@@ -1,19 +1,24 @@
-# Snips Controller — Pico 2 W GPIO Table
+# Snips Controller — RP2350A GPIO Table
 
-> **MCU:** Raspberry Pi Pico 2 W (RP2350)
-> Soldered via castellated pads directly to custom PCB.
+> **MCU:** Bare RP2350A (QFN-60) — not a Pico 2 W module. Custom USB-C +
+> external flash/crystal + a separate Murata Type 1YN WiFi/BT module.
+> See `MCU_Core` and `Wireless` sections of `snips_controller.yaml` for why.
 
 ## Reserved / Do Not Use
 | GPIO | Reason |
 |---|---|
-| GP16 | CYW43439 WiFi SPI (internal) |
-| GP17 | CYW43439 WiFi SPI (internal) |
-| GP18 | CYW43439 WiFi SPI (internal) |
-| GP19 | CYW43439 WiFi SPI (internal) |
-| GP23 | SMPS power control (internal) |
-| GP24 | VBUS sense (internal) |
-| GP25 | Onboard LED via CYW43439 (internal) |
-| GP29 | VSYS sense — used by firmware for battery voltage reading, not user GPIO |
+| GP16 | WL_ON — enables both WL_REG_ON and BT_REG_ON on the Murata Type 1YN wireless module |
+| GP23 | WL_D — bit-banged data bus to the wireless module |
+| GP24 | WL_CLK — bit-banged clock to the wireless module |
+| GP25 | WL_CS — bit-banged chip select to the wireless module |
+| GP29 | VSYS_SENSE — divide-by-3 battery voltage sense (ADC3) |
+
+The wireless interface deliberately replicates the official Pico 2 W's own
+bit-banged 3-wire RP2350↔CYW43439 protocol (not real 4-bit SDIO — RP2350
+has no SDIO host controller), so the existing pico-sdk `cyw43` PIO driver
+applies with just a pin remap.
+
+GP17-GP19 are free for future use.
 
 ---
 
@@ -37,6 +42,7 @@
 | Analog trigger (DRV5055) | GP26 | ADC0 |
 | Thumbstick X (GuliKit) | GP27 | ADC1 |
 | Thumbstick Y (GuliKit) | GP28 | ADC2 |
+| VSYS battery sense | GP29 | ADC3, divide-by-3 via R_VSYS1/R_VSYS2 |
 
 ## Digital Inputs / Outputs
 | Function | GPIO | Notes |
@@ -54,6 +60,10 @@
 | Charge status STAT1 (bq25185) | GP20 | Open-drain input, 10kΩ pull-up to 3V3 |
 | Power latch hold | GP21 | Output, driven HIGH on boot to hold soft latch |
 | RGB LED (WS2812 NeoPixel) | GP22 | PIO-driven, data line |
+| WL_ON (wireless enable) | GP16 | Output, drives WL_REG_ON + BT_REG_ON together |
+| WL_D (wireless data) | GP23 | Bit-banged, PIO-driven |
+| WL_CLK (wireless clock) | GP24 | Bit-banged, PIO-driven |
+| WL_CS (wireless chip select) | GP25 | Bit-banged, PIO-driven |
 
 ## Macro Button Matrix Layout
 6 macro buttons in a 2x3 matrix (2 rows × 3 columns).
@@ -66,6 +76,55 @@ Row 1 (GP7)  BTN_MACRO4    BTN_MACRO5    BTN_MACRO6
 ```
 
 Scan: drive one row LOW at a time, read columns. Active low with internal pull-ups on columns.
+
+---
+
+## MCU Support Circuitry (RP2350A)
+
+Bare RP2350A needs external circuitry the Pico 2 W module used to provide
+internally. All values replicate the official Pico 2 W reference schematic
+(RPI-PICO2W) for the RP2350 portion — see `MCU_Core` in the yaml.
+
+| Function | Components | Notes |
+|---|---|---|
+| Core regulator (1V1 rail) | L_VREG (3.3µH), C_VREG_1/2 (4.7µF) | External LC filter for RP2350's internal switching regulator (VREG_LX/FB) |
+| Crystal | X1 (12MHz), C16/C17 (15pF) | XIN/XOUT |
+| QSPI flash | U_FLASH (W25Q32RVXHJQ) | 4MiB, XSON-8 2x3mm |
+| BOOTSEL | SW_BOOTSEL, R11 (1kΩ) | Pulls QSPI_SS low to force USB boot |
+| USB series resistors | R_USB_DP/R_USB_DM (27Ω) | Between RP2350 and the external USB-C connector |
+| ADC_AVDD filter | R_ADC_AVDD1 (200Ω), R_ADC_AVDD2 (1Ω), C_ADC_AVDD1/2 | Two-stage RC filter off 3V3 |
+| VSYS battery sense | R_VSYS1 (200kΩ), R_VSYS2 (100kΩ) | Divide-by-3 into GP29/ADC3 |
+| IOVDD/DVDD decoupling | C_IOVDD_1/2, C_1V1_1/2, C_QSPI_IOVDD, C_VREG_AVDD | 100nF each |
+
+**IOVDD/DVDD have multiple physically separate pins on the QFN-60 package**
+that all share the same pin name — they're addressed individually by pin
+number in the yaml (not just by name) so every physical pad gets tied to
+the right net.
+
+## Wireless (Murata Type 1YN)
+
+Replaces the Pico 2 W module's onboard CYW43439 + Abracon "Niche" patented
+antenna (which requires a separate license from Abracon). Type 1YN is a
+pre-certified (FCC/CE) module using the same CYW43439 die, with antenna
+matching and RF filtering already done.
+
+| Type 1YN pin | Net | Notes |
+|---|---|---|
+| SDIO_CLK | WL_CLK (GP24) | Direct |
+| SDIO_CMD + SDIO_DATA_0 | WL_D_BUS0 | Shorted together, through R22 (470Ω) to WL_D |
+| SDIO_DATA_1 + SDIO_DATA_2 | WL_D_BUS1 | Shorted together, through R23 (10kΩ) to WL_D |
+| SDIO_DATA_3 | WL_CS (GP25) | Direct |
+| WL_REG_ON + BT_REG_ON | WL_ON (GP16) | Tied together — WiFi+BT enable as one unit |
+| VBAT, VIN_LDO | 3V3 | C_WL_VBAT1/2 (4.7µF) decoupling |
+| SR_VLX | via L_WL_VBAT (2.2µH) to 3V3 | Internal buck LC filter |
+| VIO | 3V3 | C_WL_VIO (2.2µF) decoupling |
+| LPO_IN | U_LPO output | Driven 32.768kHz oscillator IC (not a passive crystal — LPO_IN is a clock input) |
+| BT_DEV_WAKE | GND | Unused, tied low (matches Pico 2 W reference) |
+| GND(SR_PVSS) (pins 32/33) | GND | **Layout note:** must be an isolated ground pour per Murata's datasheet, not merged into the general ground plane |
+
+**Layout note:** the antenna trace geometry must exactly copy Murata's
+Hardware Application Note Figure 4 (Trace Antenna Guideline) — this is a
+PCB-layout-stage requirement that can't be captured in the schematic yaml.
 
 ---
 
@@ -98,20 +157,27 @@ Scan: drive one row LOW at a time, read columns. Active low with internal pull-u
 No external components needed — RP2350 internal pull-ups enabled in firmware, wire to GND.
 
 ### XBee
-Refer to AmidalaShield V1.2 design for XBee3 support circuitry (decoupling, RESET pull-up, RC filter).
-THT socket variant used for prototyping; SMT module footprint TBD for final PCB.
+Reusing Amidala's verified `XB3-24Z8UT-J` symbol (`PCB/libraries/Xbee3.kicad_sym`).
+THT socket footprint used for prototyping; SMT module footprint TBD for final PCB.
 
 ### Power Control Circuit
 See power control section of schematic. Uses GP15 (power button sense input) and GP21 (latch hold output).
 GP21 must be driven HIGH as the very first instruction in firmware or power will cut on button release.
 
 ### Battery Voltage Sense
-GP29 onboard VSYS divider used in firmware (reads VSYS/3). No external components needed.
-bq25185 STAT1 on GP20 provides charge state (HIGH=idle/done, LOW=charging or fault).
+GP29 reads VSYS/3 via an external R_VSYS1/R_VSYS2 divider (added when the
+Pico 2 W module — which had this divider built in — was replaced by a bare
+RP2350A). bq25185 STAT1 on GP20 provides charge state (HIGH=idle/done,
+LOW=charging or fault).
 
-> **Firmware constraint:** CYW43439 WiFi SPI shares the GP29 ADC path via the SPI CLK line. Battery voltage reads on GP29 ADC are unreliable while a WiFi SPI transaction is in progress. When WiFi is in use (e.g. syncing data with Amidala, future accessories), firmware must gate battery ADC reads to occur only when WiFi SPI is idle.
+> **Firmware constraint carried over from the original design:** if WiFi
+> traffic and VSYS ADC reads ever contend for timing (both ultimately touch
+> GP29-adjacent circuitry historically), gate battery ADC reads to avoid
+> overlapping with active WL_D bus transactions. Verify against the actual
+> pico-sdk `cyw43` PIO driver behavior once bring-up firmware exists — this
+> is inherited caution, not a confirmed conflict on the new wiring.
 
 ---
 
 ## Spare GPIO
-None — all 22 available user GPIO are assigned.
+GP17, GP18, GP19 — free for future use.
