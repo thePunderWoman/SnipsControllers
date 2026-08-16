@@ -1,4 +1,4 @@
-# Amidala Controllers — Claude Notes
+# Snips Controllers — Claude Notes
 
 ## Design principles
 
