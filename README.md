@@ -1,3 +1,3 @@
-# The Amidala Controllers
+# The Snips Controllers
 
 Controllers designed to work with the Amidala control system and firmware.
