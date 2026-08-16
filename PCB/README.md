@@ -1,4 +1,4 @@
-# Amidala Controller PCB
+# Snips Controller PCB
 
 A wireless handheld controller for R2-D2 droid operation, designed for use at public events and conventions. Communicates with the droid via XBee3 Zigbee radio in a packetized state-report architecture.
 
@@ -6,71 +6,78 @@ A wireless handheld controller for R2-D2 droid operation, designed for use at pu
 
 | Component | Part | Notes |
 |---|---|---|
-| MCU | Adafruit KB2040 | RP2040, Pro Micro form factor, USB-C |
-| ADC | ADS1115 | 16-bit, 4-channel, I2C |
+| MCU | Raspberry Pi Pico 2 W | RP2350, castellated pads soldered to PCB |
 | Display | SSD1306 1.3" OLED | 128x64, monochrome, I2C |
-| Radio | XBee3 | Zigbee, SPI mode |
-| Hall trigger | DRV5055 | Ratiometric linear hall effect, 3.3V |
+| Radio | XBee3 | Zigbee, SPI1 mode, THT socket (proto) |
+| Hall trigger | DRV5055A2 | Ratiometric linear hall effect, 3.3V |
 | Thumbstick | GuliKit hall effect module | Native 3.3V, analog X/Y + click |
-| Buttons | Omron B3F series | Tactile momentary, all inputs to GND |
-| Charger | bq25185 | USB/DC input, power path management |
-| Buck | TPS62569 | 3.3V output |
-| Battery | 18650 or 14500 Li-ion | Swappable, single cell |
+| Buttons | Omron B3F series | Tactile momentary clicky |
+| RGB LED | SK6812 NeoPixel-compatible | PIO-driven, 3.3V native, single LED status indicator |
+| Charger | bq25185 | USB/DC input, power path, 4.2V/500mA |
+| Buck | TLV62569 | 3.3V output, 1A |
+| Battery | 18650 or 14500 Li-ion | Swappable single cell, TBD empirically |
+| Power switch | DMG2305UX + 2N7002 | Soft latch, hybrid hardware+firmware |
 
 ## GPIO Assignment
 
-### SPI0 (XBee) — Silkscreen-labeled SPI pins
-| Function | Board Label | GPIO |
-|---|---|---|
-| XBee SCK | CLK | GPIO18 |
-| XBee MOSI | MOSI | GPIO19 |
-| XBee MISO | MISO | GPIO20 |
-| XBee CS | D10 | GPIO10 |
+### Reserved — Do Not Use
+| GPIO | Reason |
+|---|---|
+| GP16–GP19 | CYW43439 WiFi SPI (internal) |
+| GP23 | SMPS power control (internal) |
+| GP24 | VBUS sense (internal) |
+| GP25 | Onboard LED via CYW43439 (internal) |
+| GP29 | VSYS sense — firmware battery voltage read only |
 
-### Bottom Edge — Buttons & Control
-| Function | Board Label | GPIO |
-|---|---|---|
-| Vol up | TX/D0 | GPIO0 |
-| Vol down | RX/D1 | GPIO1 |
-| Digital trigger (bumper) | D2 | GPIO2 |
-| Thumbstick click (KEY) | D3 | GPIO3 |
-| Macro button 1 | D4 | GPIO4 |
-| Macro button 2 | D5 | GPIO5 |
-| Macro button 3 | D6 | GPIO6 |
-| Macro button 4 | D7 | GPIO7 |
-| Macro button 5 | D8 | GPIO8 |
-| Macro button 6 | D9 | GPIO9 |
+### SPI1 (XBee)
+| Function | GPIO |
+|---|---|
+| XBee SCK | GP10 |
+| XBee MOSI | GP11 |
+| XBee MISO | GP12 |
+| XBee CS | GP13 |
 
-### Analog Pins — Misc Control Signals
-| Function | Board Label | GPIO |
+### I2C0 (OLED)
+| Function | GPIO |
+|---|---|
+| SDA | GP4 |
+| SCL | GP5 |
+
+### ADC
+| Function | GPIO |
+|---|---|
+| Analog trigger (DRV5055) | GP26 |
+| Thumbstick X (GuliKit) | GP27 |
+| Thumbstick Y (GuliKit) | GP28 |
+
+### Digital Inputs / Outputs
+| Function | GPIO | Notes |
 |---|---|---|
-| LED indicator | A0 | GPIO26 |
-| Charge status (bq25185 STAT) | A1 | GPIO27 |
+| Vol up | GP0 | Active low, internal pull-up |
+| Vol down | GP1 | Active low, internal pull-up |
+| Digital trigger (bumper) | GP2 | Active low, internal pull-up |
+| Thumbstick click (KEY) | GP3 | Active low, internal pull-up |
+| Matrix Row 0 | GP6 | Drive low to scan |
+| Matrix Row 1 | GP7 | Drive low to scan |
+| Matrix Col 0 | GP8 | Input, internal pull-up |
+| Matrix Col 1 | GP9 | Input, internal pull-up |
+| Matrix Col 2 | GP14 | Input, internal pull-up |
+| Power button sense | GP15 | Input, 3-second hold detect |
+| Charge status STAT1 | GP20 | Open-drain, 10kΩ pull-up to 3V3 |
+| Power latch hold | GP21 | Output, HIGH on boot to hold latch |
+| RGB LED DIN (WS2812) | GP22 | PIO-driven |
+
+### Macro Button Matrix Layout
+6 macro buttons in a 2x3 matrix. Each button requires a 1N4148 diode (anode to switch, cathode to column) to prevent ghosting.
+
+```
+           Col0 (GP8)   Col1 (GP9)   Col2 (GP14)
+Row0 (GP6)  MACRO1       MACRO2       MACRO3
+Row1 (GP7)  MACRO4       MACRO5       MACRO6
+```
 
 ### Spare GPIO
-| Board Label | GPIO |
-|---|---|
-| A2 | GPIO28 |
-| A3 | GPIO29 |
-
-### I2C — STEMMA QT (no GPIO cost)
-| Device | Notes |
-|---|---|
-| ADS1115 | Shares bus with OLED |
-| SSD1306 OLED | Shares bus with ADS1115 |
-
-#### ADS1115 Channel Assignments
-| Channel | Function |
-|---|---|
-| A0 | Analog trigger (DRV5055) |
-| A1 | Thumbstick X (GuliKit) |
-| A2 | Thumbstick Y (GuliKit) |
-| A3 | Battery voltage sense |
-
-### Reserved / Onboard
-| Board Label | GPIO | Notes |
-|---|---|---|
-| — | GPIO17 | Onboard NeoPixel — do not use |
+None — all 22 available user GPIO are assigned.
 
 ---
 
@@ -79,35 +86,44 @@ A wireless handheld controller for R2-D2 droid operation, designed for use at pu
 ### Decoupling Caps
 | Component | Value | Notes |
 |---|---|---|
-| DRV5055 VCC | 100nF ceramic | Place close to supply pin |
-| GuliKit VCC | 100nF ceramic | Place close to supply pin |
-| ADS1115 VDD | 100nF ceramic + 10µF bulk | Both recommended |
+| DRV5055 VCC | 100nF ceramic | Close to supply pin |
+| GuliKit VCC | 100nF ceramic | Close to supply pin |
+| WS2812B VCC | 100nF ceramic | Close to supply pin |
+| bq25185 VIN | 10µF + 100nF ceramic | X7R/X5R, 25V rated |
+| bq25185 SYS | 10µF + 100nF ceramic | X7R/X5R, 25V rated |
+| bq25185 BAT | 10µF ceramic | |
+| TLV62569 VIN | 10µF ceramic | |
+| TLV62569 VOUT | 22µF ceramic | |
 
 ### Pull-up Resistors
 | Signal | Value | Notes |
 |---|---|---|
-| bq25185 STAT pin | 10kΩ | STAT is open-drain, pull up to 3.3V |
-| I2C SDA/SCL | 4.7kΩ | Verify not already present on breakout boards before adding external pull-ups |
+| bq25185 STAT1 | 10kΩ | Open-drain, pull up to 3V3 |
+| bq25185 TS/MR | 10kΩ to GND | REQUIRED if no thermistor — floating = no charging |
+| XBee RESET | 10kΩ to 3V3 | Plus 100Ω + 100nF RC filter at pin |
+| I2C SDA/SCL | 4.7kΩ | **DNP for prototyping** — Adafruit #938 has onboard pull-ups. Populate only on final PCB with bare OLED panel |
 
-### Current Limiting Resistors
+### Series Resistors
+| Signal | Value | Notes |
+|---|---|---|
+| WS2812B DIN (GP22) | 330Ω | Signal integrity, place close to GP22 pad |
+
+### Button Matrix Diodes
 | Component | Value | Notes |
 |---|---|---|
-| LED indicator | 330Ω–1kΩ | 330Ω ~8-10mA (bright), 1kΩ for lower power |
+| D_MACRO1–D_MACRO6 | 1N4148 SOD-123 | Anode to switch, cathode to column — mandatory for ghosting prevention |
 
-### Buttons
-No external components needed. All buttons wire to GND; enable RP2040 internal pull-ups in firmware (`INPUT_PULLUP`).
-
-### KB2040
-No additional passives needed — all decoupling is onboard.
+### Direct Buttons
+No external components needed. Wire to GND; enable RP2350 internal pull-ups in firmware.
 
 ### XBee
-Refer to AmidalaShield V1.2 design for XBee3 support circuitry (decoupling, RESET pull-up, RC filter). Same approach applies here.
+Refer to AmidalaShield V1.2 for XBee3 support circuitry. THT socket for prototyping; update footprint to SMT module for final PCB if size requires.
 
 ---
 
 ## Communication Architecture
 
-Controllers communicate with the droid via XBee3 in **packetized state-report** mode. The KB2040 firmware reads all inputs locally (button states, ADS1115 ADC values) and assembles them into a structured payload transmitted periodically over SPI to the XBee3 radio. The receiving AmidalaShield deserializes the packet and interprets controller state.
+Controllers communicate with the droid via XBee3 in **packetized state-report** mode. The Pico 2 W firmware reads all inputs locally (button states, ADC values for analog trigger and thumbstick) and assembles them into a structured payload transmitted periodically over SPI1 to the XBee3 radio. The receiving AmidalaShield deserializes the packet and interprets controller state.
 
 This approach is preferred over per-signal transmission as it is more efficient, easier to deserialize, and robust to timing issues.
 
@@ -122,24 +138,30 @@ This approach is preferred over per-signal transmission as it is more efficient,
 
 ## Bringup Sequence
 
-For breadboard bringup, GPIO0 (TX) and GPIO1 (RX) can be temporarily used for XBee UART communication with a serial XBee prototyping board, freeing the SPI pins. Vol up and Vol down are remapped to A0/A1 (GPIO26/27) during this phase.
+For breadboard bringup, GP0 (TX) and GP1 (RX) can be temporarily used for XBee UART communication with a serial XBee prototyping board, freeing SPI1 pins. Vol up and Vol down are remapped to spare GPIO during this phase.
 
 Recommended bringup order:
-1. KB2040 alone — verify USB enumeration, flash blink sketch
-2. OLED on STEMMA QT — verify I2C, get something on screen
-3. ADS1115 on STEMMA QT — read all four channels, verify thumbstick and trigger respond
-4. Buttons — verify all 10 digital inputs, pull-ups, and debounce
-5. LED + charge status — verify GPIO26/27 high/low behavior
-6. XBee over UART — verify basic communication with serial prototyping board
+1. Pico 2 W alone — verify USB enumeration, flash blink sketch, confirm GP21 latch hold works
+2. OLED on I2C — verify I2C on GP4/GP5, get something on screen
+3. WS2812 RGB LED — verify PIO on GP22, cycle colors
+4. Buttons — verify GP0/1/2/3 direct inputs and 2x3 matrix scan on GP6-9/14
+5. Charge status — verify STAT1 on GP20 reads correctly
+6. DRV5055 + GuliKit thumbstick — verify ADC readings on GP26/27/28
+7. XBee over UART — verify basic communication with serial prototyping board before switching to SPI1
 
 ---
 
 ## Power Architecture
 
-- Battery → bq25185 (charger + power path) → TPS62569 (3.3V buck) → KB2040 RAW pin and all 3.3V logic
-- bq25185 STAT pin → GPIO27 (open-drain, 10kΩ pull-up to 3.3V)
-- Battery voltage sense → ADS1115 A3 channel (via voltage divider if needed)
-- All logic is 3.3V — KB2040, ADS1115, DRV5055, GuliKit thumbstick are all 3.3V native
+- Battery → bq25185 (charger + power path, 4.2V VBATREG, 500mA) → TLV62569 (3.3V buck) → Pico 2 W VSYS and all 3.3V logic
+- Power switch: soft latch (DMG2305UX PFET + 2N7002 NFET) controls TLV62569 EN pin
+- Boot: press power button → hardware latch enables 3V3 → Pico boots → GP21 driven HIGH to hold latch
+- Shutdown: firmware detects 3-second hold on GP15 → graceful shutdown → GP21 LOW → power cut
+- bq25185 STAT1 → GP20 (open-drain, 10kΩ pull-up to 3V3)
+- Battery voltage sense → GP29 onboard VSYS divider (reads VSYS/3 via ADC)
+- All logic is 3.3V native — Pico 2 W, DRV5055, GuliKit thumbstick, SK6812
+
+> **Firmware constraint:** CYW43439 WiFi SPI shares the GP29 ADC path via the SPI CLK line. Battery voltage reads on GP29 ADC are unreliable while a WiFi SPI transaction is in progress. When WiFi is in use (e.g. syncing data with Amidala, future accessories), firmware must gate battery ADC reads to occur only when WiFi SPI is idle.
 
 ## Power Management
 

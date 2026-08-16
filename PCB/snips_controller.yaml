@@ -1,0 +1,737 @@
+project:
+  name: Snips Controller
+  revision: 0.1
+  description: >
+    Wireless handheld R2-D2 controller (Snips Controller). RP2350-based (Raspberry Pi Pico 2 W),
+    XBee3 Zigbee radio over SPI1, hall effect thumbstick and analog trigger,
+    SSD1306 OLED display, WS2812 RGB LED, embedded bq25185 charger + TLV62569
+    3.3V buck, swappable single-cell Li-ion battery, soft-latch power control.
+
+# ---------------------------------------------------------------------------
+# NET LEGEND
+# ---------------------------------------------------------------------------
+# VBUS        - 5V USB input from USB-C connector
+# VSYS        - Battery/charger system output (bq25185 SYS pin), ~3.7-4.5V
+# 3V3         - Regulated 3.3V output from TLV62569 buck
+# GND         - Ground
+# VBAT        - Battery positive terminal
+# USB_DP      - USB D+ data line
+# USB_DM      - USB D- data line
+# I2C_SDA     - I2C0 data (GP4) — OLED
+# I2C_SCL     - I2C0 clock (GP5) — OLED
+# SPI_SCK     - XBee SPI1 clock (GP10)
+# SPI_MOSI    - XBee SPI1 MOSI (GP11)
+# SPI_MISO    - XBee SPI1 MISO (GP12)
+# XBee_CS     - XBee SPI1 chip select (GP13)
+# TRIG_ANALOG - Analog trigger output from DRV5055 (GP26/ADC0)
+# STICK_X     - Thumbstick X axis (GP27/ADC1)
+# STICK_Y     - Thumbstick Y axis (GP28/ADC2)
+# STAT1       - bq25185 charge status pin 1 (open-drain, GP20)
+# RGB_DIN     - WS2812 NeoPixel data in (GP22, PIO-driven)
+# PWR_EN      - TLV62569 EN signal, driven by soft latch PFET drain
+# PWR_GATE    - PFET gate node (pulled HIGH by default = off)
+# PWR_LATCH_G - NFET latch gate (driven by button OR GP21)
+# PWR_BTN_NODE- Power button junction (pulled to VSYS, button pulls to GND)
+# PWR_HOLD    - GP21 output to OR diode, holds latch after boot
+# GP15_SENSE  - Divided power button sense signal into GP15
+# BTN_*       - Individual button nets (pulled up internally, wired to GND)
+# MAT_R*      - Matrix row drive lines (GP6/GP7, driven LOW to scan)
+# MAT_C*      - Matrix column sense lines (GP8/GP9/GP14, internal pull-ups)
+
+# ---------------------------------------------------------------------------
+# RESERVED GPIO — DO NOT USE
+# ---------------------------------------------------------------------------
+# GP16-GP19: CYW43439 WiFi SPI interface (internal)
+# GP23: SMPS power control (internal)
+# GP24: VBUS sense (internal)
+# GP25: Onboard LED via CYW43439 (internal)
+# GP29: VSYS sense (onboard divider, read via ADC in firmware)
+
+# ---------------------------------------------------------------------------
+groups:
+
+  # -------------------------------------------------------------------------
+  # 1. USB-C Connector
+  # -------------------------------------------------------------------------
+  # USB 2.0 only. CC resistors required for USB-C power negotiation.
+  # VBUS -> bq25185 VIN. D+/D- -> Pico 2 W USB data pins.
+  # SHIELD -> GND.
+  USB_C:
+    components:
+      J_USB:
+        symbol: Connector:USB_C_Receptacle_USB2.0_16P
+        value: USB-C
+        footprint: Connector_USB:USB_C_Receptacle_HRO_TYPE-C-31-M-12
+      R_CC1:
+        symbol: Device:R
+        value: 5.1kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+      R_CC2:
+        symbol: Device:R
+        value: 5.1kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+    connections:
+      - net: VBUS
+        pins: [J_USB:VBUS]
+      - net: USB_DP
+        pins: [J_USB:D+]
+      - net: USB_DM
+        pins: [J_USB:D-]
+      - net: GND
+        pins: [J_USB:GND, J_USB:SHIELD, R_CC1:2, R_CC2:2]
+      - net: USB_CC1
+        pins: [J_USB:CC1, R_CC1:1]
+      - net: USB_CC2
+        pins: [J_USB:CC2, R_CC2:1]
+
+  # -------------------------------------------------------------------------
+  # 2. bq25185 Battery Charger + Power Path
+  # -------------------------------------------------------------------------
+  # VIN    <- VBUS (5V USB)
+  # SYS    -> VSYS rail
+  # BAT    <-> VBAT
+  # STAT1  -> GP20 (open-drain, 10kΩ pull-up to 3V3)
+  # STAT2  -> not connected (left floating)
+  # ISET   -> R_ISET to GND. ICHG = 300 AΩ / RISET.
+  #           RISET = 600Ω -> ~500mA charge current
+  # ILIM/VSET -> R_VSET = 18kΩ -> 4.2V VBATREG, 500mA input limit
+  #           (per Table 7-1 in bq25185 datasheet)
+  # TS/MR  -> R_TS = 10kΩ to GND (REQUIRED if no thermistor)
+  # CE     -> GND (always enable charging)
+  # Decoupling: 10µF + 100nF on VIN; 10µF + 100nF on SYS; 10µF on BAT
+  # Use X7R/X5R ceramic, 25V rated on VIN and SYS pins
+  Power_Charger:
+    components:
+      U_CHG:
+        symbol: Battery_Management:BQ25185DLHR
+        value: bq25185
+        footprint: Package_DFN_QFN:Texas_R-PUQFN-N16
+      C_VIN_1:
+        symbol: Device:C
+        value: 10µF
+        footprint: Capacitor_SMD:C_0805_2012Metric
+      C_VIN_2:
+        symbol: Device:C
+        value: 100nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+      C_SYS_1:
+        symbol: Device:C
+        value: 10µF
+        footprint: Capacitor_SMD:C_0805_2012Metric
+      C_SYS_2:
+        symbol: Device:C
+        value: 100nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+      C_BAT:
+        symbol: Device:C
+        value: 10µF
+        footprint: Capacitor_SMD:C_0805_2012Metric
+      R_ISET:
+        symbol: Device:R
+        value: 600Ω
+        footprint: Resistor_SMD:R_0402_1005Metric
+      R_VSET:
+        symbol: Device:R
+        value: 18kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+      R_TS:
+        symbol: Device:R
+        value: 10kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+      R_STAT1:
+        symbol: Device:R
+        value: 10kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+    connections:
+      - net: VBUS
+        pins: [U_CHG:IN, C_VIN_1:1, C_VIN_2:1]
+      - net: VSYS
+        pins: [U_CHG:SYS, C_SYS_1:1, C_SYS_2:1]
+      - net: VBAT
+        pins: [U_CHG:BAT, C_BAT:1]
+      - net: STAT1
+        pins: [U_CHG:STAT1, R_STAT1:1]
+      - net: 3V3
+        pins: [R_STAT1:2]
+      - net: GND
+        pins: [U_CHG:GND, C_VIN_1:2, C_VIN_2:2, C_SYS_1:2, C_SYS_2:2,
+               C_BAT:2, R_ISET:2, R_VSET:2, R_TS:2, U_CHG:CE]
+      - net: CHG_ISET
+        pins: [U_CHG:ISET, R_ISET:1]
+      - net: CHG_VSET
+        pins: [U_CHG:ILIM_VSET, R_VSET:1]
+      - net: CHG_TS
+        pins: [U_CHG:TS, R_TS:1]
+      # STAT2 left floating (not connected)
+
+  # -------------------------------------------------------------------------
+  # 3. TLV62569 3.3V Buck Converter
+  # -------------------------------------------------------------------------
+  # VIN    <- VSYS
+  # VOUT   -> 3V3
+  # EN     -> PWR_EN (soft latch power control, NOT tied to 3V3 directly)
+  # FB     -> R_FB1/R_FB2 divider sets 3.3V output
+  #           VOUT = 0.6V * (1 + R_FB1/R_FB2)
+  #           R_FB1=100kΩ, R_FB2=56.2kΩ -> ~3.31V (verify with 1% resistors)
+  # L      - 1µH, >=2A rating, low DCR
+  # Decoupling: 10µF on VIN, 22µF on VOUT
+  Power_Buck:
+    components:
+      U_BUCK:
+        symbol: Regulator_Switching:TLV62569
+        value: TLV62569
+        footprint: Package_TO_SOT_SMD:SOT-23-5
+      L_BUCK:
+        symbol: Device:L
+        value: 1µH
+        footprint: Inductor_SMD:L_Bourns_SRR1260
+      C_BUCK_IN:
+        symbol: Device:C
+        value: 10µF
+        footprint: Capacitor_SMD:C_0805_2012Metric
+      C_BUCK_OUT:
+        symbol: Device:C
+        value: 22µF
+        footprint: Capacitor_SMD:C_0805_2012Metric
+      R_FB1:
+        symbol: Device:R
+        value: 100kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+      R_FB2:
+        symbol: Device:R
+        value: 56.2kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+    connections:
+      - net: VSYS
+        pins: [U_BUCK:VIN, C_BUCK_IN:1]
+      - net: 3V3
+        pins: [U_BUCK:VOUT, C_BUCK_OUT:1, R_FB1:2]
+      - net: PWR_EN
+        pins: [U_BUCK:EN]
+      - net: BUCK_SW
+        pins: [U_BUCK:SW, L_BUCK:1]
+      - net: BUCK_FB
+        pins: [U_BUCK:FB, R_FB1:1, R_FB2:1]
+      - net: GND
+        pins: [U_BUCK:GND, C_BUCK_IN:2, C_BUCK_OUT:2, R_FB2:2]
+
+  # -------------------------------------------------------------------------
+  # 4. Battery Holder
+  # -------------------------------------------------------------------------
+  # Single cell Li-ion (18650 or 14500 — to be determined empirically)
+  Battery:
+    components:
+      BT1:
+        symbol: Device:Battery
+        value: Li-ion_18650_or_14500
+        footprint: Battery:BatteryHolder_Keystone_1042_1x18650
+    connections:
+      - net: VBAT
+        pins: [BT1:+]
+      - net: GND
+        pins: [BT1:-]
+
+  # -------------------------------------------------------------------------
+  # 5. Power Control Circuit (soft latch, hybrid hardware+firmware)
+  # -------------------------------------------------------------------------
+  # Boot (hardware):
+  #   EN pulled LOW by default (off). Press PWR button -> D_OR1 drives
+  #   Q_LATCH gate HIGH -> Q_LATCH on -> Q_PWR gate pulled LOW -> PWR_EN HIGH
+  #   -> TLV62569 EN HIGH -> 3V3 up -> Pico boots.
+  #   Firmware drives GP21 HIGH immediately on boot to hold latch via D_OR2.
+  #
+  # Shutdown (firmware):
+  #   Firmware monitors PWR button on GP15 (3-second hold).
+  #   On shutdown: drive GP21 LOW -> Q_LATCH off -> R_GATE pulls Q_PWR gate
+  #   HIGH -> PWR_EN LOW -> 3V3 cut.
+  #
+  # CRITICAL: GP21 must be driven HIGH as the very first instruction in
+  # firmware or power cuts when user releases the power button.
+  #
+  # PWR_BTN_NODE pulled to VSYS via R_BTN_PU. R_PWR_SENSE (100kΩ to GND)
+  # divides with R_BTN_PU (100kΩ) giving ~2.1V at GP15 when idle (HIGH).
+  # Button press pulls to GND; GP15 reads LOW. 2.1V safe within 3.3V limit.
+  Power_Control:
+    components:
+      Q_PWR:
+        symbol: Device:Q_PMOS_GSD
+        value: DMG2305UX
+        footprint: Package_TO_SOT_SMD:SOT-23
+      Q_LATCH:
+        symbol: Device:Q_NMOS_GSD
+        value: 2N7002
+        footprint: Package_TO_SOT_SMD:SOT-23
+      D_OR1:
+        symbol: Device:D_Small
+        value: 1N4148W
+        footprint: Package_TO_SOT_SMD:SOT-23
+      D_OR2:
+        symbol: Device:D_Small
+        value: 1N4148W
+        footprint: Package_TO_SOT_SMD:SOT-23
+      R_GATE:
+        symbol: Device:R
+        value: 100kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+      R_BTN_PU:
+        symbol: Device:R
+        value: 100kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+      R_PWR_SENSE:
+        symbol: Device:R
+        value: 100kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+      R_LATCH_G:
+        symbol: Device:R
+        value: 10kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+      C_DBNC:
+        symbol: Device:C
+        value: 100nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+      SW_PWR:
+        symbol: Switch:SW_Push
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+    connections:
+      - net: VSYS
+        pins: [Q_PWR:S, R_GATE:1, R_BTN_PU:1]
+      - net: PWR_GATE
+        pins: [Q_PWR:G, R_GATE:2, Q_LATCH:D]
+      - net: PWR_EN
+        pins: [Q_PWR:D]
+      - net: PWR_LATCH_G
+        pins: [Q_LATCH:G, R_LATCH_G:2, D_OR1:K, D_OR2:K]
+      - net: GND
+        pins: [Q_LATCH:S, R_LATCH_G:1, C_DBNC:2, SW_PWR:2]
+      - net: PWR_BTN_NODE
+        pins: [SW_PWR:1, R_BTN_PU:2, C_DBNC:1, D_OR1:A, R_PWR_SENSE:1]
+      - net: GP15_SENSE
+        pins: [R_PWR_SENSE:1]
+      - net: GND
+        pins: [R_PWR_SENSE:2]
+      - net: PWR_HOLD
+        pins: [D_OR2:A]
+      - net: GP15_SENSE
+        pins: [U_MCU:GP15]
+      - net: PWR_HOLD
+        pins: [U_MCU:GP21]
+
+  # -------------------------------------------------------------------------
+  # 6. Raspberry Pi Pico 2 W (RP2350)
+  # -------------------------------------------------------------------------
+  # Soldered via castellated pads directly to PCB.
+  # Powered via VSYS pin (NOT 3V3 pin from external source).
+  # GP16-GP19 reserved for CYW43439 WiFi — do not connect externally.
+  # GP23/24/25/29 reserved for internal board functions.
+  # GP29 VSYS sense used in firmware for battery voltage reading.
+  Pico2W:
+    components:
+      U_MCU:
+        symbol: MCU_RaspberryPi:RaspberryPi_Pico2W
+        value: Pico_2_W
+        footprint: MCU_RaspberryPi:RaspberryPi_Pico_SMD_TH
+    connections:
+      - net: VSYS
+        pins: [U_MCU:VSYS]
+      - net: GND
+        pins: [U_MCU:GND]
+      - net: USB_DP
+        pins: [U_MCU:USB_DP]
+      - net: USB_DM
+        pins: [U_MCU:USB_DM]
+      # SPI1 - XBee
+      - net: SPI_SCK
+        pins: [U_MCU:GP10]
+      - net: SPI_MOSI
+        pins: [U_MCU:GP11]
+      - net: SPI_MISO
+        pins: [U_MCU:GP12]
+      - net: XBee_CS
+        pins: [U_MCU:GP13]
+      # I2C0 - OLED
+      - net: I2C_SDA
+        pins: [U_MCU:GP4]
+      - net: I2C_SCL
+        pins: [U_MCU:GP5]
+      # ADC inputs
+      - net: TRIG_ANALOG
+        pins: [U_MCU:GP26]
+      - net: STICK_X
+        pins: [U_MCU:GP27]
+      - net: STICK_Y
+        pins: [U_MCU:GP28]
+      # Misc control
+      - net: STAT1
+        pins: [U_MCU:GP20]
+      - net: RGB_DIN
+        pins: [U_MCU:GP22]
+      # Power control
+      - net: GP15_SENSE
+        pins: [U_MCU:GP15]
+      - net: PWR_HOLD
+        pins: [U_MCU:GP21]
+      # Digital buttons (internal pull-ups in firmware)
+      - net: BTN_VOL_UP
+        pins: [U_MCU:GP0]
+      - net: BTN_VOL_DN
+        pins: [U_MCU:GP1]
+      - net: BTN_TRIG_DIG
+        pins: [U_MCU:GP2]
+      - net: BTN_STICK
+        pins: [U_MCU:GP3]
+      # Macro button matrix
+      - net: MAT_R0
+        pins: [U_MCU:GP6]
+      - net: MAT_R1
+        pins: [U_MCU:GP7]
+      - net: MAT_C0
+        pins: [U_MCU:GP8]
+      - net: MAT_C1
+        pins: [U_MCU:GP9]
+      - net: MAT_C2
+        pins: [U_MCU:GP14]
+
+  # -------------------------------------------------------------------------
+  # 7. XBee3 Radio (SPI mode, THT socket)
+  # -------------------------------------------------------------------------
+  # THT socket for prototyping. Update footprint for SMT module on final PCB.
+  # RESET: 10kΩ pull-up to 3V3 + RC filter (100Ω + 100nF) per AmidalaShield.
+  # Decoupling: 100nF on VCC.
+  XBee:
+    components:
+      U_XBEE:
+        symbol: RF_Module:XBee3
+        value: XBee3
+        footprint: RF_Module:XBee_THT
+      C_XBEE_VCC:
+        symbol: Device:C
+        value: 100nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+      R_XBEE_RST:
+        symbol: Device:R
+        value: 10kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+      R_XBEE_RC:
+        symbol: Device:R
+        value: 100Ω
+        footprint: Resistor_SMD:R_0402_1005Metric
+      C_XBEE_RC:
+        symbol: Device:C
+        value: 100nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+    connections:
+      - net: 3V3
+        pins: [U_XBEE:VCC, C_XBEE_VCC:1, R_XBEE_RST:1]
+      - net: GND
+        pins: [U_XBEE:GND, C_XBEE_VCC:2, C_XBEE_RC:2]
+      - net: SPI_SCK
+        pins: [U_XBEE:SPI_CLK]
+      - net: SPI_MOSI
+        pins: [U_XBEE:SPI_MOSI]
+      - net: SPI_MISO
+        pins: [U_XBEE:SPI_MISO]
+      - net: XBee_CS
+        pins: [U_XBEE:SPI_SSEL]
+      - net: XBEE_RST_PU
+        pins: [R_XBEE_RST:2, R_XBEE_RC:1, C_XBEE_RC:1]
+      - net: XBEE_RESET
+        pins: [U_XBEE:RESET, R_XBEE_RC:2]
+
+  # -------------------------------------------------------------------------
+  # 8. SSD1306 OLED Display (1.3", 128x64, I2C)
+  # -------------------------------------------------------------------------
+  # I2C address: 0x3C (default). I2C pull-ups included as 4.7kΩ.
+  # Mark R_I2C_SDA and R_I2C_SCL as DNP if OLED breakout has them onboard.
+  # Decoupling: 10µF + 100nF on VCC.
+  OLED:
+    components:
+      U_OLED:
+        symbol: Display:SSD1306_I2C
+        value: SSD1306_1.3in
+        footprint: Display_OLED:OLED_1.3in_4pin_I2C
+      C_OLED_1:
+        symbol: Device:C
+        value: 10µF
+        footprint: Capacitor_SMD:C_0805_2012Metric
+      C_OLED_2:
+        symbol: Device:C
+        value: 100nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+      R_I2C_SDA:
+        symbol: Device:R
+        value: 4.7kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+        # DNP when using Adafruit #938 breakout — pull-ups already onboard
+        # Populate only when using bare OLED panel on final custom PCB
+      R_I2C_SCL:
+        symbol: Device:R
+        value: 4.7kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+        # DNP when using Adafruit #938 breakout — pull-ups already onboard
+        # Populate only when using bare OLED panel on final custom PCB
+    connections:
+      - net: 3V3
+        pins: [U_OLED:VCC, C_OLED_1:1, C_OLED_2:1, R_I2C_SDA:1, R_I2C_SCL:1]
+      - net: GND
+        pins: [U_OLED:GND, C_OLED_1:2, C_OLED_2:2]
+      - net: I2C_SDA
+        pins: [U_OLED:SDA, R_I2C_SDA:2]
+      - net: I2C_SCL
+        pins: [U_OLED:SCL, R_I2C_SCL:2]
+
+  # -------------------------------------------------------------------------
+  # 9. DRV5055 Analog Hall Effect Trigger Sensor
+  # -------------------------------------------------------------------------
+  # Ratiometric linear output, 3.3V native. A2 variant (50mV/mT).
+  # Decoupling: 100nF on VCC.
+  # Package: TO-92 for prototyping, SOT-23 for final PCB.
+  Hall_Trigger:
+    components:
+      U_HALL:
+        symbol: Sensor_Magnetic:DRV5055
+        value: DRV5055A2
+        footprint: Package_TO_SOT_THT:TO-92_Inline
+      C_HALL:
+        symbol: Device:C
+        value: 100nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+    connections:
+      - net: 3V3
+        pins: [U_HALL:VCC, C_HALL:1]
+      - net: GND
+        pins: [U_HALL:GND, C_HALL:2]
+      - net: TRIG_ANALOG
+        pins: [U_HALL:OUT]
+
+  # -------------------------------------------------------------------------
+  # 10. GuliKit Hall Effect Thumbstick
+  # -------------------------------------------------------------------------
+  # Native 3.3V. X/Y analog outputs, KEY digital click (active low).
+  # Decoupling: 100nF on VCC.
+  Thumbstick:
+    components:
+      J_STICK:
+        symbol: Connector:Conn_01x05_Male
+        value: GuliKit_Thumbstick
+        footprint: Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical
+      C_STICK:
+        symbol: Device:C
+        value: 100nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+    connections:
+      - net: 3V3
+        pins: [J_STICK:Pin_1, C_STICK:1]
+      - net: GND
+        pins: [J_STICK:Pin_2, C_STICK:2]
+      - net: STICK_X
+        pins: [J_STICK:Pin_3]
+      - net: STICK_Y
+        pins: [J_STICK:Pin_4]
+      - net: BTN_STICK
+        pins: [J_STICK:Pin_5]
+
+  # -------------------------------------------------------------------------
+  # 11. SK6812 RGB LED (NeoPixel-compatible)
+  # -------------------------------------------------------------------------
+  # SK6812 chosen over WS2812B for explicit 3.3V VDD compatibility.
+  # Pin and protocol compatible with WS2812B — same PIO driver code works.
+  # Driven via RP2350 PIO on GP22.
+  # R_RGB: 300-500Ω series on DIN for signal integrity (standard practice).
+  # Decoupling: 100nF on VCC.
+  RGB_LED:
+    components:
+      D_RGB:
+        symbol: LED:SK6812
+        value: SK6812
+        footprint: LED_SMD:LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm
+      R_RGB:
+        symbol: Device:R
+        value: 330Ω
+        footprint: Resistor_SMD:R_0402_1005Metric
+      C_RGB:
+        symbol: Device:C
+        value: 100nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+    connections:
+      - net: 3V3
+        pins: [D_RGB:VDD, C_RGB:1]
+      - net: GND
+        pins: [D_RGB:VSS, C_RGB:2]
+      - net: RGB_DIN_R
+        pins: [R_RGB:1]
+      - net: RGB_DIN
+        pins: [R_RGB:2]
+      - net: RGB_DIN_R
+        pins: [D_RGB:DIN]
+
+  # -------------------------------------------------------------------------
+  # 12. Macro Button Matrix (2x3, 6 buttons)
+  # -------------------------------------------------------------------------
+  # 2 rows (GP6/GP7) x 3 columns (GP8/GP9/GP14).
+  # Each button has a 1N4148 diode (anode to switch, cathode to column)
+  # to prevent ghosting on simultaneous presses.
+  # Scan: drive one row LOW, read columns (internal pull-ups on GP8/9/14).
+  #
+  # Layout:
+  #          Col0(GP8)  Col1(GP9)  Col2(GP14)
+  # Row0(GP6)  MACRO1     MACRO2     MACRO3
+  # Row1(GP7)  MACRO4     MACRO5     MACRO6
+  Button_Matrix:
+    components:
+      SW_MACRO1:
+        symbol: Switch:SW_Push
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_MACRO2:
+        symbol: Switch:SW_Push
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_MACRO3:
+        symbol: Switch:SW_Push
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_MACRO4:
+        symbol: Switch:SW_Push
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_MACRO5:
+        symbol: Switch:SW_Push
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_MACRO6:
+        symbol: Switch:SW_Push
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      D_MACRO1:
+        symbol: Device:D_Small
+        value: 1N4148
+        footprint: Diode_SMD:D_SOD-123
+      D_MACRO2:
+        symbol: Device:D_Small
+        value: 1N4148
+        footprint: Diode_SMD:D_SOD-123
+      D_MACRO3:
+        symbol: Device:D_Small
+        value: 1N4148
+        footprint: Diode_SMD:D_SOD-123
+      D_MACRO4:
+        symbol: Device:D_Small
+        value: 1N4148
+        footprint: Diode_SMD:D_SOD-123
+      D_MACRO5:
+        symbol: Device:D_Small
+        value: 1N4148
+        footprint: Diode_SMD:D_SOD-123
+      D_MACRO6:
+        symbol: Device:D_Small
+        value: 1N4148
+        footprint: Diode_SMD:D_SOD-123
+    connections:
+      # Row 0 (GP6): MACRO1, MACRO2, MACRO3
+      - net: MAT_R0
+        pins: [SW_MACRO1:1, SW_MACRO2:1, SW_MACRO3:1]
+      # Row 1 (GP7): MACRO4, MACRO5, MACRO6
+      - net: MAT_R1
+        pins: [SW_MACRO4:1, SW_MACRO5:1, SW_MACRO6:1]
+      # Switch to diode anode
+      - net: MAT_SW1_D
+        pins: [SW_MACRO1:2, D_MACRO1:A]
+      - net: MAT_SW2_D
+        pins: [SW_MACRO2:2, D_MACRO2:A]
+      - net: MAT_SW3_D
+        pins: [SW_MACRO3:2, D_MACRO3:A]
+      - net: MAT_SW4_D
+        pins: [SW_MACRO4:2, D_MACRO4:A]
+      - net: MAT_SW5_D
+        pins: [SW_MACRO5:2, D_MACRO5:A]
+      - net: MAT_SW6_D
+        pins: [SW_MACRO6:2, D_MACRO6:A]
+      # Diode cathode to column
+      - net: MAT_C0
+        pins: [D_MACRO1:K, D_MACRO4:K]
+      - net: MAT_C1
+        pins: [D_MACRO2:K, D_MACRO5:K]
+      - net: MAT_C2
+        pins: [D_MACRO3:K, D_MACRO6:K]
+
+  # -------------------------------------------------------------------------
+  # 13. Direct Buttons (vol up/dn, digital trigger)
+  # -------------------------------------------------------------------------
+  # Active low, internal pull-ups in firmware. Wire to GND.
+  Buttons_Direct:
+    components:
+      SW_VOL_UP:
+        symbol: Switch:SW_Push
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_VOL_DN:
+        symbol: Switch:SW_Push
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_TRIG_DIG:
+        symbol: Switch:SW_Push
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+    connections:
+      - net: BTN_VOL_UP
+        pins: [SW_VOL_UP:1]
+      - net: BTN_VOL_DN
+        pins: [SW_VOL_DN:1]
+      - net: BTN_TRIG_DIG
+        pins: [SW_TRIG_DIG:1]
+      - net: GND
+        pins: [SW_VOL_UP:2, SW_VOL_DN:2, SW_TRIG_DIG:2]
+
+# ---------------------------------------------------------------------------
+# DESIGN NOTES
+# ---------------------------------------------------------------------------
+# 1. bq25185 TS/MR pin: MUST tie to GND via 10kΩ (R_TS) if no thermistor.
+#    Floating TS = charging suspended. Critical, easy to miss.
+#
+# 2. TLV62569 output voltage set by R_FB1/R_FB2 divider.
+#    VOUT = 0.6V * (1 + R_FB1/R_FB2). Verify with 1% resistors.
+#
+# 3. USB-C CC resistors (R_CC1, R_CC2 = 5.1kΩ to GND) REQUIRED for
+#    USB-C chargers to negotiate power. Omitting = no charging from USB-C.
+#
+# 4. I2C pull-ups (R_I2C_SDA, R_I2C_SCL): DNP for prototyping.
+#    Adafruit #938 breakout has onboard pull-ups — do not populate externally
+#    or effective resistance will be halved causing I2C issues.
+#    Populate only on final custom PCB using bare OLED panel without breakout.
+#
+# 5. XBee RESET RC filter: same as AmidalaShield V1.2.
+#    10kΩ pull-up to 3V3, 100Ω series + 100nF to GND at RESET pin.
+#
+# 6. Battery voltage sense: GP29 onboard VSYS divider (reads VSYS/3).
+#    No external components needed.
+#    FIRMWARE CONSTRAINT: CYW43439 WiFi SPI shares the GP29 ADC path via
+#    the SPI CLK line. Battery voltage reads on GP29 ADC are unreliable
+#    while a CYW43439 SPI transaction is in progress. Firmware must gate
+#    battery ADC reads to occur only when WiFi SPI is idle. This applies
+#    to any future WiFi use (e.g. syncing data with Amidala, accessories).
+#
+# 7. Pico 2 W powered via VSYS pin. Do NOT drive 3V3 pin externally.
+#
+# 8. GP16-GP19 reserved for CYW43439 WiFi SPI. Do not connect externally.
+#
+# 9. CE pin on bq25185 tied to GND (always enable charging).
+#
+# 10. Power control: GP21 must be driven HIGH as the very first instruction
+#     in firmware or power cuts when user releases the power button.
+#
+# 11. WS2812 DIN series resistor (R_RGB = 330Ω) placed close to GP22 pad.
+#     WS2812 runs at 3.3V supply (reduced brightness vs 5V nominal —
+#     acceptable for status indicator).
+#
+# 12. Button matrix: diodes are mandatory to prevent ghosting on
+#     simultaneous button presses. 1N4148 SOD-123 SMD recommended.
+#     Anode to switch, cathode to column line.
+#
+# 13. STAT2 on bq25185 left floating (not connected). STAT1 alone provides
+#     sufficient charge state indication for firmware/display use.
+#
+# 14. XBee footprint: RF_Module:XBee_THT for prototyping.
+#     Update to SMT module footprint for final PCB if size requires it.
+#
+# 15. No spare GPIO — all 22 available user GPIO are assigned.
