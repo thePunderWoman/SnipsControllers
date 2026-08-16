@@ -1,6 +1,6 @@
 #pragma once
 
-// GPIO assignments for the Amidala Controller firmware (KB2040 / RP2040).
+// GPIO assignments for the Snips Controller firmware (KB2040 / RP2040).
 // Cross-reference: PCB/README.md, "GPIO Assignment".
 //
 // Prototyping note: the real PCB drives the XBee over SPI0 (GPIO18-20 plus
