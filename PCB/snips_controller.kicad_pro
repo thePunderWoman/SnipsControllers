@@ -25,7 +25,12 @@
     "equivalence_files": []
   },
   "erc": {
-    "erc_exclusions": [],
+    "erc_exclusions": [
+      [
+        "pin_to_pin|2501900|1143000|01bd91a7-d9a8-4dda-be08-e68d857b41d4|c6e34b56-9b4e-4a6d-85dd-db2247392e3a|/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849|/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849|/70589bdd-acbd-4920-8e78-aa58d10832b9/5707fb49-4d42-47cf-a3a9-e8b3b3046027",
+        "Intentional PWR_FLAG pattern. PF_VSYS is required on this net because U_BUCK:VIN (Power_Buck) is a Power-input pin, and KiCad's ERC only accepts a genuine Power-output pin as a driver for that check — U_CHG:SYS being plain Output isn't sufficient (confirmed by removing PF_VSYS: Power_Buck immediately failed power_pin_not_driven). The resulting Output+Power-output conflict on this pin is an unavoidable side effect of using PWR_FLAG on an already-driven net, not a wiring bug."
+      ]
+    ],
     "meta": {
       "version": 0
     },
