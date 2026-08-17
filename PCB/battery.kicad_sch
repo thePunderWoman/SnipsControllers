@@ -2,7 +2,7 @@
 	(version 20250114)
 	(generator "eeschema")
 	(generator_version "9.0")
-	(uuid "c14d544f-2a92-4784-a773-137a3c791584")
+	(uuid "0efe1479-4bdd-4f7e-bfad-69a784a7a094")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Device:Battery"
@@ -256,27 +256,6 @@
 			(embedded_fonts no)
 		)
 	)
-	(global_label "GND"
-		(shape passive)
-		(at 148.59 110.49 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "0e5241b2-3c27-43b6-901f-7f89003af943")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 148.59 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "VBAT"
 		(shape passive)
 		(at 148.59 100.33 90)
@@ -287,9 +266,30 @@
 			)
 			(justify left)
 		)
-		(uuid "c3da8e71-4de5-44c4-9cbe-505405aebf40")
+		(uuid "32300dc8-5154-42df-99cb-f6c3e935f646")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 148.59 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 148.59 110.49 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d5fae3c8-c657-48f0-95cd-bad842ec4dd9")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 148.59 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -307,7 +307,7 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "4180c4be-ec40-485a-a7f1-262cfb8f7c4f")
+		(uuid "aa22f99b-8c5c-4311-8cc7-b50b56518e63")
 		(property "Reference" "BT1"
 			(at 151.13 107.95 0)
 			(effects
@@ -381,14 +381,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "a3b1fc6b-4f12-4cad-8298-87368ddd15c3")
+			(uuid "6428972a-0c50-4c6f-b6fb-4e6a934eadb5")
 		)
 		(pin "2"
-			(uuid "de9910b1-235c-47ee-ab17-d351e7450dae")
+			(uuid "88735c9f-b029-4763-a0e0-3520399f80ce")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/b16d5823-b057-4361-a8bf-118cbc3e384e"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/6bc1f003-e00b-454c-a62b-fdbb357b02b9"
 					(reference "BT1")
 					(unit 1)
 				)

@@ -2,7 +2,7 @@
 	(version 20250114)
 	(generator "eeschema")
 	(generator_version "9.0")
-	(uuid "4062c3cf-3e64-469a-bbd7-25eedf084a07")
+	(uuid "c4fd374b-3b9e-408b-8dd0-6a70e5c8b1ca")
 	(paper "A4")
 	(lib_symbols
 		(symbol "BQ25185DLHR:BQ25185DLHR"
@@ -687,57 +687,7 @@
 	)
 	(no_connect
 		(at 214.63 121.92)
-		(uuid "72908d98-8102-46d1-a767-4299f69e3799")
-	)
-	(label "CHG_VSET"
-		(at 214.63 129.54 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "1c1db1cc-d7d5-4b5b-8afa-989814c6ee25")
-	)
-	(label "CHG_ISET"
-		(at 148.59 88.9 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "23d5c781-26e9-4856-a418-57424f502ed8")
-	)
-	(label "CHG_VSET"
-		(at 207.01 80.01 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "38ae4b5e-6992-406a-97ad-8faaa8514b71")
-	)
-	(label "CHG_TS"
-		(at 250.19 124.46 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c5a46e2b-65f9-4b87-ae82-7bc57f10978c")
-	)
-	(label "CHG_ISET"
-		(at 214.63 132.08 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e24c2b63-2676-4857-9427-26552d030edc")
+		(uuid "a4abf275-923d-4770-83d9-8c561e8c9796")
 	)
 	(label "CHG_TS"
 		(at 182.88 121.92 90)
@@ -747,95 +697,61 @@
 			)
 			(justify left)
 		)
-		(uuid "eca56ef5-5b2a-4250-a038-e2ec3f418a80")
+		(uuid "0a211584-d030-4887-91c3-cbdc9bf8e44b")
+	)
+	(label "CHG_ISET"
+		(at 147.32 88.9 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "0aaea4e6-a501-4b32-896c-912e177be001")
+	)
+	(label "CHG_VSET"
+		(at 207.01 80.01 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "10ae8744-230f-4aa5-abd8-7324a2708a57")
+	)
+	(label "CHG_ISET"
+		(at 214.63 132.08 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7da20e62-8f10-470c-82ad-3b769f8975db")
+	)
+	(label "CHG_VSET"
+		(at 214.63 129.54 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "94ac32e4-6997-4022-b059-64531a1d764f")
+	)
+	(label "CHG_TS"
+		(at 250.19 124.46 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9e9ae2da-407e-4772-91b8-0d1aa424d123")
 	)
 	(global_label "VBUS"
 		(shape input)
-		(at 124.46 121.92 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "00559d94-4419-4c43-89c0-8ea1c2a5bee2")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 124.46 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VBAT"
-		(shape passive)
-		(at 93.98 121.92 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "0e4defc1-f56e-4c73-b3d2-024185075ff1")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 93.98 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VBUS"
-		(shape input)
-		(at 118.11 88.9 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "1251a276-90d7-4e6e-a004-0e18d1fe0d09")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 118.11 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VSYS"
-		(shape input)
-		(at 177.8 80.01 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "179731e7-6ec7-4952-be75-c596f2c779d2")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 177.8 80.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 124.46 129.54 270)
+		(at 214.63 114.3 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -843,9 +759,9 @@
 			)
 			(justify right)
 		)
-		(uuid "1f0cca9a-38fc-4b91-a1d9-e34715dc174e")
+		(uuid "29d1455a-3344-426e-aae4-92d58a3206de")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 124.46 129.54 0)
+			(at 214.63 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -864,7 +780,7 @@
 			)
 			(justify left)
 		)
-		(uuid "2ac4788e-5897-4585-af33-3c65c2683093")
+		(uuid "3205138a-bd09-4ccb-9d49-c6e253c51a3b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 250.19 119.38 0)
 			(effects
@@ -877,7 +793,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 214.63 124.46 180)
+		(at 124.46 129.54 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -885,261 +801,9 @@
 			)
 			(justify right)
 		)
-		(uuid "2c2c4690-38a5-4d4a-a031-e1037b2db5e5")
+		(uuid "3820d3a0-d4ea-4737-9a96-20784f22c523")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 214.63 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 182.88 129.54 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "521b348d-42cc-4075-8348-fe4e223ce7c4")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 182.88 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 207.01 87.63 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "5ab0eb5a-65d0-4cf8-8079-ee050cd1bd94")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 207.01 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 118.11 96.52 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "63ae28a4-5844-437f-bbed-f24b04880804")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 118.11 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 93.98 129.54 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "82fd3721-6b2d-48f8-b154-ddb0309202da")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 93.98 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VSYS"
-		(shape input)
-		(at 250.19 114.3 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "9208b246-ddce-47c0-8e4c-132d1404444d")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 250.19 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 177.8 87.63 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "93eb92e0-90c5-4435-8c57-1efc99a7a448")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 177.8 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 153.67 129.54 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "9870d904-6525-44cd-b1c5-a9256b59836c")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "3V3"
-		(shape passive)
-		(at 64.77 110.49 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "a4d64af9-02d3-430a-aad2-74ef141d0025")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 64.77 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VSYS"
-		(shape input)
-		(at 153.67 121.92 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "b687de73-dd4b-4f39-a943-6016f9cb3dd6")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VBUS"
-		(shape input)
-		(at 214.63 114.3 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "b849f11d-7a59-4c45-9b0e-24d6c3148eb1")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 214.63 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 148.59 96.52 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ba70cadb-082a-4c2a-b65f-a55c512ecfad")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 148.59 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 250.19 134.62 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "cf247819-aef7-4985-97db-4b65721801b5")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 250.19 134.62 0)
+			(at 124.46 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1158,9 +822,345 @@
 			)
 			(justify left)
 		)
-		(uuid "d5df7505-8bad-4f89-95e6-84b65ea5ba41")
+		(uuid "3f715501-76a2-4e71-81b9-f09330969231")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 250.19 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 177.8 87.63 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3fd44e76-7024-4d07-8140-55dadeaf6df1")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 177.8 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 93.98 129.54 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5090d33e-159a-48e9-b5c2-6e9db1b5df8f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 93.98 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 250.19 134.62 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5b08f5f2-1e84-4442-b156-5d543a463866")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 250.19 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 147.32 96.52 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6238944d-58e7-40fe-9d24-902daf80c6fd")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 147.32 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 207.01 87.63 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "66c95975-3c9e-470f-b9c7-c495173c8330")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 207.01 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 153.67 129.54 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "77e67b17-fade-446a-9a9d-73b825e795ec")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 153.67 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 182.88 129.54 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "811f6eaf-aa73-4779-b9f8-421a75387674")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 182.88 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VBUS"
+		(shape input)
+		(at 118.11 88.9 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "8e3a3ade-cfd8-4fdd-905b-99c73b91a83f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 118.11 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 64.77 110.49 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "961f3939-50e8-4bff-ad12-d8fa24366d38")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 64.77 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 214.63 124.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a2f1e73f-567f-444e-a02b-4b88d9cfb6ea")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 214.63 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VBAT"
+		(shape passive)
+		(at 93.98 121.92 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c4144b49-7ec3-48b7-ac4f-4a6a2b7cf928")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 93.98 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VSYS"
+		(shape input)
+		(at 177.8 80.01 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c48a9f53-b86f-4347-b02c-0d79465b85b3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 177.8 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VBUS"
+		(shape input)
+		(at 124.46 121.92 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c4f42dad-2edb-420b-8afb-580541c66362")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 124.46 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VSYS"
+		(shape input)
+		(at 153.67 121.92 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d526ebdf-5619-40eb-919c-3edbb3b2f81d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 153.67 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 118.11 96.52 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ef0ca187-68e4-44fa-aae7-17065f92f518")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 118.11 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VSYS"
+		(shape input)
+		(at 250.19 114.3 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f3c4fe8f-8bfa-4c46-b671-2cff3a842c93")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 250.19 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1178,7 +1178,7 @@
 			)
 			(justify left)
 		)
-		(uuid "62941e2d-400c-43af-8d69-208766be0ac1")
+		(uuid "19325079-73df-4ddd-bb58-1354b0b8253f")
 	)
 	(hierarchical_label "STAT1"
 		(shape output)
@@ -1189,20 +1189,20 @@
 			)
 			(justify left)
 		)
-		(uuid "6c3e2353-6db3-4ef4-8442-2d7ae53e8235")
+		(uuid "1aad670b-6ca2-4855-a28f-2b3076ba13c7")
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 124.46 125.73 0)
+		(at 93.98 125.73 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "13ed789e-2735-462c-aee0-c027503bb38d")
-		(property "Reference" "C_VIN_2"
-			(at 125.095 128.27 0)
+		(uuid "0767cd8e-0da5-40f4-b73e-5722ae6caa28")
+		(property "Reference" "C_BAT1"
+			(at 94.615 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1210,8 +1210,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
-			(at 125.095 123.19 0)
+		(property "Value" "10µF"
+			(at 94.615 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1220,7 +1220,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 125.4252 121.92 0)
+			(at 94.9452 121.92 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1229,7 +1229,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 124.46 125.73 0)
+			(at 93.98 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1238,7 +1238,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 124.46 125.73 0)
+			(at 93.98 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1247,15 +1247,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "c82dbd77-7dac-426d-bb24-ea9533656ddb")
+			(uuid "1b5f3dcd-3db0-424c-9447-c8d731e2fa66")
 		)
 		(pin "2"
-			(uuid "c26163ea-7702-4860-85d4-8417c248f1f8")
+			(uuid "adedd725-a970-4d2e-9367-3b9622353885")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/1d78c561-240c-43f1-91af-6049019483b6"
-					(reference "C_VIN_2")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
+					(reference "C_BAT1")
 					(unit 1)
 				)
 			)
@@ -1270,8 +1270,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "234d5424-7d59-458c-99e7-6271d03709b8")
-		(property "Reference" "R_VSET"
+		(uuid "1f9a6351-76a9-4f15-aecd-555aaaf21858")
+		(property "Reference" "R_VSET1"
 			(at 209.042 83.82 90)
 			(effects
 				(font
@@ -1315,48 +1315,50 @@
 			)
 		)
 		(pin "1"
-			(uuid "085108d5-78e6-4867-bc8e-12f0fbad68fd")
+			(uuid "f7c1b3aa-7035-446b-b94a-82c1110babda")
 		)
 		(pin "2"
-			(uuid "09a65ea4-012b-4d87-903f-14cdc19c9fa9")
+			(uuid "2e74c5df-94f8-4e4c-b64e-876cecc909c3")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/1d78c561-240c-43f1-91af-6049019483b6"
-					(reference "R_VSET")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
+					(reference "R_VSET1")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "Device:R")
-		(at 64.77 106.68 0)
+		(lib_id "Device:C")
+		(at 118.11 92.71 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "35e3705e-5497-4252-a836-75447dffae93")
-		(property "Reference" "R_STAT1"
-			(at 66.802 106.68 90)
+		(uuid "2184a989-2d29-45a8-806f-c04b71bce4a7")
+		(property "Reference" "C_VIN_1"
+			(at 118.745 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Value" "10kΩ"
-			(at 64.77 106.68 90)
+		(property "Value" "10µF"
+			(at 118.745 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 62.992 106.68 90)
+			(at 119.0752 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1365,7 +1367,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 64.77 106.68 0)
+			(at 118.11 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1373,76 +1375,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 64.77 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4bb474b8-0973-4b3d-ac5d-f5209fe0e7d7")
-		)
-		(pin "2"
-			(uuid "95100e17-d618-4156-b2bb-5ffbc9e8c671")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/1d78c561-240c-43f1-91af-6049019483b6"
-					(reference "R_STAT1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 148.59 92.71 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "6bddbbf2-13cb-42b4-a1f2-2857e0b87a1f")
-		(property "Reference" "R_ISET"
-			(at 150.622 92.71 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "600Ω"
-			(at 148.59 92.71 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 146.812 92.71 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 148.59 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 148.59 92.71 0)
+		(property "Description" "Unpolarized capacitor"
+			(at 118.11 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1451,15 +1385,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "72ba8677-7a8c-44a2-8723-9fed42067b57")
+			(uuid "402553bb-544a-448d-8e50-8a6fe5aeb0f3")
 		)
 		(pin "2"
-			(uuid "4ac6196c-e851-454b-8392-402c8bee22ca")
+			(uuid "ce4abc6e-784d-460a-a3ee-af611af15525")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/1d78c561-240c-43f1-91af-6049019483b6"
-					(reference "R_ISET")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
+					(reference "C_VIN_1")
 					(unit 1)
 				)
 			)
@@ -1474,8 +1408,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "833871b8-ad4c-4782-ba37-504ced105f33")
-		(property "Reference" "U_CHG"
+		(uuid "6f04ae78-8024-49e0-93db-40829e7b8f6e")
+		(property "Reference" "U_CHG1"
 			(at 219.71 142.748 0)
 			(effects
 				(font
@@ -1672,42 +1606,42 @@
 			)
 		)
 		(pin "1"
-			(uuid "9d4064a5-4df8-4c36-abd8-b8b2fade23e3")
+			(uuid "01bd91a7-d9a8-4dda-be08-e68d857b41d4")
 		)
 		(pin "10"
-			(uuid "7687e1c9-dcdf-44a0-bde0-3b7f29beecd5")
+			(uuid "314ab00b-acf2-470d-9c28-1639541277aa")
 		)
 		(pin "11"
-			(uuid "0f94849b-1641-4ffb-8e6a-10a206f49b34")
+			(uuid "b4fd7225-1202-4c60-af57-d2cfd20a77d7")
 		)
 		(pin "2"
-			(uuid "f8212bb8-0888-480f-a20f-9277e824150b")
+			(uuid "deeeb3ef-b38a-4e35-abab-dd4ba92702cf")
 		)
 		(pin "3"
-			(uuid "e8f3b177-fc9e-4f27-857f-d653a9f2a24d")
+			(uuid "a9ed06a1-267b-4e2c-9dd2-7e51d89cd94d")
 		)
 		(pin "4"
-			(uuid "a022cb27-dcd8-4c89-92d7-9613ec6a5010")
+			(uuid "8f6dc344-83d6-498a-9f91-d5cf34b477d5")
 		)
 		(pin "5"
-			(uuid "7cec4b26-4e29-46cb-b825-4422c64e65af")
+			(uuid "65458c0b-40a3-4a46-9398-65627628a17b")
 		)
 		(pin "6"
-			(uuid "ca4c6b8e-e917-4b25-8356-0556bdfce2ac")
+			(uuid "2b9e06e6-e9b2-46e4-a40e-24ff3ae97ead")
 		)
 		(pin "7"
-			(uuid "a338d8b5-da47-475d-a4b4-97ef813d596f")
+			(uuid "8bca5bba-3c4b-4305-855b-f87411b7f78f")
 		)
 		(pin "8"
-			(uuid "aad8df7a-c155-44d0-8be1-b8e7bc17ff90")
+			(uuid "76ec81b6-5c02-49ff-a607-7e7c06e18bf0")
 		)
 		(pin "9"
-			(uuid "2c3fff29-cad3-4b30-ba6b-3c0ec0c04510")
+			(uuid "bf99d36c-b603-409c-9792-2e3f8634396b")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/1d78c561-240c-43f1-91af-6049019483b6"
-					(reference "U_CHG")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
+					(reference "U_CHG1")
 					(unit 1)
 				)
 			)
@@ -1722,7 +1656,7 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "8c824257-9742-4225-90c7-bd5763e6ff8f")
+		(uuid "75def458-3aa0-4bea-aa85-0202fb77dbb2")
 		(property "Reference" "C_SYS_1"
 			(at 154.305 128.27 0)
 			(effects
@@ -1769,15 +1703,219 @@
 			)
 		)
 		(pin "1"
-			(uuid "e8a49067-63a2-4a19-b7b8-3915192a767d")
+			(uuid "9e2cb7b8-a968-4b86-85a0-8e1d3aad371d")
 		)
 		(pin "2"
-			(uuid "1408ebf2-c53e-4136-8203-f4c7116b3d56")
+			(uuid "0861fba7-5d6b-4df5-a2ab-ca306c1b1231")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/1d78c561-240c-43f1-91af-6049019483b6"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
 					(reference "C_SYS_1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 64.77 106.68 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "91991820-03d7-44d4-bb20-759e966a0687")
+		(property "Reference" "R_STAT1"
+			(at 66.802 106.68 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10kΩ"
+			(at 64.77 106.68 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 62.992 106.68 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 64.77 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 64.77 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c515cafd-2bfd-4e4d-952d-e0c2b8768867")
+		)
+		(pin "2"
+			(uuid "3c5b57b4-76aa-4438-9aed-7e93f57bf5c5")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
+					(reference "R_STAT1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 182.88 125.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "97744c1c-7444-4017-9099-bb31c4769e09")
+		(property "Reference" "R_TS1"
+			(at 184.912 125.73 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10kΩ"
+			(at 182.88 125.73 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 181.102 125.73 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 182.88 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 182.88 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2d783621-8ea6-4ce8-be05-570a3db87e37")
+		)
+		(pin "2"
+			(uuid "08f15bd0-1c8c-44fc-b454-b8f440f172df")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
+					(reference "R_TS1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 147.32 92.71 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b908cf01-ac80-48c3-830a-96cefc8220fd")
+		(property "Reference" "R_ISET1"
+			(at 149.352 92.71 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "600Ω"
+			(at 147.32 92.71 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 145.542 92.71 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 147.32 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 147.32 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "88f91dc2-2977-41bb-bf4c-b8e605c086c2")
+		)
+		(pin "2"
+			(uuid "e544e35d-5463-4030-b4b3-86b20a5bd8a7")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
+					(reference "R_ISET1")
 					(unit 1)
 				)
 			)
@@ -1792,7 +1930,7 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "8ed23cc3-a46c-43d7-a2ed-1a3e6ce65f28")
+		(uuid "e017bae1-dd8c-48dc-ad6c-dfde03d8d211")
 		(property "Reference" "C_SYS_2"
 			(at 178.435 86.36 0)
 			(effects
@@ -1839,14 +1977,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "5834f442-455f-4838-813d-9337b8adbc82")
+			(uuid "08fdf625-d430-471f-bb29-c7b8fa4221f8")
 		)
 		(pin "2"
-			(uuid "257bf5b0-b66a-4fba-a667-3cd1fe32c6c0")
+			(uuid "8825eebd-58d3-442f-b09a-7d258cfa5d88")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/1d78c561-240c-43f1-91af-6049019483b6"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
 					(reference "C_SYS_2")
 					(unit 1)
 				)
@@ -1855,16 +1993,16 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 93.98 125.73 0)
+		(at 124.46 125.73 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "dcd4efa5-3c43-4b03-915d-9375da783d34")
-		(property "Reference" "C_BAT"
-			(at 94.615 128.27 0)
+		(uuid "ee3d0b95-8067-40cf-8d08-f44d2aa128cf")
+		(property "Reference" "C_VIN_2"
+			(at 125.095 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1872,8 +2010,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10µF"
-			(at 94.615 123.19 0)
+		(property "Value" "100nF"
+			(at 125.095 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1882,7 +2020,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 94.9452 121.92 0)
+			(at 125.4252 121.92 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1891,7 +2029,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 93.98 125.73 0)
+			(at 124.46 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1900,7 +2038,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 93.98 125.73 0)
+			(at 124.46 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1909,153 +2047,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "f5b51ddc-1a26-4118-adf2-cfb4d154de4b")
+			(uuid "04496647-ebc2-42c7-8f35-8af98112c530")
 		)
 		(pin "2"
-			(uuid "e3e1193e-e270-4e3d-9abf-f921873ba08a")
+			(uuid "a067683c-ac8a-449e-ba0b-94121573f9b5")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/1d78c561-240c-43f1-91af-6049019483b6"
-					(reference "C_BAT")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 182.88 125.73 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f24e0c03-692a-4542-bb56-e7af2d0dacd6")
-		(property "Reference" "R_TS"
-			(at 184.912 125.73 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10kΩ"
-			(at 182.88 125.73 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 181.102 125.73 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 182.88 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 182.88 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "6bdc5125-8dd1-46bc-8f0a-f136263fa6ac")
-		)
-		(pin "2"
-			(uuid "d715e0b1-f5fd-49e0-8e29-be56663908f8")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/1d78c561-240c-43f1-91af-6049019483b6"
-					(reference "R_TS")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 118.11 92.71 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "fbd5c278-1c46-4e84-ad02-1e057c06e862")
-		(property "Reference" "C_VIN_1"
-			(at 118.745 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "10µF"
-			(at 118.745 90.17 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 119.0752 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 118.11 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 118.11 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "bd41c2b7-3666-4a56-a7d3-84c6a6522534")
-		)
-		(pin "2"
-			(uuid "b5a3f253-14b4-424a-8519-cb9a43a221dc")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/1d78c561-240c-43f1-91af-6049019483b6"
-					(reference "C_VIN_1")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
+					(reference "C_VIN_2")
 					(unit 1)
 				)
 			)

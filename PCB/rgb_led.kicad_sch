@@ -2,7 +2,7 @@
 	(version 20250114)
 	(generator "eeschema")
 	(generator_version "9.0")
-	(uuid "1231090e-a1c1-45cf-8030-813b2a01069a")
+	(uuid "54a7f642-5696-4ccf-96e7-7327cce5aff8")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Device:C"
@@ -526,17 +526,7 @@
 	)
 	(no_connect
 		(at 182.88 95.25)
-		(uuid "e2999fbb-e03b-443a-b448-590a47dcfe00")
-	)
-	(label "RGB_DIN_R"
-		(at 167.64 95.25 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "1ccab77a-e991-4b49-8b4e-8735ec3c0759")
+		(uuid "e6dd7ef6-538e-4f82-ba14-3be879483b1e")
 	)
 	(label "RGB_DIN_R"
 		(at 121.92 127 90)
@@ -546,7 +536,38 @@
 			)
 			(justify left)
 		)
-		(uuid "c61e6f54-a63d-40ef-b450-c8509fcde864")
+		(uuid "1777203c-4f6f-465f-b0d8-bcb41e479b4b")
+	)
+	(label "RGB_DIN_R"
+		(at 167.64 95.25 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "1cc8b1b1-4c16-46d6-806e-f2c2cc78c1c5")
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 175.26 87.63 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6dba9d88-0ef2-47dd-b957-ae20bedfbf6e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 175.26 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(global_label "GND"
 		(shape passive)
@@ -558,7 +579,7 @@
 			)
 			(justify right)
 		)
-		(uuid "433728ff-9495-4fcf-8da6-8fa094d92d67")
+		(uuid "b26e5bc8-8ad3-4c52-aee8-73fb42b75600")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 175.26 102.87 0)
 			(effects
@@ -579,30 +600,9 @@
 			)
 			(justify left)
 		)
-		(uuid "65246743-571c-4436-aca0-5faa89a72328")
+		(uuid "c160c571-0ac0-466e-9ea3-26a1477adde7")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 137.16 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "3V3"
-		(shape passive)
-		(at 175.26 87.63 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "767773ce-4f2d-4424-84fe-8470f7edb56b")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 175.26 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -621,7 +621,7 @@
 			)
 			(justify right)
 		)
-		(uuid "be0375be-45d9-4a5f-808e-a9e68f4c1a1e")
+		(uuid "d25ae3d6-57fd-4ce1-b3c0-66163f8e7131")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 137.16 82.55 0)
 			(effects
@@ -641,7 +641,7 @@
 			)
 			(justify left)
 		)
-		(uuid "9cdc1049-ef4a-421d-9bd5-87f49d851c65")
+		(uuid "c01170af-12da-4428-902d-92ddc6f680aa")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -652,8 +652,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "6eb23458-126f-40c5-8816-78924c301756")
-		(property "Reference" "C_RGB"
+		(uuid "a9bccc2b-3e21-483c-b10c-a8b56d5b128f")
+		(property "Reference" "C_RGB1"
 			(at 137.795 81.28 0)
 			(effects
 				(font
@@ -699,15 +699,83 @@
 			)
 		)
 		(pin "1"
-			(uuid "8be2a3e9-13dc-43e3-a277-f940362b59c2")
+			(uuid "70b656ba-fb87-4b7a-8caf-d546e71d145f")
 		)
 		(pin "2"
-			(uuid "b67f3a30-c423-4d3f-955c-513213c06b8b")
+			(uuid "d52ff52b-67a9-4e72-b2fb-063418f09361")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/d370bfd7-92c0-4db2-8e41-752e909926d0"
-					(reference "C_RGB")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/fa750337-dd8a-4963-aa5f-de1f036c9ce0"
+					(reference "C_RGB1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 121.92 130.81 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f967d827-41e3-466f-8512-596e779f06c6")
+		(property "Reference" "R_RGB1"
+			(at 123.952 130.81 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "330Ω"
+			(at 121.92 130.81 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 120.142 130.81 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 121.92 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 121.92 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4d7d7ea6-99c2-4a03-9ed0-34d1123c3f51")
+		)
+		(pin "2"
+			(uuid "aa7a460b-71fa-472b-b5c8-8c309393ea7e")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/fa750337-dd8a-4963-aa5f-de1f036c9ce0"
+					(reference "R_RGB1")
 					(unit 1)
 				)
 			)
@@ -722,8 +790,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "ae301284-9d7d-4cc3-98f4-fb24524a3f42")
-		(property "Reference" "D_RGB"
+		(uuid "fcbeff0c-3c05-4cb9-8bd4-47db4aac8657")
+		(property "Reference" "D_RGB1"
 			(at 180.34 100.965 0)
 			(effects
 				(font
@@ -771,89 +839,21 @@
 			)
 		)
 		(pin "1"
-			(uuid "0a4599cf-9fdc-4d97-8280-0a2a126d5992")
+			(uuid "c5d80f14-f71b-446e-b3d7-cec05b0b8e67")
 		)
 		(pin "2"
-			(uuid "b34e6b24-d7ce-4ea3-93b9-85cda09b70a8")
+			(uuid "257d7256-1a6c-40f7-a524-89f07a48f6d6")
 		)
 		(pin "3"
-			(uuid "fa47df08-e829-415c-a07a-5c9a1a218c94")
+			(uuid "718796a1-03f2-414f-a743-fff99ea1c315")
 		)
 		(pin "4"
-			(uuid "2bb5d551-991e-4cd6-a473-1f74690e52b0")
+			(uuid "fa19cd96-92f8-4351-8212-d393511ed26d")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/d370bfd7-92c0-4db2-8e41-752e909926d0"
-					(reference "D_RGB")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 121.92 130.81 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f873d5be-4ba1-444a-868b-26eb670a3098")
-		(property "Reference" "R_RGB"
-			(at 123.952 130.81 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "330Ω"
-			(at 121.92 130.81 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 120.142 130.81 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 121.92 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 121.92 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "95af430c-89a2-4d56-a073-c5da3a8af12d")
-		)
-		(pin "2"
-			(uuid "a5cf3511-a882-4478-b182-37a139e8168e")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/d370bfd7-92c0-4db2-8e41-752e909926d0"
-					(reference "R_RGB")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/fa750337-dd8a-4963-aa5f-de1f036c9ce0"
+					(reference "D_RGB1")
 					(unit 1)
 				)
 			)

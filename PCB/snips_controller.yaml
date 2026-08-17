@@ -595,9 +595,9 @@ groups:
       - net: MCU_XOUT
         pins: [U_MCU:XOUT, X1:2, C17:1]
       # RUN: internal ~50k pull-up, no external reset circuit (matches
-      # Pico 2 W reference — no manual reset button)
-      - net: MCU_RUN
-        pins: [U_MCU:RUN]
+      # Pico 2 W reference — no manual reset button). Not a named net —
+      # nothing else in this design touches it.
+      - no_connect: [U_MCU:RUN]
       # SPI1 - XBee
       - net: SPI_SCK
         pins: [U_MCU:GPIO10, U_XBEE:SPI_CLK]

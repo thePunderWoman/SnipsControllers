@@ -410,63 +410,63 @@
   },
   "sheets": [
     [
-      "2289c08f-f540-4e27-86fd-a28b71d1d149",
+      "70589bdd-acbd-4920-8e78-aa58d10832b9",
       "Root"
     ],
     [
-      "89b20f31-77e1-4703-939a-baaa45dd618e",
+      "2c2b3d28-8ac2-4987-8c53-96e65f7bf4f4",
       "USB_C"
     ],
     [
-      "27b7aaff-0640-4f6a-8a71-edb49aad3b8c",
+      "82ed813d-4587-4fc0-b1d3-6101fc081cab",
       "Wireless"
     ],
     [
-      "1d78c561-240c-43f1-91af-6049019483b6",
+      "d3206666-a68c-4743-9732-d3abae7b1849",
       "Power_Charger"
     ],
     [
-      "907e35f1-e424-48fc-a7f0-faf2380326e7",
+      "a7308643-866f-4c6b-a56c-9fd0d6be4741",
       "XBee"
     ],
     [
-      "b449e0ff-7ccc-49d4-b8f4-b860a763fa6b",
+      "02b5ff5b-47a1-4118-a6c5-598b45ee3682",
       "Power_Buck"
     ],
     [
-      "38e901e3-6f06-4270-b671-e3380c30e7d7",
+      "5707fb49-4d42-47cf-a3a9-e8b3b3046027",
       "MCU_Core"
     ],
     [
-      "fe4677e2-7c34-48c2-8825-a66fd28c5ed7",
+      "fa8d9052-edcd-4e87-9862-f05c1bd3de9a",
       "OLED"
     ],
     [
-      "b16d5823-b057-4361-a8bf-118cbc3e384e",
+      "6bc1f003-e00b-454c-a62b-fdbb357b02b9",
       "Battery"
     ],
     [
-      "f0a735b3-5667-42dc-802e-e46904fa430c",
+      "d425906b-e7ab-4d10-bbf9-3571bc43ff5e",
       "Hall_Trigger"
     ],
     [
-      "60009cef-7f13-40e5-a41f-77b5cb1d7d23",
+      "f44fb548-8e40-45a0-b5ff-df7ab7c76c7b",
       "Power_Control"
     ],
     [
-      "b18b6387-74fa-49ca-90a7-3b13e5aeea3c",
+      "bfb4bb8d-7e51-441a-9c52-8d66824f53e1",
       "Thumbstick"
     ],
     [
-      "d370bfd7-92c0-4db2-8e41-752e909926d0",
+      "fa750337-dd8a-4963-aa5f-de1f036c9ce0",
       "RGB_LED"
     ],
     [
-      "c01d6b19-237e-479b-ac5c-af6d5e4a0c9c",
+      "e2a172ff-869d-47d1-93b6-b7fd83cd5f36",
       "Buttons_Direct"
     ],
     [
-      "f69c0ec4-2482-4e3d-949a-3b9e5d4ac31e",
+      "88a9d017-4391-487e-b73c-a9e748265203",
       "Button_Matrix"
     ]
   ],

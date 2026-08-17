@@ -1,0 +1,5 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "SnipsControllers")(type "KiCad")(uri "${KIPRJMOD}/libraries/SnipsControllers.pretty")(options "")(descr ""))
+  (lib (name "BQ25185DLHR")(type "KiCad")(uri "${KIPRJMOD}/libraries/BQ25185DLHR.pretty")(options "")(descr ""))
+)
