@@ -1,6 +1,0 @@
-(sym_lib_table
-  (version 7)
-  (lib (name "SnipsControllers")(type "KiCad")(uri "${KIPRJMOD}/libraries/SnipsControllers.kicad_sym")(options "")(descr "Project-local custom symbols"))
-  (lib (name "Xbee3")(type "KiCad")(uri "${KIPRJMOD}/libraries/Xbee3.kicad_sym")(options "")(descr "XBee3 module, reused from Amidala"))
-  (lib (name "BQ25185DLHR")(type "KiCad")(uri "${KIPRJMOD}/libraries/BQ25185DLHR/BQ25185DLHR.kicad_sym")(options "")(descr "bq25185 charger, from SnapMagic/SnapEDA"))
-)

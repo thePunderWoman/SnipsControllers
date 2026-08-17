@@ -63,3 +63,7 @@ PCB/*.kicad_prl
 
 # Production reports
 PCB/production/misc/*
+
+# ERC report JSON scratch files (from kicad-cli sch erc)
+PCB/erc*.json
+PCB/full_erc*.json
