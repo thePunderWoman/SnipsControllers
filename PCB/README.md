@@ -6,7 +6,9 @@ A wireless handheld controller for R2-D2 droid operation, designed for use at pu
 
 | Component | Part | Notes |
 |---|---|---|
-| MCU | Raspberry Pi Pico 2 W | RP2350, castellated pads soldered to PCB |
+| MCU | Bare RP2350A (QFN-60) | Not a Pico module — external USB-C, flash, crystal, and wireless module. See `GPIO_table.md` for the full support circuitry |
+| Flash | Winbond W25Q32RVXHJQ | 4MiB QSPI, XSON-8 2x3mm |
+| Wireless | Murata Type 1YN (LBEE5KL1YN) | WiFi/BT module (same CYW43439 die as Pico 2 W's onboard radio), bit-banged 3-wire interface |
 | Display | SSD1306 1.3" OLED | 128x64, monochrome, I2C |
 | Radio | XBee3 | Zigbee, SPI1 mode, THT socket (proto) |
 | Hall trigger | DRV5055A2 | Ratiometric linear hall effect, 3.3V |
@@ -20,14 +22,25 @@ A wireless handheld controller for R2-D2 droid operation, designed for use at pu
 
 ## GPIO Assignment
 
+> See `GPIO_table.md` for the full pin-by-pin table, including bare-RP2350A
+> support circuitry and Murata wireless module wiring — this section is a
+> summary.
+
 ### Reserved — Do Not Use
 | GPIO | Reason |
 |---|---|
-| GP16–GP19 | CYW43439 WiFi SPI (internal) |
-| GP23 | SMPS power control (internal) |
-| GP24 | VBUS sense (internal) |
-| GP25 | Onboard LED via CYW43439 (internal) |
-| GP29 | VSYS sense — firmware battery voltage read only |
+| GP16 | WL_ON — enables WL_REG_ON + BT_REG_ON on the Murata wireless module |
+| GP17 | XBee ON_SLEEP status input |
+| GP18 | XBee SPI_ATTN — data-ready interrupt |
+| GP23 | WL_D — bit-banged data bus to the wireless module |
+| GP24 | WL_CLK — bit-banged clock to the wireless module |
+| GP25 | WL_CS — bit-banged chip select to the wireless module |
+| GP29 | VSYS_SENSE — divide-by-3 battery voltage sense (ADC3) |
+
+The wireless interface deliberately replicates the official Pico 2 W's own
+bit-banged 3-wire RP2350↔CYW43439 protocol (not real 4-bit SDIO — RP2350 has
+no SDIO host controller), so the existing pico-sdk `cyw43` PIO driver applies
+with just a pin remap.
 
 ### SPI1 (XBee)
 | Function | GPIO |
@@ -36,6 +49,8 @@ A wireless handheld controller for R2-D2 droid operation, designed for use at pu
 | XBee MOSI | GP11 |
 | XBee MISO | GP12 |
 | XBee CS | GP13 |
+| XBee ON_SLEEP | GP17 |
+| XBee SPI_ATTN | GP18 |
 
 ### I2C0 (OLED)
 | Function | GPIO |
@@ -66,6 +81,10 @@ A wireless handheld controller for R2-D2 droid operation, designed for use at pu
 | Charge status STAT1 | GP20 | Open-drain, 10kΩ pull-up to 3V3 |
 | Power latch hold | GP21 | Output, HIGH on boot to hold latch |
 | RGB LED DIN (WS2812) | GP22 | PIO-driven |
+| WL_ON (wireless enable) | GP16 | Output, drives WL_REG_ON + BT_REG_ON together |
+| WL_D (wireless data) | GP23 | Bit-banged, PIO-driven |
+| WL_CLK (wireless clock) | GP24 | Bit-banged, PIO-driven |
+| WL_CS (wireless chip select) | GP25 | Bit-banged, PIO-driven |
 
 ### Macro Button Matrix Layout
 6 macro buttons in a 2x3 matrix. Each button requires a 1N4148 diode (anode to switch, cathode to column) to prevent ghosting.
@@ -77,7 +96,28 @@ Row1 (GP7)  MACRO4       MACRO5       MACRO6
 ```
 
 ### Spare GPIO
-None — all 22 available user GPIO are assigned.
+GP19 — free for future use.
+
+---
+
+## MCU Support Circuitry (RP2350A)
+
+Bare RP2350A needs external circuitry the Pico 2 W module used to provide
+internally: core regulator LC filter, crystal, QSPI flash, BOOTSEL, USB
+series resistors, ADC_AVDD filter, and the VSYS battery-sense divider. All
+values replicate the official Pico 2 W reference schematic (RPI-PICO2W) for
+the RP2350 portion. See `GPIO_table.md` for the full component list.
+
+## Wireless (Murata Type 1YN)
+
+Replaces the Pico 2 W module's onboard CYW43439 + Abracon "Niche" patented
+antenna (which requires a separate license from Abracon). Type 1YN is a
+pre-certified (FCC/CE) module using the same CYW43439 die, with antenna
+matching and RF filtering already done. See `GPIO_table.md` for the full
+pin-by-pin wiring.
+
+> **Layout note:** the antenna trace geometry must exactly copy Murata's
+> Hardware Application Note Figure 4 (Trace Antenna Guideline).
 
 ---
 
@@ -119,11 +159,16 @@ No external components needed. Wire to GND; enable RP2350 internal pull-ups in f
 ### XBee
 Refer to AmidalaShield V1.2 for XBee3 support circuitry. THT socket for prototyping; update footprint to SMT module for final PCB if size requires.
 
+Beyond the 4-wire SPI bus (SCK/MOSI/MISO/CS) and RESET, three more pins are
+wired per Amidala's actual netlist: DTR tied to GND, ON_SLEEP and SPI_ATTN
+to GP17/GP18. SPI_ATTN in particular is the XBee's data-ready interrupt —
+needed for reliable SPI transfers, not just a nice-to-have.
+
 ---
 
 ## Communication Architecture
 
-Controllers communicate with the droid via XBee3 in **packetized state-report** mode. The Pico 2 W firmware reads all inputs locally (button states, ADC values for analog trigger and thumbstick) and assembles them into a structured payload transmitted periodically over SPI1 to the XBee3 radio. The receiving AmidalaShield deserializes the packet and interprets controller state.
+Controllers communicate with the droid via XBee3 in **packetized state-report** mode. The RP2350A firmware reads all inputs locally (button states, ADC values for analog trigger and thumbstick) and assembles them into a structured payload transmitted periodically over SPI1 to the XBee3 radio. The receiving AmidalaShield deserializes the packet and interprets controller state.
 
 This approach is preferred over per-signal transmission as it is more efficient, easier to deserialize, and robust to timing issues.
 
@@ -141,7 +186,7 @@ This approach is preferred over per-signal transmission as it is more efficient,
 For breadboard bringup, GP0 (TX) and GP1 (RX) can be temporarily used for XBee UART communication with a serial XBee prototyping board, freeing SPI1 pins. Vol up and Vol down are remapped to spare GPIO during this phase.
 
 Recommended bringup order:
-1. Pico 2 W alone — verify USB enumeration, flash blink sketch, confirm GP21 latch hold works
+1. RP2350A + external flash alone — verify USB enumeration, flash blink sketch, confirm GP21 latch hold works
 2. OLED on I2C — verify I2C on GP4/GP5, get something on screen
 3. WS2812 RGB LED — verify PIO on GP22, cycle colors
 4. Buttons — verify GP0/1/2/3 direct inputs and 2x3 matrix scan on GP6-9/14
@@ -153,15 +198,15 @@ Recommended bringup order:
 
 ## Power Architecture
 
-- Battery → bq25185 (charger + power path, 4.2V VBATREG, 500mA) → TLV62569 (3.3V buck) → Pico 2 W VSYS and all 3.3V logic
+- Battery → bq25185 (charger + power path, 4.2V VBATREG, 500mA) → TLV62569 (3.3V buck) → RP2350A VSYS and all 3.3V logic
 - Power switch: soft latch (DMG2305UX PFET + 2N7002 NFET) controls TLV62569 EN pin
-- Boot: press power button → hardware latch enables 3V3 → Pico boots → GP21 driven HIGH to hold latch
+- Boot: press power button → hardware latch enables 3V3 → RP2350A boots → GP21 driven HIGH to hold latch
 - Shutdown: firmware detects 3-second hold on GP15 → graceful shutdown → GP21 LOW → power cut
 - bq25185 STAT1 → GP20 (open-drain, 10kΩ pull-up to 3V3)
-- Battery voltage sense → GP29 onboard VSYS divider (reads VSYS/3 via ADC)
-- All logic is 3.3V native — Pico 2 W, DRV5055, GuliKit thumbstick, SK6812
+- Battery voltage sense → GP29 via external R_VSYS1/R_VSYS2 divider (reads VSYS/3 via ADC) — added when the Pico 2 W module's built-in divider was replaced by a bare RP2350A
+- All logic is 3.3V native — RP2350A, DRV5055, GuliKit thumbstick, SK6812, Murata wireless module
 
-> **Firmware constraint:** CYW43439 WiFi SPI shares the GP29 ADC path via the SPI CLK line. Battery voltage reads on GP29 ADC are unreliable while a WiFi SPI transaction is in progress. When WiFi is in use (e.g. syncing data with Amidala, future accessories), firmware must gate battery ADC reads to occur only when WiFi SPI is idle.
+> **Firmware constraint:** if WiFi traffic and VSYS ADC reads ever contend for timing, gate battery ADC reads to avoid overlapping with active WL_D bus transactions. This is inherited caution from the Pico 2 W reference design, not a confirmed conflict on the new wiring — verify against actual pico-sdk `cyw43` PIO driver behavior once bring-up firmware exists.
 
 ## Power Management
 

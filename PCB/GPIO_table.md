@@ -18,7 +18,17 @@ bit-banged 3-wire RP2350↔CYW43439 protocol (not real 4-bit SDIO — RP2350
 has no SDIO host controller), so the existing pico-sdk `cyw43` PIO driver
 applies with just a pin remap.
 
-GP17-GP19 are free for future use.
+## XBee Auxiliary Pins
+| GPIO | Reason |
+|---|---|
+| GP17 | XBee ON_SLEEP status input |
+| GP18 | XBee SPI_ATTN — data-ready interrupt, needed for reliable SPI transfers |
+
+Pulled directly from Amidala's actual AmidalaShield netlist (IPC-2581
+export), not guessed: DTR is tied low, ON_SLEEP and SPI_ATTN go to host
+GPIO on that board too (ESP32 GPIO15/16 there, RP2350 GP17/18 here).
+
+GP19 is free for future use.
 
 ---
 
@@ -29,6 +39,8 @@ GP17-GP19 are free for future use.
 | XBee MOSI | GP11 |
 | XBee MISO | GP12 |
 | XBee CS | GP13 |
+| XBee ON_SLEEP | GP17 |
+| XBee SPI_ATTN | GP18 |
 
 ## I2C0 (OLED)
 | Function | GPIO |
@@ -160,6 +172,11 @@ No external components needed — RP2350 internal pull-ups enabled in firmware, 
 Reusing Amidala's verified `XB3-24Z8UT-J` symbol (`PCB/libraries/Xbee3.kicad_sym`).
 THT socket footprint used for prototyping; SMT module footprint TBD for final PCB.
 
+Beyond the 4-wire SPI bus (SCK/MOSI/MISO/CS) and RESET, three more pins are
+wired per Amidala's actual netlist: DTR tied to GND, ON_SLEEP and SPI_ATTN
+to GP17/GP18. SPI_ATTN in particular is the XBee's data-ready interrupt —
+needed for reliable SPI transfers, not just a nice-to-have.
+
 ### Power Control Circuit
 See power control section of schematic. Uses GP15 (power button sense input) and GP21 (latch hold output).
 GP21 must be driven HIGH as the very first instruction in firmware or power will cut on button release.
@@ -180,4 +197,4 @@ LOW=charging or fault).
 ---
 
 ## Spare GPIO
-GP17, GP18, GP19 — free for future use.
+GP19 — free for future use.
