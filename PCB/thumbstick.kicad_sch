@@ -2,7 +2,7 @@
 	(version 20250114)
 	(generator "eeschema")
 	(generator_version "9.0")
-	(uuid "ee5f9ec2-527c-4f90-b885-6d6a92c2d5eb")
+	(uuid "61024153-e2db-4eb5-9b08-71e30aa0c5f2")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x05"
@@ -374,6 +374,27 @@
 			(embedded_fonts no)
 		)
 	)
+	(global_label "GND"
+		(shape passive)
+		(at 129.54 111.76 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "28c5d3b3-33cc-4038-84b2-0fa3a77635cc")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 129.54 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "3V3"
 		(shape passive)
 		(at 129.54 104.14 90)
@@ -384,7 +405,7 @@
 			)
 			(justify left)
 		)
-		(uuid "91ad827d-6603-4c29-a837-ec39160b587a")
+		(uuid "2bbc1752-ac3a-4c06-8811-aa626b2f6c18")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 129.54 104.14 0)
 			(effects
@@ -405,30 +426,9 @@
 			)
 			(justify right)
 		)
-		(uuid "a09ad188-53e2-4945-b3db-dc8942914677")
+		(uuid "6046934a-2625-4421-aabe-4e6d8e2f0749")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 162.56 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 129.54 111.76 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "eb09c924-905a-4bdf-a75f-25bdc692ec79")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 129.54 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -447,7 +447,7 @@
 			)
 			(justify right)
 		)
-		(uuid "ec502cc9-c85a-4041-bb85-21bfb05233ff")
+		(uuid "725ed6f5-209a-47f3-a809-4143d108656f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 162.56 96.52 0)
 			(effects
@@ -458,17 +458,6 @@
 			)
 		)
 	)
-	(hierarchical_label "STICK_Y"
-		(shape output)
-		(at 162.56 104.14 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "14dc2942-09b4-4c75-bbb6-5e57221e3bc2")
-	)
 	(hierarchical_label "STICK_X"
 		(shape output)
 		(at 162.56 101.6 0)
@@ -478,7 +467,18 @@
 			)
 			(justify left)
 		)
-		(uuid "8ff1d69b-f84d-4820-98e8-aa6060ea5d87")
+		(uuid "3749f8da-894d-4b4e-b3c7-cf684ed5462f")
+	)
+	(hierarchical_label "STICK_Y"
+		(shape output)
+		(at 162.56 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "4b31a51a-43cf-404d-9195-d9f7b407cc81")
 	)
 	(hierarchical_label "BTN_STICK"
 		(shape output)
@@ -489,7 +489,84 @@
 			)
 			(justify left)
 		)
-		(uuid "c701d339-c7c0-4993-809f-b4c215e3e52b")
+		(uuid "4db43819-8137-470d-b399-0694a0a5609b")
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x05")
+		(at 167.64 101.6 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2a18d684-6704-44c4-bd4a-5dbcc9163807")
+		(property "Reference" "J_STICK1"
+			(at 167.64 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GuliKit_Thumbstick"
+			(at 167.64 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 167.64 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 167.64 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 167.64 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ca181f02-1272-4e5e-a077-a4cae1386597")
+		)
+		(pin "2"
+			(uuid "a0213a60-9025-4b5b-b4c4-d13b1bd5078b")
+		)
+		(pin "3"
+			(uuid "1d12d5d0-a290-4344-9dd6-54cb59281290")
+		)
+		(pin "4"
+			(uuid "6f4de7e3-974d-4575-b9b8-6fd75234950e")
+		)
+		(pin "5"
+			(uuid "59b12803-61bd-42fd-8945-dcb8168db36c")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/bfb4bb8d-7e51-441a-9c52-8d66824f53e1"
+					(reference "J_STICK1")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -500,8 +577,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "9c4181b4-cc91-4b44-85d6-d5e791d03750")
-		(property "Reference" "C_STICK"
+		(uuid "58c76ae7-e163-4b24-9d62-5e614de81c2a")
+		(property "Reference" "C_STICK1"
 			(at 130.175 110.49 0)
 			(effects
 				(font
@@ -547,92 +624,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "ece01419-80ae-4a13-a275-da19dc3c3eed")
+			(uuid "59bbe851-b0ca-4edd-af36-387f2e3dbd72")
 		)
 		(pin "2"
-			(uuid "4546bc85-68ba-4911-9bb9-8cb32cb95813")
+			(uuid "b6c9eaf4-3e84-4c58-b9bc-898b93f331cf")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/b18b6387-74fa-49ca-90a7-3b13e5aeea3c"
-					(reference "C_STICK")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector_Generic:Conn_01x05")
-		(at 167.64 101.6 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "fb96c858-a8ec-4232-bb2a-b77551973d02")
-		(property "Reference" "J_STICK"
-			(at 167.64 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GuliKit_Thumbstick"
-			(at 167.64 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 167.64 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 167.64 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 167.64 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "9f4df6ff-3c5b-43c0-958f-4d57b3ad6dd2")
-		)
-		(pin "2"
-			(uuid "95c72952-d8ad-4ef7-9b17-69cb9d9b4b83")
-		)
-		(pin "3"
-			(uuid "2b20414a-8542-4853-9977-350d1057d5ff")
-		)
-		(pin "4"
-			(uuid "c1e2e4e2-1d19-4c0c-ada5-c1f5bc084e58")
-		)
-		(pin "5"
-			(uuid "359883ec-3437-478a-8aac-f2e469a496b5")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/b18b6387-74fa-49ca-90a7-3b13e5aeea3c"
-					(reference "J_STICK")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/bfb4bb8d-7e51-441a-9c52-8d66824f53e1"
+					(reference "C_STICK1")
 					(unit 1)
 				)
 			)

@@ -2,7 +2,7 @@
 	(version 20250114)
 	(generator "eeschema")
 	(generator_version "9.0")
-	(uuid "50d6663e-6b62-4cfa-a291-5df413f5c271")
+	(uuid "053c9f1d-df0b-4b41-bef7-baad20b2badc")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Device:C"
@@ -415,93 +415,9 @@
 			)
 			(justify left)
 		)
-		(uuid "1070fa93-2f50-44d9-bb92-10d4a3d34b5d")
+		(uuid "1cf717cd-65e2-46cc-a3f3-9e052f8d2b55")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 142.24 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "3V3"
-		(shape passive)
-		(at 82.55 101.6 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "402df586-ff46-4b66-9a95-f6f52c43b8a3")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 82.55 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "3V3"
-		(shape passive)
-		(at 113.03 101.6 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "5020f129-692c-473b-8bbe-1425bd7fd4e8")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 113.03 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "3V3"
-		(shape passive)
-		(at 171.45 100.33 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "64ebd309-d9fd-4aa5-a995-530cb0ebc673")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 171.45 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "3V3"
-		(shape passive)
-		(at 198.12 101.6 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "8ec8ebb9-7af8-4e21-827b-44fd475caf6f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 198.12 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -520,7 +436,7 @@
 			)
 			(justify right)
 		)
-		(uuid "90a0329e-a003-4c1d-bbd7-6e2391d50045")
+		(uuid "1ff9c391-4139-485f-8eae-c320c0d5b938")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 113.03 109.22 0)
 			(effects
@@ -541,9 +457,72 @@
 			)
 			(justify right)
 		)
-		(uuid "f1788efa-3267-4211-aa3d-cac11b8652a0")
+		(uuid "721c0126-bdc6-4632-b18b-aa23ab256d48")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 82.55 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 198.12 101.6 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "727f5760-4fdf-4380-9f88-77c1472b79ba")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 198.12 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 171.45 100.33 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9ad14f35-f38c-4165-a531-74a4f5a41944")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 171.45 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 82.55 101.6 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c0bbeb61-0871-47b6-87eb-a4144cdfa496")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 82.55 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -562,7 +541,7 @@
 			)
 			(justify right)
 		)
-		(uuid "f7528ec4-dffc-4dc5-81a3-4bbf6ca6f668")
+		(uuid "ce84fb0d-b97d-4b64-b886-186c95c879bf")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 198.12 104.14 0)
 			(effects
@@ -573,16 +552,26 @@
 			)
 		)
 	)
-	(hierarchical_label "I2C_SCL"
-		(shape bidirectional)
-		(at 171.45 107.95 90)
+	(global_label "3V3"
+		(shape passive)
+		(at 113.03 101.6 90)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "0d543edd-a941-4c76-92a1-190d387000dd")
+		(uuid "f8e6ebc1-4b04-4ffe-bae1-c716a74c3768")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 113.03 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(hierarchical_label "I2C_SDA"
 		(shape bidirectional)
@@ -593,7 +582,18 @@
 			)
 			(justify left)
 		)
-		(uuid "976195c2-a7ad-4edf-be9c-8c01385e72f4")
+		(uuid "16a5ac29-18dd-4d25-9877-53bb5b1a9723")
+	)
+	(hierarchical_label "I2C_SCL"
+		(shape bidirectional)
+		(at 171.45 107.95 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "23d9f90a-8408-4fdc-965f-4eeff24b0b4c")
 	)
 	(hierarchical_label "I2C_SCL"
 		(shape bidirectional)
@@ -604,7 +604,7 @@
 			)
 			(justify left)
 		)
-		(uuid "9ffb60b9-7d61-4840-9c58-79e7310c28c7")
+		(uuid "62c8b6c3-1021-4f04-af07-f0e31c43c5a0")
 	)
 	(hierarchical_label "I2C_SDA"
 		(shape bidirectional)
@@ -615,7 +615,7 @@
 			)
 			(justify left)
 		)
-		(uuid "e6a67934-0c09-4591-89a5-a809bd5e93d7")
+		(uuid "6b9fff02-6abc-4123-9cbc-77d36df96d2c")
 	)
 	(symbol
 		(lib_id "SnipsControllers:SSD1306_OLED_4pin")
@@ -626,8 +626,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "72735843-bf48-48bf-a9a9-34a44ccb1edd")
-		(property "Reference" "U_OLED"
+		(uuid "42ebd13a-1f6c-434e-86de-fdbcb5560e33")
+		(property "Reference" "U_OLED1"
 			(at 214.63 114.41 0)
 			(effects
 				(font
@@ -670,89 +670,21 @@
 			)
 		)
 		(pin "1"
-			(uuid "c7c0f93b-a5f5-4067-b6ba-8dd0c4d23f21")
+			(uuid "cf799dc7-5fe5-41ee-bbd4-94dbf323dacd")
 		)
 		(pin "2"
-			(uuid "acbdf16d-a952-4dc6-b5fa-fd92eea6afc1")
+			(uuid "0b020f01-9ffa-4a8f-a1e9-f30c49c4626e")
 		)
 		(pin "3"
-			(uuid "10b060b3-e00c-448f-a005-f9d3f2a2d231")
+			(uuid "b520659f-678e-4b9c-b230-b53a3409adce")
 		)
 		(pin "4"
-			(uuid "3959114e-bd02-4700-af66-25b039a44afd")
+			(uuid "d70b099d-8974-403b-9a70-893bdd18adac")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/fe4677e2-7c34-48c2-8825-a66fd28c5ed7"
-					(reference "U_OLED")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 171.45 104.14 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "8c3921f2-2fd9-4c09-814d-a2ce32169d4b")
-		(property "Reference" "R_I2C_SCL"
-			(at 173.482 104.14 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "4.7kΩ"
-			(at 171.45 104.14 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 169.672 104.14 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 171.45 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 171.45 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "2bcc001b-d46a-451a-bd7c-7c18bd9ccd64")
-		)
-		(pin "2"
-			(uuid "244b75c4-206a-423e-8e2e-bf2e223bbea5")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/fe4677e2-7c34-48c2-8825-a66fd28c5ed7"
-					(reference "R_I2C_SCL")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/fa8d9052-edcd-4e87-9862-f05c1bd3de9a"
+					(reference "U_OLED1")
 					(unit 1)
 				)
 			)
@@ -767,7 +699,7 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "ab016ad6-f764-421d-9eac-6a28db7db443")
+		(uuid "5d7e294d-8f9f-4c6b-a847-5848f8ec7028")
 		(property "Reference" "C_OLED_1"
 			(at 83.185 107.95 0)
 			(effects
@@ -814,14 +746,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "17746e2c-2d41-4fac-adfb-360baea885f6")
+			(uuid "1513b302-d023-4181-b757-d01991e1a0bd")
 		)
 		(pin "2"
-			(uuid "9b212a1f-9f84-4de5-8ab2-3d64d719324a")
+			(uuid "1a73ca9f-e53f-404a-abc5-093dadf791f9")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/fe4677e2-7c34-48c2-8825-a66fd28c5ed7"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/fa8d9052-edcd-4e87-9862-f05c1bd3de9a"
 					(reference "C_OLED_1")
 					(unit 1)
 				)
@@ -837,8 +769,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "c3029eab-1011-4052-ac65-0355c5b15de4")
-		(property "Reference" "R_I2C_SDA"
+		(uuid "87c9d6d4-9b69-4ea8-8dc4-9c3177d222b6")
+		(property "Reference" "R_I2C_SDA1"
 			(at 144.272 104.14 90)
 			(effects
 				(font
@@ -882,15 +814,83 @@
 			)
 		)
 		(pin "1"
-			(uuid "405d1792-3996-4419-803f-180fc7997e18")
+			(uuid "f7d42243-e39b-400a-8281-74cb9919b417")
 		)
 		(pin "2"
-			(uuid "2995a518-5e3d-48b3-b8bc-b833d44940b5")
+			(uuid "128bb381-16f9-4bb6-a7aa-4a3bfe5313b2")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/fe4677e2-7c34-48c2-8825-a66fd28c5ed7"
-					(reference "R_I2C_SDA")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/fa8d9052-edcd-4e87-9862-f05c1bd3de9a"
+					(reference "R_I2C_SDA1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 171.45 104.14 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9a7ce433-ff56-437c-b754-3e1dd0e810ab")
+		(property "Reference" "R_I2C_SCL1"
+			(at 173.482 104.14 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4.7kΩ"
+			(at 171.45 104.14 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 169.672 104.14 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 171.45 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 171.45 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0b392d5e-95cc-48b8-a1b2-6d683d28bf8d")
+		)
+		(pin "2"
+			(uuid "a8faeb4f-107a-4285-925c-234ac5ed5ee8")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/fa8d9052-edcd-4e87-9862-f05c1bd3de9a"
+					(reference "R_I2C_SCL1")
 					(unit 1)
 				)
 			)
@@ -905,7 +905,7 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "e615a40e-6cf0-4fd8-8812-2b52cd103d2d")
+		(uuid "f8f51623-25c9-4855-9d42-efb57224f911")
 		(property "Reference" "C_OLED_2"
 			(at 113.665 107.95 0)
 			(effects
@@ -952,14 +952,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "d77560a3-b3c9-4d40-8c3f-7cc1940bc8d9")
+			(uuid "e5ddac2d-38b5-493e-9306-1b77ec9fba83")
 		)
 		(pin "2"
-			(uuid "17c17ecf-f15d-496a-902f-147002956544")
+			(uuid "81fc5102-5276-40e0-a688-e4b81138802a")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/fe4677e2-7c34-48c2-8825-a66fd28c5ed7"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/fa8d9052-edcd-4e87-9862-f05c1bd3de9a"
 					(reference "C_OLED_2")
 					(unit 1)
 				)

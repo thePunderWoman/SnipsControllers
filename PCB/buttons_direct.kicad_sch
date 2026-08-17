@@ -2,7 +2,7 @@
 	(version 20250114)
 	(generator "eeschema")
 	(generator_version "9.0")
-	(uuid "d5e1f8b7-5901-4041-ab6d-88b87be8c656")
+	(uuid "d10ce8a9-04d2-4cbf-a0a6-067fe36f47da")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Switch:SW_Push"
@@ -166,30 +166,9 @@
 			)
 			(justify left)
 		)
-		(uuid "644598a3-4d94-4e66-9e57-20d0768c1f62")
+		(uuid "1ee4926d-4541-4e92-a676-d7407c50a1d0")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 153.67 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 152.4 105.41 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "7a6ecb22-02dd-4119-b791-61ea234976e1")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 152.4 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -208,7 +187,7 @@
 			)
 			(justify left)
 		)
-		(uuid "f307aafe-05e6-43d2-999a-df4e4147d57c")
+		(uuid "49dcaa9a-dbeb-4767-86a3-3fa5c317397f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 153.67 135.89 0)
 			(effects
@@ -219,16 +198,26 @@
 			)
 		)
 	)
-	(hierarchical_label "BTN_VOL_DN"
-		(shape output)
-		(at 143.51 135.89 0)
+	(global_label "GND"
+		(shape passive)
+		(at 152.4 105.41 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "730e13e5-0bd6-417d-aee8-21187a53cab0")
+		(uuid "a52741ca-6906-457e-98ec-4d764cc5ef92")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 152.4 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(hierarchical_label "BTN_VOL_UP"
 		(shape output)
@@ -239,7 +228,7 @@
 			)
 			(justify left)
 		)
-		(uuid "adca1276-89b0-4416-889a-827a4a3d015b")
+		(uuid "ab9eeb35-cac4-42b3-8c62-4050d7f1d514")
 	)
 	(hierarchical_label "BTN_TRIG_DIG"
 		(shape output)
@@ -250,76 +239,18 @@
 			)
 			(justify left)
 		)
-		(uuid "fad3f928-307b-4b94-8b8c-b4b97fb73983")
+		(uuid "bed03e51-4872-40a2-9353-64f34ca2e894")
 	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 148.59 135.89 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0dc3d20f-7553-4723-8e4e-8c6408431a81")
-		(property "Reference" "SW_VOL_DN"
-			(at 149.86 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
+	(hierarchical_label "BTN_VOL_DN"
+		(shape output)
+		(at 143.51 135.89 0)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left)
 		)
-		(property "Value" "Omron_B3F"
-			(at 148.59 134.366 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 148.59 140.97 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 148.59 140.97 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 148.59 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "73850058-994c-45eb-bad8-ead64096133e")
-		)
-		(pin "2"
-			(uuid "10f6de14-6b45-4842-ba04-694bc958eb55")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/c01d6b19-237e-479b-ac5c-af6d5e4a0c9c"
-					(reference "SW_VOL_DN")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "d6eec15c-2a62-4727-80ab-01a6e666bdb2")
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
@@ -330,8 +261,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "219f6adb-cf36-4c1c-9ce2-cd8395d5f88b")
-		(property "Reference" "SW_TRIG_DIG"
+		(uuid "44244000-62b2-4104-9eae-9f6f89b1dcc7")
+		(property "Reference" "SW_TRIG_DIG1"
 			(at 149.86 77.47 0)
 			(effects
 				(font
@@ -376,15 +307,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "95bfffe4-ec60-463d-ae39-70d5fd49f643")
+			(uuid "a3cd6b94-6978-4f5f-85fd-b2d33fc63412")
 		)
 		(pin "2"
-			(uuid "7c3335d3-65ef-435f-9ef5-e9c2190e4538")
+			(uuid "b177f081-1057-417c-9775-4de2ccfb29d7")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/c01d6b19-237e-479b-ac5c-af6d5e4a0c9c"
-					(reference "SW_TRIG_DIG")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/e2a172ff-869d-47d1-93b6-b7fd83cd5f36"
+					(reference "SW_TRIG_DIG1")
 					(unit 1)
 				)
 			)
@@ -399,8 +330,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "ee56cabe-afcc-486c-a4ef-99e24452c2d9")
-		(property "Reference" "SW_VOL_UP"
+		(uuid "a0c26025-03dc-4202-8c4b-fc07f8bdf4b5")
+		(property "Reference" "SW_VOL_UP1"
 			(at 148.59 107.95 0)
 			(effects
 				(font
@@ -445,15 +376,84 @@
 			)
 		)
 		(pin "1"
-			(uuid "57a0f324-b016-48db-8dc1-216a008be11e")
+			(uuid "67358841-7bcd-46b6-aaf4-c8a793b8c487")
 		)
 		(pin "2"
-			(uuid "314a455f-1ba3-4613-81e4-57644b77ad51")
+			(uuid "1f9b0c0f-34eb-4adf-b704-5f47026a10df")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/c01d6b19-237e-479b-ac5c-af6d5e4a0c9c"
-					(reference "SW_VOL_UP")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/e2a172ff-869d-47d1-93b6-b7fd83cd5f36"
+					(reference "SW_VOL_UP1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 148.59 135.89 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "de438005-4a50-43d3-93b0-5cbaa557a5a3")
+		(property "Reference" "SW_VOL_DN1"
+			(at 149.86 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Omron_B3F"
+			(at 148.59 134.366 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 148.59 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 148.59 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 148.59 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4b7b50a3-bfad-4842-b128-d253c2f668a1")
+		)
+		(pin "2"
+			(uuid "88303c7b-bb48-4b8e-a279-49a363c32c8b")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/e2a172ff-869d-47d1-93b6-b7fd83cd5f36"
+					(reference "SW_VOL_DN1")
 					(unit 1)
 				)
 			)

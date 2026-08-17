@@ -2,7 +2,7 @@
 	(version 20250114)
 	(generator "eeschema")
 	(generator_version "9.0")
-	(uuid "3e228c85-4b3c-46bc-aa53-f1955bde76bd")
+	(uuid "16ef258b-9f1e-48db-a335-922b83622e1a")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Device:C"
@@ -1164,34 +1164,34 @@
 		)
 	)
 	(label "PWR_LATCH_G"
-		(at 129.54 107.95 180)
+		(at 129.54 106.68 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "15d54d55-4652-4c7b-93df-30f9bb1183e4")
-	)
-	(label "PWR_GATE"
-		(at 191.77 120.65 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "26b5fd42-bd03-4a30-a373-cd6587b708a9")
+		(uuid "05cac969-9456-4384-a816-7bc8f37c2de6")
 	)
 	(label "PWR_LATCH_G"
-		(at 167.64 93.98 180)
+		(at 167.64 92.71 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "2801424a-75f9-40cb-8863-ef3c1cf75f79")
+		(uuid "2e437e3d-4e9c-4dc2-99b1-3d7f864f274c")
+	)
+	(label "PWR_LATCH_G"
+		(at 107.95 78.74 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3aedc566-cd80-4047-be90-60e58a93d9bf")
 	)
 	(label "PWR_GATE"
 		(at 87.63 138.43 180)
@@ -1201,17 +1201,7 @@
 			)
 			(justify right)
 		)
-		(uuid "2a11bb1a-0a68-4cec-af1b-aa051e5eb756")
-	)
-	(label "PWR_LATCH_G"
-		(at 184.15 125.73 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "2b22ad60-ee5f-4ada-a855-c101fa346565")
+		(uuid "3d7fd33c-f9a0-494e-ba65-9e35c3d3c162")
 	)
 	(label "PWR_GATE"
 		(at 125.73 151.13 270)
@@ -1221,17 +1211,48 @@
 			)
 			(justify right)
 		)
-		(uuid "a438559e-f72d-4cc9-aa9f-02d1aee1d522")
+		(uuid "3ecf20d8-94a5-4af5-ab6b-5f0f32030b56")
+	)
+	(label "PWR_GATE"
+		(at 191.77 120.65 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "ec2b5049-9b56-4994-aafc-2fc064f7c8a5")
 	)
 	(label "PWR_LATCH_G"
-		(at 107.95 80.01 270)
+		(at 184.15 125.73 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "c048f493-2450-476e-861e-840b56bb6ff1")
+		(uuid "f6fedf40-677a-45f0-898b-bc5f69c04ffc")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 137.16 74.93 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3a69599d-cf19-42ba-ab96-ba625193c01a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 137.16 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(global_label "VSYS"
 		(shape input)
@@ -1243,72 +1264,9 @@
 			)
 			(justify left)
 		)
-		(uuid "0b5a94a7-e776-4270-af20-8208534db4b8")
+		(uuid "46997faa-1436-41a7-8c63-67ca511cf3a2")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 156.21 134.62 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 107.95 72.39 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "2f63e67c-0a47-4ce3-89f2-d19ac55747ef")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 107.95 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VSYS"
-		(shape input)
-		(at 125.73 143.51 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "31168a54-64da-4c1a-bc64-5c3dd8ec208b")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 125.73 143.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 167.64 66.04 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "40463c47-9627-4e82-bb2b-2e593723a58d")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 167.64 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1327,7 +1285,7 @@
 			)
 			(justify left)
 		)
-		(uuid "73437d5e-0abc-4de4-8e5c-d46d35116a12")
+		(uuid "5ac7c178-1775-4bc6-9548-3240430ce504")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 208.28 63.5 0)
 			(effects
@@ -1340,17 +1298,17 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 191.77 130.81 270)
+		(at 107.95 71.12 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
-		(uuid "ae1828ba-82d7-4dd6-a1d0-8dd11287922f")
+		(uuid "5d84be4e-6c29-41ae-af8e-97c26d8ffb5f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 191.77 130.81 0)
+			(at 107.95 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1359,19 +1317,19 @@
 			)
 		)
 	)
-	(global_label "GND"
-		(shape passive)
-		(at 137.16 74.93 270)
+	(global_label "VSYS"
+		(shape input)
+		(at 125.73 143.51 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
-		(uuid "ce1e3a20-aecd-46de-a5b7-50e547d0639e")
+		(uuid "81b1dca1-0282-4fe6-8188-d2aca9e3fb20")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 137.16 74.93 0)
+			(at 125.73 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1390,7 +1348,7 @@
 			)
 			(justify right)
 		)
-		(uuid "f0386d58-53fa-469f-9af0-59007f474b13")
+		(uuid "9ee0ffdd-ad73-448b-8ed2-22ac5cea9c97")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 95.25 143.51 0)
 			(effects
@@ -1401,27 +1359,47 @@
 			)
 		)
 	)
-	(hierarchical_label "GP15_SENSE"
-		(shape bidirectional)
-		(at 167.64 58.42 90)
+	(global_label "GND"
+		(shape passive)
+		(at 167.64 66.04 270)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
-		(uuid "24c19343-c683-4f3e-bde6-2ac49775adf5")
+		(uuid "c5aa64c8-370c-47aa-98a3-96e3f1029f08")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 167.64 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
-	(hierarchical_label "PWR_HOLD"
-		(shape bidirectional)
-		(at 134.62 107.95 0)
+	(global_label "GND"
+		(shape passive)
+		(at 191.77 130.81 270)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
-		(uuid "316b4510-d01a-495d-b39d-be966f96228b")
+		(uuid "da027eab-69c6-45f6-ad8d-e3374de857f5")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 191.77 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(hierarchical_label "GP15_SENSE"
 		(shape bidirectional)
@@ -1432,7 +1410,18 @@
 			)
 			(justify left)
 		)
-		(uuid "67eb87a4-b3e1-4844-bb95-450e6b359a2c")
+		(uuid "0be3865c-2630-420c-ac26-dc8ad23dc112")
+	)
+	(hierarchical_label "GP15_SENSE"
+		(shape bidirectional)
+		(at 167.64 58.42 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "11bdfb09-9ba2-4931-b0f1-0fe6d0b5fa9f")
 	)
 	(hierarchical_label "GP15_SENSE"
 		(shape bidirectional)
@@ -1443,29 +1432,7 @@
 			)
 			(justify left)
 		)
-		(uuid "6e36f690-3731-4e20-99ac-869e7109f9e0")
-	)
-	(hierarchical_label "GP15_SENSE"
-		(shape bidirectional)
-		(at 198.12 63.5 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "993cf7ec-f180-4bd5-a1f8-a5c57d002bc2")
-	)
-	(hierarchical_label "GP15_SENSE"
-		(shape bidirectional)
-		(at 172.72 93.98 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "d9d59e71-af78-4d1c-8925-7b468e3c6119")
+		(uuid "57bde85c-4908-4a0d-9e16-5d2e51fb8cd6")
 	)
 	(hierarchical_label "PWR_EN"
 		(shape output)
@@ -1476,597 +1443,40 @@
 			)
 			(justify left)
 		)
-		(uuid "ddfdc488-f5c3-46c2-9c20-8ba9c50613c7")
+		(uuid "5f1bcfd2-65bc-474d-8b3b-f29b706ac400")
 	)
-	(symbol
-		(lib_id "Device:D_Small")
-		(at 132.08 107.95 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0c8b3f36-5b8a-4c63-8cc5-60fcf5a725fc")
-		(property "Reference" "D_OR2"
-			(at 130.81 109.982 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
+	(hierarchical_label "PWR_HOLD"
+		(shape bidirectional)
+		(at 134.62 106.68 0)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left)
 		)
-		(property "Value" "1N4148W"
-			(at 128.27 105.918 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 132.08 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 132.08 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Diode, small symbol"
-			(at 132.08 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "D"
-			(at 132.08 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=K 2=A"
-			(at 132.08 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "6202e360-8e57-46c5-91a4-46da947f64d3")
-		)
-		(pin "2"
-			(uuid "944e9534-e3b1-4f48-a554-ce644e8ab6db")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/60009cef-7f13-40e5-a41f-77b5cb1d7d23"
-					(reference "D_OR2")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "9613ec1b-75db-47b9-93fd-8d11c842ac99")
 	)
-	(symbol
-		(lib_id "Device:R")
-		(at 167.64 62.23 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3340f303-926f-4192-b26b-2cc361834018")
-		(property "Reference" "R_PWR_SENSE"
-			(at 169.672 62.23 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
+	(hierarchical_label "GP15_SENSE"
+		(shape bidirectional)
+		(at 172.72 92.71 0)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left)
 		)
-		(property "Value" "100kΩ"
-			(at 167.64 62.23 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 165.862 62.23 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 167.64 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 167.64 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "95ca9d04-58eb-4aef-829b-7a017713b6dc")
-		)
-		(pin "2"
-			(uuid "6798b6cf-3fc0-48f0-b2a8-8f9984b0248e")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/60009cef-7f13-40e5-a41f-77b5cb1d7d23"
-					(reference "R_PWR_SENSE")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "a0f12643-802d-4694-be6a-5423dcc23864")
 	)
-	(symbol
-		(lib_id "Device:R")
-		(at 125.73 147.32 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "381881d1-c112-4549-8727-7a112d996bf7")
-		(property "Reference" "R_GATE"
-			(at 127.762 147.32 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
+	(hierarchical_label "GP15_SENSE"
+		(shape bidirectional)
+		(at 198.12 63.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left)
 		)
-		(property "Value" "100kΩ"
-			(at 125.73 147.32 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 123.952 147.32 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 125.73 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 125.73 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4cce422b-8812-462d-a9a4-61cd97391a02")
-		)
-		(pin "2"
-			(uuid "c2b27976-b4b0-4f3c-b003-f0947d4090e4")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/60009cef-7f13-40e5-a41f-77b5cb1d7d23"
-					(reference "R_GATE")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:D_Small")
-		(at 170.18 93.98 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "6bc8b1eb-fbb7-4c73-aa43-454416016d35")
-		(property "Reference" "D_OR1"
-			(at 168.91 96.012 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "1N4148W"
-			(at 166.37 91.948 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 170.18 93.98 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 170.18 93.98 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Diode, small symbol"
-			(at 170.18 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "D"
-			(at 170.18 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=K 2=A"
-			(at 170.18 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "45184702-42a8-4cef-bc2f-808b1b915d35")
-		)
-		(pin "2"
-			(uuid "b7998ac7-c3f1-4e5b-8ab8-07426c4988b8")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/60009cef-7f13-40e5-a41f-77b5cb1d7d23"
-					(reference "D_OR1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 156.21 138.43 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "71f56e59-a29f-45e6-a545-8738be539ff6")
-		(property "Reference" "R_BTN_PU"
-			(at 158.242 138.43 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100kΩ"
-			(at 156.21 138.43 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 154.432 138.43 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 156.21 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 156.21 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7b49b90e-2274-44c2-8ac1-03ffdafed389")
-		)
-		(pin "2"
-			(uuid "4a652878-14e2-4224-a905-9d8ca181e1ac")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/60009cef-7f13-40e5-a41f-77b5cb1d7d23"
-					(reference "R_BTN_PU")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Transistor_FET:Q_NMOS_GSD")
-		(at 189.23 125.73 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a8c70732-0f20-4c9f-b041-53e9ffabdff2")
-		(property "Reference" "Q_LATCH"
-			(at 194.31 127.635 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "2N7002"
-			(at 194.31 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 194.31 128.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 189.23 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "N-MOSFET transistor, gate/source/drain"
-			(at 189.23 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e149cf7c-6a27-425d-b38e-dd681b58e255")
-		)
-		(pin "2"
-			(uuid "9f9d9943-9fee-48a5-9346-96d39ee9e64d")
-		)
-		(pin "3"
-			(uuid "b28bd33d-2538-4630-b13f-a6d4a54b1c8b")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/60009cef-7f13-40e5-a41f-77b5cb1d7d23"
-					(reference "Q_LATCH")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 203.2 63.5 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b48b9e5d-98e1-4360-953a-9c285dbf8edb")
-		(property "Reference" "SW_PWR"
-			(at 204.47 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Omron_B3F"
-			(at 203.2 61.976 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 203.2 68.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 203.2 68.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 203.2 63.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "32fef846-8d47-4b5e-a0b5-241e12922197")
-		)
-		(pin "2"
-			(uuid "163b3d78-1407-44f1-b031-ce0f8d30a69d")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/60009cef-7f13-40e5-a41f-77b5cb1d7d23"
-					(reference "SW_PWR")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 107.95 76.2 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d0f7d252-8143-497f-adc0-5685da53c594")
-		(property "Reference" "R_LATCH_G"
-			(at 109.982 76.2 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10kΩ"
-			(at 107.95 76.2 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 106.172 76.2 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 107.95 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 107.95 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "94c4eac5-dc35-410c-8f6a-c0c757e93df1")
-		)
-		(pin "2"
-			(uuid "6375206a-ab00-4fae-816f-b6c548d51fa4")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/60009cef-7f13-40e5-a41f-77b5cb1d7d23"
-					(reference "R_LATCH_G")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "b7e6238a-204e-4a88-ba36-961f803fc340")
 	)
 	(symbol
 		(lib_id "Transistor_FET:Q_PMOS_GSD")
@@ -2077,8 +1487,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "fd316184-c3f2-4997-bc8a-768d85ec9c8b")
-		(property "Reference" "Q_PWR"
+		(uuid "107b6819-bbe2-4a45-b1d7-90a91e696987")
+		(property "Reference" "Q_PWR1"
 			(at 97.79 140.335 0)
 			(effects
 				(font
@@ -2124,18 +1534,384 @@
 			)
 		)
 		(pin "1"
-			(uuid "a1a91acb-9278-4d75-8aac-20b00fcb8d51")
+			(uuid "f4d88998-50c6-4910-84b9-3885c710c054")
 		)
 		(pin "2"
-			(uuid "9a0d3ec8-cced-4bbc-a1ad-d85c5e7173e9")
+			(uuid "1ef4de40-2680-4627-8bd2-31d7dbcc4526")
 		)
 		(pin "3"
-			(uuid "00fcba7d-bab4-498f-8671-7fce41953c89")
+			(uuid "72f340ce-06ed-45d9-95a5-a85f275cc72d")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/60009cef-7f13-40e5-a41f-77b5cb1d7d23"
-					(reference "Q_PWR")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/f44fb548-8e40-45a0-b5ff-df7ab7c76c7b"
+					(reference "Q_PWR1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Transistor_FET:Q_NMOS_GSD")
+		(at 189.23 125.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "22cbafd9-02f9-4b2e-a96f-e7a4e2f229d2")
+		(property "Reference" "Q_LATCH1"
+			(at 194.31 127.635 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "2N7002"
+			(at 194.31 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 194.31 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 189.23 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "N-MOSFET transistor, gate/source/drain"
+			(at 189.23 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d0682303-fe41-40f5-b580-ff6219420f7d")
+		)
+		(pin "2"
+			(uuid "df9bb81c-c42a-43a0-bbad-6de515a270e4")
+		)
+		(pin "3"
+			(uuid "7947ec33-d744-4d1f-abc0-0b5c60e166ce")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/f44fb548-8e40-45a0-b5ff-df7ab7c76c7b"
+					(reference "Q_LATCH1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Small")
+		(at 132.08 106.68 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2bcaa776-2882-4946-87ca-6072f52f9121")
+		(property "Reference" "D_OR2"
+			(at 130.81 108.712 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1N4148W"
+			(at 128.27 104.648 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 132.08 106.68 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 132.08 106.68 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Diode, small symbol"
+			(at 132.08 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 132.08 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 132.08 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c2d8778a-c6e1-4fbd-adba-a15974714a77")
+		)
+		(pin "2"
+			(uuid "3b2b02c0-639e-465e-b13d-bd04cffec1e0")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/f44fb548-8e40-45a0-b5ff-df7ab7c76c7b"
+					(reference "D_OR2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 167.64 62.23 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "4e766970-d565-47d2-a2be-889d94272cd9")
+		(property "Reference" "R_PWR_SENSE1"
+			(at 169.672 62.23 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100kΩ"
+			(at 167.64 62.23 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 165.862 62.23 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 167.64 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 167.64 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1dc7bb75-d0c6-4b1f-915e-8ed76930017c")
+		)
+		(pin "2"
+			(uuid "116d70f4-2bbb-47ca-9971-2def3c8d1feb")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/f44fb548-8e40-45a0-b5ff-df7ab7c76c7b"
+					(reference "R_PWR_SENSE1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 203.2 63.5 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "98545a3d-cf3e-4fab-a279-77570cb278b7")
+		(property "Reference" "SW_PWR1"
+			(at 204.47 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Omron_B3F"
+			(at 203.2 61.976 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 203.2 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 203.2 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 203.2 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ef6a037c-49f1-4c26-9b9b-e25d5e293204")
+		)
+		(pin "2"
+			(uuid "97acd89c-3757-4714-8faf-a0ed5aabfaa7")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/f44fb548-8e40-45a0-b5ff-df7ab7c76c7b"
+					(reference "SW_PWR1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 125.73 147.32 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ae7aa040-19e4-421a-b2e1-f4c75017823f")
+		(property "Reference" "R_GATE1"
+			(at 127.762 147.32 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100kΩ"
+			(at 125.73 147.32 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 123.952 147.32 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 125.73 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 125.73 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "8566d9c2-6f79-42cd-a6ad-928fedc9da63")
+		)
+		(pin "2"
+			(uuid "d51f37a0-4a19-4bb5-a075-8ee9e03314aa")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/f44fb548-8e40-45a0-b5ff-df7ab7c76c7b"
+					(reference "R_GATE1")
 					(unit 1)
 				)
 			)
@@ -2150,8 +1926,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "fe9f7ed5-6219-4b3e-9ec9-74076f5d5787")
-		(property "Reference" "C_DBNC"
+		(uuid "c466bbf5-e29e-41f4-8584-7e1bc942f019")
+		(property "Reference" "C_DBNC1"
 			(at 137.795 73.66 0)
 			(effects
 				(font
@@ -2197,15 +1973,239 @@
 			)
 		)
 		(pin "1"
-			(uuid "92070565-5ca4-40b3-bb95-30dd18f04ac8")
+			(uuid "206ab3fa-693a-4f0c-abd3-ab4369fd9550")
 		)
 		(pin "2"
-			(uuid "dec41126-f1d6-45b7-81a9-5f2cc725c102")
+			(uuid "31affed1-5c69-4a30-90ff-c295df068f78")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/2289c08f-f540-4e27-86fd-a28b71d1d149/60009cef-7f13-40e5-a41f-77b5cb1d7d23"
-					(reference "C_DBNC")
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/f44fb548-8e40-45a0-b5ff-df7ab7c76c7b"
+					(reference "C_DBNC1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 107.95 74.93 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d0711002-91eb-42f6-8c65-e189f1c77bb0")
+		(property "Reference" "R_LATCH_G1"
+			(at 109.982 74.93 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10kΩ"
+			(at 107.95 74.93 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 106.172 74.93 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 107.95 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 107.95 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e13ce2b9-c909-4ff5-80d0-0632883361ed")
+		)
+		(pin "2"
+			(uuid "4daed8c8-d884-49b9-9c16-14fda82c478b")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/f44fb548-8e40-45a0-b5ff-df7ab7c76c7b"
+					(reference "R_LATCH_G1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Small")
+		(at 170.18 92.71 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d464a732-9fa1-43fa-b58e-c561c5acfe1a")
+		(property "Reference" "D_OR1"
+			(at 168.91 94.742 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1N4148W"
+			(at 166.37 90.678 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 170.18 92.71 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 170.18 92.71 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Diode, small symbol"
+			(at 170.18 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 170.18 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 170.18 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "74ffffec-a51e-4405-abe5-b6dcf51176bb")
+		)
+		(pin "2"
+			(uuid "6c32358f-47ee-440a-8dcd-8b1db2b996f2")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/f44fb548-8e40-45a0-b5ff-df7ab7c76c7b"
+					(reference "D_OR1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 156.21 138.43 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ea81d4e1-4109-4255-a732-5d96d7470059")
+		(property "Reference" "R_BTN_PU1"
+			(at 158.242 138.43 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100kΩ"
+			(at 156.21 138.43 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 154.432 138.43 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 156.21 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 156.21 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fe787226-2ad7-4288-8445-5d46acb72d94")
+		)
+		(pin "2"
+			(uuid "2dc0ba14-be65-46bc-8b7c-c66e9e6e071d")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/f44fb548-8e40-45a0-b5ff-df7ab7c76c7b"
+					(reference "R_BTN_PU1")
 					(unit 1)
 				)
 			)
