@@ -2,6 +2,7 @@
 
 #include "ButtonState.h"
 #include "Buttons.h"
+#include "PinConfig.h"
 
 namespace {
 
@@ -17,9 +18,10 @@ unsigned long lastPollMs = 0;
 void setup() {
   Serial.begin(115200);
 
-  // GPIO0/1 are UART0's default pins on RP2040, which is exactly where the
-  // XBee is wired for prototyping — no pin remapping needed.
-  Serial1.begin(kXbeeUartBaud);
+  // ESP32-S3 UART pins aren't fixed to a default, so the RX/TX GPIO the
+  // XBee is wired to for prototyping must be passed explicitly.
+  Serial1.begin(kXbeeUartBaud, SERIAL_8N1, PinConfig::kXbeeUartRx,
+                PinConfig::kXbeeUartTx);
 
   for (size_t i = 0; i < Buttons::kCount; ++i) {
     pinMode(Buttons::kPins[i], INPUT_PULLUP);

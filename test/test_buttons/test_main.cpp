@@ -13,7 +13,7 @@ void test_button_pins_are_unique() {
 
 void test_button_pins_within_gpio_range() {
   for (size_t i = 0; i < Buttons::kCount; ++i) {
-    TEST_ASSERT_TRUE(Buttons::kPins[i] >= 0 && Buttons::kPins[i] <= 29);
+    TEST_ASSERT_TRUE(Buttons::kPins[i] >= 0 && Buttons::kPins[i] <= 48);
   }
 }
 

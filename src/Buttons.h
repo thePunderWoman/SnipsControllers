@@ -4,8 +4,8 @@
 
 #include "PinConfig.h"
 
-// All digital buttons and their current GPIO pin, in prototyping (UART
-// XBee) configuration. See PinConfig.h for the pin-mapping caveats.
+// All digital buttons and their GPIO pin. See PinConfig.h for the
+// pin-mapping caveats.
 namespace Buttons {
 
 enum Index : size_t {
