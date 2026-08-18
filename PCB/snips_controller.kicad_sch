@@ -1,258 +1,1258 @@
 (kicad_sch
 	(version 20250114)
-	(generator "kicaddy")
-	(generator_version "0.1.0")
+	(generator "eeschema")
+	(generator_version "9.0")
 	(uuid "868f8289-8434-4465-b2f4-2accc5e40bab")
 	(paper "A4")
 	(lib_symbols)
 	(wire
-		(pts (xy 934.72 350.52) (xy 1482.09 199.39))
-		(stroke (width 0) (type default))
-		(uuid "100c1fd9-f72e-470e-9897-8e9ad9b61dd7")
-	)
-	(wire
-		(pts (xy 991.87 350.52) (xy 1617.98 199.39))
-		(stroke (width 0) (type default))
-		(uuid "083f34c4-c710-4ac4-a48f-255419b9e377")
-	)
-	(wire
-		(pts (xy 751.84 849.63) (xy 387.35 999.49))
-		(stroke (width 0) (type default))
-		(uuid "0efed61c-51b2-4de8-9620-a8022a00aec5")
-	)
-	(wire
-		(pts (xy 784.86 849.63) (xy 433.07 999.49))
-		(stroke (width 0) (type default))
-		(uuid "479f5505-b45b-464c-acdf-4e0a45aea870")
-	)
-	(wire
-		(pts (xy 817.88 849.63) (xy 477.52 999.49))
-		(stroke (width 0) (type default))
-		(uuid "3f62385f-b164-478d-b522-b4bdd7c2b3a8")
-	)
-	(wire
-		(pts (xy 850.9 849.63) (xy 523.24 999.49))
-		(stroke (width 0) (type default))
-		(uuid "5afde355-b97e-4bdb-a14f-8fa074a4f42e")
-	)
-	(wire
-		(pts (xy 883.92 849.63) (xy 567.69 999.49))
-		(stroke (width 0) (type default))
-		(uuid "4b011bfd-121c-4fbb-a4c2-3eeb47929613")
-	)
-	(wire
-		(pts (xy 916.94 849.63) (xy 612.14 999.49))
-		(stroke (width 0) (type default))
-		(uuid "e019ebb6-0732-4b8b-81ec-eafe3a3378f8")
-	)
-	(wire
-		(pts (xy 949.96 849.63) (xy 782.32 999.49))
-		(stroke (width 0) (type default))
-		(uuid "94054799-1194-4bcd-b3b0-9b5991ed44ba")
-	)
-	(wire
-		(pts (xy 982.98 849.63) (xy 916.94 999.49))
-		(stroke (width 0) (type default))
-		(uuid "c064ffe6-80ed-4f8d-b505-b8ac057baa9c")
-	)
-	(wire
-		(pts (xy 1200.15 999.49) (xy 1016 849.63))
-		(stroke (width 0) (type default))
-		(uuid "18184958-c2fb-4e0e-880a-75aadc7efaac")
-	)
-	(wire
-		(pts (xy 1049.02 849.63) (xy 1459.23 999.49))
-		(stroke (width 0) (type default))
+		(pts
+			(xy 1049.02 849.63) (xy 1459.23 999.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
 		(uuid "010dd7de-7a6b-433b-befb-e29fdc827c49")
 	)
 	(wire
-		(pts (xy 1082.04 849.63) (xy 1549.4 999.49))
-		(stroke (width 0) (type default))
-		(uuid "11e37297-7f00-4068-917c-29e60356d0a1")
-	)
-	(wire
-		(pts (xy 1049.02 350.52) (xy 1899.92 199.39))
-		(stroke (width 0) (type default))
-		(uuid "f0ae9fdb-ad5c-4943-a6c3-64fe8ba58f15")
-	)
-	(wire
-		(pts (xy 1769.11 999.49) (xy 1148.08 849.63))
-		(stroke (width 0) (type default))
-		(uuid "c0889349-09be-49e2-b253-3e12ef9e3817")
-	)
-	(wire
-		(pts (xy 1807.21 999.49) (xy 1181.1 849.63))
-		(stroke (width 0) (type default))
-		(uuid "1db085f3-8418-477f-896c-0afafa9c0be2")
-	)
-	(wire
-		(pts (xy 1845.31 999.49) (xy 1214.12 849.63))
-		(stroke (width 0) (type default))
-		(uuid "d4afdfd9-a38f-4f7c-adc1-0542b581902b")
-	)
-	(wire
-		(pts (xy 1115.06 849.63) (xy 1640.84 999.49))
-		(stroke (width 0) (type default))
-		(uuid "f97effd8-75f2-4655-9c84-ea39c9338e4e")
-	)
-	(wire
-		(pts (xy 1883.41 999.49) (xy 1247.14 849.63))
-		(stroke (width 0) (type default))
-		(uuid "0921815b-5159-48e7-8a2f-cec84be92b91")
-	)
-	(wire
-		(pts (xy 1921.51 999.49) (xy 1280.16 849.63))
-		(stroke (width 0) (type default))
-		(uuid "8db360cd-60e2-43a0-9b60-4fc6fa655a42")
-	)
-	(wire
-		(pts (xy 1959.61 999.49) (xy 1313.18 849.63))
-		(stroke (width 0) (type default))
-		(uuid "0f589909-2afd-43bd-b2e9-53e8d9efe587")
-	)
-	(wire
-		(pts (xy 1997.71 999.49) (xy 1346.2 849.63))
-		(stroke (width 0) (type default))
-		(uuid "848d4ce1-9761-400f-a619-f7ee53208597")
-	)
-	(wire
-		(pts (xy 2035.81 999.49) (xy 1379.22 849.63))
-		(stroke (width 0) (type default))
-		(uuid "32acc8f7-ea27-4ad9-92ee-a6be74e18cd1")
-	)
-	(wire
-		(pts (xy 2073.91 999.49) (xy 1412.24 849.63))
-		(stroke (width 0) (type default))
+		(pts
+			(xy 2073.91 999.49) (xy 1412.24 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
 		(uuid "045a3bb8-0836-4ca7-b633-b1a90b179cdb")
 	)
 	(wire
-		(pts (xy 763.27 350.52) (xy 82.55 199.39))
-		(stroke (width 0) (type default))
-		(uuid "e0fbbc9c-6468-485e-9cbb-79654c7f0050")
+		(pts
+			(xy 991.87 350.52) (xy 1617.98 199.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "083f34c4-c710-4ac4-a48f-255419b9e377")
 	)
 	(wire
-		(pts (xy 820.42 350.52) (xy 217.17 199.39))
-		(stroke (width 0) (type default))
-		(uuid "5b0d1b40-cee7-448c-b7ef-c1395ecec22e")
+		(pts
+			(xy 1883.41 999.49) (xy 1247.14 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0921815b-5159-48e7-8a2f-cec84be92b91")
 	)
 	(wire
-		(pts (xy 849.63 0) (xy 1549.4 0))
-		(stroke (width 0) (type default))
+		(pts
+			(xy 751.84 849.63) (xy 387.35 999.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0efed61c-51b2-4de8-9620-a8022a00aec5")
+	)
+	(wire
+		(pts
+			(xy 1959.61 999.49) (xy 1313.18 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0f589909-2afd-43bd-b2e9-53e8d9efe587")
+	)
+	(wire
+		(pts
+			(xy 934.72 350.52) (xy 1482.09 199.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "100c1fd9-f72e-470e-9897-8e9ad9b61dd7")
+	)
+	(wire
+		(pts
+			(xy 1082.04 849.63) (xy 1549.4 999.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "11e37297-7f00-4068-917c-29e60356d0a1")
+	)
+	(wire
+		(pts
+			(xy 1200.15 999.49) (xy 1016 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "18184958-c2fb-4e0e-880a-75aadc7efaac")
+	)
+	(wire
+		(pts
+			(xy 1807.21 999.49) (xy 1181.1 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1db085f3-8418-477f-896c-0afafa9c0be2")
+	)
+	(wire
+		(pts
+			(xy 2035.81 999.49) (xy 1379.22 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "32acc8f7-ea27-4ad9-92ee-a6be74e18cd1")
+	)
+	(wire
+		(pts
+			(xy 849.63 0) (xy 1549.4 0)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
 		(uuid "36ee40e1-bc82-4796-99ac-9d527644962e")
 	)
 	(wire
-		(pts (xy 877.57 350.52) (xy 500.38 199.39))
-		(stroke (width 0) (type default))
+		(pts
+			(xy 817.88 849.63) (xy 477.52 999.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3f62385f-b164-478d-b522-b4bdd7c2b3a8")
+	)
+	(wire
+		(pts
+			(xy 784.86 849.63) (xy 433.07 999.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "479f5505-b45b-464c-acdf-4e0a45aea870")
+	)
+	(wire
+		(pts
+			(xy 883.92 849.63) (xy 567.69 999.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4b011bfd-121c-4fbb-a4c2-3eeb47929613")
+	)
+	(wire
+		(pts
+			(xy 850.9 849.63) (xy 523.24 999.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5afde355-b97e-4bdb-a14f-8fa074a4f42e")
+	)
+	(wire
+		(pts
+			(xy 820.42 350.52) (xy 217.17 199.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5b0d1b40-cee7-448c-b7ef-c1395ecec22e")
+	)
+	(wire
+		(pts
+			(xy 1997.71 999.49) (xy 1346.2 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "848d4ce1-9761-400f-a619-f7ee53208597")
+	)
+	(wire
+		(pts
+			(xy 1921.51 999.49) (xy 1280.16 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8db360cd-60e2-43a0-9b60-4fc6fa655a42")
+	)
+	(wire
+		(pts
+			(xy 949.96 849.63) (xy 782.32 999.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "94054799-1194-4bcd-b3b0-9b5991ed44ba")
+	)
+	(wire
+		(pts
+			(xy 982.98 849.63) (xy 916.94 999.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c064ffe6-80ed-4f8d-b505-b8ac057baa9c")
+	)
+	(wire
+		(pts
+			(xy 1769.11 999.49) (xy 1148.08 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c0889349-09be-49e2-b253-3e12ef9e3817")
+	)
+	(wire
+		(pts
+			(xy 1845.31 999.49) (xy 1214.12 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d4afdfd9-a38f-4f7c-adc1-0542b581902b")
+	)
+	(wire
+		(pts
+			(xy 877.57 350.52) (xy 500.38 199.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
 		(uuid "dc2372d2-4225-4f3c-a19b-db2f37197899")
 	)
-	(sheet (at 350.52 0) (size 299.72 199.39) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "f4ce95ac-f63c-4d24-81c6-83f86b68c3b6") (property "Sheetname"
-			"Power_Charger"
-			(at 350.52 -0.7116 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"power_charger.kicad_sch"
-			(at 350.52 199.9746 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		) (pin "STAT1" output (at 500.38 199.39 270) (uuid "b63b47b3-933a-4490-8a3b-4f8fe8cc35f2") (effects (font (size 1.27 1.27)) (justify right))))
-	(sheet (at 350.52 999.49) (size 299.72 200.66) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "c69a94f8-41dd-441c-96d4-f7b37eb128c5") (property "Sheetname"
-			"XBee"
-			(at 350.52 998.7784 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"xbee.kicad_sch"
-			(at 350.52 1200.7346 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		) (pin "SPI_SCK" bidirectional (at 387.35 999.49 90) (uuid "2a6190bc-1cd5-402d-961e-38a53d71425f") (effects (font (size 1.27 1.27)) (justify right))) (pin "SPI_MOSI" bidirectional (at 433.07 999.49 90) (uuid "32e7c160-913c-4e9d-8157-c799302f1428") (effects (font (size 1.27 1.27)) (justify right))) (pin "SPI_MISO" bidirectional (at 477.52 999.49 90) (uuid "73c650f6-0857-4d7e-acd0-b811f4f85b27") (effects (font (size 1.27 1.27)) (justify right))) (pin "XBee_CS" bidirectional (at 523.24 999.49 90) (uuid "4690d8ea-9d9f-484c-9f68-462528fc2b51") (effects (font (size 1.27 1.27)) (justify right))) (pin "XBEE_ON_SLEEP" bidirectional (at 567.69 999.49 90) (uuid "ac938644-9e61-4bf9-8cda-37dd75f4c7a8") (effects (font (size 1.27 1.27)) (justify right))) (pin "XBEE_SPI_ATTN" bidirectional (at 612.14 999.49 90) (uuid "5cc933cb-0c66-437a-8874-42c56415e1c5") (effects (font (size 1.27 1.27)) (justify right))))
-	(sheet (at 1050.29 999.49) (size 299.72 200.66) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "3b2478ec-2890-4ec8-b56f-d58b64ce58ab") (property "Sheetname"
-			"Hall_Trigger"
+	(wire
+		(pts
+			(xy 916.94 849.63) (xy 612.14 999.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e019ebb6-0732-4b8b-81ec-eafe3a3378f8")
+	)
+	(wire
+		(pts
+			(xy 763.27 350.52) (xy 82.55 199.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e0fbbc9c-6468-485e-9cbb-79654c7f0050")
+	)
+	(wire
+		(pts
+			(xy 1049.02 350.52) (xy 1899.92 199.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f0ae9fdb-ad5c-4943-a6c3-64fe8ba58f15")
+	)
+	(wire
+		(pts
+			(xy 1115.06 849.63) (xy 1640.84 999.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f97effd8-75f2-4655-9c84-ea39c9338e4e")
+	)
+	(sheet
+		(at 1050.29 999.49)
+		(size 299.72 200.66)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "3b2478ec-2890-4ec8-b56f-d58b64ce58ab")
+		(property "Sheetname" "Hall_Trigger"
 			(at 1050.29 998.7784 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"hall_trigger.kicad_sch"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "hall_trigger.kicad_sch"
 			(at 1050.29 1200.7346 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		) (pin "TRIG_ANALOG" output (at 1200.15 999.49 90) (uuid "47ba89d6-3ab2-4769-bcb1-ecfd19bbab32") (effects (font (size 1.27 1.27)) (justify right))))
-	(sheet (at 1399.54 999.49) (size 300.99 200.66) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "7a3e413b-2e94-4a8b-a1cc-2db3e975d99a") (property "Sheetname"
-			"Thumbstick"
-			(at 1399.54 998.7784 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"thumbstick.kicad_sch"
-			(at 1399.54 1200.7346 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		) (pin "STICK_X" output (at 1459.23 999.49 90) (uuid "0f537d38-2ad2-4dd9-b2ee-806a5334f06c") (effects (font (size 1.27 1.27)) (justify right))) (pin "STICK_Y" output (at 1549.4 999.49 90) (uuid "2f8eda21-81ba-4198-9eda-8651598d63eb") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_STICK" output (at 1640.84 999.49 90) (uuid "a4821189-dc54-4c6e-ad3b-69b405c5c4a1") (effects (font (size 1.27 1.27)) (justify right))))
-	(sheet (at 1750.06 999.49) (size 342.9 200.66) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "d13ef906-1771-4e4b-8ca2-9a54efc5a20e") (property "Sheetname"
-			"Buttons_Direct"
-			(at 1750.06 998.7784 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"buttons_direct.kicad_sch"
-			(at 1750.06 1200.7346 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		) (pin "BTN_VOL_UP" output (at 1769.11 999.49 90) (uuid "8769b8a6-c683-432b-ae91-a3ecc34d2018") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_VOL_DN" output (at 1807.21 999.49 90) (uuid "349594cc-f425-46ab-907e-1e93ee55a0a6") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_TRIG_DIG" output (at 1845.31 999.49 90) (uuid "566773a0-bca4-40e4-b57f-c447a152db47") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO1" output (at 1883.41 999.49 90) (uuid "84036333-f91d-4625-b82f-24779b91d8cd") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO2" output (at 1921.51 999.49 90) (uuid "d4a84ec7-d313-4176-aac8-36674f2597ec") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO3" output (at 1959.61 999.49 90) (uuid "c7f8f64d-3091-4aac-b89c-b2a0320cd210") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO4" output (at 1997.71 999.49 90) (uuid "4ecd8ed4-c816-41a6-849d-1d49116dfaa6") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO5" output (at 2035.81 999.49 90) (uuid "ef00a9b1-f957-4b20-8de3-40fd9ffa9951") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO6" output (at 2073.91 999.49 90) (uuid "ed220aed-5ad8-4331-a36f-1b40738fb2bc") (effects (font (size 1.27 1.27)) (justify right))))
-	(sheet (at 699.77 0) (size 299.72 199.39) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "d62b292b-5ada-41ed-8d21-6dd942010aa6") (property "Sheetname"
-			"Power_Buck"
-			(at 699.77 -0.7116 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"power_buck.kicad_sch"
-			(at 699.77 199.9746 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		) (pin "PWR_EN" input (at 849.63 0 90) (uuid "5d43788b-1e09-4a16-a9b6-0f7ad56151d6") (effects (font (size 1.27 1.27)) (justify right))))
-	(sheet (at 1399.54 0) (size 300.99 199.39) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "cb7204a8-9133-479c-b60d-b3ae12c76b22") (property "Sheetname"
-			"Power_Control"
-			(at 1399.54 -0.7116 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"power_control.kicad_sch"
-			(at 1399.54 199.9746 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		) (pin "PWR_BTN_SENSE" bidirectional (at 1482.09 199.39 270) (uuid "2f69170e-9759-49a6-b347-9c1c6276ec76") (effects (font (size 1.27 1.27)) (justify right))) (pin "PWR_HOLD" bidirectional (at 1617.98 199.39 270) (uuid "59f69fa8-66eb-4e76-907b-1063c40a1f6b") (effects (font (size 1.27 1.27)) (justify right))) (pin "PWR_EN" output (at 1549.4 0 90) (uuid "67f7a580-b479-41c5-a50c-7ddcbf6e24c0") (effects (font (size 1.27 1.27)) (justify right))))
-	(sheet (at 1050.29 0) (size 299.72 199.39) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "748cb1dd-d7df-4e73-a93b-27e67a5ba349") (property "Sheetname"
-			"Battery"
-			(at 1050.29 -0.7116 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"battery.kicad_sch"
-			(at 1050.29 199.9746 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		))
-	(sheet (at 0 0) (size 299.72 199.39) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "e6ff3e19-e2b0-4f04-a1cc-1faee1ac6630") (property "Sheetname"
-			"USB_C"
-			(at 0 -0.7116 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"usb_c.kicad_sch"
-			(at 0 199.9746 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		) (pin "USB_DP" bidirectional (at 82.55 199.39 270) (uuid "e76804d1-b287-4741-aee8-b5d8516f064a") (effects (font (size 1.27 1.27)) (justify right))) (pin "USB_DM" bidirectional (at 217.17 199.39 270) (uuid "1101b07f-2f25-4dfd-a649-83c3d93ad469") (effects (font (size 1.27 1.27)) (justify right))))
-	(sheet (at 1750.06 0) (size 299.72 199.39) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "735d8d44-e064-4356-9d02-a40b0078b674") (property "Sheetname"
-			"RGB_LED"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "TRIG_ANALOG" output
+			(at 1200.15 999.49 90)
+			(uuid "47ba89d6-3ab2-4769-bcb1-ecfd19bbab32")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(sheet
+		(at 1750.06 0)
+		(size 299.72 199.39)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "735d8d44-e064-4356-9d02-a40b0078b674")
+		(property "Sheetname" "RGB_LED"
 			(at 1750.06 -0.7116 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"rgb_led.kicad_sch"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "rgb_led.kicad_sch"
 			(at 1750.06 199.9746 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		) (pin "RGB_DIN" input (at 1899.92 199.39 270) (uuid "16e2e8d0-6d04-4694-be09-77123cb8ae4a") (effects (font (size 1.27 1.27)) (justify right))))
-	(sheet (at 699.77 999.49) (size 299.72 200.66) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "9fde31f3-a36d-4ca9-b27d-63e931064f80") (property "Sheetname"
-			"OLED"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "RGB_DIN" input
+			(at 1899.92 199.39 270)
+			(uuid "16e2e8d0-6d04-4694-be09-77123cb8ae4a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(sheet
+		(at 1050.29 0)
+		(size 299.72 199.39)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "748cb1dd-d7df-4e73-a93b-27e67a5ba349")
+		(property "Sheetname" "Battery"
+			(at 1050.29 -0.7116 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "battery.kicad_sch"
+			(at 1050.29 199.9746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+	)
+	(sheet
+		(at 1399.54 999.49)
+		(size 300.99 200.66)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "7a3e413b-2e94-4a8b-a1cc-2db3e975d99a")
+		(property "Sheetname" "Thumbstick"
+			(at 1399.54 998.7784 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "thumbstick.kicad_sch"
+			(at 1399.54 1200.7346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "STICK_X" output
+			(at 1459.23 999.49 90)
+			(uuid "0f537d38-2ad2-4dd9-b2ee-806a5334f06c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "STICK_Y" output
+			(at 1549.4 999.49 90)
+			(uuid "2f8eda21-81ba-4198-9eda-8651598d63eb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_STICK" output
+			(at 1640.84 999.49 90)
+			(uuid "a4821189-dc54-4c6e-ad3b-69b405c5c4a1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(sheet
+		(at 699.77 999.49)
+		(size 299.72 200.66)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "9fde31f3-a36d-4ca9-b27d-63e931064f80")
+		(property "Sheetname" "OLED"
 			(at 699.77 998.7784 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"oled.kicad_sch"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "oled.kicad_sch"
 			(at 699.77 1200.7346 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		) (pin "I2C_SDA" bidirectional (at 782.32 999.49 90) (uuid "ce17f293-4421-401e-b24a-9fc6a9d2d6e7") (effects (font (size 1.27 1.27)) (justify right))) (pin "I2C_SCL" bidirectional (at 916.94 999.49 90) (uuid "9075b6ad-3e54-4ba5-bb44-da96d10c2bc5") (effects (font (size 1.27 1.27)) (justify right))))
-	(sheet (at 699.77 350.52) (size 764.54 499.11) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "aa68e619-4bbe-481c-98b1-65e9f4bd72c4") (property "Sheetname"
-			"MCU_Core"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "I2C_SDA" bidirectional
+			(at 782.32 999.49 90)
+			(uuid "ce17f293-4421-401e-b24a-9fc6a9d2d6e7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "I2C_SCL" bidirectional
+			(at 916.94 999.49 90)
+			(uuid "9075b6ad-3e54-4ba5-bb44-da96d10c2bc5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(sheet
+		(at 699.77 350.52)
+		(size 764.54 499.11)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "aa68e619-4bbe-481c-98b1-65e9f4bd72c4")
+		(property "Sheetname" "MCU_Core"
 			(at 699.77 349.8084 0)
-			(effects (font (size 1.27 1.27)) (justify left bottom))
-		) (property "Sheetfile"
-			"mcu_core.kicad_sch"
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mcu_core.kicad_sch"
 			(at 699.77 850.2146 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		) (pin "USB_DP" bidirectional (at 763.27 350.52 90) (uuid "d3467a19-990c-4342-ab60-5efea284f823") (effects (font (size 1.27 1.27)) (justify right))) (pin "USB_DM" bidirectional (at 820.42 350.52 90) (uuid "0ef9bf7c-707d-46c6-9c45-5e8903520ec8") (effects (font (size 1.27 1.27)) (justify right))) (pin "STAT1" input (at 877.57 350.52 90) (uuid "ed811922-3edc-4cb9-ae68-28179d715744") (effects (font (size 1.27 1.27)) (justify right))) (pin "PWR_BTN_SENSE" bidirectional (at 934.72 350.52 90) (uuid "1ac99756-a0ce-429c-b9d4-ce628858f65a") (effects (font (size 1.27 1.27)) (justify right))) (pin "PWR_HOLD" bidirectional (at 991.87 350.52 90) (uuid "9ac5a5e1-9bc2-46b0-bd2c-330a3b08e6db") (effects (font (size 1.27 1.27)) (justify right))) (pin "RGB_DIN" output (at 1049.02 350.52 90) (uuid "08598034-fc0c-4b91-9975-a4beffa06a22") (effects (font (size 1.27 1.27)) (justify right))) (pin "SPI_SCK" bidirectional (at 751.84 849.63 270) (uuid "9fee67f0-f822-400a-a51f-7dd5dc8f8f87") (effects (font (size 1.27 1.27)) (justify right))) (pin "SPI_MOSI" bidirectional (at 784.86 849.63 270) (uuid "c6df95d6-b7f7-440f-a51a-47161621c684") (effects (font (size 1.27 1.27)) (justify right))) (pin "SPI_MISO" bidirectional (at 817.88 849.63 270) (uuid "feb84342-ad13-46db-b729-f75b8ddf4b56") (effects (font (size 1.27 1.27)) (justify right))) (pin "XBee_CS" bidirectional (at 850.9 849.63 270) (uuid "6cfc3bc8-d133-44d3-a7f1-bb9c7178a5be") (effects (font (size 1.27 1.27)) (justify right))) (pin "XBEE_ON_SLEEP" bidirectional (at 883.92 849.63 270) (uuid "90e0aad4-1d6d-4538-b1d8-aa321fe66d05") (effects (font (size 1.27 1.27)) (justify right))) (pin "XBEE_SPI_ATTN" bidirectional (at 916.94 849.63 270) (uuid "2a55a6c6-22dc-4ced-a4fd-4ea7974469be") (effects (font (size 1.27 1.27)) (justify right))) (pin "I2C_SDA" bidirectional (at 949.96 849.63 270) (uuid "9973a0d5-a895-4cec-941d-64ab0d0b88f6") (effects (font (size 1.27 1.27)) (justify right))) (pin "I2C_SCL" bidirectional (at 982.98 849.63 270) (uuid "97393979-49c8-4b93-85d3-8df87f331f74") (effects (font (size 1.27 1.27)) (justify right))) (pin "TRIG_ANALOG" input (at 1016 849.63 270) (uuid "80414146-173a-41c9-af3a-dc2b638288b4") (effects (font (size 1.27 1.27)) (justify right))) (pin "STICK_X" input (at 1049.02 849.63 270) (uuid "8a01c6b1-85d2-4bc4-aa55-31219e2710cd") (effects (font (size 1.27 1.27)) (justify right))) (pin "STICK_Y" input (at 1082.04 849.63 270) (uuid "116568f5-9461-49e2-8f7a-e9ef742d0f8c") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_STICK" input (at 1115.06 849.63 270) (uuid "e3d8eb38-a5ba-495a-8422-8dd2e906d9fd") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_VOL_UP" input (at 1148.08 849.63 270) (uuid "41e023a0-aa0f-41ed-9b91-107b1de1ce1e") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_VOL_DN" input (at 1181.1 849.63 270) (uuid "fe50fd6c-6323-4cec-942f-acbcc6cabd75") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_TRIG_DIG" input (at 1214.12 849.63 270) (uuid "3f10d7d9-71cf-4419-b200-7244b779960a") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO1" input (at 1247.14 849.63 270) (uuid "9cfdada9-959b-4554-83be-01b88442e7b2") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO2" input (at 1280.16 849.63 270) (uuid "d63d405b-aa86-4cee-a319-5ed7e0b64ff9") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO3" input (at 1313.18 849.63 270) (uuid "d2c9ba4b-9300-4668-8a0c-bd73e70ccedf") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO4" input (at 1346.2 849.63 270) (uuid "106a67d7-e197-4d5d-80e3-356fd801d1fa") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO5" input (at 1379.22 849.63 270) (uuid "a7056597-8f7b-4053-be6c-2124b914a322") (effects (font (size 1.27 1.27)) (justify right))) (pin "BTN_MACRO6" input (at 1412.24 849.63 270) (uuid "27998f94-6b88-4419-8f78-f3cf890a88c6") (effects (font (size 1.27 1.27)) (justify right))))
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "USB_DP" bidirectional
+			(at 763.27 350.52 90)
+			(uuid "d3467a19-990c-4342-ab60-5efea284f823")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "USB_DM" bidirectional
+			(at 820.42 350.52 90)
+			(uuid "0ef9bf7c-707d-46c6-9c45-5e8903520ec8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "STAT1" input
+			(at 877.57 350.52 90)
+			(uuid "ed811922-3edc-4cb9-ae68-28179d715744")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "PWR_BTN_SENSE" bidirectional
+			(at 934.72 350.52 90)
+			(uuid "1ac99756-a0ce-429c-b9d4-ce628858f65a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "PWR_HOLD" bidirectional
+			(at 991.87 350.52 90)
+			(uuid "9ac5a5e1-9bc2-46b0-bd2c-330a3b08e6db")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "RGB_DIN" output
+			(at 1049.02 350.52 90)
+			(uuid "08598034-fc0c-4b91-9975-a4beffa06a22")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI_SCK" bidirectional
+			(at 751.84 849.63 270)
+			(uuid "9fee67f0-f822-400a-a51f-7dd5dc8f8f87")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI_MOSI" bidirectional
+			(at 784.86 849.63 270)
+			(uuid "c6df95d6-b7f7-440f-a51a-47161621c684")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI_MISO" bidirectional
+			(at 817.88 849.63 270)
+			(uuid "feb84342-ad13-46db-b729-f75b8ddf4b56")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "XBee_CS" bidirectional
+			(at 850.9 849.63 270)
+			(uuid "6cfc3bc8-d133-44d3-a7f1-bb9c7178a5be")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "XBEE_ON_SLEEP" bidirectional
+			(at 883.92 849.63 270)
+			(uuid "90e0aad4-1d6d-4538-b1d8-aa321fe66d05")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "XBEE_SPI_ATTN" bidirectional
+			(at 916.94 849.63 270)
+			(uuid "2a55a6c6-22dc-4ced-a4fd-4ea7974469be")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "I2C_SDA" bidirectional
+			(at 949.96 849.63 270)
+			(uuid "9973a0d5-a895-4cec-941d-64ab0d0b88f6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "I2C_SCL" bidirectional
+			(at 982.98 849.63 270)
+			(uuid "97393979-49c8-4b93-85d3-8df87f331f74")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "TRIG_ANALOG" input
+			(at 1016 849.63 270)
+			(uuid "80414146-173a-41c9-af3a-dc2b638288b4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "STICK_X" input
+			(at 1049.02 849.63 270)
+			(uuid "8a01c6b1-85d2-4bc4-aa55-31219e2710cd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "STICK_Y" input
+			(at 1082.04 849.63 270)
+			(uuid "116568f5-9461-49e2-8f7a-e9ef742d0f8c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_STICK" input
+			(at 1115.06 849.63 270)
+			(uuid "e3d8eb38-a5ba-495a-8422-8dd2e906d9fd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_VOL_UP" input
+			(at 1148.08 849.63 270)
+			(uuid "41e023a0-aa0f-41ed-9b91-107b1de1ce1e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_VOL_DN" input
+			(at 1181.1 849.63 270)
+			(uuid "fe50fd6c-6323-4cec-942f-acbcc6cabd75")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_TRIG_DIG" input
+			(at 1214.12 849.63 270)
+			(uuid "3f10d7d9-71cf-4419-b200-7244b779960a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO1" input
+			(at 1247.14 849.63 270)
+			(uuid "9cfdada9-959b-4554-83be-01b88442e7b2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO2" input
+			(at 1280.16 849.63 270)
+			(uuid "d63d405b-aa86-4cee-a319-5ed7e0b64ff9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO3" input
+			(at 1313.18 849.63 270)
+			(uuid "d2c9ba4b-9300-4668-8a0c-bd73e70ccedf")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO4" input
+			(at 1346.2 849.63 270)
+			(uuid "106a67d7-e197-4d5d-80e3-356fd801d1fa")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO5" input
+			(at 1379.22 849.63 270)
+			(uuid "a7056597-8f7b-4053-be6c-2124b914a322")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO6" input
+			(at 1412.24 849.63 270)
+			(uuid "27998f94-6b88-4419-8f78-f3cf890a88c6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(sheet
+		(at 350.52 999.49)
+		(size 299.72 200.66)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "c69a94f8-41dd-441c-96d4-f7b37eb128c5")
+		(property "Sheetname" "XBee"
+			(at 350.52 998.7784 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "xbee.kicad_sch"
+			(at 350.52 1200.7346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "SPI_SCK" bidirectional
+			(at 387.35 999.49 90)
+			(uuid "2a6190bc-1cd5-402d-961e-38a53d71425f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI_MOSI" bidirectional
+			(at 433.07 999.49 90)
+			(uuid "32e7c160-913c-4e9d-8157-c799302f1428")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI_MISO" bidirectional
+			(at 477.52 999.49 90)
+			(uuid "73c650f6-0857-4d7e-acd0-b811f4f85b27")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "XBee_CS" bidirectional
+			(at 523.24 999.49 90)
+			(uuid "4690d8ea-9d9f-484c-9f68-462528fc2b51")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "XBEE_ON_SLEEP" bidirectional
+			(at 567.69 999.49 90)
+			(uuid "ac938644-9e61-4bf9-8cda-37dd75f4c7a8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "XBEE_SPI_ATTN" bidirectional
+			(at 612.14 999.49 90)
+			(uuid "5cc933cb-0c66-437a-8874-42c56415e1c5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(sheet
+		(at 1399.54 0)
+		(size 300.99 199.39)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "cb7204a8-9133-479c-b60d-b3ae12c76b22")
+		(property "Sheetname" "Power_Control"
+			(at 1399.54 -0.7116 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "power_control.kicad_sch"
+			(at 1399.54 199.9746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "PWR_BTN_SENSE" bidirectional
+			(at 1482.09 199.39 270)
+			(uuid "2f69170e-9759-49a6-b347-9c1c6276ec76")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "PWR_HOLD" bidirectional
+			(at 1617.98 199.39 270)
+			(uuid "59f69fa8-66eb-4e76-907b-1063c40a1f6b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "PWR_EN" output
+			(at 1549.4 0 90)
+			(uuid "67f7a580-b479-41c5-a50c-7ddcbf6e24c0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(sheet
+		(at 1750.06 999.49)
+		(size 342.9 200.66)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "d13ef906-1771-4e4b-8ca2-9a54efc5a20e")
+		(property "Sheetname" "Buttons_Direct"
+			(at 1750.06 998.7784 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "buttons_direct.kicad_sch"
+			(at 1750.06 1200.7346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "BTN_VOL_UP" output
+			(at 1769.11 999.49 90)
+			(uuid "8769b8a6-c683-432b-ae91-a3ecc34d2018")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_VOL_DN" output
+			(at 1807.21 999.49 90)
+			(uuid "349594cc-f425-46ab-907e-1e93ee55a0a6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_TRIG_DIG" output
+			(at 1845.31 999.49 90)
+			(uuid "566773a0-bca4-40e4-b57f-c447a152db47")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO1" output
+			(at 1883.41 999.49 90)
+			(uuid "84036333-f91d-4625-b82f-24779b91d8cd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO2" output
+			(at 1921.51 999.49 90)
+			(uuid "d4a84ec7-d313-4176-aac8-36674f2597ec")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO3" output
+			(at 1959.61 999.49 90)
+			(uuid "c7f8f64d-3091-4aac-b89c-b2a0320cd210")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO4" output
+			(at 1997.71 999.49 90)
+			(uuid "4ecd8ed4-c816-41a6-849d-1d49116dfaa6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO5" output
+			(at 2035.81 999.49 90)
+			(uuid "ef00a9b1-f957-4b20-8de3-40fd9ffa9951")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BTN_MACRO6" output
+			(at 2073.91 999.49 90)
+			(uuid "ed220aed-5ad8-4331-a36f-1b40738fb2bc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(sheet
+		(at 699.77 0)
+		(size 299.72 199.39)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "d62b292b-5ada-41ed-8d21-6dd942010aa6")
+		(property "Sheetname" "Power_Buck"
+			(at 699.77 -0.7116 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "power_buck.kicad_sch"
+			(at 699.77 199.9746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "PWR_EN" input
+			(at 849.63 0 90)
+			(uuid "5d43788b-1e09-4a16-a9b6-0f7ad56151d6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(sheet
+		(at 0 0)
+		(size 299.72 199.39)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "e6ff3e19-e2b0-4f04-a1cc-1faee1ac6630")
+		(property "Sheetname" "USB_C"
+			(at 0 -0.7116 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "usb_c.kicad_sch"
+			(at 0 199.9746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "USB_DP" bidirectional
+			(at 82.55 199.39 270)
+			(uuid "e76804d1-b287-4741-aee8-b5d8516f064a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "USB_DM" bidirectional
+			(at 217.17 199.39 270)
+			(uuid "1101b07f-2f25-4dfd-a649-83c3d93ad469")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(sheet
+		(at 350.52 0)
+		(size 299.72 199.39)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "f4ce95ac-f63c-4d24-81c6-83f86b68c3b6")
+		(property "Sheetname" "Power_Charger"
+			(at 350.52 -0.7116 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "power_charger.kicad_sch"
+			(at 350.52 199.9746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "STAT1" output
+			(at 500.38 199.39 270)
+			(uuid "b63b47b3-933a-4490-8a3b-4f8fe8cc35f2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
 	(sheet_instances
 		(path "/"
 			(page "1")

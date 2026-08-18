@@ -1,56 +1,270 @@
 (kicad_sch
 	(version 20250114)
-	(generator "kicaddy")
-	(generator_version "0.1.0")
+	(generator "eeschema")
+	(generator_version "9.0")
 	(uuid "aac307a7-e547-4f16-b0f6-3166f7994e77")
 	(paper "A4")
 	(lib_symbols
-		(symbol "Device:R"
-			(pin_numbers (hide yes))
+		(symbol "Device:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference"
-				"R"
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762) (xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "R"
 				(at 2.032 0 90)
-				(effects (font (size 1.27 1.27)))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
 			)
-			(property "Value"
-				"R"
+			(property "Value" "R"
 				(at 0 0 90)
-				(effects (font (size 1.27 1.27)))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
 			)
-			(property "Footprint"
-				""
+			(property "Footprint" ""
 				(at -1.778 0 90)
-				(effects (font (size 1.27 1.27)) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
 			)
-			(property "Datasheet"
-				"~"
+			(property "Datasheet" "~"
 				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
 			)
-			(property "Description"
-				"Resistor"
+			(property "Description" "Resistor"
 				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
 			)
-			(property "ki_keywords"
-				"R res resistor"
+			(property "ki_keywords" "R res resistor"
 				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
 			)
-			(property "ki_fp_filters"
-				"R_*"
+			(property "ki_fp_filters" "R_*"
 				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
 			)
 			(symbol "R_0_1"
-				(rectangle (start -1.016 -2.54) (end 1.016 2.54) (stroke (width 0.254) (type default)) (fill (type none)))
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
 			)
 			(symbol "R_1_1"
-				(pin passive line (at 0 3.81 270) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -3.81 90) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27)))))
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
 			)
 			(embedded_fonts no)
 		)
@@ -58,252 +272,350 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference"
-				"U"
+			(property "Reference" "U"
 				(at 0 9 0)
-				(effects (font (size 1.27 1.27)))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
 			)
-			(property "Value"
-				"SSD1306_OLED_4pin"
+			(property "Value" "SSD1306_OLED_4pin"
 				(at 0 -9 0)
-				(effects (font (size 1.27 1.27)))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
 			)
-			(property "Footprint"
-				""
+			(property "Footprint" ""
 				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
 			)
-			(property "Description"
-				"Generic 4-pin I2C SSD1306 OLED breakout module (VCC, GND, SCL, SDA). Hand-authored project-local symbol, no vendor-specific pinout assumed."
+			(property "Datasheet" ""
 				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic 4-pin I2C SSD1306 OLED breakout module (VCC, GND, SCL, SDA). Hand-authored project-local symbol, no vendor-specific pinout assumed."
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
 			)
 			(symbol "SSD1306_OLED_4pin_0_1"
-				(rectangle (start -12.7 6.35) (end 12.7 -6.35) (stroke (width 0.254) (type default)) (fill (type background)))
+				(rectangle
+					(start -12.7 6.35)
+					(end 12.7 -6.35)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
 			)
 			(symbol "SSD1306_OLED_4pin_1_1"
-				(pin power_in line (at -16.51 3.81 0) (length 3.81) (name "VCC" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
-				(pin power_in line (at -16.51 1.27 0) (length 3.81) (name "GND" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27)))))
-				(pin input line (at -16.51 -1.27 0) (length 3.81) (name "SCL" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27)))))
-				(pin bidirectional line (at -16.51 -3.81 0) (length 3.81) (name "SDA" (effects (font (size 1.27 1.27)))) (number "4" (effects (font (size 1.27 1.27)))))
-			)
-		)
-		(symbol "Device:C"
-			(pin_numbers (hide yes))
-			(pin_names (offset 0.254))
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference"
-				"C"
-				(at 0.635 2.54 0)
-				(effects (font (size 1.27 1.27)) (justify left))
-			)
-			(property "Value"
-				"C"
-				(at 0.635 -2.54 0)
-				(effects (font (size 1.27 1.27)) (justify left))
-			)
-			(property "Footprint"
-				""
-				(at 0.9652 -3.81 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "Datasheet"
-				"~"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "Description"
-				"Unpolarized capacitor"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "ki_keywords"
-				"cap capacitor"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "ki_fp_filters"
-				"C_*"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(symbol "C_0_1"
-				(polyline (pts (xy -2.032 0.762) (xy 2.032 0.762)) (stroke (width 0.508) (type default)) (fill (type none)))
-				(polyline (pts (xy -2.032 -0.762) (xy 2.032 -0.762)) (stroke (width 0.508) (type default)) (fill (type none)))
-			)
-			(symbol "C_1_1"
-				(pin passive line (at 0 3.81 270) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -3.81 90) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27)))))
+				(pin power_in line
+					(at -16.51 3.81 0)
+					(length 3.81)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -16.51 1.27 0)
+					(length 3.81)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -16.51 -1.27 0)
+					(length 3.81)
+					(name "SCL"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -16.51 -3.81 0)
+					(length 3.81)
+					(name "SDA"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
 			)
 			(embedded_fonts no)
 		)
 	)
 	(global_label "3V3"
 		(shape passive)
-		(at 198.12 101.6 0)
+		(at 198.12 101.6 180)
 		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
 		(uuid "00c41d3a-af1f-48f2-b0cc-f4dfa97059f0")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 198.12 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(global_label "3V3"
 		(shape passive)
-		(at 82.55 101.6 270)
+		(at 113.03 101.6 90)
 		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "49f9bbc0-8bee-4bc1-86f5-f3852320448f")
-	)
-	(global_label "3V3"
-		(shape passive)
-		(at 113.03 101.6 270)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify left))
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
 		(uuid "1cc2ec9c-afe5-426f-8673-6aae3421bad8")
-	)
-	(global_label "3V3"
-		(shape passive)
-		(at 142.24 100.33 270)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "3b94d188-a7cd-4580-a8f5-096523cc13df")
-	)
-	(global_label "3V3"
-		(shape passive)
-		(at 171.45 100.33 270)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "6b9fa725-955e-430d-b3bb-72af05625e94")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 113.03 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 198.12 104.14 0)
+		(at 82.55 109.22 270)
 		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
-		(uuid "5249bef9-4585-4c9e-8a5f-8ab17fd53392")
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 82.55 109.22 90)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
 		(uuid "338561a0-403d-424c-8a89-0390d4529fc7")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 82.55 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 142.24 100.33 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3b94d188-a7cd-4580-a8f5-096523cc13df")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 142.24 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 82.55 101.6 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "49f9bbc0-8bee-4bc1-86f5-f3852320448f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 82.55 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 113.03 109.22 90)
+		(at 198.12 104.14 180)
 		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
-		(uuid "a17b8eee-b3a7-49b1-ad44-0593ae493127")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5249bef9-4585-4c9e-8a5f-8ab17fd53392")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 198.12 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
-	(hierarchical_label "I2C_SDA"
-		(shape bidirectional)
-		(at 198.12 109.22 0)
-		(uuid "6154eea3-a8fc-4eb1-a022-b6b134f3c3f8")
+	(global_label "3V3"
+		(shape passive)
+		(at 171.45 100.33 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6b9fa725-955e-430d-b3bb-72af05625e94")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 171.45 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 113.03 109.22 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a17b8eee-b3a7-49b1-ad44-0593ae493127")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 113.03 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(hierarchical_label "I2C_SDA"
 		(shape bidirectional)
 		(at 142.24 107.95 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
 		(uuid "0d5544bc-6581-44be-ba41-8e1682fc9221")
 	)
-	(hierarchical_label "I2C_SCL"
+	(hierarchical_label "I2C_SDA"
 		(shape bidirectional)
-		(at 198.12 106.68 0)
-		(uuid "b9c90c5e-baea-40fa-981a-f097a82a7bf7")
+		(at 198.12 109.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6154eea3-a8fc-4eb1-a022-b6b134f3c3f8")
 	)
 	(hierarchical_label "I2C_SCL"
 		(shape bidirectional)
 		(at 171.45 107.95 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
 		(uuid "9a67074d-9b43-4d24-80fa-75b311a3d51e")
 	)
-	(symbol
-		(lib_id "Device:R")
-		(at 142.24 104.14 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a83177d5-8c65-4582-b685-2c8df39f4ca9")
-		(property "Reference"
-			"R_I2C_SDA"
-			(at 144.272 104.14 90)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Value"
-			"4.7kΩ"
-			(at 142.24 104.14 90)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Footprint"
-			"Resistor_SMD:R_0402_1005Metric"
-			(at 140.462 104.14 90)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Datasheet"
-			"~"
-			(at 142.24 104.14 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Description"
-			"Resistor"
-			(at 142.24 104.14 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(pin "1" (uuid "b2d66b47-294f-420c-a3dc-148919ed88da"))
-		(pin "2" (uuid "a88e7f6b-35d1-4c65-b481-c9cd2c693514"))
-		(instances
-			(project ""
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/9fde31f3-a36d-4ca9-b27d-63e931064f80"
-					(reference "R_I2C_SDA")
-					(unit 1)
-				)
+	(hierarchical_label "I2C_SCL"
+		(shape bidirectional)
+		(at 198.12 106.68 0)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left)
 		)
-	)
-	(symbol
-		(lib_id "SnipsControllers:SSD1306_OLED_4pin")
-		(at 214.63 105.41 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3c33c249-41be-4b7e-98b9-05008e9b6607")
-		(property "Reference"
-			"U_OLED"
-			(at 214.63 114.41 0)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Value"
-			"SSD1306_1.3in"
-			(at 214.63 96.41 0)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Footprint"
-			"Display:Adafruit_SSD1306"
-			(at 214.63 105.41 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Description"
-			"Generic 4-pin I2C SSD1306 OLED breakout module (VCC, GND, SCL, SDA). Hand-authored project-local symbol, no vendor-specific pinout assumed."
-			(at 214.63 105.41 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(pin "1" (uuid "f919e54a-6708-48d8-9b12-54146742949d"))
-		(pin "2" (uuid "55c9ffcb-ee4c-41cb-a0b9-446e859591aa"))
-		(pin "3" (uuid "0d96013e-af34-471a-b699-f41779b9256a"))
-		(pin "4" (uuid "5e38eb66-800d-478f-85ee-dd1d096305a9"))
-		(instances
-			(project ""
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/9fde31f3-a36d-4ca9-b27d-63e931064f80"
-					(reference "U_OLED")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "b9c90c5e-baea-40fa-981a-f097a82a7bf7")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -315,83 +627,61 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2e3cb4a3-7272-41a5-82ba-b8086297ba40")
-		(property "Reference"
-			"C_OLED_1"
+		(property "Reference" "C_OLED_1"
 			(at 83.185 107.95 0)
-			(effects (font (size 1.27 1.27)) (justify left))
-		)
-		(property "Value"
-			"10µF"
-			(at 83.185 102.87 0)
-			(effects (font (size 1.27 1.27)) (justify left))
-		)
-		(property "Footprint"
-			"Capacitor_SMD:C_0805_2012Metric"
-			(at 83.5152 101.6 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Datasheet"
-			"~"
-			(at 82.55 105.41 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Description"
-			"Unpolarized capacitor"
-			(at 82.55 105.41 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(pin "1" (uuid "dbf9ffe8-740a-4d31-8f19-33abad6b74ca"))
-		(pin "2" (uuid "069c38ce-e2bf-4ad9-97a6-04bda40dbf13"))
-		(instances
-			(project ""
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/9fde31f3-a36d-4ca9-b27d-63e931064f80"
-					(reference "C_OLED_1")
-					(unit 1)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 113.03 105.41 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f0c2aadb-28f4-4bf5-9867-85989f03def8")
-		(property "Reference"
-			"C_OLED_2"
-			(at 113.665 107.95 0)
-			(effects (font (size 1.27 1.27)) (justify left))
+		(property "Value" "10µF"
+			(at 83.185 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
 		)
-		(property "Value"
-			"100nF"
-			(at 113.665 102.87 0)
-			(effects (font (size 1.27 1.27)) (justify left))
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 83.5152 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Footprint"
-			"Capacitor_SMD:C_0402_1005Metric"
-			(at 113.9952 101.6 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+		(property "Datasheet" "~"
+			(at 82.55 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Datasheet"
-			"~"
-			(at 113.03 105.41 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+		(property "Description" "Unpolarized capacitor"
+			(at 82.55 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Description"
-			"Unpolarized capacitor"
-			(at 113.03 105.41 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+		(pin "1"
+			(uuid "dbf9ffe8-740a-4d31-8f19-33abad6b74ca")
 		)
-		(pin "1" (uuid "0fdc164b-273e-436b-a743-39f119313f07"))
-		(pin "2" (uuid "91fb12a5-3190-43bd-a69d-19208123fe1b"))
+		(pin "2"
+			(uuid "069c38ce-e2bf-4ad9-97a6-04bda40dbf13")
+		)
 		(instances
-			(project ""
+			(project "snips_controller"
 				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/9fde31f3-a36d-4ca9-b27d-63e931064f80"
-					(reference "C_OLED_2")
+					(reference "C_OLED_1")
 					(unit 1)
 				)
 			)
@@ -407,46 +697,273 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2ffed1df-dffc-49c7-9bac-4b751b001c7a")
-		(property "Reference"
-			"R_I2C_SCL"
+		(property "Reference" "R_I2C_SCL1"
 			(at 173.482 104.14 90)
-			(effects (font (size 1.27 1.27)))
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
 		)
-		(property "Value"
-			"4.7kΩ"
+		(property "Value" "4.7kΩ"
 			(at 171.45 104.14 90)
-			(effects (font (size 1.27 1.27)))
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
 		)
-		(property "Footprint"
-			"Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 169.672 104.14 90)
-			(effects (font (size 1.27 1.27)) (hide yes))
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Datasheet"
-			"~"
+		(property "Datasheet" "~"
 			(at 171.45 104.14 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Description"
-			"Resistor"
+		(property "Description" "Resistor"
 			(at 171.45 104.14 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(pin "1" (uuid "76c92295-d14d-43b2-83a1-1adc9dca1acb"))
-		(pin "2" (uuid "e746ced7-dd49-4355-ac80-f53acd57f26d"))
+		(pin "1"
+			(uuid "76c92295-d14d-43b2-83a1-1adc9dca1acb")
+		)
+		(pin "2"
+			(uuid "e746ced7-dd49-4355-ac80-f53acd57f26d")
+		)
 		(instances
-			(project ""
+			(project "snips_controller"
 				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/9fde31f3-a36d-4ca9-b27d-63e931064f80"
-					(reference "R_I2C_SCL")
+					(reference "R_I2C_SCL1")
 					(unit 1)
 				)
 			)
 		)
 	)
-	(sheet_instances
-		(path "/868f8289-8434-4465-b2f4-2accc5e40bab/9fde31f3-a36d-4ca9-b27d-63e931064f80"
-			(page "1")
+	(symbol
+		(lib_id "SnipsControllers:SSD1306_OLED_4pin")
+		(at 214.63 105.41 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3c33c249-41be-4b7e-98b9-05008e9b6607")
+		(property "Reference" "U_OLED1"
+			(at 214.63 114.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SSD1306_1.3in"
+			(at 214.63 96.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Display:Adafruit_SSD1306"
+			(at 214.63 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 214.63 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Generic 4-pin I2C SSD1306 OLED breakout module (VCC, GND, SCL, SDA). Hand-authored project-local symbol, no vendor-specific pinout assumed."
+			(at 214.63 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f919e54a-6708-48d8-9b12-54146742949d")
+		)
+		(pin "2"
+			(uuid "55c9ffcb-ee4c-41cb-a0b9-446e859591aa")
+		)
+		(pin "3"
+			(uuid "0d96013e-af34-471a-b699-f41779b9256a")
+		)
+		(pin "4"
+			(uuid "5e38eb66-800d-478f-85ee-dd1d096305a9")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/9fde31f3-a36d-4ca9-b27d-63e931064f80"
+					(reference "U_OLED1")
+					(unit 1)
+				)
+			)
 		)
 	)
-	(embedded_fonts no)
+	(symbol
+		(lib_id "Device:R")
+		(at 142.24 104.14 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a83177d5-8c65-4582-b685-2c8df39f4ca9")
+		(property "Reference" "R_I2C_SDA1"
+			(at 144.272 104.14 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4.7kΩ"
+			(at 142.24 104.14 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 140.462 104.14 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 142.24 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 142.24 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b2d66b47-294f-420c-a3dc-148919ed88da")
+		)
+		(pin "2"
+			(uuid "a88e7f6b-35d1-4c65-b481-c9cd2c693514")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/9fde31f3-a36d-4ca9-b27d-63e931064f80"
+					(reference "R_I2C_SDA1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 113.03 105.41 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f0c2aadb-28f4-4bf5-9867-85989f03def8")
+		(property "Reference" "C_OLED_2"
+			(at 113.665 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100nF"
+			(at 113.665 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 113.9952 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 113.03 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 113.03 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0fdc164b-273e-436b-a743-39f119313f07")
+		)
+		(pin "2"
+			(uuid "91fb12a5-3190-43bd-a69d-19208123fe1b")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/9fde31f3-a36d-4ca9-b27d-63e931064f80"
+					(reference "C_OLED_2")
+					(unit 1)
+				)
+			)
+		)
+	)
 )

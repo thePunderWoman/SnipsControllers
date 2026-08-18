@@ -1,481 +1,1120 @@
 (kicad_sch
 	(version 20250114)
-	(generator "kicaddy")
-	(generator_version "0.1.0")
+	(generator "eeschema")
+	(generator_version "9.0")
 	(uuid "648f0171-f2d1-45d5-b244-422c1c9f638e")
 	(paper "A4")
 	(lib_symbols
+		(symbol "Device:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762) (xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Xbee3:XB3-24Z8UT-J"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference"
-				"IC"
+			(property "Reference" "IC"
 				(at 59.69 7.62 0)
-				(effects (font (size 1.27 1.27)) (justify left top))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
 			)
-			(property "Value"
-				"XB3-24Z8UT-J"
+			(property "Value" "XB3-24Z8UT-J"
 				(at 59.69 5.08 0)
-				(effects (font (size 1.27 1.27)) (justify left top))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
 			)
-			(property "Footprint"
-				""
+			(property "Footprint" ""
 				(at 59.69 -94.92 0)
-				(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
 			)
-			(property "Datasheet"
-				"https://componentsearchengine.com/Datasheets/1/XB3-24Z8UT-J.pdf"
+			(property "Datasheet" "https://componentsearchengine.com/Datasheets/1/XB3-24Z8UT-J.pdf"
 				(at 59.69 -194.92 0)
-				(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
 			)
-			(property "ki_description"
-				"Zigbee Modules (802.15.4) XBee3,2.4 Ghz ZB 3.0, U.FL Ant, TH MT"
-				(at 59.69 -294.92 0)
-				(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
+			(property "Description" "Zigbee Modules (802.15.4) XBee3,2.4 Ghz ZB 3.0, U.FL Ant, TH MT"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
 			)
-			(property "Height"
-				"2.79"
+			(property "Height" "2.79"
 				(at 59.69 -394.92 0)
-				(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
 			)
-			(property "Mouser Part Number"
-				"888-XB3-24Z8UT-J"
+			(property "Mouser Part Number" "888-XB3-24Z8UT-J"
 				(at 59.69 -494.92 0)
-				(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
 			)
-			(property "Mouser Price/Stock"
-				"https://www.mouser.com/Search/Refine.aspx?Keyword=888-XB3-24Z8UT-J"
+			(property "Mouser Price/Stock" "https://www.mouser.com/Search/Refine.aspx?Keyword=888-XB3-24Z8UT-J"
 				(at 59.69 -594.92 0)
-				(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
 			)
-			(property "Manufacturer_Name"
-				"Digi International"
+			(property "Manufacturer_Name" "Digi International"
 				(at 59.69 -694.92 0)
-				(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
 			)
-			(property "Manufacturer_Part_Number"
-				"XB3-24Z8UT-J"
+			(property "Manufacturer_Part_Number" "XB3-24Z8UT-J"
 				(at 59.69 -794.92 0)
-				(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
 			)
 			(symbol "XB3-24Z8UT-J_0_1"
-				(rectangle (start 5.08 2.54) (end 58.42 -25.4) (stroke (width 0.254) (type default)) (fill (type background)))
+				(rectangle
+					(start 5.08 2.54)
+					(end 58.42 -25.4)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
 			)
 			(symbol "XB3-24Z8UT-J_1_1"
-				(pin passive line (at 0 0 0) (length 5.08) (name "VCC" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -2.54 0) (length 5.08) (name "DOUT/DIO13" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -5.08 0) (length 5.08) (name "DIN/~{CONFIG}/DIO14" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -7.62 0) (length 5.08) (name "SPI_MISO" (effects (font (size 1.27 1.27)))) (number "4" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -10.16 0) (length 5.08) (name "RESET" (effects (font (size 1.27 1.27)))) (number "5" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -12.7 0) (length 5.08) (name "RSSI_PWM/DIO10" (effects (font (size 1.27 1.27)))) (number "6" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -15.24 0) (length 5.08) (name "PWM1/DIO11" (effects (font (size 1.27 1.27)))) (number "7" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -17.78 0) (length 5.08) (name "[RESERVED]_1" (effects (font (size 1.27 1.27)))) (number "8" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -20.32 0) (length 5.08) (name "DTR" (effects (font (size 1.27 1.27)))) (number "9" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -22.86 0) (length 5.08) (name "GND" (effects (font (size 1.27 1.27)))) (number "10" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 63.5 -22.86 180) (length 5.08) (name "SPI_MOSI" (effects (font (size 1.27 1.27)))) (number "11" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 63.5 -20.32 180) (length 5.08) (name "~{CTS}/DIO7" (effects (font (size 1.27 1.27)))) (number "12" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 63.5 -17.78 180) (length 5.08) (name "ON_SLEEP" (effects (font (size 1.27 1.27)))) (number "13" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 63.5 -15.24 180) (length 5.08) (name "[RESERVED]_2" (effects (font (size 1.27 1.27)))) (number "14" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 63.5 -12.7 180) (length 5.08) (name "ASSOCIATE/DIO5" (effects (font (size 1.27 1.27)))) (number "15" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 63.5 -10.16 180) (length 5.08) (name "~{RTS}/DIO6" (effects (font (size 1.27 1.27)))) (number "16" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 63.5 -7.62 180) (length 5.08) (name "SPI_SSEL" (effects (font (size 1.27 1.27)))) (number "17" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 63.5 -5.08 180) (length 5.08) (name "SPI_CLK" (effects (font (size 1.27 1.27)))) (number "18" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 63.5 -2.54 180) (length 5.08) (name "SPI_ATTN" (effects (font (size 1.27 1.27)))) (number "19" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 63.5 0 180) (length 5.08) (name "AD0_/DIO0" (effects (font (size 1.27 1.27)))) (number "20" (effects (font (size 1.27 1.27)))))
-			)
-		)
-		(symbol "Device:R"
-			(pin_numbers (hide yes))
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference"
-				"R"
-				(at 2.032 0 90)
-				(effects (font (size 1.27 1.27)))
-			)
-			(property "Value"
-				"R"
-				(at 0 0 90)
-				(effects (font (size 1.27 1.27)))
-			)
-			(property "Footprint"
-				""
-				(at -1.778 0 90)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "Datasheet"
-				"~"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "Description"
-				"Resistor"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "ki_keywords"
-				"R res resistor"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "ki_fp_filters"
-				"R_*"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(symbol "R_0_1"
-				(rectangle (start -1.016 -2.54) (end 1.016 2.54) (stroke (width 0.254) (type default)) (fill (type none)))
-			)
-			(symbol "R_1_1"
-				(pin passive line (at 0 3.81 270) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -3.81 90) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27)))))
+				(pin passive line
+					(at 0 0 0)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -2.54 0)
+					(length 5.08)
+					(name "DOUT/DIO13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -5.08 0)
+					(length 5.08)
+					(name "DIN/~{CONFIG}/DIO14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -7.62 0)
+					(length 5.08)
+					(name "SPI_MISO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -10.16 0)
+					(length 5.08)
+					(name "RESET"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -12.7 0)
+					(length 5.08)
+					(name "RSSI_PWM/DIO10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -15.24 0)
+					(length 5.08)
+					(name "PWM1/DIO11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -17.78 0)
+					(length 5.08)
+					(name "[RESERVED]_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -20.32 0)
+					(length 5.08)
+					(name "DTR"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -22.86 0)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 63.5 0 180)
+					(length 5.08)
+					(name "AD0_/DIO0"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "20"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 63.5 -2.54 180)
+					(length 5.08)
+					(name "SPI_ATTN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "19"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 63.5 -5.08 180)
+					(length 5.08)
+					(name "SPI_CLK"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "18"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 63.5 -7.62 180)
+					(length 5.08)
+					(name "SPI_SSEL"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "17"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 63.5 -10.16 180)
+					(length 5.08)
+					(name "~{RTS}/DIO6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "16"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 63.5 -12.7 180)
+					(length 5.08)
+					(name "ASSOCIATE/DIO5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "15"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 63.5 -15.24 180)
+					(length 5.08)
+					(name "[RESERVED]_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 63.5 -17.78 180)
+					(length 5.08)
+					(name "ON_SLEEP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 63.5 -20.32 180)
+					(length 5.08)
+					(name "~{CTS}/DIO7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 63.5 -22.86 180)
+					(length 5.08)
+					(name "SPI_MOSI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Device:C"
-			(pin_numbers (hide yes))
-			(pin_names (offset 0.254))
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference"
-				"C"
-				(at 0.635 2.54 0)
-				(effects (font (size 1.27 1.27)) (justify left))
+	)
+	(no_connect
+		(at 101.6 114.3)
+		(uuid "035defee-580a-457b-aba6-25fd07d5de6a")
+	)
+	(no_connect
+		(at 165.1 96.52)
+		(uuid "2061a0a3-4c96-4a0a-9994-0647c3bb6685")
+	)
+	(no_connect
+		(at 165.1 111.76)
+		(uuid "4e21d335-8e3e-436b-b80b-a906376cc18c")
+	)
+	(no_connect
+		(at 101.6 109.22)
+		(uuid "76f47a19-514b-4885-9e96-b489d77887c0")
+	)
+	(no_connect
+		(at 165.1 106.68)
+		(uuid "8ca7bd33-984f-41b1-8f1e-14c7abc844db")
+	)
+	(no_connect
+		(at 165.1 116.84)
+		(uuid "932dae1f-93ae-49bd-ba62-a0f97be7f8a3")
+	)
+	(no_connect
+		(at 101.6 101.6)
+		(uuid "948f5d51-da0f-4d90-8d46-2778aa1d0aef")
+	)
+	(no_connect
+		(at 101.6 111.76)
+		(uuid "a073340e-3459-47aa-a19d-be5f94d16415")
+	)
+	(no_connect
+		(at 101.6 99.06)
+		(uuid "f6123005-1354-40b9-82e5-8e9e2db70798")
+	)
+	(no_connect
+		(at 165.1 109.22)
+		(uuid "fe408be9-a524-4ee3-a433-ba3f222533fa")
+	)
+	(label "XBEE_RST_PU"
+		(at 166.37 104.14 90)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
-			(property "Value"
-				"C"
-				(at 0.635 -2.54 0)
-				(effects (font (size 1.27 1.27)) (justify left))
-			)
-			(property "Footprint"
-				""
-				(at 0.9652 -3.81 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "Datasheet"
-				"~"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "Description"
-				"Unpolarized capacitor"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "ki_keywords"
-				"cap capacitor"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(property "ki_fp_filters"
-				"C_*"
-				(at 0 0 0)
-				(effects (font (size 1.27 1.27)) (hide yes))
-			)
-			(symbol "C_0_1"
-				(polyline (pts (xy -2.032 0.762) (xy 2.032 0.762)) (stroke (width 0.508) (type default)) (fill (type none)))
-				(polyline (pts (xy -2.032 -0.762) (xy 2.032 -0.762)) (stroke (width 0.508) (type default)) (fill (type none)))
-			)
-			(symbol "C_1_1"
-				(pin passive line (at 0 3.81 270) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
-				(pin passive line (at 0 -3.81 90) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27)))))
-			)
-			(embedded_fonts no)
+			(justify left)
 		)
+		(uuid "315f3deb-e47e-4bda-83fb-aa4dbb576822")
 	)
-	(no_connect (at 101.6 99.06) (uuid "f6123005-1354-40b9-82e5-8e9e2db70798"))
-	(no_connect (at 101.6 101.6) (uuid "948f5d51-da0f-4d90-8d46-2778aa1d0aef"))
-	(no_connect (at 101.6 109.22) (uuid "76f47a19-514b-4885-9e96-b489d77887c0"))
-	(no_connect (at 101.6 111.76) (uuid "a073340e-3459-47aa-a19d-be5f94d16415"))
-	(no_connect (at 101.6 114.3) (uuid "035defee-580a-457b-aba6-25fd07d5de6a"))
-	(no_connect (at 165.1 116.84) (uuid "932dae1f-93ae-49bd-ba62-a0f97be7f8a3"))
-	(no_connect (at 165.1 111.76) (uuid "4e21d335-8e3e-436b-b80b-a906376cc18c"))
-	(no_connect (at 165.1 109.22) (uuid "fe408be9-a524-4ee3-a433-ba3f222533fa"))
-	(no_connect (at 165.1 106.68) (uuid "8ca7bd33-984f-41b1-8f1e-14c7abc844db"))
-	(no_connect (at 165.1 96.52) (uuid "2061a0a3-4c96-4a0a-9994-0647c3bb6685"))
-	(global_label "3V3"
-		(shape passive)
-		(at 101.6 96.52 0)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
-		(uuid "b77298b2-660e-4818-89eb-382ef851da15")
+	(label "XBEE_RST_PU"
+		(at 195.58 114.3 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "62a609b9-a31a-4bd7-8650-7eed9675d866")
 	)
-	(global_label "3V3"
-		(shape passive)
-		(at 134.62 135.89 270)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "68a74b5d-8e77-4f6f-8f3c-631fd3320df4")
+	(label "XBEE_RESET"
+		(at 101.6 106.68 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7ffcdd0b-4f5d-45cb-9f53-688901eb0a21")
 	)
-	(global_label "3V3"
-		(shape passive)
-		(at 195.58 106.68 270)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "286188b2-a19f-4691-befe-a46ad6b47930")
+	(label "XBEE_RST_PU"
+		(at 166.37 66.04 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c74c0d55-822c-4116-9a1a-8fa3134b3ce2")
+	)
+	(label "XBEE_RESET"
+		(at 166.37 73.66 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e183501d-088d-45dd-b090-22d1c18e3f20")
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 101.6 119.38 0)
+		(at 134.62 143.51 270)
 		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
-		(uuid "453556b9-38b5-43a8-9f6d-f11339d97536")
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 134.62 143.51 90)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
 		(uuid "189a0347-0078-40e2-935d-4cf7da078e42")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 134.62 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 195.58 106.68 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "286188b2-a19f-4691-befe-a46ad6b47930")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 195.58 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 166.37 111.76 90)
+		(at 101.6 119.38 180)
 		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "453556b9-38b5-43a8-9f6d-f11339d97536")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 101.6 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 134.62 135.89 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "68a74b5d-8e77-4f6f-8f3c-631fd3320df4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 134.62 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 166.37 111.76 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
 		(uuid "777fc2db-a99b-4773-86f8-e17cb56e46bc")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 166.37 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 101.6 116.84 0)
+		(at 101.6 116.84 180)
 		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
 		(uuid "91b25b5a-f863-413e-9dd5-52a512cfd4a0")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 101.6 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 101.6 96.52 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b77298b2-660e-4818-89eb-382ef851da15")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 101.6 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 	)
 	(hierarchical_label "SPI_SCK"
 		(shape bidirectional)
-		(at 165.1 101.6 180)
+		(at 165.1 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
 		(uuid "21aaaad4-9cf2-4e4d-bd6d-e15a9f5ae6c6")
 	)
 	(hierarchical_label "SPI_MOSI"
 		(shape bidirectional)
-		(at 165.1 119.38 180)
+		(at 165.1 119.38 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
 		(uuid "2e939ded-7870-4a69-a3a8-03b758eba0c5")
-	)
-	(hierarchical_label "SPI_MISO"
-		(shape bidirectional)
-		(at 101.6 104.14 0)
-		(uuid "82a64606-2f0e-46aa-b057-5b5382d4410d")
-	)
-	(hierarchical_label "XBee_CS"
-		(shape bidirectional)
-		(at 165.1 104.14 180)
-		(uuid "e2c812d8-7dd1-4895-b758-7fa2a0adbaff")
 	)
 	(hierarchical_label "XBEE_ON_SLEEP"
 		(shape bidirectional)
-		(at 165.1 114.3 180)
+		(at 165.1 114.3 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
 		(uuid "4551d1b8-d101-42a2-9f62-68b648785ba7")
 	)
 	(hierarchical_label "XBEE_SPI_ATTN"
 		(shape bidirectional)
-		(at 165.1 99.06 180)
+		(at 165.1 99.06 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
 		(uuid "72463efb-44d3-48d7-9dd7-c126b5dd4f37")
 	)
-	(label "XBEE_RST_PU"
-		(at 195.58 114.3 90)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
-		(uuid "62a609b9-a31a-4bd7-8650-7eed9675d866")
+	(hierarchical_label "SPI_MISO"
+		(shape bidirectional)
+		(at 101.6 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "82a64606-2f0e-46aa-b057-5b5382d4410d")
 	)
-	(label "XBEE_RST_PU"
-		(at 166.37 66.04 270)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "c74c0d55-822c-4116-9a1a-8fa3134b3ce2")
-	)
-	(label "XBEE_RST_PU"
-		(at 166.37 104.14 270)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "315f3deb-e47e-4bda-83fb-aa4dbb576822")
-	)
-	(label "XBEE_RESET"
-		(at 101.6 106.68 0)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
-		(uuid "7ffcdd0b-4f5d-45cb-9f53-688901eb0a21")
-	)
-	(label "XBEE_RESET"
-		(at 166.37 73.66 90)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify right))
-		(uuid "e183501d-088d-45dd-b090-22d1c18e3f20")
+	(hierarchical_label "XBee_CS"
+		(shape bidirectional)
+		(at 165.1 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e2c812d8-7dd1-4895-b758-7fa2a0adbaff")
 	)
 	(symbol
-		(lib_id "Xbee3:XB3-24Z8UT-J")
-		(at 101.6 96.52 0)
+		(lib_id "Device:C")
+		(at 134.62 139.7 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "cafdfe89-743e-4652-9213-f7a22333f868")
-		(property "Reference"
-			"U_XBEE"
-			(at 161.29 104.14 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		)
-		(property "Value"
-			"XBee3"
-			(at 161.29 101.6 0)
-			(effects (font (size 1.27 1.27)) (justify left top))
-		)
-		(property "Footprint"
-			"Xbee3:XB324Z8UTJ"
-			(at 161.29 1.6 0)
-			(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
-		)
-		(property "Datasheet"
-			"https://componentsearchengine.com/Datasheets/1/XB3-24Z8UT-J.pdf"
-			(at 161.29 -98.4 0)
-			(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
-		)
-		(property "Height"
-			"2.79"
-			(at 161.29 -298.4 0)
-			(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
-		)
-		(property "Mouser Part Number"
-			"888-XB3-24Z8UT-J"
-			(at 161.29 -398.4 0)
-			(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
-		)
-		(property "Mouser Price/Stock"
-			"https://www.mouser.com/Search/Refine.aspx?Keyword=888-XB3-24Z8UT-J"
-			(at 161.29 -498.4 0)
-			(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
-		)
-		(property "Manufacturer_Name"
-			"Digi International"
-			(at 161.29 -598.4 0)
-			(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
-		)
-		(property "Manufacturer_Part_Number"
-			"XB3-24Z8UT-J"
-			(at 161.29 -698.4 0)
-			(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
-		)
-		(pin "1" (uuid "49f0bdaf-4945-476d-87ef-a735552f8447"))
-		(pin "10" (uuid "d39963b5-e0fa-4f5c-ba0c-5ec029022bca"))
-		(pin "11" (uuid "69e63be6-1226-4886-a1be-4ffbdca7617b"))
-		(pin "12" (uuid "f435a529-62d4-4650-80ad-d6eded6620ae"))
-		(pin "13" (uuid "9f425730-8353-446a-9143-8a663d562e22"))
-		(pin "14" (uuid "27021714-47e4-4e06-aa9b-67e5b6f899b3"))
-		(pin "15" (uuid "25435919-b08c-4327-b1eb-978b1a315b54"))
-		(pin "16" (uuid "31b9b7b8-d0c1-4114-ba2d-a77affa7231e"))
-		(pin "17" (uuid "f9dfdcc5-c0ec-46c0-bd6f-f4eea0f06e36"))
-		(pin "18" (uuid "ee051969-6a10-4109-8e9a-8a633f33e177"))
-		(pin "19" (uuid "fddff4bc-87b4-4894-8236-2526923841db"))
-		(pin "2" (uuid "b9c9fc56-1a11-4001-9f2a-603b0eb1109e"))
-		(pin "20" (uuid "969013a4-19af-4058-8acc-ca05c333eb2b"))
-		(pin "3" (uuid "70775d0e-03d0-45d0-bf49-eab5b8d066bd"))
-		(pin "4" (uuid "44e596a7-1503-4545-85e2-5096686c65f7"))
-		(pin "5" (uuid "048e90ce-e8f4-4cc1-98cd-f328428291c3"))
-		(pin "6" (uuid "9fcc4d96-8dd6-4f58-94e7-717252d94613"))
-		(pin "7" (uuid "2e067d07-31c5-41f7-a52b-11eaad04c0bc"))
-		(pin "8" (uuid "2e97bf35-bbfd-40d0-82f5-cef85a95f2eb"))
-		(pin "9" (uuid "9d0fcf75-63ed-4543-ac23-bf6da5d66f45"))
-		(instances
-			(project ""
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c69a94f8-41dd-441c-96d4-f7b37eb128c5"
-					(reference "U_XBEE")
-					(unit 1)
+		(uuid "4cda8d77-ea77-4cfa-bb3d-0710fbe4b5b1")
+		(property "Reference" "C_XBEE_VCC1"
+			(at 135.255 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 166.37 69.85 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b21af570-44f1-4f66-86c2-bd6dcb024a44")
-		(property "Reference"
-			"R_XBEE_RC"
-			(at 168.402 69.85 90)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Value"
-			"100Ω"
-			(at 166.37 69.85 90)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Footprint"
-			"Resistor_SMD:R_0402_1005Metric"
-			(at 164.592 69.85 90)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Datasheet"
-			"~"
-			(at 166.37 69.85 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Description"
-			"Resistor"
-			(at 166.37 69.85 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(pin "1" (uuid "85e63bef-3a27-454a-a9c0-22372b373390"))
-		(pin "2" (uuid "f284abb8-4edc-4e47-9a4b-7cefc2c6fabb"))
-		(instances
-			(project ""
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c69a94f8-41dd-441c-96d4-f7b37eb128c5"
-					(reference "R_XBEE_RC")
-					(unit 1)
+		(property "Value" "100nF"
+			(at 135.255 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 195.58 110.49 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "bb68d869-f96c-4fa6-9a75-4ea7960c5adc")
-		(property "Reference"
-			"R_XBEE_RST"
-			(at 197.612 110.49 90)
-			(effects (font (size 1.27 1.27)))
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 135.5852 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Value"
-			"10kΩ"
-			(at 195.58 110.49 90)
-			(effects (font (size 1.27 1.27)))
+		(property "Datasheet" "~"
+			(at 134.62 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Footprint"
-			"Resistor_SMD:R_0402_1005Metric"
-			(at 193.802 110.49 90)
-			(effects (font (size 1.27 1.27)) (hide yes))
+		(property "Description" "Unpolarized capacitor"
+			(at 134.62 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Datasheet"
-			"~"
-			(at 195.58 110.49 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+		(pin "1"
+			(uuid "b5624946-3697-4c2a-81f2-8ce3819b3d23")
 		)
-		(property "Description"
-			"Resistor"
-			(at 195.58 110.49 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+		(pin "2"
+			(uuid "df33a769-3d95-4db0-8e1d-2b1a814bd25c")
 		)
-		(pin "1" (uuid "4e32052b-5e3d-4884-a58c-69cc6c442b6e"))
-		(pin "2" (uuid "4a24cc78-d3ee-48f0-8e2d-bec54acc2005"))
 		(instances
-			(project ""
+			(project "snips_controller"
 				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c69a94f8-41dd-441c-96d4-f7b37eb128c5"
-					(reference "R_XBEE_RST")
+					(reference "C_XBEE_VCC1")
 					(unit 1)
 				)
 			)
@@ -491,92 +1130,375 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6b5e6cb5-17db-48a4-b264-cd0d44d10cd9")
-		(property "Reference"
-			"C_XBEE_RC"
+		(property "Reference" "C_XBEE_RC1"
 			(at 167.005 110.49 0)
-			(effects (font (size 1.27 1.27)) (justify left))
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
 		)
-		(property "Value"
-			"100nF"
+		(property "Value" "100nF"
 			(at 167.005 105.41 0)
-			(effects (font (size 1.27 1.27)) (justify left))
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
 		)
-		(property "Footprint"
-			"Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 167.3352 104.14 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Datasheet"
-			"~"
+		(property "Datasheet" "~"
 			(at 166.37 107.95 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Description"
-			"Unpolarized capacitor"
+		(property "Description" "Unpolarized capacitor"
 			(at 166.37 107.95 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(pin "1" (uuid "dc70d9fd-830f-43f7-9944-60ef29107edf"))
-		(pin "2" (uuid "57af0dfb-e056-4ad5-8736-262899d4d2f3"))
+		(pin "1"
+			(uuid "dc70d9fd-830f-43f7-9944-60ef29107edf")
+		)
+		(pin "2"
+			(uuid "57af0dfb-e056-4ad5-8736-262899d4d2f3")
+		)
 		(instances
-			(project ""
+			(project "snips_controller"
 				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c69a94f8-41dd-441c-96d4-f7b37eb128c5"
-					(reference "C_XBEE_RC")
+					(reference "C_XBEE_RC1")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 134.62 139.7 0)
+		(lib_id "Device:R")
+		(at 166.37 69.85 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "4cda8d77-ea77-4cfa-bb3d-0710fbe4b5b1")
-		(property "Reference"
-			"C_XBEE_VCC"
-			(at 135.255 142.24 0)
-			(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b21af570-44f1-4f66-86c2-bd6dcb024a44")
+		(property "Reference" "R_XBEE_RC1"
+			(at 168.402 69.85 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
 		)
-		(property "Value"
-			"100nF"
-			(at 135.255 137.16 0)
-			(effects (font (size 1.27 1.27)) (justify left))
+		(property "Value" "100Ω"
+			(at 166.37 69.85 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
 		)
-		(property "Footprint"
-			"Capacitor_SMD:C_0402_1005Metric"
-			(at 135.5852 135.89 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 164.592 69.85 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Datasheet"
-			"~"
-			(at 134.62 139.7 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+		(property "Datasheet" "~"
+			(at 166.37 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(property "Description"
-			"Unpolarized capacitor"
-			(at 134.62 139.7 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
+		(property "Description" "Resistor"
+			(at 166.37 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(pin "1" (uuid "b5624946-3697-4c2a-81f2-8ce3819b3d23"))
-		(pin "2" (uuid "df33a769-3d95-4db0-8e1d-2b1a814bd25c"))
+		(pin "1"
+			(uuid "85e63bef-3a27-454a-a9c0-22372b373390")
+		)
+		(pin "2"
+			(uuid "f284abb8-4edc-4e47-9a4b-7cefc2c6fabb")
+		)
 		(instances
-			(project ""
+			(project "snips_controller"
 				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c69a94f8-41dd-441c-96d4-f7b37eb128c5"
-					(reference "C_XBEE_VCC")
+					(reference "R_XBEE_RC1")
 					(unit 1)
 				)
 			)
 		)
 	)
-	(sheet_instances
-		(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c69a94f8-41dd-441c-96d4-f7b37eb128c5"
-			(page "1")
+	(symbol
+		(lib_id "Device:R")
+		(at 195.58 110.49 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "bb68d869-f96c-4fa6-9a75-4ea7960c5adc")
+		(property "Reference" "R_XBEE_RST1"
+			(at 197.612 110.49 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10kΩ"
+			(at 195.58 110.49 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 193.802 110.49 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 195.58 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 195.58 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4e32052b-5e3d-4884-a58c-69cc6c442b6e")
+		)
+		(pin "2"
+			(uuid "4a24cc78-d3ee-48f0-8e2d-bec54acc2005")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c69a94f8-41dd-441c-96d4-f7b37eb128c5"
+					(reference "R_XBEE_RST1")
+					(unit 1)
+				)
+			)
 		)
 	)
-	(embedded_fonts no)
+	(symbol
+		(lib_id "Xbee3:XB3-24Z8UT-J")
+		(at 101.6 96.52 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "cafdfe89-743e-4652-9213-f7a22333f868")
+		(property "Reference" "U_XBEE1"
+			(at 161.29 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Value" "XBee3"
+			(at 161.29 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Footprint" "Xbee3:XB324Z8UTJ"
+			(at 161.29 1.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://componentsearchengine.com/Datasheets/1/XB3-24Z8UT-J.pdf"
+			(at 161.29 -98.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "Zigbee Modules (802.15.4) XBee3,2.4 Ghz ZB 3.0, U.FL Ant, TH MT"
+			(at 101.6 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Height" "2.79"
+			(at 161.29 -298.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "888-XB3-24Z8UT-J"
+			(at 161.29 -398.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Mouser Price/Stock" "https://www.mouser.com/Search/Refine.aspx?Keyword=888-XB3-24Z8UT-J"
+			(at 161.29 -498.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Digi International"
+			(at 161.29 -598.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "XB3-24Z8UT-J"
+			(at 161.29 -698.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "49f0bdaf-4945-476d-87ef-a735552f8447")
+		)
+		(pin "10"
+			(uuid "d39963b5-e0fa-4f5c-ba0c-5ec029022bca")
+		)
+		(pin "11"
+			(uuid "69e63be6-1226-4886-a1be-4ffbdca7617b")
+		)
+		(pin "12"
+			(uuid "f435a529-62d4-4650-80ad-d6eded6620ae")
+		)
+		(pin "13"
+			(uuid "9f425730-8353-446a-9143-8a663d562e22")
+		)
+		(pin "14"
+			(uuid "27021714-47e4-4e06-aa9b-67e5b6f899b3")
+		)
+		(pin "15"
+			(uuid "25435919-b08c-4327-b1eb-978b1a315b54")
+		)
+		(pin "16"
+			(uuid "31b9b7b8-d0c1-4114-ba2d-a77affa7231e")
+		)
+		(pin "17"
+			(uuid "f9dfdcc5-c0ec-46c0-bd6f-f4eea0f06e36")
+		)
+		(pin "18"
+			(uuid "ee051969-6a10-4109-8e9a-8a633f33e177")
+		)
+		(pin "19"
+			(uuid "fddff4bc-87b4-4894-8236-2526923841db")
+		)
+		(pin "2"
+			(uuid "b9c9fc56-1a11-4001-9f2a-603b0eb1109e")
+		)
+		(pin "20"
+			(uuid "969013a4-19af-4058-8acc-ca05c333eb2b")
+		)
+		(pin "3"
+			(uuid "70775d0e-03d0-45d0-bf49-eab5b8d066bd")
+		)
+		(pin "4"
+			(uuid "44e596a7-1503-4545-85e2-5096686c65f7")
+		)
+		(pin "5"
+			(uuid "048e90ce-e8f4-4cc1-98cd-f328428291c3")
+		)
+		(pin "6"
+			(uuid "9fcc4d96-8dd6-4f58-94e7-717252d94613")
+		)
+		(pin "7"
+			(uuid "2e067d07-31c5-41f7-a52b-11eaad04c0bc")
+		)
+		(pin "8"
+			(uuid "2e97bf35-bbfd-40d0-82f5-cef85a95f2eb")
+		)
+		(pin "9"
+			(uuid "9d0fcf75-63ed-4543-ac23-bf6da5d66f45")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c69a94f8-41dd-441c-96d4-f7b37eb128c5"
+					(reference "U_XBEE1")
+					(unit 1)
+				)
+			)
+		)
+	)
 )
