@@ -1,7 +1,7 @@
 (kicad_sch
-	(version 20250114)
+	(version 20260306)
 	(generator "eeschema")
-	(generator_version "9.0")
+	(generator_version "10.0")
 	(uuid "868f8289-8434-4465-b2f4-2accc5e40bab")
 	(paper "A4")
 	(lib_symbols)
@@ -297,11 +297,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "3b2478ec-2890-4ec8-b56f-d58b64ce58ab")
 		(property "Sheetname" "Hall_Trigger"
 			(at 1050.29 998.7784 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -311,6 +313,8 @@
 		)
 		(property "Sheetfile" "hall_trigger.kicad_sch"
 			(at 1050.29 1200.7346 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -328,6 +332,13 @@
 				(justify right)
 			)
 		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "9")
+				)
+			)
+		)
 	)
 	(sheet
 		(at 1750.06 0)
@@ -341,11 +352,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "735d8d44-e064-4356-9d02-a40b0078b674")
 		(property "Sheetname" "RGB_LED"
 			(at 1750.06 -0.7116 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -355,6 +368,8 @@
 		)
 		(property "Sheetfile" "rgb_led.kicad_sch"
 			(at 1750.06 199.9746 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -372,6 +387,13 @@
 				(justify right)
 			)
 		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "12")
+				)
+			)
+		)
 	)
 	(sheet
 		(at 1050.29 0)
@@ -385,11 +407,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "748cb1dd-d7df-4e73-a93b-27e67a5ba349")
 		(property "Sheetname" "Battery"
 			(at 1050.29 -0.7116 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -399,11 +423,20 @@
 		)
 		(property "Sheetfile" "battery.kicad_sch"
 			(at 1050.29 199.9746 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left top)
+			)
+		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "8")
+				)
 			)
 		)
 	)
@@ -419,11 +452,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "7a3e413b-2e94-4a8b-a1cc-2db3e975d99a")
 		(property "Sheetname" "Thumbstick"
 			(at 1399.54 998.7784 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -433,6 +468,8 @@
 		)
 		(property "Sheetfile" "thumbstick.kicad_sch"
 			(at 1399.54 1200.7346 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -470,6 +507,13 @@
 				(justify right)
 			)
 		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "11")
+				)
+			)
+		)
 	)
 	(sheet
 		(at 699.77 999.49)
@@ -483,11 +527,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "9fde31f3-a36d-4ca9-b27d-63e931064f80")
 		(property "Sheetname" "OLED"
 			(at 699.77 998.7784 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -497,6 +543,8 @@
 		)
 		(property "Sheetfile" "oled.kicad_sch"
 			(at 699.77 1200.7346 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -524,6 +572,13 @@
 				(justify right)
 			)
 		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "7")
+				)
+			)
+		)
 	)
 	(sheet
 		(at 699.77 350.52)
@@ -537,11 +592,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "aa68e619-4bbe-481c-98b1-65e9f4bd72c4")
 		(property "Sheetname" "MCU_Core"
 			(at 699.77 349.8084 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -551,6 +608,8 @@
 		)
 		(property "Sheetfile" "mcu_core.kicad_sch"
 			(at 699.77 850.2146 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -828,6 +887,13 @@
 				(justify right)
 			)
 		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "6")
+				)
+			)
+		)
 	)
 	(sheet
 		(at 350.52 999.49)
@@ -841,11 +907,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "c69a94f8-41dd-441c-96d4-f7b37eb128c5")
 		(property "Sheetname" "XBee"
 			(at 350.52 998.7784 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -855,6 +923,8 @@
 		)
 		(property "Sheetfile" "xbee.kicad_sch"
 			(at 350.52 1200.7346 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -922,6 +992,13 @@
 				(justify right)
 			)
 		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "4")
+				)
+			)
+		)
 	)
 	(sheet
 		(at 1399.54 0)
@@ -935,11 +1012,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "cb7204a8-9133-479c-b60d-b3ae12c76b22")
 		(property "Sheetname" "Power_Control"
 			(at 1399.54 -0.7116 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -949,6 +1028,8 @@
 		)
 		(property "Sheetfile" "power_control.kicad_sch"
 			(at 1399.54 199.9746 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -986,6 +1067,13 @@
 				(justify right)
 			)
 		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "10")
+				)
+			)
+		)
 	)
 	(sheet
 		(at 1750.06 999.49)
@@ -999,11 +1087,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "d13ef906-1771-4e4b-8ca2-9a54efc5a20e")
 		(property "Sheetname" "Buttons_Direct"
 			(at 1750.06 998.7784 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1013,6 +1103,8 @@
 		)
 		(property "Sheetfile" "buttons_direct.kicad_sch"
 			(at 1750.06 1200.7346 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1110,6 +1202,13 @@
 				(justify right)
 			)
 		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "13")
+				)
+			)
+		)
 	)
 	(sheet
 		(at 699.77 0)
@@ -1123,11 +1222,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "d62b292b-5ada-41ed-8d21-6dd942010aa6")
 		(property "Sheetname" "Power_Buck"
 			(at 699.77 -0.7116 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1137,6 +1238,8 @@
 		)
 		(property "Sheetfile" "power_buck.kicad_sch"
 			(at 699.77 199.9746 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1154,6 +1257,13 @@
 				(justify right)
 			)
 		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "5")
+				)
+			)
+		)
 	)
 	(sheet
 		(at 0 0)
@@ -1167,11 +1277,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "e6ff3e19-e2b0-4f04-a1cc-1faee1ac6630")
 		(property "Sheetname" "USB_C"
 			(at 0 -0.7116 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1181,6 +1293,8 @@
 		)
 		(property "Sheetfile" "usb_c.kicad_sch"
 			(at 0 199.9746 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1208,6 +1322,13 @@
 				(justify right)
 			)
 		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "2")
+				)
+			)
+		)
 	)
 	(sheet
 		(at 350.52 0)
@@ -1221,11 +1342,13 @@
 			(type solid)
 		)
 		(fill
-			(color 0 0 0 0.0000)
+			(color 0 0 0 0)
 		)
 		(uuid "f4ce95ac-f63c-4d24-81c6-83f86b68c3b6")
 		(property "Sheetname" "Power_Charger"
 			(at 350.52 -0.7116 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1235,6 +1358,8 @@
 		)
 		(property "Sheetfile" "power_charger.kicad_sch"
 			(at 350.52 199.9746 0)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1250,6 +1375,13 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+			)
+		)
+		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab"
+					(page "3")
+				)
 			)
 		)
 	)
