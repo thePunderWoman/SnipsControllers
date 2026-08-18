@@ -2,4 +2,6 @@
   (version 7)
   (lib (name "SnipsControllers")(type "KiCad")(uri "${KIPRJMOD}/libraries/SnipsControllers.pretty")(options "")(descr ""))
   (lib (name "BQ25185DLHR")(type "KiCad")(uri "${KIPRJMOD}/libraries/BQ25185DLHR.pretty")(options "")(descr ""))
+  (lib (name "Espressif")(type "KiCad")(uri "${KIPRJMOD}/libraries/Espressif.pretty")(options "")(descr ""))
+  (lib (name "Xbee3")(type "KiCad")(uri "${KIPRJMOD}/libraries/Xbee3.pretty")(options "")(descr ""))
 )

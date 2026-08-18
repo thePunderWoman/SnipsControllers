@@ -1,647 +1,220 @@
 (kicad_sch
 	(version 20250114)
-	(generator "eeschema")
-	(generator_version "9.0")
-	(uuid "54a7f642-5696-4ccf-96e7-7327cce5aff8")
+	(generator "kicaddy")
+	(generator_version "0.1.0")
+	(uuid "d9612ebf-8fea-4631-b23f-8981759b69f1")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Device:C"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0.254)
-			)
+			(pin_numbers (hide yes))
+			(pin_names (offset 0.254))
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "C"
+			(property "Reference"
+				"C"
 				(at 0.635 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
+				(effects (font (size 1.27 1.27)) (justify left))
 			)
-			(property "Value" "C"
+			(property "Value"
+				"C"
 				(at 0.635 -2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
+				(effects (font (size 1.27 1.27)) (justify left))
 			)
-			(property "Footprint" ""
+			(property "Footprint"
+				""
 				(at 0.9652 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "Datasheet" "~"
+			(property "Datasheet"
+				"~"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "Description" "Unpolarized capacitor"
+			(property "Description"
+				"Unpolarized capacitor"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "ki_keywords" "cap capacitor"
+			(property "ki_keywords"
+				"cap capacitor"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "ki_fp_filters" "C_*"
+			(property "ki_fp_filters"
+				"C_*"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
 			(symbol "C_0_1"
-				(polyline
-					(pts
-						(xy -2.032 0.762) (xy 2.032 0.762)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -2.032 -0.762) (xy 2.032 -0.762)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
+				(polyline (pts (xy -2.032 0.762) (xy 2.032 0.762)) (stroke (width 0.508) (type default)) (fill (type none)))
+				(polyline (pts (xy -2.032 -0.762) (xy 2.032 -0.762)) (stroke (width 0.508) (type default)) (fill (type none)))
 			)
 			(symbol "C_1_1"
-				(pin passive line
-					(at 0 3.81 270)
-					(length 2.794)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -3.81 90)
-					(length 2.794)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "Device:R"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "R"
-				(at 2.032 0 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "R"
-				(at 0 0 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at -1.778 0 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Resistor"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "R res resistor"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "R_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "R_0_1"
-				(rectangle
-					(start -1.016 -2.54)
-					(end 1.016 2.54)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "R_1_1"
-				(pin passive line
-					(at 0 3.81 270)
-					(length 1.27)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -3.81 90)
-					(length 1.27)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
+				(pin passive line (at 0 3.81 270) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
+				(pin passive line (at 0 -3.81 90) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27)))))
 			)
 			(embedded_fonts no)
 		)
 		(symbol "LED:SK6812"
-			(pin_names
-				(offset 0.254)
-			)
+			(pin_names (offset 0.254))
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "D"
+			(property "Reference"
+				"D"
 				(at 5.08 5.715 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify right bottom)
-				)
+				(effects (font (size 1.27 1.27)) (justify right bottom))
 			)
-			(property "Value" "SK6812"
+			(property "Value"
+				"SK6812"
 				(at 1.27 -5.715 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left top)
-				)
+				(effects (font (size 1.27 1.27)) (justify left top))
 			)
-			(property "Footprint" "LED_SMD:LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm"
+			(property "Footprint"
+				"LED_SMD:LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm"
 				(at 1.27 -7.62 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left top)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
 			)
-			(property "Datasheet" "https://cdn-shop.adafruit.com/product-files/1138/SK6812+LED+datasheet+.pdf"
+			(property "Datasheet"
+				"https://cdn-shop.adafruit.com/product-files/1138/SK6812+LED+datasheet+.pdf"
 				(at 2.54 -9.525 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left top)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
 			)
-			(property "Description" "RGB LED with integrated controller"
+			(property "Description"
+				"RGB LED with integrated controller"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "ki_keywords" "RGB LED NeoPixel addressable"
+			(property "ki_keywords"
+				"RGB LED NeoPixel addressable"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "ki_fp_filters" "LED*SK6812*PLCC*5.0x5.0mm*P3.2mm*"
+			(property "ki_fp_filters"
+				"LED*SK6812*PLCC*5.0x5.0mm*P3.2mm*"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
 			(symbol "SK6812_0_0"
 				(text "RGB"
 					(at 2.286 -4.191 0)
-					(effects
-						(font
-							(size 0.762 0.762)
-						)
-					)
+					(effects (font (size 0.762 0.762)))
 				)
 			)
 			(symbol "SK6812_0_1"
-				(polyline
-					(pts
-						(xy 1.27 -2.54) (xy 1.778 -2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 -3.556) (xy 1.778 -3.556)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.286 -1.524) (xy 1.27 -2.54) (xy 1.27 -2.032)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.286 -2.54) (xy 1.27 -3.556) (xy 1.27 -3.048)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.683 -1.016) (xy 3.683 -3.556) (xy 3.683 -4.064)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 4.699 -1.524) (xy 2.667 -1.524) (xy 3.683 -3.556) (xy 4.699 -1.524)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 4.699 -3.556) (xy 2.667 -3.556)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 5.08 5.08)
-					(end -5.08 -5.08)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
+				(polyline (pts (xy 1.27 -2.54) (xy 1.778 -2.54)) (stroke (width 0) (type default)) (fill (type none)))
+				(polyline (pts (xy 1.27 -3.556) (xy 1.778 -3.556)) (stroke (width 0) (type default)) (fill (type none)))
+				(polyline (pts (xy 2.286 -1.524) (xy 1.27 -2.54) (xy 1.27 -2.032)) (stroke (width 0) (type default)) (fill (type none)))
+				(polyline (pts (xy 2.286 -2.54) (xy 1.27 -3.556) (xy 1.27 -3.048)) (stroke (width 0) (type default)) (fill (type none)))
+				(polyline (pts (xy 3.683 -1.016) (xy 3.683 -3.556) (xy 3.683 -4.064)) (stroke (width 0) (type default)) (fill (type none)))
+				(polyline (pts (xy 4.699 -1.524) (xy 2.667 -1.524) (xy 3.683 -3.556) (xy 4.699 -1.524)) (stroke (width 0) (type default)) (fill (type none)))
+				(polyline (pts (xy 4.699 -3.556) (xy 2.667 -3.556)) (stroke (width 0) (type default)) (fill (type none)))
+				(rectangle (start 5.08 5.08) (end -5.08 -5.08) (stroke (width 0.254) (type default)) (fill (type background)))
 			)
 			(symbol "SK6812_1_1"
-				(pin input line
-					(at -7.62 0 0)
-					(length 2.54)
-					(name "DIN"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 0 7.62 270)
-					(length 2.54)
-					(name "VDD"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 0 -7.62 90)
-					(length 2.54)
-					(name "VSS"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 7.62 0 180)
-					(length 2.54)
-					(name "DOUT"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
+				(pin input line (at -7.62 0 0) (length 2.54) (name "DIN" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27)))))
+				(pin power_in line (at 0 7.62 270) (length 2.54) (name "VDD" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27)))))
+				(pin power_in line (at 0 -7.62 90) (length 2.54) (name "VSS" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
+				(pin output line (at 7.62 0 180) (length 2.54) (name "DOUT" (effects (font (size 1.27 1.27)))) (number "4" (effects (font (size 1.27 1.27)))))
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R"
+			(pin_numbers (hide yes))
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference"
+				"R"
+				(at 2.032 0 90)
+				(effects (font (size 1.27 1.27)))
+			)
+			(property "Value"
+				"R"
+				(at 0 0 90)
+				(effects (font (size 1.27 1.27)))
+			)
+			(property "Footprint"
+				""
+				(at -1.778 0 90)
+				(effects (font (size 1.27 1.27)) (hide yes))
+			)
+			(property "Datasheet"
+				"~"
+				(at 0 0 0)
+				(effects (font (size 1.27 1.27)) (hide yes))
+			)
+			(property "Description"
+				"Resistor"
+				(at 0 0 0)
+				(effects (font (size 1.27 1.27)) (hide yes))
+			)
+			(property "ki_keywords"
+				"R res resistor"
+				(at 0 0 0)
+				(effects (font (size 1.27 1.27)) (hide yes))
+			)
+			(property "ki_fp_filters"
+				"R_*"
+				(at 0 0 0)
+				(effects (font (size 1.27 1.27)) (hide yes))
+			)
+			(symbol "R_0_1"
+				(rectangle (start -1.016 -2.54) (end 1.016 2.54) (stroke (width 0.254) (type default)) (fill (type none)))
+			)
+			(symbol "R_1_1"
+				(pin passive line (at 0 3.81 270) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
+				(pin passive line (at 0 -3.81 90) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27)))))
 			)
 			(embedded_fonts no)
 		)
 	)
-	(no_connect
-		(at 182.88 95.25)
-		(uuid "e6dd7ef6-538e-4f82-ba14-3be879483b1e")
-	)
-	(label "RGB_DIN_R"
-		(at 121.92 127 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "1777203c-4f6f-465f-b0d8-bcb41e479b4b")
-	)
-	(label "RGB_DIN_R"
-		(at 167.64 95.25 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "1cc8b1b1-4c16-46d6-806e-f2c2cc78c1c5")
+	(no_connect (at 182.88 95.25) (uuid "d58b3903-3a9f-4e5b-9e2b-db9a59443f73"))
+	(global_label "3V3"
+		(shape passive)
+		(at 175.26 87.63 270)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "64266d82-8e03-42cd-929a-a5e8ab285aec")
 	)
 	(global_label "3V3"
 		(shape passive)
-		(at 175.26 87.63 90)
+		(at 137.16 74.93 270)
 		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "6dba9d88-0ef2-47dd-b957-ae20bedfbf6e")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 175.26 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e2a768d0-a8c7-47bc-8afa-10e33748596e")
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 175.26 102.87 270)
+		(at 175.26 102.87 90)
 		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "b26e5bc8-8ad3-4c52-aee8-73fb42b75600")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 175.26 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "3V3"
-		(shape passive)
-		(at 137.16 74.93 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c160c571-0ac0-466e-9ea3-26a1477adde7")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 137.16 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "bbb1d69d-6782-4906-a069-149ddbdae3e7")
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 137.16 82.55 270)
+		(at 137.16 82.55 90)
 		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "d25ae3d6-57fd-4ce1-b3c0-66163f8e7131")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 137.16 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "92541374-ccb4-490c-9c8c-0b1d1732b04a")
 	)
 	(hierarchical_label "RGB_DIN"
 		(shape input)
 		(at 121.92 134.62 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c01170af-12da-4428-902d-92ddc6f680aa")
+		(uuid "8600fd80-c7e2-44f1-999a-286690bde0b0")
+	)
+	(label "RGB_DIN_R"
+		(at 121.92 127 270)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "32aacb44-1edd-4cfd-9f76-e2c1799e7945")
+	)
+	(label "RGB_DIN_R"
+		(at 167.64 95.25 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "10c69b15-8a68-4a72-8255-a2a6ba25138d")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -652,130 +225,38 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "a9bccc2b-3e21-483c-b10c-a8b56d5b128f")
-		(property "Reference" "C_RGB1"
+		(uuid "5c9b6a77-375e-4370-b666-ca9dc1ab6b6d")
+		(property "Reference"
+			"C_RGB"
 			(at 137.795 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+			(effects (font (size 1.27 1.27)) (justify left))
 		)
-		(property "Value" "100nF"
+		(property "Value"
+			"100nF"
 			(at 137.795 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+			(effects (font (size 1.27 1.27)) (justify left))
 		)
-		(property "Footprint" ""
+		(property "Footprint"
+			"Capacitor_SMD:C_0402_1005Metric"
 			(at 138.1252 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet"
+			"~"
 			(at 137.16 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description"
+			"Unpolarized capacitor"
 			(at 137.16 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(pin "1"
-			(uuid "70b656ba-fb87-4b7a-8caf-d546e71d145f")
-		)
-		(pin "2"
-			(uuid "d52ff52b-67a9-4e72-b2fb-063418f09361")
-		)
+		(pin "1" (uuid "310fb1de-0a6d-44e1-b511-7539240c3213"))
+		(pin "2" (uuid "9691ea39-d517-426d-9525-4086b6082474"))
 		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/fa750337-dd8a-4963-aa5f-de1f036c9ce0"
-					(reference "C_RGB1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 121.92 130.81 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f967d827-41e3-466f-8512-596e779f06c6")
-		(property "Reference" "R_RGB1"
-			(at 123.952 130.81 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "330Ω"
-			(at 121.92 130.81 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 120.142 130.81 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 121.92 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 121.92 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4d7d7ea6-99c2-4a03-9ed0-34d1123c3f51")
-		)
-		(pin "2"
-			(uuid "aa7a460b-71fa-472b-b5c8-8c309393ea7e")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/fa750337-dd8a-4963-aa5f-de1f036c9ce0"
-					(reference "R_RGB1")
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/735d8d44-e064-4356-9d02-a40b0078b674"
+					(reference "C_RGB")
 					(unit 1)
 				)
 			)
@@ -790,73 +271,95 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "fcbeff0c-3c05-4cb9-8bd4-47db4aac8657")
-		(property "Reference" "D_RGB1"
+		(uuid "58e7384e-cbb6-4083-98b9-81f19fe69dcf")
+		(property "Reference"
+			"D_RGB"
 			(at 180.34 100.965 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right bottom)
-			)
+			(effects (font (size 1.27 1.27)) (justify right bottom))
 		)
-		(property "Value" "SK6812"
+		(property "Value"
+			"SK6812"
 			(at 176.53 89.535 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
+			(effects (font (size 1.27 1.27)) (justify left top))
 		)
-		(property "Footprint" "LED_SMD:LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm"
+		(property "Footprint"
+			"LED_SMD:LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm"
 			(at 176.53 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
 		)
-		(property "Datasheet" "https://cdn-shop.adafruit.com/product-files/1138/SK6812+LED+datasheet+.pdf"
+		(property "Datasheet"
+			"https://cdn-shop.adafruit.com/product-files/1138/SK6812+LED+datasheet+.pdf"
 			(at 177.8 85.725 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify left top) (hide yes))
 		)
-		(property "Description" "RGB LED with integrated controller"
+		(property "Description"
+			"RGB LED with integrated controller"
 			(at 175.26 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(pin "1"
-			(uuid "c5d80f14-f71b-446e-b3d7-cec05b0b8e67")
-		)
-		(pin "2"
-			(uuid "257d7256-1a6c-40f7-a524-89f07a48f6d6")
-		)
-		(pin "3"
-			(uuid "718796a1-03f2-414f-a743-fff99ea1c315")
-		)
-		(pin "4"
-			(uuid "fa19cd96-92f8-4351-8212-d393511ed26d")
-		)
+		(pin "1" (uuid "680e788d-025f-450f-8f08-622d5c1daa5a"))
+		(pin "2" (uuid "2a29c697-79f7-4548-b2da-12b9fe35d2f3"))
+		(pin "3" (uuid "cd867f1b-f910-4f3c-b8df-b3812a9c5c9a"))
+		(pin "4" (uuid "f99801d5-4968-429a-a6d9-a766f2cc3844"))
 		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/fa750337-dd8a-4963-aa5f-de1f036c9ce0"
-					(reference "D_RGB1")
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/735d8d44-e064-4356-9d02-a40b0078b674"
+					(reference "D_RGB")
 					(unit 1)
 				)
 			)
 		)
 	)
+	(symbol
+		(lib_id "Device:R")
+		(at 121.92 130.81 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6f433684-63ad-42f4-847c-49d93e436b5b")
+		(property "Reference"
+			"R_RGB"
+			(at 123.952 130.81 90)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Value"
+			"330Ω"
+			(at 121.92 130.81 90)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Footprint"
+			"Resistor_SMD:R_0402_1005Metric"
+			(at 120.142 130.81 90)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet"
+			"~"
+			(at 121.92 130.81 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description"
+			"Resistor"
+			(at 121.92 130.81 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(pin "1" (uuid "d89ccb59-4ddc-4414-83e7-a1e8e2901f45"))
+		(pin "2" (uuid "664d127f-702d-4f9d-a64e-0c93d2761424"))
+		(instances
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/735d8d44-e064-4356-9d02-a40b0078b674"
+					(reference "R_RGB")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/868f8289-8434-4465-b2f4-2accc5e40bab/735d8d44-e064-4356-9d02-a40b0078b674"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
 )
