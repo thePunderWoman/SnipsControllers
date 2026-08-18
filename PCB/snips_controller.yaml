@@ -2,12 +2,15 @@ project:
   name: Snips Controller
   revision: 0.1
   description: >
-    Wireless handheld R2-D2 controller (Snips Controller). Bare RP2350A MCU
-    (custom USB-C + Murata Type 1YN WiFi/BT module, not a Pico 2 W module —
-    see MCU_Core/Wireless sections), XBee3 Zigbee radio over SPI1, hall
-    effect thumbstick and analog trigger, SSD1306 OLED display, WS2812 RGB
-    LED, embedded bq25185 charger + TLV62569 3.3V buck, swappable
-    single-cell Li-ion battery, soft-latch power control.
+    Wireless handheld R2-D2 controller (Snips Controller). ESP32-S3-WROOM-1
+    module MCU (integrated WiFi/BT, flash, crystal, antenna — no external
+    RF/flash/crystal design needed; see MCU_Core section), custom USB-C for
+    flashing/charging/future accessory expansion, XBee3 Zigbee radio over
+    SPI, hall effect thumbstick and analog trigger, SSD1306 OLED display,
+    WS2812 RGB LED, embedded bq25185 charger + TLV62569 3.3V buck, swappable
+    single-cell Li-ion battery, soft-latch power control. Macro buttons are
+    direct-wired (no scan matrix) — ESP32-S3-WROOM-1 has ample spare GPIO,
+    unlike the bare-RP2350A design this replaced.
 
 # ---------------------------------------------------------------------------
 # NET LEGEND
@@ -17,54 +20,52 @@ project:
 # 3V3         - Regulated 3.3V output from TLV62569 buck
 # GND         - Ground
 # VBAT        - Battery positive terminal
-# USB_DP      - USB D+ data line
-# USB_DM      - USB D- data line
-# I2C_SDA     - I2C0 data (GP4) — OLED
-# I2C_SCL     - I2C0 clock (GP5) — OLED
-# SPI_SCK     - XBee SPI1 clock (GP10)
-# SPI_MOSI    - XBee SPI1 MOSI (GP11)
-# SPI_MISO    - XBee SPI1 MISO (GP12)
-# XBee_CS     - XBee SPI1 chip select (GP13)
-# XBEE_ON_SLEEP - XBee ON/~SLEEP status, host input (GP17)
-# XBEE_SPI_ATTN - XBee SPI data-ready interrupt (GP18)
-# TRIG_ANALOG - Analog trigger output from DRV5055 (GP26/ADC0)
-# STICK_X     - Thumbstick X axis (GP27/ADC1)
-# STICK_Y     - Thumbstick Y axis (GP28/ADC2)
-# STAT1       - bq25185 charge status pin 1 (open-drain, GP20)
-# RGB_DIN     - WS2812 NeoPixel data in (GP22, PIO-driven)
+# USB_DP_MCU/USB_DM_MCU - USB D+/D- data lines (native USB, U_MCU pins 14/13)
+# I2C_SDA     - I2C data (pin 12) — OLED
+# I2C_SCL     - I2C clock (pin 17) — OLED
+# SPI_SCK     - XBee SPI clock (pin 18)
+# SPI_MOSI    - XBee SPI MOSI (pin 19)
+# SPI_MISO    - XBee SPI MISO (pin 20)
+# XBee_CS     - XBee SPI chip select (pin 21)
+# XBEE_ON_SLEEP - XBee ON/~SLEEP status, host input (pin 22)
+# XBEE_SPI_ATTN - XBee SPI data-ready interrupt (pin 8)
+# TRIG_ANALOG - Analog trigger output from DRV5055 (pin 4, ADC1_CH3)
+# STICK_X     - Thumbstick X axis (pin 5, ADC1_CH4)
+# STICK_Y     - Thumbstick Y axis (pin 6, ADC1_CH5)
+# STAT1       - bq25185 charge status pin 1 (open-drain, pin 39)
+# RGB_DIN     - WS2812 NeoPixel data in (pin 37)
 # PWR_EN      - TLV62569 EN signal, driven by soft latch PFET drain
 # PWR_GATE    - PFET gate node (pulled HIGH by default = off)
-# PWR_LATCH_G - NFET latch gate (driven by button OR GP21)
-# PWR_HOLD    - GP21 output to OR diode, holds latch after boot
-# GP15_SENSE  - Power button junction: R_BTN_PU/R_PWR_SENSE divider
-#               midpoint, pulled to VSYS, button pulls to GND, feeds GP15
-# BTN_*       - Individual button nets (pulled up internally, wired to GND)
-# MAT_R*      - Matrix row drive lines (GP6/GP7, driven LOW to scan)
-# MAT_C*      - Matrix column sense lines (GP8/GP9/GP14, internal pull-ups)
-# WL_CLK/WL_D/WL_CS - Bit-banged 3-wire interface to the Murata Type 1YN
-#               wireless module (GP24/GP23/GP25), matches Pico 2 W's own
-#               RP2350<->CYW43439 wiring so the existing pico-sdk cyw43 PIO
-#               driver applies unmodified
-# WL_ON       - Enables both WL_REG_ON and BT_REG_ON on the wireless module (GP16)
-# MCU_1V1     - RP2350 internal core rail, externally filtered (VREG_LX/FB)
-# MCU_ADC_AVDD- Filtered analog supply for RP2350's ADC_AVDD pin
-# VSYS_SENSE  - Divide-by-3 VSYS sense into GP29/ADC3 (R_VSYS1/R_VSYS2),
-#               replaces the Pico 2 W module's onboard divider
+# PWR_LATCH_G - NFET latch gate (driven by button OR PWR_HOLD)
+# PWR_HOLD    - Pin 36 output to OR diode, holds latch after boot
+# PWR_BTN_SENSE - Power button junction: R_BTN_PU/R_PWR_SENSE divider
+#               midpoint, pulled to VSYS, button pulls to GND, feeds pin 38
+# BTN_*       - Individual button nets (pulled up internally, wired to GND),
+#               includes the 6 macro buttons — direct-wired, no scan matrix
+# MCU_EN      - EN (reset) pin, pulled up via R_EN_PU
+# MCU_BOOT    - GPIO0/BOOT strapping pin, pulled up via R_BOOT_PU, button
+#               pulls low to enter UF2/download mode
+# VSYS_SENSE  - Divide-by-3 VSYS sense into pin 7 (ADC1_CH6), via
+#               R_VSYS1/R_VSYS2
 
 # ---------------------------------------------------------------------------
 # RESERVED GPIO — DO NOT USE
 # ---------------------------------------------------------------------------
-# GP16: WL_ON  - wireless module WL_REG_ON + BT_REG_ON enable (shared)
-# GP23: WL_D   - wireless module bit-banged data bus (see Wireless section)
-# GP24: WL_CLK - wireless module bit-banged clock
-# GP25: WL_CS  - wireless module bit-banged chip select
-# GP29: VSYS_SENSE - divide-by-3 battery voltage sense (ADC3), replaces
-#       the Pico 2 W module's onboard VSYS divider (see R_VSYS1/R_VSYS2
-#       in MCU_Core)
+# Pin 3  (EN)      - reset/enable, pulled up via R_EN_PU
+# Pin 27 (GPIO0)   - BOOT strapping pin, pulled up via R_BOOT_PU + button
+# Pin 13 (GPIO19)  - USB_D-  (native USB)
+# Pin 14 (GPIO20)  - USB_D+  (native USB)
+# Pins 1, 40, 41   - GND
+# Pin 2            - 3V3
+# Pins 26-32 (internal, not broken out on the module) - internal SPI flash
+# Pins 33-34 (not broken out on the WROOM-1 module at all)
 #
-# GP17: XBee ON_SLEEP status input (host GPIO per Amidala's netlist)
-# GP18: XBee SPI_ATTN — data-ready interrupt from XBee, needed for SPI mode
-# GP19 is free for future use.
+# Use with care if ever needed (strapping pins, sampled at boot):
+# Pin 15 (GPIO3), Pin 16 (GPIO46), Pin 26 (GPIO45)
+#
+# Spare (clean, no caveats) — default JTAG, fully reusable as plain GPIO:
+# Pin 32 (GPIO39/MTCK), Pin 33 (GPIO40/MTDO), Pin 34 (GPIO41/MTDI),
+# Pin 35 (GPIO42/MTMS)
 
 # ---------------------------------------------------------------------------
 groups:
@@ -73,13 +74,14 @@ groups:
   # 1. USB-C Connector
   # -------------------------------------------------------------------------
   # USB 2.0 only. CC resistors required for USB-C power negotiation.
-  # VBUS -> bq25185 VIN. D+/D- -> Pico 2 W USB data pins.
+  # VBUS -> bq25185 VIN. D+/D- -> ESP32-S3-WROOM-1 native USB data pins.
   # SHIELD -> GND.
   # USB_DP/USB_DM run from the connector through the 27R series resistors in
-  # MCU_Core (R_USB_DP/R_USB_DM, per RP2350 reference design) to the bare
-  # RP2350's own USB_DP/USB_DM pins. This connector's data lines were
-  # formerly (incorrectly) routed to a Pico 2 W module, which does not
-  # expose USB D+/D- as header pins — see MCU_Core section for the fix.
+  # MCU_Core (R_USB_DP/R_USB_DM) to the ESP32-S3-WROOM-1's own native USB
+  # pins (13/14). Real, exposed USB data — used for firmware flashing,
+  # charging, and future accessory expansion, which is exactly what a
+  # stock Pico-family module can't provide (its USB is hardwired to its
+  # own onboard connector, not broken out).
   USB_C:
     components:
       J_USB:
@@ -210,7 +212,7 @@ groups:
       - net: VBAT
         pins: [U_CHG:BAT, C_BAT:1]
       - net: STAT1
-        pins: [U_CHG:STAT1, R_STAT1:1, U_MCU:GPIO20]
+        pins: [U_CHG:STAT1, R_STAT1:1, U_MCU:39]
       - net: 3V3
         pins: [R_STAT1:2]
       - net: GND
@@ -377,78 +379,63 @@ groups:
         pins: [Q_LATCH:G, R_LATCH_G:2, D_OR1:K, D_OR2:K]
       - net: GND
         pins: [Q_LATCH:S, R_LATCH_G:1, C_DBNC:2, SW_PWR:2]
-      # PWR_BTN_NODE and GP15_SENSE are the same physical node (R_BTN_PU/
+      # PWR_BTN_NODE and PWR_BTN_SENSE are the same physical node (R_BTN_PU/
       # R_PWR_SENSE divider midpoint, also where the button pulls to GND) —
-      # standardized on one label (GP15_SENSE) to avoid an ERC ambiguous-
+      # standardized on one label (PWR_BTN_SENSE) to avoid an ERC ambiguous-
       # net-name warning.
-      - net: GP15_SENSE
-        pins: [SW_PWR:1, R_BTN_PU:2, C_DBNC:1, D_OR1:A, R_PWR_SENSE:1, U_MCU:GPIO15]
+      - net: PWR_BTN_SENSE
+        pins: [SW_PWR:1, R_BTN_PU:2, C_DBNC:1, D_OR1:A, R_PWR_SENSE:1, U_MCU:38]
       - net: GND
         pins: [R_PWR_SENSE:2]
       - net: PWR_HOLD
-        pins: [D_OR2:A, U_MCU:GPIO21]
+        pins: [D_OR2:A, U_MCU:36]
 
   # -------------------------------------------------------------------------
-  # 6. Bare RP2350A + external flash/crystal/USB/core-regulator
+  # 6. MCU_Core: ESP32-S3-WROOM-1 module
   # -------------------------------------------------------------------------
-  # Bare RP2350A (QFN-60) instead of the Pico 2 W module, so USB_DP/USB_DM
-  # and the wireless interface can be wired to our own external USB-C
-  # connector and a separate pre-certified wireless module. Everything
-  # below (flash, crystal, VREG LC filter, USB series resistors, BOOTSEL,
-  # decoupling) replicates the official Pico 2 W reference schematic
-  # (RPI-PICO2W, sheet 1) for the RP2350 portion, since our own bq25185 +
-  # TLV62569 already supplies 3V3 — the Pico 2 W's own onboard buck-boost
-  # regulator (which exists only to generate 3V3 for the module itself)
-  # is not needed.
+  # Pre-certified module (integrated flash, crystal, WiFi/BT radio + PCB
+  # antenna) — replaces the bare-RP2350A + external flash/crystal + Murata
+  # wireless module design. No RF design, no antenna licensing, no crystal
+  # load-cap calculation, no core-regulator LC filter: the module handles
+  # all of that internally. Symbol/footprint from Espressif's own official
+  # KiCad library (github.com/espressif/kicad-libraries), not hand-authored.
   #
-  # IOVDD/DVDD both have several physically separate pins on the QFN-60
-  # package that all happen to share the same pin *name* — kicaddy resolves
-  # a bare pin name to only the first matching pin, so the rest are
-  # addressed explicitly by pin number below (still the same electrical
-  # net, just multiple physical attachment points for decoupling).
+  # Pins referenced by number, not name — the module's pins are heavily
+  # multi-function (e.g. pin 4 is "GPIO4/TOUCH4/ADC1_CH3") and numbers are
+  # unambiguous. GPIO26-32 are internally wired to the module's own flash
+  # and are not present on this symbol at all; GPIO33/34 exist on the bare
+  # chip but aren't broken out on the WROOM-1 module either.
+  #
+  # EN and GPIO0 (BOOT) both have internal weak pull-ups, but external
+  # 10kΩ pull-ups are standard, reliable practice for both (matches every
+  # real ESP32-S3 reference design, including Espressif's own DevKitC).
+  # GPIO0 additionally gets a button to pull it low at boot, exactly like
+  # the old RP2350 BOOTSEL pattern, just renamed to match ESP32 convention.
+  #
+  # ADC signals deliberately use ADC1-only pins (4/5/6/7) — ADC2 is
+  # unusable while WiFi is active on ESP32-S3, and this design keeps WiFi
+  # on.
   MCU_Core:
     components:
       U_MCU:
-        symbol: MCU_RaspberryPi:RP2350A
+        symbol: Espressif:ESP32-S3-WROOM-1
         sheet: MCU_Core
-        value: RP2350A0A2
-        footprint: Package_DFN_QFN:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm
-      U_FLASH:
-        symbol: Memory_Flash:W25Q32JVSS
-        sheet: MCU_Core
-        value: W25Q32RVXHJQ
-        # NOTE: JVSS above is the closest stock pin-compatible symbol
-        # (same 8-pin QSPI flash pinout, pin numbers match the real
-        # footprint below 1:1). Footprint sourced from Ultra Librarian
-        # (nominal/IPC-standard land pattern for the real XSON-8 2x3mm
-        # RVXHJQ package). Its exposed thermal pad (pad 9) has no
-        # corresponding pin on the JVSS symbol — tie it to GND directly
-        # in the PCB editor during layout, not through the schematic.
-        footprint: SnipsControllers:XSON8_XH_2x3x0p4_WIN
-      X1:
-        symbol: Device:Crystal
-        sheet: MCU_Core
-        value: 12MHz
-        footprint: Crystal_SMD:Crystal_SMD_3225-4Pin_3.2x2.5mm
-      C16:
-        symbol: Device:C
-        sheet: MCU_Core
-        value: 15pF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      C17:
-        symbol: Device:C
-        sheet: MCU_Core
-        value: 15pF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      SW_BOOTSEL:
+        value: ESP32-S3-WROOM-1-N8
+        footprint: Espressif:ESP32-S3-WROOM-1
+      SW_BOOT:
         symbol: Switch:SW_Push
         sheet: MCU_Core
         value: TP-1221U-K9K5325
         footprint: Button_Switch_SMD:SW_SPST_TL3342
-      R11:
+      R_BOOT_PU:
         symbol: Device:R
         sheet: MCU_Core
-        value: 1kΩ
+        value: 10kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
+      R_EN_PU:
+        symbol: Device:R
+        sheet: MCU_Core
+        value: 10kΩ
         footprint: Resistor_SMD:R_0402_1005Metric
       R_USB_DP:
         symbol: Device:R
@@ -460,71 +447,16 @@ groups:
         sheet: MCU_Core
         value: 27Ω
         footprint: Resistor_SMD:R_0402_1005Metric
-      L_VREG:
-        symbol: Device:L
-        sheet: MCU_Core
-        value: 3.3µH
-        footprint: Inductor_SMD:L_0603_1608Metric
-      C_VREG_1:
+      C_3V3_1:
         symbol: Device:C
         sheet: MCU_Core
-        value: 4.7µF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      C_VREG_2:
-        symbol: Device:C
-        sheet: MCU_Core
-        value: 4.7µF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      C_VREG_AVDD:
-        symbol: Device:C
-        sheet: MCU_Core
-        value: 4.7µF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      C_QSPI_IOVDD:
-        symbol: Device:C
-        sheet: MCU_Core
-        value: 100nF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      C_IOVDD_1:
-        symbol: Device:C
-        sheet: MCU_Core
-        value: 100nF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      C_IOVDD_2:
-        symbol: Device:C
-        sheet: MCU_Core
-        value: 100nF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      C_1V1_1:
-        symbol: Device:C
-        sheet: MCU_Core
-        value: 100nF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      C_1V1_2:
-        symbol: Device:C
-        sheet: MCU_Core
-        value: 100nF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      R_ADC_AVDD1:
-        symbol: Device:R
-        sheet: MCU_Core
-        value: 200Ω
-        footprint: Resistor_SMD:R_0603_1608Metric
-      R_ADC_AVDD2:
-        symbol: Device:R
-        sheet: MCU_Core
-        value: 1Ω
-        footprint: Resistor_SMD:R_0402_1005Metric
-      C_ADC_AVDD1:
-        symbol: Device:C
-        sheet: MCU_Core
-        value: 100nF
+        value: 10µF
         footprint: Capacitor_SMD:C_0603_1608Metric
-      C_ADC_AVDD2:
+      C_3V3_2:
         symbol: Device:C
         sheet: MCU_Core
-        value: 4.7µF
-        footprint: Capacitor_SMD:C_0603_1608Metric
+        value: 100nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
       R_VSYS1:
         symbol: Device:R
         sheet: MCU_Core
@@ -536,250 +468,82 @@ groups:
         value: 100kΩ
         footprint: Resistor_SMD:R_0402_1005Metric
     connections:
-      # Power
       - net: 3V3
-        pins: [U_MCU:IOVDD, U_MCU:53, U_MCU:VREG_VIN, U_MCU:VREG_AVDD,
-               U_MCU:QSPI_IOVDD, U_FLASH:VCC, C_IOVDD_1:1, C_IOVDD_2:1,
-               C_VREG_AVDD:1, C_QSPI_IOVDD:1]
-      # Remaining physically-separate IOVDD pins (same 3V3 net, by number)
-      - net: 3V3
-        pins: [U_MCU:11, U_MCU:20, U_MCU:30, U_MCU:38, U_MCU:45]
+        pins: [U_MCU:2, R_EN_PU:2, R_BOOT_PU:2, C_3V3_1:1, C_3V3_2:1]
       - net: GND
-        pins: [U_MCU:GND, U_FLASH:GND, C16:2, C17:2,
-               C_IOVDD_1:2, C_IOVDD_2:2, C_VREG_AVDD:2, C_QSPI_IOVDD:2,
-               U_MCU:VREG_PGND, SW_BOOTSEL:1,
-               C_ADC_AVDD1:2, C_ADC_AVDD2:2]
-      # RP2350 core switching regulator: VREG_LX -> L_VREG -> 1V1 rail,
-      # feedback (VREG_FB) senses the same 1V1 rail. DVDD pins (multiple
-      # physical pads) are powered from that same regulated 1V1 rail.
-      - net: MCU_1V1
-        pins: [U_MCU:DVDD, U_MCU:23, U_MCU:39, U_MCU:VREG_FB,
-               L_VREG:2, C_VREG_1:1, C_VREG_2:1, C_1V1_1:1, C_1V1_2:1]
-      - net: MCU_VREG_LX
-        pins: [U_MCU:VREG_LX, L_VREG:1]
-      - net: GND
-        pins: [C_VREG_1:2, C_VREG_2:2, C_1V1_1:2, C_1V1_2:2]
-      # ADC_AVDD: two-stage RC filter off 3V3 (matches Pico 2 W reference)
-      - net: 3V3
-        pins: [R_ADC_AVDD1:1]
-      - net: MCU_ADC_FILT2
-        pins: [R_ADC_AVDD1:2, C_ADC_AVDD1:1, R_ADC_AVDD2:1]
-      - net: MCU_ADC_AVDD
-        pins: [R_ADC_AVDD2:2, C_ADC_AVDD2:1, U_MCU:ADC_AVDD]
-      # USB (external USB-C connector, via 27R series per RP2350 ref design)
+        pins: [U_MCU:1, U_MCU:40, U_MCU:41, C_3V3_1:2, C_3V3_2:2, SW_BOOT:1]
+      - net: MCU_EN
+        pins: [U_MCU:3, R_EN_PU:1]
+      - net: MCU_BOOT
+        pins: [U_MCU:27, R_BOOT_PU:1, SW_BOOT:2]
+      # USB (native — external USB-C connector via 27R series)
       - net: USB_DP_MCU
-        pins: [R_USB_DP:2, U_MCU:USB_DP]
+        pins: [R_USB_DP:2, U_MCU:14]
       - net: USB_DM_MCU
-        pins: [R_USB_DM:2, U_MCU:USB_DM]
-      # QSPI flash
-      - net: QSPI_SS
-        pins: ["U_MCU:~{QSPI_SS}", "U_FLASH:~{CS}", R11:2]
-      - net: QSPI_SCLK
-        pins: [U_MCU:QSPI_SCLK, U_FLASH:CLK]
-      - net: QSPI_SD0
-        pins: [U_MCU:QSPI_SD0, "U_FLASH:DI/IO_{0}"]
-      - net: QSPI_SD1
-        pins: [U_MCU:QSPI_SD1, "U_FLASH:DO/IO_{1}"]
-      - net: QSPI_SD2
-        pins: [U_MCU:QSPI_SD2, "U_FLASH:~{WP}/IO_{2}"]
-      - net: QSPI_SD3
-        pins: [U_MCU:QSPI_SD3, "U_FLASH:~{HOLD}/~{RESET}/IO_{3}"]
-      # BOOTSEL: pulls QSPI_SS low through R11 to force USB boot
-      - net: GND
-        pins: [SW_BOOTSEL:1]
-      - net: BOOTSEL_SW
-        pins: [SW_BOOTSEL:2, R11:1]
-      # Crystal
-      - net: MCU_XIN
-        pins: [U_MCU:XIN, X1:1, C16:1]
-      - net: MCU_XOUT
-        pins: [U_MCU:XOUT, X1:2, C17:1]
-      # RUN: internal ~50k pull-up, no external reset circuit (matches
-      # Pico 2 W reference — no manual reset button). Not a named net —
-      # nothing else in this design touches it.
-      - no_connect: [U_MCU:RUN]
-      # SPI1 - XBee
+        pins: [R_USB_DM:2, U_MCU:13]
+      # SPI - XBee
       - net: SPI_SCK
-        pins: [U_MCU:GPIO10, U_XBEE:SPI_CLK]
+        pins: [U_MCU:18, U_XBEE:SPI_CLK]
       - net: SPI_MOSI
-        pins: [U_MCU:GPIO11, U_XBEE:SPI_MOSI]
+        pins: [U_MCU:19, U_XBEE:SPI_MOSI]
       - net: SPI_MISO
-        pins: [U_MCU:GPIO12, U_XBEE:SPI_MISO]
+        pins: [U_MCU:20, U_XBEE:SPI_MISO]
       - net: XBee_CS
-        pins: [U_MCU:GPIO13, U_XBEE:SPI_SSEL]
+        pins: [U_MCU:21, U_XBEE:SPI_SSEL]
       - net: XBEE_ON_SLEEP
-        pins: [U_MCU:GPIO17, U_XBEE:ON_SLEEP]
+        pins: [U_MCU:22, U_XBEE:ON_SLEEP]
       - net: XBEE_SPI_ATTN
-        pins: [U_MCU:GPIO18, U_XBEE:SPI_ATTN]
-      # SWD debug port not broken out to a header; GPIO19 is the one
-      # remaining spare pin
-      - no_connect: [U_MCU:SWCLK, U_MCU:SWDIO, U_MCU:GPIO19]
-      # I2C0 - OLED
+        pins: [U_MCU:8, U_XBEE:SPI_ATTN]
+      # I2C - OLED
       - net: I2C_SDA
-        pins: [U_MCU:GPIO4, U_OLED:SDA, R_I2C_SDA:2]
+        pins: [U_MCU:12, U_OLED:SDA, R_I2C_SDA:2]
       - net: I2C_SCL
-        pins: [U_MCU:GPIO5, U_OLED:SCL, R_I2C_SCL:2]
-      # ADC inputs
+        pins: [U_MCU:17, U_OLED:SCL, R_I2C_SCL:2]
+      # ADC inputs (ADC1-only, see note above)
       - net: TRIG_ANALOG
-        pins: [U_MCU:GPIO26/ADC0, U_HALL:OUT]
+        pins: [U_MCU:4, U_HALL:OUT]
       - net: STICK_X
-        pins: [U_MCU:GPIO27/ADC1, J_STICK:Pin_3]
+        pins: [U_MCU:5, J_STICK:Pin_3]
       - net: STICK_Y
-        pins: [U_MCU:GPIO28/ADC2, J_STICK:Pin_4]
+        pins: [U_MCU:6, J_STICK:Pin_4]
       # Misc control
       - net: RGB_DIN
-        pins: [U_MCU:GPIO22, R_RGB:2]
-      # Power control
+        pins: [U_MCU:37, R_RGB:2]
       # Digital buttons (internal pull-ups in firmware)
       - net: BTN_VOL_UP
-        pins: [U_MCU:GPIO0, SW_VOL_UP:1]
+        pins: [U_MCU:9, SW_VOL_UP:1]
       - net: BTN_VOL_DN
-        pins: [U_MCU:GPIO1, SW_VOL_DN:1]
+        pins: [U_MCU:10, SW_VOL_DN:1]
       - net: BTN_TRIG_DIG
-        pins: [U_MCU:GPIO2, SW_TRIG_DIG:1]
+        pins: [U_MCU:11, SW_TRIG_DIG:1]
       - net: BTN_STICK
-        pins: [U_MCU:GPIO3, J_STICK:Pin_5]
-      # Macro button matrix
-      - net: MAT_R0
-        pins: [U_MCU:GPIO6, SW_MACRO1:1, SW_MACRO2:1, SW_MACRO3:1]
-      - net: MAT_R1
-        pins: [U_MCU:GPIO7, SW_MACRO4:1, SW_MACRO5:1, SW_MACRO6:1]
-      - net: MAT_C0
-        pins: [U_MCU:GPIO8, D_MACRO1:K, D_MACRO4:K]
-      - net: MAT_C1
-        pins: [U_MCU:GPIO9, D_MACRO2:K, D_MACRO5:K]
-      - net: MAT_C2
-        pins: [U_MCU:GPIO14, D_MACRO3:K, D_MACRO6:K]
-      # Wireless module control (bit-banged 3-wire gSPI-style interface,
-      # matching the official Pico 2 W's own RP2350<->CYW43439 wiring
-      # exactly so the existing pico-sdk cyw43 PIO driver applies unmodified)
-      - net: WL_CLK
-        pins: [U_MCU:GPIO24, U_WIFI:SDIO_CLK]
-      - net: WL_D
-        pins: [U_MCU:GPIO23, R22:2]
-      - net: WL_CS
-        pins: [U_MCU:GPIO25, U_WIFI:SDIO_DATA_3]
-      - net: WL_ON
-        pins: [U_MCU:GPIO16, U_WIFI:WL_REG_ON, U_WIFI:BT_REG_ON]
-      # VSYS battery-voltage sense: divide-by-3 (matches the Pico 2 W
-      # module's own onboard divider ratio, which no longer exists now
-      # that we're not using that module) into GP29 (ADC3). Freed up by
-      # moving WL_ON off GP29 above.
+        pins: [U_MCU:23, J_STICK:Pin_5]
+      # Macro buttons — direct-wired, no scan matrix. ESP32-S3-WROOM-1 has
+      # ample spare GPIO, unlike the bare-RP2350A design this replaced,
+      # so the 1-pin savings of a 2x3 matrix isn't worth the anti-ghosting
+      # diodes and scan firmware it costs.
+      - net: BTN_MACRO1
+        pins: [U_MCU:24, SW_MACRO1:1]
+      - net: BTN_MACRO2
+        pins: [U_MCU:25, SW_MACRO2:1]
+      - net: BTN_MACRO3
+        pins: [U_MCU:28, SW_MACRO3:1]
+      - net: BTN_MACRO4
+        pins: [U_MCU:29, SW_MACRO4:1]
+      - net: BTN_MACRO5
+        pins: [U_MCU:30, SW_MACRO5:1]
+      - net: BTN_MACRO6
+        pins: [U_MCU:31, SW_MACRO6:1]
+      # VSYS battery-voltage sense: divide-by-3 into ADC1_CH6 (pin 7)
       - net: VSYS_SENSE
-        pins: [R_VSYS1:2, R_VSYS2:1, U_MCU:GPIO29/ADC3]
+        pins: [R_VSYS1:2, R_VSYS2:1, U_MCU:7]
       - net: GND
         pins: [R_VSYS2:2]
-
-  # -------------------------------------------------------------------------
-  # 6b. Wireless: Murata Type 1YN (CYW43439 WiFi+BT, pre-certified module)
-  # -------------------------------------------------------------------------
-  # Replaces the Pico 2 W module's onboard CYW43439 + Abracon "Niche"
-  # patented antenna (which requires a separate license from Abracon).
-  # Type 1YN uses the same CYW43439 die as the Pico 2 W with its own
-  # pre-certified (FCC/CE) antenna and RF matching already done — no RF
-  # design or antenna licensing needed on our side.
-  #
-  # Digital interface deliberately replicates the Pico 2 W's own bit-banged
-  # 3-wire scheme (WL_CLK/WL_D/WL_CS) instead of Murata's generic 4-bit
-  # SDIO reference circuit, because RP2350 has no real SDIO host controller
-  # — its Pico SDK cyw43 driver only speaks this specific PIO-bitbanged
-  # protocol. SDIO_CMD+SDIO_DATA_0 short directly to WL_D through R22;
-  # SDIO_DATA_1+SDIO_DATA_2 short directly together and join the same WL_D
-  # node through R23. Values/topology taken directly from the official
-  # RPI-PICO2W schematic (sheet 2), not estimated.
-  #
-  # WL_ON drives both WL_REG_ON and BT_REG_ON together (WiFi+BT enable as
-  # one unit, matching the Pico 2 W reference).
-  #
-  # LPO_IN needs a driven 32.768kHz clock, not a passive crystal load — see
-  # pin 37 description in the Type 1YN datasheet ("External sleep clock
-  # input"). U_LPO below is a generic 32.768kHz CMOS oscillator IC.
-  #
-  # LAYOUT NOTE (not representable in schematic-only yaml): GND(SR_PVSS)
-  # (pins 32/33) must be an isolated ground pour, per Murata's own
-  # datasheet warning, not merged with the general ground plane. The
-  # antenna trace geometry itself must exactly copy Murata's Hardware
-  # Application Note Figure 4 (Trace Antenna Guideline) — this is a
-  # PCB-layout-stage requirement, not a schematic component.
-  Wireless:
-    components:
-      U_WIFI:
-        symbol: SnipsControllers:Murata_Type1YN
-        sheet: Wireless
-        value: LBEE5KL1YN
-        footprint: SnipsControllers:Murata_Type1YN
-        # Land pattern generated from Murata's official
-        # type1yn-module-footprint-topview.dxf (46 pads: 42 perimeter +
-        # 4 large GND/shield pads), pin numbers cross-checked against
-        # Figure 4 (Pin Assignments Top View) in the datasheet.
-      U_LPO:
-        symbol: SnipsControllers:Osc_32k768_3pin
-        sheet: Wireless
-        value: 32.768kHz_oscillator
-        footprint: Oscillator:Oscillator_SMD_SiTime_SiT8008-4pin_2.0x1.6mm
-      R22:
-        symbol: Device:R
-        sheet: Wireless
-        value: 470Ω
-        footprint: Resistor_SMD:R_0402_1005Metric
-      R23:
-        symbol: Device:R
-        sheet: Wireless
-        value: 10kΩ
-        footprint: Resistor_SMD:R_0402_1005Metric
-      C_WL_VBAT1:
-        symbol: Device:C
-        sheet: Wireless
-        value: 4.7µF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      C_WL_VBAT2:
-        symbol: Device:C
-        sheet: Wireless
-        value: 4.7µF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-      L_WL_VBAT:
-        symbol: Device:L
-        sheet: Wireless
-        value: 2.2µH
-        footprint: Inductor_SMD:L_0402_1005Metric
-        # LQM18PN2R2MGH recommended per Murata reference circuit
-      C_WL_VIO:
-        symbol: Device:C
-        sheet: Wireless
-        value: 2.2µF
-        footprint: Capacitor_SMD:C_0402_1005Metric
-    connections:
-      # WL_D bus: SDIO_CMD+SDIO_DATA_0 shorted direct; SDIO_DATA_1+
-      # SDIO_DATA_2 shorted direct through R23; both join WL_D through R22
-      - net: WL_D_BUS0
-        pins: [U_WIFI:SDIO_CMD, U_WIFI:SDIO_DATA_0, R22:1]
-      - net: WL_D_BUS1
-        pins: [U_WIFI:SDIO_DATA_1, U_WIFI:SDIO_DATA_2, R23:1]
-      - net: WL_D_BUS0
-        pins: [R23:2]
-      # Power
-      - net: 3V3
-        pins: [U_WIFI:VBAT, U_WIFI:VIN_LDO, U_WIFI:VIO, C_WL_VBAT1:1,
-               C_WL_VBAT2:1, C_WL_VIO:1, L_WL_VBAT:2, U_LPO:VDD]
-      - net: WL_VREG_LX
-        pins: [U_WIFI:SR_VLX, L_WL_VBAT:1]
-      - net: GND
-        pins: [U_WIFI:GND, U_WIFI:GND_12, U_WIFI:GND_19, U_WIFI:GND_21,
-               U_WIFI:GND_29, U_WIFI:GND_32_SR_PVSS, U_WIFI:GND_33_SR_PVSS,
-               U_WIFI:GND_35, U_WIFI:GND_40, U_WIFI:GND_42, U_WIFI:GND_43,
-               U_WIFI:GND_44, U_WIFI:GND_45, U_WIFI:GND_46,
-               U_WIFI:BT_DEV_WAKE, C_WL_VBAT1:2, C_WL_VBAT2:2, C_WL_VIO:2,
-               U_LPO:GND]
-      - net: WL_LPO
-        pins: [U_WIFI:LPO_IN, U_LPO:OUT]
-      # Unused per Pico 2 W reference: BT UART (2-5), NC pads (6,7,13,15,16),
-      # BT PCM (8-11), WL_GPIO_0/1/2 (27,18,17), BT_HOST_WAKE (38).
-      # ANT (41): RF output goes to a PCB trace antenna at layout time, not
-      # a schematic net.
-      - no_connect: [U_WIFI:2, U_WIFI:3, U_WIFI:4, U_WIFI:5, U_WIFI:6,
-                     U_WIFI:7, U_WIFI:8, U_WIFI:9, U_WIFI:10, U_WIFI:11,
-                     U_WIFI:13, U_WIFI:15, U_WIFI:16, U_WIFI:17, U_WIFI:18,
-                     U_WIFI:27, U_WIFI:38, U_WIFI:41]
+      # Spare GPIO: 15/16/26 usable-with-care (strapping), 32-35 clean
+      # (default JTAG, fully reusable as plain GPIO). See RESERVED GPIO
+      # header comment for details.
+      - no_connect: [U_MCU:15, U_MCU:16, U_MCU:26, U_MCU:32, U_MCU:33,
+                     U_MCU:34, U_MCU:35]
 
   # -------------------------------------------------------------------------
   # 7. XBee3 Radio (SPI mode, THT socket)
@@ -793,7 +557,7 @@ groups:
         symbol: Xbee3:XB3-24Z8UT-J
         sheet: XBee
         value: XBee3
-        footprint: RF_Module:XBee_THT
+        footprint: Xbee3:XB324Z8UTJ
       C_XBEE_VCC:
         symbol: Device:C
         sheet: XBee
@@ -847,7 +611,7 @@ groups:
         symbol: SnipsControllers:SSD1306_OLED_4pin
         sheet: OLED
         value: SSD1306_1.3in
-        footprint: Display_OLED:OLED_1.3in_4pin_I2C
+        footprint: Display:Adafruit_SSD1306
       C_OLED_1:
         symbol: Device:C
         sheet: OLED
@@ -929,8 +693,8 @@ groups:
   # 11. SK6812 RGB LED (NeoPixel-compatible)
   # -------------------------------------------------------------------------
   # SK6812 chosen over WS2812B for explicit 3.3V VDD compatibility.
-  # Pin and protocol compatible with WS2812B — same PIO driver code works.
-  # Driven via RP2350 PIO on GP22.
+  # Pin and protocol compatible with WS2812B — driven via ESP32-S3's RMT
+  # peripheral (pin 37), the standard driver mechanism for this timing.
   # R_RGB: 300-500Ω series on DIN for signal integrity (standard practice).
   # Decoupling: 100nF on VCC.
   RGB_LED:
@@ -963,101 +727,13 @@ groups:
       - no_connect: [D_RGB:DOUT]
 
   # -------------------------------------------------------------------------
-  # 12. Macro Button Matrix (2x3, 6 buttons)
-  # -------------------------------------------------------------------------
-  # 2 rows (GP6/GP7) x 3 columns (GP8/GP9/GP14).
-  # Each button has a 1N4148 diode (anode to switch, cathode to column)
-  # to prevent ghosting on simultaneous presses.
-  # Scan: drive one row LOW, read columns (internal pull-ups on GP8/9/14).
-  #
-  # Layout:
-  #          Col0(GP8)  Col1(GP9)  Col2(GP14)
-  # Row0(GP6)  MACRO1     MACRO2     MACRO3
-  # Row1(GP7)  MACRO4     MACRO5     MACRO6
-  Button_Matrix:
-    components:
-      SW_MACRO1:
-        symbol: Switch:SW_Push
-        sheet: Button_Matrix
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
-      SW_MACRO2:
-        symbol: Switch:SW_Push
-        sheet: Button_Matrix
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
-      SW_MACRO3:
-        symbol: Switch:SW_Push
-        sheet: Button_Matrix
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
-      SW_MACRO4:
-        symbol: Switch:SW_Push
-        sheet: Button_Matrix
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
-      SW_MACRO5:
-        symbol: Switch:SW_Push
-        sheet: Button_Matrix
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
-      SW_MACRO6:
-        symbol: Switch:SW_Push
-        sheet: Button_Matrix
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
-      D_MACRO1:
-        symbol: Device:D_Small
-        sheet: Button_Matrix
-        value: 1N4148
-        footprint: Diode_SMD:D_SOD-123
-      D_MACRO2:
-        symbol: Device:D_Small
-        sheet: Button_Matrix
-        value: 1N4148
-        footprint: Diode_SMD:D_SOD-123
-      D_MACRO3:
-        symbol: Device:D_Small
-        sheet: Button_Matrix
-        value: 1N4148
-        footprint: Diode_SMD:D_SOD-123
-      D_MACRO4:
-        symbol: Device:D_Small
-        sheet: Button_Matrix
-        value: 1N4148
-        footprint: Diode_SMD:D_SOD-123
-      D_MACRO5:
-        symbol: Device:D_Small
-        sheet: Button_Matrix
-        value: 1N4148
-        footprint: Diode_SMD:D_SOD-123
-      D_MACRO6:
-        symbol: Device:D_Small
-        sheet: Button_Matrix
-        value: 1N4148
-        footprint: Diode_SMD:D_SOD-123
-    connections:
-      # Row 0 (GP6): MACRO1, MACRO2, MACRO3
-      # Row 1 (GP7): MACRO4, MACRO5, MACRO6
-      # Switch to diode anode
-      - net: MAT_SW1_D
-        pins: [SW_MACRO1:2, D_MACRO1:A]
-      - net: MAT_SW2_D
-        pins: [SW_MACRO2:2, D_MACRO2:A]
-      - net: MAT_SW3_D
-        pins: [SW_MACRO3:2, D_MACRO3:A]
-      - net: MAT_SW4_D
-        pins: [SW_MACRO4:2, D_MACRO4:A]
-      - net: MAT_SW5_D
-        pins: [SW_MACRO5:2, D_MACRO5:A]
-      - net: MAT_SW6_D
-        pins: [SW_MACRO6:2, D_MACRO6:A]
-      # Diode cathode to column
-
-  # -------------------------------------------------------------------------
-  # 13. Direct Buttons (vol up/dn, digital trigger)
+  # 12-13. Direct Buttons (vol up/dn, digital trigger, 6 macro buttons)
   # -------------------------------------------------------------------------
   # Active low, internal pull-ups in firmware. Wire to GND.
+  # Macro buttons are direct-wired here too (no 2x3 scan matrix) — see the
+  # MCU_Core note on why: ESP32-S3-WROOM-1 has enough spare GPIO that the
+  # matrix's 1-pin savings isn't worth the anti-ghosting diodes and scan
+  # firmware it used to require.
   Buttons_Direct:
     components:
       SW_VOL_UP:
@@ -1075,9 +751,41 @@ groups:
         sheet: Buttons_Direct
         value: Omron_B3F
         footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_MACRO1:
+        symbol: Switch:SW_Push
+        sheet: Buttons_Direct
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_MACRO2:
+        symbol: Switch:SW_Push
+        sheet: Buttons_Direct
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_MACRO3:
+        symbol: Switch:SW_Push
+        sheet: Buttons_Direct
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_MACRO4:
+        symbol: Switch:SW_Push
+        sheet: Buttons_Direct
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_MACRO5:
+        symbol: Switch:SW_Push
+        sheet: Buttons_Direct
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
+      SW_MACRO6:
+        symbol: Switch:SW_Push
+        sheet: Buttons_Direct
+        value: Omron_B3F
+        footprint: Button_Switch_THT:SW_PUSH_6mm
     connections:
       - net: GND
-        pins: [SW_VOL_UP:2, SW_VOL_DN:2, SW_TRIG_DIG:2]
+        pins: [SW_VOL_UP:2, SW_VOL_DN:2, SW_TRIG_DIG:2, SW_MACRO1:2,
+               SW_MACRO2:2, SW_MACRO3:2, SW_MACRO4:2, SW_MACRO5:2,
+               SW_MACRO6:2]
 
   # -------------------------------------------------------------------------
   # 14. ERC power flags
@@ -1085,16 +793,16 @@ groups:
   # KiCad's ERC requires every net with a "power input" pin on it to also
   # have a "power output" pin (or a PWR_FLAG) somewhere on that same net,
   # to confirm the net is actually externally driven. None of our regulator
-  # ICs expose a strictly "power_out"-typed pin on 3V3/GND/MCU_1V1/
-  # MCU_ADC_AVDD (their outputs come through inductors/resistors, which are
-  # "passive"-typed), so ERC can't infer it on its own. Standard, expected
-  # step for any schematic — not a design bug.
-  # Positions pinned explicitly, off in isolated space away from all other
-  # components — kicaddy's auto-layout is not stable between compiles
-  # (positions shift on unrelated yaml edits), and these tiny symbols kept
-  # landing on top of unrelated wires (crystal, wireless module) causing
-  # spurious ERC pin-to-pin/multiple-net-name errors purely from geometric
-  # overlap, not any actual connection.
+  # ICs expose a strictly "power_out"-typed pin on 3V3/GND (their outputs
+  # come through inductors/resistors, which are "passive"-typed), so ERC
+  # can't infer it on its own. Standard, expected step for any schematic —
+  # not a design bug. PF_VSYS specifically is required even though VSYS
+  # already has a real Output-type driver (U_CHG:SYS) elsewhere on the
+  # net — Power_Buck's VIN pin is "Power input" type, which only accepts
+  # a genuine "Power output" pin as a driver, and PWR_FLAG is the only
+  # thing on this net with that exact type (confirmed empirically: removing
+  # PF_VSYS broke Power_Buck's ERC). No explicit position overrides needed
+  # — auto-layout places these fine now that routing is deterministic.
   Power_Flags:
     components:
       PF_3V3:
@@ -1104,18 +812,6 @@ groups:
         footprint: ""
         power: true
       PF_GND:
-        symbol: power:PWR_FLAG
-        sheet: MCU_Core
-        value: PWR_FLAG
-        footprint: ""
-        power: true
-      PF_MCU_1V1:
-        symbol: power:PWR_FLAG
-        sheet: MCU_Core
-        value: PWR_FLAG
-        footprint: ""
-        power: true
-      PF_MCU_ADC_AVDD:
         symbol: power:PWR_FLAG
         sheet: MCU_Core
         value: PWR_FLAG
@@ -1132,10 +828,6 @@ groups:
         pins: [PF_3V3:1]
       - net: GND
         pins: [PF_GND:1]
-      - net: MCU_1V1
-        pins: [PF_MCU_1V1:1]
-      - net: MCU_ADC_AVDD
-        pins: [PF_MCU_ADC_AVDD:1]
 
 # ---------------------------------------------------------------------------
 # DESIGN NOTES
@@ -1157,38 +849,52 @@ groups:
 # 5. XBee RESET RC filter: same as AmidalaShield V1.2.
 #    10kΩ pull-up to 3V3, 100Ω series + 100nF to GND at RESET pin.
 #
-# 6. Battery voltage sense: GP29 onboard VSYS divider (reads VSYS/3).
-#    No external components needed.
-#    FIRMWARE CONSTRAINT: CYW43439 WiFi SPI shares the GP29 ADC path via
-#    the SPI CLK line. Battery voltage reads on GP29 ADC are unreliable
-#    while a CYW43439 SPI transaction is in progress. Firmware must gate
-#    battery ADC reads to occur only when WiFi SPI is idle. This applies
-#    to any future WiFi use (e.g. syncing data with Amidala, accessories).
+# 6. Battery voltage sense: pin 7 (ADC1_CH6) via R_VSYS1/R_VSYS2 divider
+#    (reads VSYS/3). No firmware/WiFi ADC contention concern on ESP32-S3 —
+#    unlike the old bit-banged RP2350+CYW43439 design, WiFi is fully
+#    on-die here and doesn't share any exposed GPIO/ADC path.
 #
-# 7. Pico 2 W powered via VSYS pin. Do NOT drive 3V3 pin externally.
+# 7. ESP32-S3-WROOM-1 powered via its 3V3 pin (pin 2) directly — the module
+#    has no separate VSYS-style pin, its own internal regulation is only
+#    for the RF/digital core, not a board-level supply input.
 #
-# 8. GP16-GP19 reserved for CYW43439 WiFi SPI. Do not connect externally.
+# 8. EN (pin 3) and GPIO0/BOOT (pin 27) are strapping pins, each pulled up
+#    externally via 10kΩ (R_EN_PU/R_BOOT_PU) per standard ESP32-S3
+#    practice. GPIO0 additionally has SW_BOOT to pull it low at boot to
+#    force UF2/download mode. GPIO3/45/46 are also strapping pins — left
+#    unconnected (see RESERVED GPIO), fine to use later but avoid anything
+#    that toggles during boot.
 #
 # 9. CE pin on bq25185 tied to GND (always enable charging).
 #
-# 10. Power control: GP21 must be driven HIGH as the very first instruction
-#     in firmware or power cuts when user releases the power button.
+# 10. Power control: PWR_HOLD (pin 36) must be driven HIGH as the very
+#     first instruction in firmware or power cuts when user releases the
+#     power button.
 #
-# 11. WS2812 DIN series resistor (R_RGB = 330Ω) placed close to GP22 pad.
-#     WS2812 runs at 3.3V supply (reduced brightness vs 5V nominal —
-#     acceptable for status indicator).
+# 11. WS2812 DIN series resistor (R_RGB = 330Ω) placed close to the RGB_DIN
+#     pad (pin 37). WS2812 runs at 3.3V supply (reduced brightness vs 5V
+#     nominal — acceptable for status indicator).
 #
-# 12. Button matrix: diodes are mandatory to prevent ghosting on
-#     simultaneous button presses. 1N4148 SOD-123 SMD recommended.
-#     Anode to switch, cathode to column line.
+# 12. Macro buttons are direct-wired (no scan matrix, no anti-ghosting
+#     diodes needed) — see MCU_Core section for why.
 #
 # 13. STAT2 on bq25185 left floating (not connected). STAT1 alone provides
 #     sufficient charge state indication for firmware/display use.
 #
-# 14. XBee footprint: RF_Module:XBee_THT for prototyping.
+# 14. XBee footprint: Xbee3:XB324Z8UTJ (real THT footprint, same one
+#     already validated on the Amidala board — sourced from the vendor's
+#     multi-format library dump, not RF_Module:XBee_THT, which never
+#     actually existed in stock KiCad libraries).
 #     Update to SMT module footprint for final PCB if size requires it.
 #
-# 15. No spare GPIO — all 22 available user GPIO are assigned.
+# 15. ESP32-S3-WROOM-1 antenna keepout: the module's footprint (Espressif's
+#     official Espressif.pretty library) includes the required antenna
+#     keepout area — keep copper/components out of it per the module's
+#     datasheet. Much simpler than the old Murata design's custom PCB
+#     trace antenna, but still a real layout-stage requirement.
+#
+# 16. Spare GPIO: pins 15/16/26 (strapping, usable with care) and pins
+#     32-35 (default JTAG, cleanly reusable). See RESERVED GPIO header.
 
 sheets:
   USB_C:
@@ -1227,7 +933,7 @@ sheets:
     position: [1399.54, 0]
     size: [300.99, 199.39]
     pins:
-      - name: "GP15_SENSE"
+      - name: "PWR_BTN_SENSE"
         shape: bidirectional
         position: [1482.09, 199.39]
       - name: "PWR_HOLD"
@@ -1244,30 +950,10 @@ sheets:
       - name: "RGB_DIN"
         shape: input
         position: [1899.92, 199.39]
-  Button_Matrix:
-    path: button_matrix
-    position: [2100.58, 0]
-    size: [299.72, 199.39]
-    pins:
-      - name: "MAT_R0"
-        shape: bidirectional
-        position: [2142.49, 199.39]
-      - name: "MAT_R1"
-        shape: bidirectional
-        position: [2197.1, 199.39]
-      - name: "MAT_C0"
-        shape: bidirectional
-        position: [2250.44, 199.39]
-      - name: "MAT_C1"
-        shape: bidirectional
-        position: [2303.78, 199.39]
-      - name: "MAT_C2"
-        shape: bidirectional
-        position: [2358.39, 199.39]
   MCU_Core:
     path: mcu_core
     position: [699.77, 350.52]
-    size: [699.77, 499.11]
+    size: [764.54, 499.11]
     pins:
       - name: "USB_DP"
         shape: bidirectional
@@ -1278,7 +964,7 @@ sheets:
       - name: "STAT1"
         shape: input
         position: [877.57, 350.52]
-      - name: "GP15_SENSE"
+      - name: "PWR_BTN_SENSE"
         shape: bidirectional
         position: [934.72, 350.52]
       - name: "PWR_HOLD"
@@ -1287,95 +973,69 @@ sheets:
       - name: "RGB_DIN"
         shape: output
         position: [1049.02, 350.52]
-      - name: "MAT_R0"
-        shape: bidirectional
-        position: [1107.44, 350.52]
-      - name: "MAT_R1"
-        shape: bidirectional
-        position: [1164.59, 350.52]
-      - name: "MAT_C0"
-        shape: bidirectional
-        position: [1221.74, 350.52]
-      - name: "MAT_C1"
-        shape: bidirectional
-        position: [1278.89, 350.52]
-      - name: "MAT_C2"
-        shape: bidirectional
-        position: [1336.04, 350.52]
-      - name: "WL_CLK"
-        shape: bidirectional
-        position: [751.84, 849.63]
-      - name: "WL_CS"
-        shape: bidirectional
-        position: [784.86, 849.63]
-      - name: "WL_D"
-        shape: bidirectional
-        position: [817.88, 849.63]
-      - name: "WL_ON"
-        shape: bidirectional
-        position: [850.9, 849.63]
       - name: "SPI_SCK"
         shape: bidirectional
-        position: [883.92, 849.63]
+        position: [751.84, 849.63]
       - name: "SPI_MOSI"
         shape: bidirectional
-        position: [916.94, 849.63]
+        position: [784.86, 849.63]
       - name: "SPI_MISO"
         shape: bidirectional
-        position: [949.96, 849.63]
+        position: [817.88, 849.63]
       - name: "XBee_CS"
         shape: bidirectional
-        position: [982.98, 849.63]
+        position: [850.9, 849.63]
       - name: "XBEE_ON_SLEEP"
         shape: bidirectional
-        position: [1016, 849.63]
+        position: [883.92, 849.63]
       - name: "XBEE_SPI_ATTN"
         shape: bidirectional
-        position: [1049.02, 849.63]
+        position: [916.94, 849.63]
       - name: "I2C_SDA"
         shape: bidirectional
-        position: [1083.31, 849.63]
+        position: [949.96, 849.63]
       - name: "I2C_SCL"
         shape: bidirectional
-        position: [1116.33, 849.63]
+        position: [982.98, 849.63]
       - name: "TRIG_ANALOG"
         shape: input
-        position: [1149.35, 849.63]
+        position: [1016, 849.63]
       - name: "STICK_X"
         shape: input
-        position: [1182.37, 849.63]
+        position: [1049.02, 849.63]
       - name: "STICK_Y"
         shape: input
-        position: [1215.39, 849.63]
+        position: [1082.04, 849.63]
       - name: "BTN_STICK"
         shape: input
-        position: [1248.41, 849.63]
+        position: [1115.06, 849.63]
       - name: "BTN_VOL_UP"
         shape: input
-        position: [1281.43, 849.63]
+        position: [1148.08, 849.63]
       - name: "BTN_VOL_DN"
         shape: input
-        position: [1314.45, 849.63]
+        position: [1181.10, 849.63]
       - name: "BTN_TRIG_DIG"
         shape: input
-        position: [1347.47, 849.63]
-  Wireless:
-    path: wireless
-    position: [0, 999.49]
-    size: [299.72, 200.66]
-    pins:
-      - name: "WL_CLK"
-        shape: bidirectional
-        position: [48.26, 999.49]
-      - name: "WL_CS"
-        shape: bidirectional
-        position: [115.57, 999.49]
-      - name: "WL_D"
-        shape: bidirectional
-        position: [184.15, 999.49]
-      - name: "WL_ON"
-        shape: bidirectional
-        position: [251.46, 999.49]
+        position: [1214.12, 849.63]
+      - name: "BTN_MACRO1"
+        shape: input
+        position: [1247.14, 849.63]
+      - name: "BTN_MACRO2"
+        shape: input
+        position: [1280.16, 849.63]
+      - name: "BTN_MACRO3"
+        shape: input
+        position: [1313.18, 849.63]
+      - name: "BTN_MACRO4"
+        shape: input
+        position: [1346.20, 849.63]
+      - name: "BTN_MACRO5"
+        shape: input
+        position: [1379.22, 849.63]
+      - name: "BTN_MACRO6"
+        shape: input
+        position: [1412.24, 849.63]
   XBee:
     path: xbee
     position: [350.52, 999.49]
@@ -1435,14 +1095,32 @@ sheets:
   Buttons_Direct:
     path: buttons_direct
     position: [1750.06, 999.49]
-    size: [299.72, 200.66]
+    size: [342.9, 200.66]
     pins:
       - name: "BTN_VOL_UP"
         shape: output
-        position: [1809.75, 999.49]
+        position: [1769.11, 999.49]
       - name: "BTN_VOL_DN"
         shape: output
-        position: [1899.92, 999.49]
+        position: [1807.21, 999.49]
       - name: "BTN_TRIG_DIG"
         shape: output
-        position: [1990.09, 999.49]
+        position: [1845.31, 999.49]
+      - name: "BTN_MACRO1"
+        shape: output
+        position: [1883.41, 999.49]
+      - name: "BTN_MACRO2"
+        shape: output
+        position: [1921.51, 999.49]
+      - name: "BTN_MACRO3"
+        shape: output
+        position: [1959.61, 999.49]
+      - name: "BTN_MACRO4"
+        shape: output
+        position: [1997.71, 999.49]
+      - name: "BTN_MACRO5"
+        shape: output
+        position: [2035.81, 999.49]
+      - name: "BTN_MACRO6"
+        shape: output
+        position: [2073.91, 999.49]

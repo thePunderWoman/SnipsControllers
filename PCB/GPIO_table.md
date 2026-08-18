@@ -1,142 +1,154 @@
-# Snips Controller — RP2350A GPIO Table
+# Snips Controller — ESP32-S3-WROOM-1 GPIO Table
 
-> **MCU:** Bare RP2350A (QFN-60) — not a Pico 2 W module. Custom USB-C +
-> external flash/crystal + a separate Murata Type 1YN WiFi/BT module.
-> See `MCU_Core` and `Wireless` sections of `snips_controller.yaml` for why.
+> **⚠ Known kicaddy bug (2026-08-17):** the yaml's `footprint:` field is not
+> currently applied by `kicaddy compile` — compiled `.kicad_sch` files have
+> blank/wrong Footprint properties for most components right now. The
+> `footprint:` values in `snips_controller.yaml` are still accurate as
+> documentation of intent; they're just not making it into the compiled
+> output yet. **Don't start PCB layout from the current compiled schematic's
+> footprints** until this is fixed — assign footprints manually in the
+> KiCad GUI in the meantime, or wait for the fix.
+
+> **MCU:** ESP32-S3-WROOM-1 module (pre-certified, integrated flash +
+> crystal + WiFi/BT radio + PCB antenna). No external RF design, flash,
+> or crystal needed — the module handles all of that internally. Custom
+> USB-C for firmware flashing, charging, and future accessory expansion
+> (the module's native USB is genuinely exposed, unlike a Pico-family
+> module whose USB is hardwired to its own onboard connector).
+> Pins referenced by number in the yaml, not name — the module's pins are
+> heavily multi-function (e.g. pin 4 is "GPIO4/TOUCH4/ADC1_CH3") and
+> numbers are unambiguous. See `MCU_Core` section of `snips_controller.yaml`.
 
 ## Reserved / Do Not Use
-| GPIO | Reason |
+| Pin | Reason |
 |---|---|
-| GP16 | WL_ON — enables both WL_REG_ON and BT_REG_ON on the Murata Type 1YN wireless module |
-| GP23 | WL_D — bit-banged data bus to the wireless module |
-| GP24 | WL_CLK — bit-banged clock to the wireless module |
-| GP25 | WL_CS — bit-banged chip select to the wireless module |
-| GP29 | VSYS_SENSE — divide-by-3 battery voltage sense (ADC3) |
+| 1, 40, 41 | GND |
+| 2 | 3V3 |
+| 3 | EN — reset/enable, pulled up via R_EN_PU (10kΩ) |
+| 13 | USB_D- (native USB) |
+| 14 | USB_D+ (native USB) |
+| 27 | GPIO0/BOOT — pulled up via R_BOOT_PU (10kΩ), SW_BOOT pulls low to force UF2/download mode |
+| 26-32 (internal) | Internal SPI flash — not present on this symbol/module at all |
+| 33-34 (internal) | Exist on the bare ESP32-S3 chip but not broken out on the WROOM-1 module |
 
-The wireless interface deliberately replicates the official Pico 2 W's own
-bit-banged 3-wire RP2350↔CYW43439 protocol (not real 4-bit SDIO — RP2350
-has no SDIO host controller), so the existing pico-sdk `cyw43` PIO driver
-applies with just a pin remap.
+**Use with care if ever needed** (strapping pins, sampled at boot — fine
+for a static signal, avoid anything that toggles during power-up):
+| Pin | Note |
+|---|---|
+| 15 (GPIO3) | Strapping — JTAG signal source select |
+| 16 (GPIO46) | Strapping — boot message control |
+| 26 (GPIO45) | Strapping — flash voltage select |
+
+**Spare, no caveats** (default JTAG — fully reusable as plain GPIO if you
+don't need hardware debugging):
+| Pin | Default function |
+|---|---|
+| 32 (GPIO39) | MTCK |
+| 33 (GPIO40) | MTDO |
+| 34 (GPIO41) | MTDI |
+| 35 (GPIO42) | MTMS |
 
 ## XBee Auxiliary Pins
-| GPIO | Reason |
+| Pin | Reason |
 |---|---|
-| GP17 | XBee ON_SLEEP status input |
-| GP18 | XBee SPI_ATTN — data-ready interrupt, needed for reliable SPI transfers |
+| 22 (GPIO18) | XBee ON_SLEEP status input |
+| 8 (GPIO15) | XBee SPI_ATTN — data-ready interrupt, needed for reliable SPI transfers |
 
 Pulled directly from Amidala's actual AmidalaShield netlist (IPC-2581
 export), not guessed: DTR is tied low, ON_SLEEP and SPI_ATTN go to host
-GPIO on that board too (ESP32 GPIO15/16 there, RP2350 GP17/18 here).
-
-GP19 is free for future use.
+GPIO on that board too (ESP32 GPIO15/16 there — same MCU family as this
+board now, so the pin roles map over conceptually).
 
 ---
 
-## SPI1 (XBee)
-| Function | GPIO |
+## SPI (XBee)
+| Function | Pin |
 |---|---|
-| XBee SCK | GP10 |
-| XBee MOSI | GP11 |
-| XBee MISO | GP12 |
-| XBee CS | GP13 |
-| XBee ON_SLEEP | GP17 |
-| XBee SPI_ATTN | GP18 |
+| XBee SCK | 18 (GPIO10) |
+| XBee MOSI | 19 (GPIO11) |
+| XBee MISO | 20 (GPIO12) |
+| XBee CS | 21 (GPIO13) |
+| XBee ON_SLEEP | 22 (GPIO18) |
+| XBee SPI_ATTN | 8 (GPIO15) |
 
-## I2C0 (OLED)
-| Function | GPIO |
+## I2C (OLED)
+| Function | Pin |
 |---|---|
-| SDA | GP4 |
-| SCL | GP5 |
+| SDA | 12 (GPIO8) |
+| SCL | 17 (GPIO9) |
 
-## ADC
-| Function | GPIO | Notes |
+## ADC — ADC1 only, see note below
+| Function | Pin | Notes |
 |---|---|---|
-| Analog trigger (DRV5055) | GP26 | ADC0 |
-| Thumbstick X (GuliKit) | GP27 | ADC1 |
-| Thumbstick Y (GuliKit) | GP28 | ADC2 |
-| VSYS battery sense | GP29 | ADC3, divide-by-3 via R_VSYS1/R_VSYS2 |
+| Analog trigger (DRV5055) | 4 (GPIO4) | ADC1_CH3 |
+| Thumbstick X (GuliKit) | 5 (GPIO5) | ADC1_CH4 |
+| Thumbstick Y (GuliKit) | 6 (GPIO6) | ADC1_CH5 |
+| VSYS battery sense | 7 (GPIO7) | ADC1_CH6, divide-by-3 via R_VSYS1/R_VSYS2 |
+
+> **Why ADC1 only:** ESP32-S3's ADC2 is unusable while WiFi is active,
+> and this design keeps WiFi on. All 4 analog signals are deliberately
+> placed on ADC1-capable pins to avoid any contention — unlike the old
+> RP2350 design, there's no firmware-side gating workaround needed here.
 
 ## Digital Inputs / Outputs
-| Function | GPIO | Notes |
+| Function | Pin | Notes |
 |---|---|---|
-| Vol up | GP0 | Internal pull-up, active low |
-| Vol down | GP1 | Internal pull-up, active low |
-| Digital trigger (bumper) | GP2 | Internal pull-up, active low |
-| Thumbstick click (KEY) | GP3 | Internal pull-up, active low |
-| Macro button matrix Row 0 | GP6 | Drive low to scan |
-| Macro button matrix Row 1 | GP7 | Drive low to scan |
-| Macro button matrix Col 0 | GP8 | Input, internal pull-up |
-| Macro button matrix Col 1 | GP9 | Input, internal pull-up |
-| Macro button matrix Col 2 | GP14 | Input, internal pull-up |
-| Power button sense | GP15 | Input, monitors for 3-second hold |
-| Charge status STAT1 (bq25185) | GP20 | Open-drain input, 10kΩ pull-up to 3V3 |
-| Power latch hold | GP21 | Output, driven HIGH on boot to hold soft latch |
-| RGB LED (WS2812 NeoPixel) | GP22 | PIO-driven, data line |
-| WL_ON (wireless enable) | GP16 | Output, drives WL_REG_ON + BT_REG_ON together |
-| WL_D (wireless data) | GP23 | Bit-banged, PIO-driven |
-| WL_CLK (wireless clock) | GP24 | Bit-banged, PIO-driven |
-| WL_CS (wireless chip select) | GP25 | Bit-banged, PIO-driven |
+| Vol up | 9 (GPIO16) | Internal pull-up, active low |
+| Vol down | 10 (GPIO17) | Internal pull-up, active low |
+| Digital trigger (bumper) | 11 (GPIO18) | Internal pull-up, active low |
+| Thumbstick click (KEY) | 23 (GPIO21) | Internal pull-up, active low |
+| Macro button 1-6 | 24, 25, 28, 29, 30, 31 (GPIO47, 48, 35, 36, 37, 38) | Internal pull-up, active low — direct-wired, no scan matrix |
+| Power button sense | 38 (GPIO2) | Input, monitors for 3-second hold |
+| Charge status STAT1 (bq25185) | 39 (GPIO1) | Open-drain input, 10kΩ pull-up to 3V3 |
+| Power latch hold | 36 (GPIO44) | Output, driven HIGH on boot to hold soft latch |
+| RGB LED (WS2812/SK6812) | 37 (GPIO43) | RMT-driven, data line |
 
-## Macro Button Matrix Layout
-6 macro buttons in a 2x3 matrix (2 rows × 3 columns).
-Each button has a 1N4148 diode (anode to switch, cathode to column) to prevent ghosting.
+## Macro Buttons — Direct-Wired, No Scan Matrix
+6 macro buttons, each wired straight to its own GPIO with an internal
+pull-up (same pattern as the other direct buttons). No anti-ghosting
+diodes, no row/column scan firmware.
 
-```
-         Col 0 (GP8)   Col 1 (GP9)   Col 2 (GP14)
-Row 0 (GP6)  BTN_MACRO1    BTN_MACRO2    BTN_MACRO3
-Row 1 (GP7)  BTN_MACRO4    BTN_MACRO5    BTN_MACRO6
-```
-
-Scan: drive one row LOW at a time, read columns. Active low with internal pull-ups on columns.
+**Why not a 2x3 matrix?** The RP2350A design used a matrix because it
+only had 1 spare GPIO — a matrix costs 5 pins for 6 buttons instead of 6,
+a savings worth the diodes and scan complexity when pins are that scarce.
+ESP32-S3-WROOM-1 has roughly 8 pins to spare even after every other
+signal is assigned (see below), so that 1-pin savings isn't worth it
+anymore — direct wiring is simpler to wire, debug, and reason about.
 
 ---
 
-## MCU Support Circuitry (RP2350A)
+## MCU Support Circuitry (ESP32-S3-WROOM-1)
 
-Bare RP2350A needs external circuitry the Pico 2 W module used to provide
-internally. All values replicate the official Pico 2 W reference schematic
-(RPI-PICO2W) for the RP2350 portion — see `MCU_Core` in the yaml.
+Far simpler than the bare-RP2350A design it replaced — the module
+integrates flash, crystal, and the WiFi/BT radio + antenna internally.
+What's left is standard ESP32 practice, matching Espressif's own
+reference designs (including their DevKitC boards):
 
 | Function | Components | Notes |
 |---|---|---|
-| Core regulator (1V1 rail) | L_VREG (3.3µH), C_VREG_1/2 (4.7µF) | External LC filter for RP2350's internal switching regulator (VREG_LX/FB) |
-| Crystal | X1 (12MHz), C16/C17 (15pF) | XIN/XOUT |
-| QSPI flash | U_FLASH (W25Q32RVXHJQ) | 4MiB, XSON-8 2x3mm |
-| BOOTSEL | SW_BOOTSEL, R11 (1kΩ) | Pulls QSPI_SS low to force USB boot |
-| USB series resistors | R_USB_DP/R_USB_DM (27Ω) | Between RP2350 and the external USB-C connector |
-| ADC_AVDD filter | R_ADC_AVDD1 (200Ω), R_ADC_AVDD2 (1Ω), C_ADC_AVDD1/2 | Two-stage RC filter off 3V3 |
-| VSYS battery sense | R_VSYS1 (200kΩ), R_VSYS2 (100kΩ) | Divide-by-3 into GP29/ADC3 |
-| IOVDD/DVDD decoupling | C_IOVDD_1/2, C_1V1_1/2, C_QSPI_IOVDD, C_VREG_AVDD | 100nF each |
+| EN pull-up | R_EN_PU (10kΩ) | EN has an internal weak pull-up too; external is standard practice for reliable reset timing |
+| BOOT pull-up + button | R_BOOT_PU (10kΩ), SW_BOOT | GPIO0 pulled up, button pulls low to force UF2/download mode at boot — same role as the old RP2350 BOOTSEL button |
+| USB series resistors | R_USB_DP/R_USB_DM (27Ω) | Between the module's native USB pins (13/14) and the external USB-C connector |
+| 3V3 decoupling | C_3V3_1 (10µF bulk), C_3V3_2 (100nF) | Standard module decoupling |
+| VSYS battery sense | R_VSYS1 (200kΩ), R_VSYS2 (100kΩ) | Divide-by-3 into pin 7 (ADC1_CH6) |
 
-**IOVDD/DVDD have multiple physically separate pins on the QFN-60 package**
-that all share the same pin name — they're addressed individually by pin
-number in the yaml (not just by name) so every physical pad gets tied to
-the right net.
+**No longer needed at all** (this is the point of the pivot): external
+QSPI flash chip, crystal + load caps, RP2350 core-regulator LC filter
+(VREG_LX/FB), two-stage ADC_AVDD RC filter, per-pin IOVDD/DVDD
+decoupling network, separate wireless module + its bit-banged interface
++ antenna licensing question.
 
-## Wireless (Murata Type 1YN)
+## Wireless — Fully Integrated
 
-Replaces the Pico 2 W module's onboard CYW43439 + Abracon "Niche" patented
-antenna (which requires a separate license from Abracon). Type 1YN is a
-pre-certified (FCC/CE) module using the same CYW43439 die, with antenna
-matching and RF filtering already done.
+WiFi/BT radio, antenna, and RF matching are all internal to the
+ESP32-S3-WROOM-1 module — no external wireless component, no bit-banged
+interface consuming GPIO, nothing to wire in the schematic at all.
 
-| Type 1YN pin | Net | Notes |
-|---|---|---|
-| SDIO_CLK | WL_CLK (GP24) | Direct |
-| SDIO_CMD + SDIO_DATA_0 | WL_D_BUS0 | Shorted together, through R22 (470Ω) to WL_D |
-| SDIO_DATA_1 + SDIO_DATA_2 | WL_D_BUS1 | Shorted together, through R23 (10kΩ) to WL_D |
-| SDIO_DATA_3 | WL_CS (GP25) | Direct |
-| WL_REG_ON + BT_REG_ON | WL_ON (GP16) | Tied together — WiFi+BT enable as one unit |
-| VBAT, VIN_LDO | 3V3 | C_WL_VBAT1/2 (4.7µF) decoupling |
-| SR_VLX | via L_WL_VBAT (2.2µH) to 3V3 | Internal buck LC filter |
-| VIO | 3V3 | C_WL_VIO (2.2µF) decoupling |
-| LPO_IN | U_LPO output | Driven 32.768kHz oscillator IC (not a passive crystal — LPO_IN is a clock input) |
-| BT_DEV_WAKE | GND | Unused, tied low (matches Pico 2 W reference) |
-| GND(SR_PVSS) (pins 32/33) | GND | **Layout note:** must be an isolated ground pour per Murata's datasheet, not merged into the general ground plane |
-
-**Layout note:** the antenna trace geometry must exactly copy Murata's
-Hardware Application Note Figure 4 (Trace Antenna Guideline) — this is a
-PCB-layout-stage requirement that can't be captured in the schematic yaml.
+**Layout note:** the module's footprint (Espressif's own official
+`Espressif.pretty` library) includes the required antenna keepout area —
+keep copper/components out of it per the module's datasheet. Much
+simpler than the old Murata design's custom PCB trace antenna, but still
+a real layout-stage requirement, not just a schematic one.
 
 ---
 
@@ -147,7 +159,7 @@ PCB-layout-stage requirement that can't be captured in the schematic yaml.
 |---|---|---|
 | DRV5055 VCC | 100nF ceramic | Close to supply pin |
 | GuliKit VCC | 100nF ceramic | Close to supply pin |
-| WS2812 VCC | 100nF ceramic | Close to supply pin |
+| WS2812/SK6812 VCC | 100nF ceramic | Close to supply pin |
 
 ### Pull-up Resistors
 | Signal | Value | Notes |
@@ -158,15 +170,12 @@ PCB-layout-stage requirement that can't be captured in the schematic yaml.
 ### Series Resistors
 | Signal | Value | Notes |
 |---|---|---|
-| SK6812 DIN (GP22) | 300–500Ω | Signal integrity protection, standard NeoPixel best practice |
+| RGB DIN (pin 37) | 300–500Ω | Signal integrity protection, standard NeoPixel/SK6812 best practice |
 
-### Button Matrix Diodes
-| Component | Value | Notes |
-|---|---|---|
-| D_MACRO1–D_MACRO6 | 1N4148 | One per macro button, anode to switch, cathode to column |
-
-### Buttons (non-matrix)
-No external components needed — RP2350 internal pull-ups enabled in firmware, wire to GND.
+### Buttons (all direct-wired, no matrix)
+No external components needed — ESP32-S3 internal pull-ups enabled in
+firmware, wire to GND. Applies to vol up/down, digital trigger, stick
+click, and all 6 macro buttons.
 
 ### XBee
 Reusing Amidala's verified `XB3-24Z8UT-J` symbol (`PCB/libraries/Xbee3.kicad_sym`).
@@ -174,27 +183,27 @@ THT socket footprint used for prototyping; SMT module footprint TBD for final PC
 
 Beyond the 4-wire SPI bus (SCK/MOSI/MISO/CS) and RESET, three more pins are
 wired per Amidala's actual netlist: DTR tied to GND, ON_SLEEP and SPI_ATTN
-to GP17/GP18. SPI_ATTN in particular is the XBee's data-ready interrupt —
+to pins 22/8. SPI_ATTN in particular is the XBee's data-ready interrupt —
 needed for reliable SPI transfers, not just a nice-to-have.
 
 ### Power Control Circuit
-See power control section of schematic. Uses GP15 (power button sense input) and GP21 (latch hold output).
-GP21 must be driven HIGH as the very first instruction in firmware or power will cut on button release.
+See power control section of schematic. Uses pin 38 (power button sense
+input) and pin 36 (latch hold output). Pin 36 must be driven HIGH as the
+very first instruction in firmware or power will cut on button release.
 
 ### Battery Voltage Sense
-GP29 reads VSYS/3 via an external R_VSYS1/R_VSYS2 divider (added when the
-Pico 2 W module — which had this divider built in — was replaced by a bare
-RP2350A). bq25185 STAT1 on GP20 provides charge state (HIGH=idle/done,
-LOW=charging or fault).
+Pin 7 (ADC1_CH6) reads VSYS/3 via an external R_VSYS1/R_VSYS2 divider —
+same role as the RP2350 design's divider, still needed since
+ESP32-S3-WROOM-1 has no VSYS-style pin of its own either. bq25185 STAT1
+on pin 39 provides charge state (HIGH=idle/done, LOW=charging or fault).
 
-> **Firmware constraint carried over from the original design:** if WiFi
-> traffic and VSYS ADC reads ever contend for timing (both ultimately touch
-> GP29-adjacent circuitry historically), gate battery ADC reads to avoid
-> overlapping with active WL_D bus transactions. Verify against the actual
-> pico-sdk `cyw43` PIO driver behavior once bring-up firmware exists — this
-> is inherited caution, not a confirmed conflict on the new wiring.
+No firmware ADC-gating workaround needed here (unlike the old bit-banged
+RP2350+CYW43439 design) — WiFi is fully on-die and doesn't share any
+exposed GPIO/ADC path with this sense pin.
 
 ---
 
 ## Spare GPIO
-GP19 — free for future use.
+Pins 32-35 (GPIO39-42, default JTAG) — clean, no caveats.
+Pins 15, 16, 26 (GPIO3/46/45) — usable, but strapping pins, best for a
+static/non-boot-critical signal.

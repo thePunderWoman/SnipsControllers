@@ -3,4 +3,5 @@
   (lib (name "SnipsControllers")(type "KiCad")(uri "${KIPRJMOD}/libraries/SnipsControllers.kicad_sym")(options "")(descr ""))
   (lib (name "Xbee3")(type "KiCad")(uri "${KIPRJMOD}/libraries/Xbee3.kicad_sym")(options "")(descr ""))
   (lib (name "BQ25185DLHR")(type "KiCad")(uri "${KIPRJMOD}/libraries/BQ25185DLHR/BQ25185DLHR.kicad_sym")(options "")(descr ""))
+  (lib (name "Espressif")(type "KiCad")(uri "${KIPRJMOD}/libraries/Espressif.kicad_sym")(options "")(descr ""))
 )

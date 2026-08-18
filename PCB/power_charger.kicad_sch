@@ -1,1403 +1,407 @@
 (kicad_sch
 	(version 20250114)
-	(generator "eeschema")
-	(generator_version "9.0")
-	(uuid "c4fd374b-3b9e-408b-8dd0-6a70e5c8b1ca")
+	(generator "kicaddy")
+	(generator_version "0.1.0")
+	(uuid "8b112242-8774-423f-b1a1-8d63d5cde4f7")
 	(paper "A4")
 	(lib_symbols
 		(symbol "BQ25185DLHR:BQ25185DLHR"
-			(pin_names
-				(offset 1.016)
-			)
+			(pin_names (offset 1.016))
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "U"
+			(property "Reference"
+				"U"
 				(at -12.7 15.748 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left bottom)
-				)
+				(effects (font (size 1.27 1.27)) (justify left bottom))
 			)
-			(property "Value" "BQ25185DLHR"
+			(property "Value"
+				"BQ25185DLHR"
 				(at -12.7 -15.24 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left bottom)
-				)
+				(effects (font (size 1.27 1.27)) (justify left bottom))
 			)
-			(property "Footprint" "BQ25185DLHR:IC_BQ25185DLHR"
+			(property "Footprint"
+				"BQ25185DLHR:IC_BQ25185DLHR"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "Datasheet" ""
+			(property "MF"
+				"Texas Instruments"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "Description" ""
+			(property "SNAPEDA_PACKAGE_ID"
+				"124517"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "MF" "Texas Instruments"
+			(property "CREATOR"
+				"AMINA"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "SNAPEDA_PACKAGE_ID" "124517"
+			(property "Price"
+				"None"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "CREATOR" "AMINA"
+			(property "Package"
+				"WFDFN-10 Texas Instruments"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "Price" "None"
+			(property "Check_prices"
+				"https://www.snapeda.com/parts/BQ25185DLHR/Texas+Instruments/view-part/?ref=eda"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "Package" "WFDFN-10 Texas Instruments"
+			(property "STANDARD"
+				"Manufacturer Recommendations"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "Check_prices" "https://www.snapeda.com/parts/BQ25185DLHR/Texas+Instruments/view-part/?ref=eda"
+			(property "PARTREV"
+				"OCTOBER 2023"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "STANDARD" "Manufacturer Recommendations"
+			(property "VERIFIER"
+				""
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "PARTREV" "OCTOBER 2023"
+			(property "SnapEDA_Link"
+				"https://www.snapeda.com/parts/BQ25185DLHR/Texas+Instruments/view-part/?ref=snap"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "VERIFIER" ""
+			(property "MP"
+				"BQ25185DLHR"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "SnapEDA_Link" "https://www.snapeda.com/parts/BQ25185DLHR/Texas+Instruments/view-part/?ref=snap"
+			(property "MAXIMUM_PACKAGE_HEIGHT"
+				"0.8mm"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "MP" "BQ25185DLHR"
+			(property "Description"
+				"\n                        \n                            1-cell, 1-A stand-alone linear battery charger with power path and solar input support\n                        \n"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "MAXIMUM_PACKAGE_HEIGHT" "0.8mm"
+			(property "Availability"
+				"In Stock"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
-			(property "Description_1" "1-cell, 1-A stand-alone linear battery charger with power path and solar input support"
+			(property "MANUFACTURER"
+				"Texas Instruments"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "Availability" "In Stock"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "MANUFACTURER" "Texas Instruments"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 			)
 			(symbol "BQ25185DLHR_0_0"
-				(rectangle
-					(start -12.7 -12.7)
-					(end 12.7 15.24)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin input line
-					(at -17.78 12.7 0)
-					(length 5.08)
-					(name "IN"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "10"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at -17.78 7.62 0)
-					(length 5.08)
-					(name "STAT1"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "9"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at -17.78 5.08 0)
-					(length 5.08)
-					(name "STAT2"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -17.78 2.54 0)
-					(length 5.08)
-					(name "~{CE}"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -17.78 -2.54 0)
-					(length 5.08)
-					(name "ILIM/VSET"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -17.78 -5.08 0)
-					(length 5.08)
-					(name "ISET"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 17.78 12.7 180)
-					(length 5.08)
-					(name "SYS"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 17.78 7.62 180)
-					(length 5.08)
-					(name "BAT"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at 17.78 2.54 180)
-					(length 5.08)
-					(name "TS/MR"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 17.78 -7.62 180)
-					(length 5.08)
-					(name "THERMAL_PAD"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "11"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 17.78 -10.16 180)
-					(length 5.08)
-					(name "GND"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
+				(rectangle (start -12.7 -12.7) (end 12.7 15.24) (stroke (width 0.254) (type default)) (fill (type background)))
+				(pin input line (at -17.78 12.7 0) (length 5.08) (name "IN" (effects (font (size 1.016 1.016)))) (number "10" (effects (font (size 1.016 1.016)))))
+				(pin output line (at -17.78 7.62 0) (length 5.08) (name "STAT1" (effects (font (size 1.016 1.016)))) (number "9" (effects (font (size 1.016 1.016)))))
+				(pin output line (at -17.78 5.08 0) (length 5.08) (name "STAT2" (effects (font (size 1.016 1.016)))) (number "3" (effects (font (size 1.016 1.016)))))
+				(pin input line (at -17.78 2.54 0) (length 5.08) (name "~{CE}" (effects (font (size 1.016 1.016)))) (number "4" (effects (font (size 1.016 1.016)))))
+				(pin input line (at -17.78 -2.54 0) (length 5.08) (name "ILIM/VSET" (effects (font (size 1.016 1.016)))) (number "7" (effects (font (size 1.016 1.016)))))
+				(pin input line (at -17.78 -5.08 0) (length 5.08) (name "ISET" (effects (font (size 1.016 1.016)))) (number "8" (effects (font (size 1.016 1.016)))))
+				(pin output line (at 17.78 12.7 180) (length 5.08) (name "SYS" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
+				(pin output line (at 17.78 7.62 180) (length 5.08) (name "BAT" (effects (font (size 1.016 1.016)))) (number "2" (effects (font (size 1.016 1.016)))))
+				(pin input line (at 17.78 2.54 180) (length 5.08) (name "TS/MR" (effects (font (size 1.016 1.016)))) (number "6" (effects (font (size 1.016 1.016)))))
+				(pin passive line (at 17.78 -7.62 180) (length 5.08) (name "THERMAL_PAD" (effects (font (size 1.016 1.016)))) (number "11" (effects (font (size 1.016 1.016)))))
+				(pin power_in line (at 17.78 -10.16 180) (length 5.08) (name "GND" (effects (font (size 1.016 1.016)))) (number "5" (effects (font (size 1.016 1.016)))))
 			)
-			(embedded_fonts no)
 		)
 		(symbol "Device:C"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0.254)
-			)
+			(pin_numbers (hide yes))
+			(pin_names (offset 0.254))
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "C"
+			(property "Reference"
+				"C"
 				(at 0.635 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
+				(effects (font (size 1.27 1.27)) (justify left))
 			)
-			(property "Value" "C"
+			(property "Value"
+				"C"
 				(at 0.635 -2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
+				(effects (font (size 1.27 1.27)) (justify left))
 			)
-			(property "Footprint" ""
+			(property "Footprint"
+				""
 				(at 0.9652 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "Datasheet" "~"
+			(property "Datasheet"
+				"~"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "Description" "Unpolarized capacitor"
+			(property "Description"
+				"Unpolarized capacitor"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "ki_keywords" "cap capacitor"
+			(property "ki_keywords"
+				"cap capacitor"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "ki_fp_filters" "C_*"
+			(property "ki_fp_filters"
+				"C_*"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
 			(symbol "C_0_1"
-				(polyline
-					(pts
-						(xy -2.032 0.762) (xy 2.032 0.762)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -2.032 -0.762) (xy 2.032 -0.762)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
+				(polyline (pts (xy -2.032 0.762) (xy 2.032 0.762)) (stroke (width 0.508) (type default)) (fill (type none)))
+				(polyline (pts (xy -2.032 -0.762) (xy 2.032 -0.762)) (stroke (width 0.508) (type default)) (fill (type none)))
 			)
 			(symbol "C_1_1"
-				(pin passive line
-					(at 0 3.81 270)
-					(length 2.794)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -3.81 90)
-					(length 2.794)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
+				(pin passive line (at 0 3.81 270) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
+				(pin passive line (at 0 -3.81 90) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27)))))
 			)
 			(embedded_fonts no)
 		)
 		(symbol "Device:R"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-			)
+			(pin_numbers (hide yes))
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "R"
+			(property "Reference"
+				"R"
 				(at 2.032 0 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
+				(effects (font (size 1.27 1.27)))
 			)
-			(property "Value" "R"
+			(property "Value"
+				"R"
 				(at 0 0 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
+				(effects (font (size 1.27 1.27)))
 			)
-			(property "Footprint" ""
+			(property "Footprint"
+				""
 				(at -1.778 0 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "Datasheet" "~"
+			(property "Datasheet"
+				"~"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "Description" "Resistor"
+			(property "Description"
+				"Resistor"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "ki_keywords" "R res resistor"
+			(property "ki_keywords"
+				"R res resistor"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
-			(property "ki_fp_filters" "R_*"
+			(property "ki_fp_filters"
+				"R_*"
 				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
+				(effects (font (size 1.27 1.27)) (hide yes))
 			)
 			(symbol "R_0_1"
-				(rectangle
-					(start -1.016 -2.54)
-					(end 1.016 2.54)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
+				(rectangle (start -1.016 -2.54) (end 1.016 2.54) (stroke (width 0.254) (type default)) (fill (type none)))
 			)
 			(symbol "R_1_1"
-				(pin passive line
-					(at 0 3.81 270)
-					(length 1.27)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -3.81 90)
-					(length 1.27)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
+				(pin passive line (at 0 3.81 270) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
+				(pin passive line (at 0 -3.81 90) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27)))))
 			)
 			(embedded_fonts no)
 		)
 	)
-	(no_connect
-		(at 214.63 121.92)
-		(uuid "a4abf275-923d-4770-83d9-8c561e8c9796")
-	)
-	(label "CHG_TS"
-		(at 182.88 121.92 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "0a211584-d030-4887-91c3-cbdc9bf8e44b")
-	)
-	(label "CHG_ISET"
-		(at 147.32 88.9 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "0aaea4e6-a501-4b32-896c-912e177be001")
-	)
-	(label "CHG_VSET"
-		(at 207.01 80.01 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "10ae8744-230f-4aa5-abd8-7324a2708a57")
-	)
-	(label "CHG_ISET"
-		(at 214.63 132.08 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "7da20e62-8f10-470c-82ad-3b769f8975db")
-	)
-	(label "CHG_VSET"
-		(at 214.63 129.54 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "94ac32e4-6997-4022-b059-64531a1d764f")
-	)
-	(label "CHG_TS"
-		(at 250.19 124.46 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "9e9ae2da-407e-4772-91b8-0d1aa424d123")
+	(no_connect (at 214.63 121.92) (uuid "8979a987-3820-4786-b7e2-7c60a2e992e1"))
+	(global_label "VBUS"
+		(shape input)
+		(at 214.63 114.3 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "65be74c4-bd76-4665-8abe-26dcc8ef595f")
 	)
 	(global_label "VBUS"
 		(shape input)
-		(at 214.63 114.3 180)
+		(at 118.11 88.9 270)
 		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "29d1455a-3344-426e-aae4-92d58a3206de")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 214.63 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e4a950e0-00bc-4e43-a3b0-16442e5e45a9")
+	)
+	(global_label "VBUS"
+		(shape input)
+		(at 124.46 121.92 270)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d8b3a8b3-bf99-4688-95f4-5a35ec08093d")
+	)
+	(global_label "VSYS"
+		(shape input)
+		(at 250.19 114.3 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "58ca44bb-f788-4834-858b-68cedb519ecc")
+	)
+	(global_label "VSYS"
+		(shape input)
+		(at 153.67 121.92 270)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "120d5e32-d931-420d-a38a-095d720be709")
+	)
+	(global_label "VSYS"
+		(shape input)
+		(at 177.8 80.01 270)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "04ec8f92-fcb6-466e-8250-53135f7e9199")
 	)
 	(global_label "VBAT"
 		(shape passive)
-		(at 250.19 119.38 0)
+		(at 250.19 119.38 180)
 		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "3205138a-bd09-4ccb-9d49-c6e253c51a3b")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 250.19 119.38 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "26dd9e05-4f77-4eb5-89cd-5f8809b70f56")
 	)
-	(global_label "GND"
+	(global_label "VBAT"
 		(shape passive)
-		(at 124.46 129.54 270)
+		(at 95.25 121.92 270)
 		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "3820d3a0-d4ea-4737-9a96-20784f22c523")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 124.46 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 250.19 137.16 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "3f715501-76a2-4e71-81b9-f09330969231")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 250.19 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 177.8 87.63 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "3fd44e76-7024-4d07-8140-55dadeaf6df1")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 177.8 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 93.98 129.54 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "5090d33e-159a-48e9-b5c2-6e9db1b5df8f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 93.98 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 250.19 134.62 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "5b08f5f2-1e84-4442-b156-5d543a463866")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 250.19 134.62 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 147.32 96.52 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "6238944d-58e7-40fe-9d24-902daf80c6fd")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 147.32 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 207.01 87.63 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "66c95975-3c9e-470f-b9c7-c495173c8330")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 207.01 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 153.67 129.54 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "77e67b17-fade-446a-9a9d-73b825e795ec")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 182.88 129.54 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "811f6eaf-aa73-4779-b9f8-421a75387674")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 182.88 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VBUS"
-		(shape input)
-		(at 118.11 88.9 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "8e3a3ade-cfd8-4fdd-905b-99c73b91a83f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 118.11 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0086c952-bdc8-496d-835c-826c744b9764")
 	)
 	(global_label "3V3"
 		(shape passive)
-		(at 64.77 110.49 270)
+		(at 64.77 110.49 90)
 		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "961f3939-50e8-4bff-ad12-d8fa24366d38")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 64.77 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "b19af12c-4136-4e6f-b3b1-54c9971d4dad")
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 214.63 124.46 180)
+		(at 250.19 137.16 180)
 		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "a2f1e73f-567f-444e-a02b-4b88d9cfb6ea")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 214.63 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VBAT"
-		(shape passive)
-		(at 93.98 121.92 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c4144b49-7ec3-48b7-ac4f-4a6a2b7cf928")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 93.98 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VSYS"
-		(shape input)
-		(at 177.8 80.01 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c48a9f53-b86f-4347-b02c-0d79465b85b3")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 177.8 80.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VBUS"
-		(shape input)
-		(at 124.46 121.92 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c4f42dad-2edb-420b-8afb-580541c66362")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 124.46 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VSYS"
-		(shape input)
-		(at 153.67 121.92 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "d526ebdf-5619-40eb-919c-3edbb3b2f81d")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "78cf7aa9-cbf3-4e89-9777-30d5a59d5be2")
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 118.11 96.52 270)
+		(at 118.11 96.52 90)
 		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ef0ca187-68e4-44fa-aae7-17065f92f518")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 118.11 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "57f4771c-aa4c-45b7-803a-6f2486d8e181")
 	)
-	(global_label "VSYS"
-		(shape input)
-		(at 250.19 114.3 0)
+	(global_label "GND"
+		(shape passive)
+		(at 124.46 129.54 90)
 		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "f3c4fe8f-8bfa-4c46-b671-2cff3a842c93")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 250.19 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "d51b4be3-0e28-456e-a8d1-27af11d28647")
 	)
-	(hierarchical_label "STAT1"
-		(shape output)
-		(at 64.77 102.87 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "19325079-73df-4ddd-bb58-1354b0b8253f")
+	(global_label "GND"
+		(shape passive)
+		(at 153.67 129.54 90)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "4f66f48a-f6ba-4f59-8220-7b2395b86549")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 177.8 87.63 90)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "4e0565ad-e1c5-41e6-a332-3a4f6ce25eb4")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 95.25 129.54 90)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "fc81509c-c025-4758-857b-11e9545aa824")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 148.59 96.52 90)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "c7189ded-96ae-445b-ae92-45b363aa45e0")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 207.01 87.63 90)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "a48e9a0f-c3dd-418f-afa7-f9fe3733df69")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 182.88 129.54 90)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "7c021a49-0b3e-42e2-b602-378306843a91")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 214.63 124.46 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "52b92820-6214-4b0c-8f00-3a25cf2ccd89")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 250.19 134.62 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b24324bd-0cda-4e9c-b608-dda64ff1f7cf")
 	)
 	(hierarchical_label "STAT1"
 		(shape output)
 		(at 214.63 119.38 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "1aad670b-6ca2-4855-a28f-2b3076ba13c7")
+		(uuid "027d467f-4ab2-495c-829b-e21da6e3459a")
 	)
-	(symbol
-		(lib_id "Device:C")
-		(at 93.98 125.73 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0767cd8e-0da5-40f4-b73e-5722ae6caa28")
-		(property "Reference" "C_BAT1"
-			(at 94.615 128.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "10µF"
-			(at 94.615 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 94.9452 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 93.98 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 93.98 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1b5f3dcd-3db0-424c-9447-c8d731e2fa66")
-		)
-		(pin "2"
-			(uuid "adedd725-a970-4d2e-9367-3b9622353885")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
-					(reference "C_BAT1")
-					(unit 1)
-				)
-			)
-		)
+	(hierarchical_label "STAT1"
+		(shape output)
+		(at 64.77 102.87 270)
+		(uuid "1a66db1f-ddd7-41e3-abf4-3510dd9ab21e")
 	)
-	(symbol
-		(lib_id "Device:R")
-		(at 207.01 83.82 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
+	(label "CHG_ISET"
+		(at 214.63 132.08 0)
 		(fields_autoplaced yes)
-		(uuid "1f9a6351-76a9-4f15-aecd-555aaaf21858")
-		(property "Reference" "R_VSET1"
-			(at 209.042 83.82 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "18kΩ"
-			(at 207.01 83.82 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 205.232 83.82 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 207.01 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 207.01 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f7c1b3aa-7035-446b-b94a-82c1110babda")
-		)
-		(pin "2"
-			(uuid "2e74c5df-94f8-4e4c-b64e-876cecc909c3")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
-					(reference "R_VSET1")
-					(unit 1)
-				)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "0c2c7b66-f503-4d72-a1e1-6b3c201080f2")
 	)
-	(symbol
-		(lib_id "Device:C")
-		(at 118.11 92.71 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
+	(label "CHG_ISET"
+		(at 148.59 88.9 270)
 		(fields_autoplaced yes)
-		(uuid "2184a989-2d29-45a8-806f-c04b71bce4a7")
-		(property "Reference" "C_VIN_1"
-			(at 118.745 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "10µF"
-			(at 118.745 90.17 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 119.0752 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 118.11 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 118.11 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "402553bb-544a-448d-8e50-8a6fe5aeb0f3")
-		)
-		(pin "2"
-			(uuid "ce4abc6e-784d-460a-a3ee-af611af15525")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
-					(reference "C_VIN_1")
-					(unit 1)
-				)
-			)
-		)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6657323b-3c51-4c13-bed5-74be8008775c")
+	)
+	(label "CHG_VSET"
+		(at 214.63 129.54 0)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "c882f572-06ec-46f2-9247-1c5b3b56f45a")
+	)
+	(label "CHG_VSET"
+		(at 207.01 80.01 270)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e9171701-7c73-4611-84af-3db055afb015")
+	)
+	(label "CHG_TS"
+		(at 250.19 124.46 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f4d8c5f5-42b4-4614-9774-9116bbe566b6")
+	)
+	(label "CHG_TS"
+		(at 182.88 121.92 270)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "fc60070e-6349-4e7e-975b-4eb84589c821")
 	)
 	(symbol
 		(lib_id "BQ25185DLHR:BQ25185DLHR")
@@ -1408,240 +412,112 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "6f04ae78-8024-49e0-93db-40829e7b8f6e")
-		(property "Reference" "U_CHG1"
+		(uuid "ebb8f113-125e-4d24-bcc5-9927ea73dcb8")
+		(property "Reference"
+			"U_CHG"
 			(at 219.71 142.748 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
-		(property "Value" "bq25185"
+		(property "Value"
+			"bq25185"
 			(at 219.71 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
-		(property "Footprint" "BQ25185DLHR:IC_BQ25185DLHR"
+		(property "Footprint"
+			"BQ25185DLHR:IC_BQ25185DLHR"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "Datasheet" ""
+		(property "MF"
+			"Texas Instruments"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "Description" "\n                        \n                            1-cell, 1-A stand-alone linear battery charger with power path and solar input support\n                        \n"
+		(property "SNAPEDA_PACKAGE_ID"
+			"124517"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "MF" "Texas Instruments"
+		(property "CREATOR"
+			"AMINA"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "SNAPEDA_PACKAGE_ID" "124517"
+		(property "Price"
+			"None"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "CREATOR" "AMINA"
+		(property "Package"
+			"WFDFN-10 Texas Instruments"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "Price" "None"
+		(property "Check_prices"
+			"https://www.snapeda.com/parts/BQ25185DLHR/Texas+Instruments/view-part/?ref=eda"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "Package" "WFDFN-10 Texas Instruments"
+		(property "STANDARD"
+			"Manufacturer Recommendations"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "Check_prices" "https://www.snapeda.com/parts/BQ25185DLHR/Texas+Instruments/view-part/?ref=eda"
+		(property "PARTREV"
+			"OCTOBER 2023"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "STANDARD" "Manufacturer Recommendations"
+		(property "VERIFIER"
+			""
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "PARTREV" "OCTOBER 2023"
+		(property "SnapEDA_Link"
+			"https://www.snapeda.com/parts/BQ25185DLHR/Texas+Instruments/view-part/?ref=snap"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "VERIFIER" ""
+		(property "MP"
+			"BQ25185DLHR"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "SnapEDA_Link" "https://www.snapeda.com/parts/BQ25185DLHR/Texas+Instruments/view-part/?ref=snap"
+		(property "MAXIMUM_PACKAGE_HEIGHT"
+			"0.8mm"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "MP" "BQ25185DLHR"
+		(property "Description"
+			"\n                        \n                            1-cell, 1-A stand-alone linear battery charger with power path and solar input support\n                        \n"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "MAXIMUM_PACKAGE_HEIGHT" "0.8mm"
+		(property "Availability"
+			"In Stock"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "Availability" "In Stock"
+		(property "MANUFACTURER"
+			"Texas Instruments"
 			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (justify bottom) (hide yes))
 		)
-		(property "MANUFACTURER" "Texas Instruments"
-			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Description_1" "1-cell, 1-A stand-alone linear battery charger with power path and solar input support"
-			(at 232.41 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "01bd91a7-d9a8-4dda-be08-e68d857b41d4")
-		)
-		(pin "10"
-			(uuid "314ab00b-acf2-470d-9c28-1639541277aa")
-		)
-		(pin "11"
-			(uuid "b4fd7225-1202-4c60-af57-d2cfd20a77d7")
-		)
-		(pin "2"
-			(uuid "deeeb3ef-b38a-4e35-abab-dd4ba92702cf")
-		)
-		(pin "3"
-			(uuid "a9ed06a1-267b-4e2c-9dd2-7e51d89cd94d")
-		)
-		(pin "4"
-			(uuid "8f6dc344-83d6-498a-9f91-d5cf34b477d5")
-		)
-		(pin "5"
-			(uuid "65458c0b-40a3-4a46-9398-65627628a17b")
-		)
-		(pin "6"
-			(uuid "2b9e06e6-e9b2-46e4-a40e-24ff3ae97ead")
-		)
-		(pin "7"
-			(uuid "8bca5bba-3c4b-4305-855b-f87411b7f78f")
-		)
-		(pin "8"
-			(uuid "76ec81b6-5c02-49ff-a607-7e7c06e18bf0")
-		)
-		(pin "9"
-			(uuid "bf99d36c-b603-409c-9792-2e3f8634396b")
-		)
+		(pin "1" (uuid "4ce28f5d-abc7-4f39-9f61-2b4be532b24c"))
+		(pin "10" (uuid "9c44144e-e64b-414b-bf46-e764000b2eeb"))
+		(pin "11" (uuid "38007539-6861-4e15-a286-30115d6a7eb4"))
+		(pin "2" (uuid "a1b4059a-b6a8-48b3-83cf-0e6954eb92ef"))
+		(pin "3" (uuid "a3356ad4-156f-4481-b771-25b664e09740"))
+		(pin "4" (uuid "c9eff2e1-7162-423b-96f4-9b8eba58a845"))
+		(pin "5" (uuid "e17d3c0d-db17-4a00-a574-c38bc593add2"))
+		(pin "6" (uuid "eecaa939-4d5c-4861-b7d1-374f451f9a55"))
+		(pin "7" (uuid "f7282410-00ce-4250-88c8-08bb2f4eb7cd"))
+		(pin "8" (uuid "ea944f9e-6378-4eda-a34f-61ee729afb0b"))
+		(pin "9" (uuid "70dcd522-3acb-422e-a96f-0829da66f15d"))
 		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
-					(reference "U_CHG1")
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6"
+					(reference "U_CHG")
 					(unit 1)
 				)
 			)
@@ -1649,69 +525,45 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 153.67 125.73 0)
+		(at 95.25 125.73 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "75def458-3aa0-4bea-aa85-0202fb77dbb2")
-		(property "Reference" "C_SYS_1"
-			(at 154.305 128.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+		(uuid "9f2f8f0a-17c0-4235-8277-36c13d8b25d7")
+		(property "Reference"
+			"C_BAT"
+			(at 95.885 128.27 0)
+			(effects (font (size 1.27 1.27)) (justify left))
 		)
-		(property "Value" "10µF"
-			(at 154.305 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+		(property "Value"
+			"10µF"
+			(at 95.885 123.19 0)
+			(effects (font (size 1.27 1.27)) (justify left))
 		)
-		(property "Footprint" ""
-			(at 154.6352 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+		(property "Footprint"
+			"Capacitor_SMD:C_0805_2012Metric"
+			(at 96.2152 121.92 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Datasheet" "~"
-			(at 153.67 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+		(property "Datasheet"
+			"~"
+			(at 95.25 125.73 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "Unpolarized capacitor"
-			(at 153.67 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+		(property "Description"
+			"Unpolarized capacitor"
+			(at 95.25 125.73 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(pin "1"
-			(uuid "9e2cb7b8-a968-4b86-85a0-8e1d3aad371d")
-		)
-		(pin "2"
-			(uuid "0861fba7-5d6b-4df5-a2ab-ca306c1b1231")
-		)
+		(pin "1" (uuid "c442d4cc-09fc-48a5-b7bf-39c60cb47644"))
+		(pin "2" (uuid "e9adc4cd-9fa2-4b61-9124-d252aa5ffe7d"))
 		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
-					(reference "C_SYS_1")
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6"
+					(reference "C_BAT")
 					(unit 1)
 				)
 			)
@@ -1726,196 +578,38 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "91991820-03d7-44d4-bb20-759e966a0687")
-		(property "Reference" "R_STAT1"
+		(uuid "1ae23401-a24b-4e4d-9b66-c9cf4211420f")
+		(property "Reference"
+			"R_STAT1"
 			(at 66.802 106.68 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
+			(effects (font (size 1.27 1.27)))
 		)
-		(property "Value" "10kΩ"
+		(property "Value"
+			"10kΩ"
 			(at 64.77 106.68 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
+			(effects (font (size 1.27 1.27)))
 		)
-		(property "Footprint" ""
+		(property "Footprint"
+			"Resistor_SMD:R_0402_1005Metric"
 			(at 62.992 106.68 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet"
+			"~"
 			(at 64.77 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "Resistor"
+		(property "Description"
+			"Resistor"
 			(at 64.77 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(pin "1"
-			(uuid "c515cafd-2bfd-4e4d-952d-e0c2b8768867")
-		)
-		(pin "2"
-			(uuid "3c5b57b4-76aa-4438-9aed-7e93f57bf5c5")
-		)
+		(pin "1" (uuid "1b70a209-890f-4cc2-b97b-453290b780d4"))
+		(pin "2" (uuid "9cd1dde7-f1c5-473d-b475-147e15b9d92b"))
 		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6"
 					(reference "R_STAT1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 182.88 125.73 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "97744c1c-7444-4017-9099-bb31c4769e09")
-		(property "Reference" "R_TS1"
-			(at 184.912 125.73 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10kΩ"
-			(at 182.88 125.73 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 181.102 125.73 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 182.88 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 182.88 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "2d783621-8ea6-4ce8-be05-570a3db87e37")
-		)
-		(pin "2"
-			(uuid "08f15bd0-1c8c-44fc-b454-b8f440f172df")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
-					(reference "R_TS1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 147.32 92.71 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b908cf01-ac80-48c3-830a-96cefc8220fd")
-		(property "Reference" "R_ISET1"
-			(at 149.352 92.71 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "600Ω"
-			(at 147.32 92.71 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 145.542 92.71 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 147.32 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 147.32 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "88f91dc2-2977-41bb-bf4c-b8e605c086c2")
-		)
-		(pin "2"
-			(uuid "e544e35d-5463-4030-b4b3-86b20a5bd8a7")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
-					(reference "R_ISET1")
 					(unit 1)
 				)
 			)
@@ -1930,62 +624,176 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "e017bae1-dd8c-48dc-ad6c-dfde03d8d211")
-		(property "Reference" "C_SYS_2"
+		(uuid "c0446715-eaed-454f-957f-aead56e51a6e")
+		(property "Reference"
+			"C_SYS_2"
 			(at 178.435 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+			(effects (font (size 1.27 1.27)) (justify left))
 		)
-		(property "Value" "100nF"
+		(property "Value"
+			"100nF"
 			(at 178.435 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+			(effects (font (size 1.27 1.27)) (justify left))
 		)
-		(property "Footprint" ""
+		(property "Footprint"
+			"Capacitor_SMD:C_0402_1005Metric"
 			(at 178.7652 80.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet"
+			"~"
 			(at 177.8 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description"
+			"Unpolarized capacitor"
 			(at 177.8 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(pin "1"
-			(uuid "08fdf625-d430-471f-bb29-c7b8fa4221f8")
-		)
-		(pin "2"
-			(uuid "8825eebd-58d3-442f-b09a-7d258cfa5d88")
-		)
+		(pin "1" (uuid "68731e6e-51ee-4770-ac0d-a9043c91dbde"))
+		(pin "2" (uuid "bb5ecbfb-6c38-4894-a215-82a6aa30b3fe"))
 		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6"
 					(reference "C_SYS_2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 207.01 83.82 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "66cf04f0-0e0a-4e31-80ca-db183c24a156")
+		(property "Reference"
+			"R_VSET"
+			(at 209.042 83.82 90)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Value"
+			"18kΩ"
+			(at 207.01 83.82 90)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Footprint"
+			"Resistor_SMD:R_0402_1005Metric"
+			(at 205.232 83.82 90)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet"
+			"~"
+			(at 207.01 83.82 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description"
+			"Resistor"
+			(at 207.01 83.82 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(pin "1" (uuid "f408538e-7ca6-4cbe-a666-2319d251a8a3"))
+		(pin "2" (uuid "d2b6b371-8248-4266-aa05-129a003b5257"))
+		(instances
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6"
+					(reference "R_VSET")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 182.88 125.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "80ecdb16-bfd7-4e7f-841a-ace46f632a72")
+		(property "Reference"
+			"R_TS"
+			(at 184.912 125.73 90)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Value"
+			"10kΩ"
+			(at 182.88 125.73 90)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Footprint"
+			"Resistor_SMD:R_0402_1005Metric"
+			(at 181.102 125.73 90)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet"
+			"~"
+			(at 182.88 125.73 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description"
+			"Resistor"
+			(at 182.88 125.73 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(pin "1" (uuid "2f81c9fa-524b-437b-b9be-d4c7b1e8dedf"))
+		(pin "2" (uuid "b9815e19-71f4-46d9-8a9d-0968cd532b1e"))
+		(instances
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6"
+					(reference "R_TS")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 153.67 125.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "16d92741-5855-46fe-8a66-e295d1398692")
+		(property "Reference"
+			"C_SYS_1"
+			(at 154.305 128.27 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value"
+			"10µF"
+			(at 154.305 123.19 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint"
+			"Capacitor_SMD:C_0805_2012Metric"
+			(at 154.6352 121.92 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet"
+			"~"
+			(at 153.67 125.73 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description"
+			"Unpolarized capacitor"
+			(at 153.67 125.73 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(pin "1" (uuid "663be76d-d974-4cb5-bad4-7506b48cbf79"))
+		(pin "2" (uuid "4f48bc0a-8078-4f35-8b21-294e65199529"))
+		(instances
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6"
+					(reference "C_SYS_1")
 					(unit 1)
 				)
 			)
@@ -2000,65 +808,139 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "ee3d0b95-8067-40cf-8d08-f44d2aa128cf")
-		(property "Reference" "C_VIN_2"
+		(uuid "223cd783-6fef-4973-83c6-fd3a738ff586")
+		(property "Reference"
+			"C_VIN_2"
 			(at 125.095 128.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+			(effects (font (size 1.27 1.27)) (justify left))
 		)
-		(property "Value" "100nF"
+		(property "Value"
+			"100nF"
 			(at 125.095 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+			(effects (font (size 1.27 1.27)) (justify left))
 		)
-		(property "Footprint" ""
+		(property "Footprint"
+			"Capacitor_SMD:C_0402_1005Metric"
 			(at 125.4252 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet"
+			"~"
 			(at 124.46 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description"
+			"Unpolarized capacitor"
 			(at 124.46 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(pin "1"
-			(uuid "04496647-ebc2-42c7-8f35-8af98112c530")
-		)
-		(pin "2"
-			(uuid "a067683c-ac8a-449e-ba0b-94121573f9b5")
-		)
+		(pin "1" (uuid "e46ce71e-374c-45cf-9be3-2e44d8bb8a37"))
+		(pin "2" (uuid "6ae4f880-27d6-432f-9166-d49856767ef7"))
 		(instances
-			(project "snips_controller"
-				(path "/70589bdd-acbd-4920-8e78-aa58d10832b9/d3206666-a68c-4743-9732-d3abae7b1849"
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6"
 					(reference "C_VIN_2")
 					(unit 1)
 				)
 			)
 		)
 	)
+	(symbol
+		(lib_id "Device:R")
+		(at 148.59 92.71 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c580ebea-b91d-4c6a-bcad-02f93cd3fe9a")
+		(property "Reference"
+			"R_ISET"
+			(at 150.622 92.71 90)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Value"
+			"600Ω"
+			(at 148.59 92.71 90)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Footprint"
+			"Resistor_SMD:R_0402_1005Metric"
+			(at 146.812 92.71 90)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet"
+			"~"
+			(at 148.59 92.71 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description"
+			"Resistor"
+			(at 148.59 92.71 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(pin "1" (uuid "998fd1e9-4211-49b3-8d9c-20d9f34729a9"))
+		(pin "2" (uuid "7bedd6a0-c564-45dc-bd95-a9cc4ae1655e"))
+		(instances
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6"
+					(reference "R_ISET")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 118.11 92.71 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "bbe6c06c-2925-4aee-a8a3-2e4378add2e3")
+		(property "Reference"
+			"C_VIN_1"
+			(at 118.745 95.25 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value"
+			"10µF"
+			(at 118.745 90.17 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint"
+			"Capacitor_SMD:C_0805_2012Metric"
+			(at 119.0752 88.9 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet"
+			"~"
+			(at 118.11 92.71 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description"
+			"Unpolarized capacitor"
+			(at 118.11 92.71 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(pin "1" (uuid "efa3f682-68dd-443d-ab4d-7b79df276ba7"))
+		(pin "2" (uuid "a0b54cbe-fdc1-406e-8ebe-b2fb49daa10f"))
+		(instances
+			(project ""
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6"
+					(reference "C_VIN_1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
 )
