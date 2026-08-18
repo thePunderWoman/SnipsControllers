@@ -43,7 +43,7 @@ jobs:
           echo "$output"
           exit $status
 
-  kb2040-build:
+  esp32s3-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -58,10 +58,10 @@ jobs:
           path: |
             ~/.cache/pip
             ~/.platformio
-          key: ${{ runner.os }}-platformio-kb2040-${{ hashFiles('platformio.ini') }}
+          key: ${{ runner.os }}-platformio-esp32s3-${{ hashFiles('platformio.ini') }}
 
       - name: Install PlatformIO
         run: pip install --upgrade platformio
 
-      - name: Build kb2040 firmware
-        run: pio run -e kb2040
+      - name: Build esp32s3 firmware
+        run: pio run -e esp32s3

@@ -1,47 +1,43 @@
 #pragma once
 
-// GPIO assignments for the Snips Controller firmware (KB2040 / RP2040).
-// Cross-reference: PCB/README.md, "GPIO Assignment".
+// GPIO assignments for the Snips Controller firmware (ESP32-S3-WROOM-1).
+// Cross-reference: PCB/GPIO_table.md.
 //
-// Prototyping note: the real PCB drives the XBee over SPI0 (GPIO18-20 plus
-// CS on GPIO10) and puts Vol up/down on GPIO0/1. Until that board exists,
-// the XBee talks over UART0 instead (its default pins are GPIO0/1 — see
-// PCB/README.md, "Bringup Sequence"), so Vol up/down are temporarily moved
-// to GPIO26/27. That leaves the LED indicator and charge-status inputs
-// (also GPIO26/27 on the real PCB) without a home for now; wire those up
-// once GPIO0/1 free up again on real hardware.
+// Pins below are Arduino GPIO numbers (e.g. 16 means GPIO16), not the
+// module's physical pin numbers used in the PCB docs — see GPIO_table.md
+// for the physical-pin-to-GPIO mapping.
+//
+// Prototyping note: the real PCB drives the XBee over SPI (GPIO10-13).
+// Until that board exists, the XBee talks over UART instead, on a pair of
+// spare GPIO (39/40) that carry no reserved role on this module — unlike
+// RP2040, the ESP32-S3 UART peripherals aren't tied to fixed default pins,
+// so any free GPIO works and no other signal needs to move to make room.
 
 namespace PinConfig {
 
-// XBee UART (prototyping only — default UART0 pins on RP2040/KB2040)
-constexpr int kXbeeUartTx = 0;
-constexpr int kXbeeUartRx = 1;
+// XBee UART (prototyping only — real PCB uses SPI instead, see below)
+constexpr int kXbeeUartRx = 39;
+constexpr int kXbeeUartTx = 40;
 
-// Bottom edge buttons
-constexpr int kDigitalTrigger = 2;
-constexpr int kThumbstickClick = 3;
-constexpr int kMacro1 = 4;
-constexpr int kMacro2 = 5;
-constexpr int kMacro3 = 6;
-constexpr int kMacro4 = 7;
-constexpr int kMacro5 = 8;
-constexpr int kMacro6 = 9;
+// Digital buttons
+constexpr int kDigitalTrigger = 18;
+constexpr int kThumbstickClick = 21;
+constexpr int kMacro1 = 47;
+constexpr int kMacro2 = 48;
+constexpr int kMacro3 = 35;
+constexpr int kMacro4 = 36;
+constexpr int kMacro5 = 37;
+constexpr int kMacro6 = 38;
+constexpr int kVolUp = 16;
+constexpr int kVolDown = 17;
 
-// Vol up/down: remapped here from their final GPIO0/1 slots (see note above)
-constexpr int kVolUp = 26;
-constexpr int kVolDown = 27;
+// RGB status LED (SK6812, RMT-driven)
+constexpr int kRgbLedData = 43;
 
-// Spare GPIO, unused for now
-constexpr int kSpareA2 = 28;
-constexpr int kSpareA3 = 29;
-
-// Reserved by the KB2040 board itself — never drive this pin
-constexpr int kOnboardNeoPixel = 17;
-
-// SPI0 XBee pins for the real PCB — unused while the XBee is on UART
-constexpr int kXbeeSpiSck = 18;
-constexpr int kXbeeSpiMosi = 19;
-constexpr int kXbeeSpiMiso = 20;
-constexpr int kXbeeSpiCs = 10;
+// SPI (XBee) pins for the real PCB — unused while the XBee is on UART
+constexpr int kXbeeSpiSck = 10;
+constexpr int kXbeeSpiMosi = 11;
+constexpr int kXbeeSpiMiso = 12;
+constexpr int kXbeeSpiCs = 13;
 
 }  // namespace PinConfig
