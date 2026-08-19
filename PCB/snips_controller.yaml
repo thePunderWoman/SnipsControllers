@@ -503,9 +503,9 @@ groups:
       - net: TRIG_ANALOG
         pins: [U_MCU:4, U_HALL:OUT]
       - net: STICK_X
-        pins: [U_MCU:5, J_STICK:Pin_3]
+        pins: [U_MCU:5, J_STICK:2]
       - net: STICK_Y
-        pins: [U_MCU:6, J_STICK:Pin_4]
+        pins: [U_MCU:6, J_STICK:2']
       # Misc control
       - net: RGB_DIN
         pins: [U_MCU:37, R_RGB:2]
@@ -517,7 +517,7 @@ groups:
       - net: BTN_TRIG_DIG
         pins: [U_MCU:11, SW_TRIG_DIG:1]
       - net: BTN_STICK
-        pins: [U_MCU:23, J_STICK:Pin_5]
+        pins: [U_MCU:23, J_STICK:a]
       # Macro buttons — direct-wired, no scan matrix. ESP32-S3-WROOM-1 has
       # ample spare GPIO, unlike the bare-RP2350A design this replaced,
       # so the 1-pin savings of a 2x3 matrix isn't worth the anti-ghosting
@@ -669,15 +669,19 @@ groups:
   # -------------------------------------------------------------------------
   # 10. GuliKit Hall Effect Thumbstick
   # -------------------------------------------------------------------------
-  # Native 3.3V. X/Y analog outputs, KEY digital click (active low).
+  # OEM-replacement-style hall/TMR stick (ALPS RKJXV1224 / C&K THB001P
+  # footprint family) -- a 2-axis potentiometer-emulation interface, not a
+  # simple VCC/GND/X/Y/SW breakout. Each axis needs its own low/wiper/high
+  # connection (1/2/3 for X, 1'/2'/3' for Y); switch is pins a/c (b/d are
+  # mechanically-redundant duplicate legs, intentionally unconnected).
   # Decoupling: 100nF on VCC.
   Thumbstick:
     components:
       J_STICK:
-        symbol: Connector_Generic:Conn_01x05
+        symbol: SnipsControllers_Custom:GuliKit_HallStick
         sheet: Thumbstick
         value: GuliKit_Thumbstick
-        footprint: Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical
+        footprint: SnipsControllers_Custom:GuliKit_HallStick
       C_STICK:
         symbol: Device:C
         sheet: Thumbstick
@@ -685,9 +689,9 @@ groups:
         footprint: Capacitor_SMD:C_0402_1005Metric
     connections:
       - net: 3V3
-        pins: [J_STICK:Pin_1, C_STICK:1]
+        pins: [J_STICK:3, J_STICK:3', C_STICK:1]
       - net: GND
-        pins: [J_STICK:Pin_2, C_STICK:2]
+        pins: [J_STICK:1, J_STICK:1', J_STICK:c, C_STICK:2]
 
   # -------------------------------------------------------------------------
   # 11. SK6812 RGB LED (NeoPixel-compatible)

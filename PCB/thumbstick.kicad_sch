@@ -2,254 +2,9 @@
 	(version 20260306)
 	(generator "eeschema")
 	(generator_version "10.0")
-	(uuid "ca80242b-15d0-43fa-a399-9c96ab5caacb")
+	(uuid "bc641e21-64c5-4bd5-b789-0cf8a8fd4481")
 	(paper "A4")
 	(lib_symbols
-		(symbol "Connector_Generic:Conn_01x05"
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "J"
-				(at 0 7.62 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "Conn_01x05"
-				(at 0 -7.62 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "connector"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "Connector*:*_1x??_*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "Conn_01x05_1_1"
-				(rectangle
-					(start -1.27 6.35)
-					(end 1.27 -6.35)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(rectangle
-					(start -1.27 5.207)
-					(end 0 4.953)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 2.667)
-					(end 0 2.413)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 0.127)
-					(end 0 -0.127)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 -2.413)
-					(end 0 -2.667)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 -4.953)
-					(end 0 -5.207)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -5.08 5.08 0)
-					(length 3.81)
-					(name "Pin_1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 2.54 0)
-					(length 3.81)
-					(name "Pin_2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 3.81)
-					(name "Pin_3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 -2.54 0)
-					(length 3.81)
-					(name "Pin_4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 -5.08 0)
-					(length 3.81)
-					(name "Pin_5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Device:C"
 			(pin_numbers
 				(hide yes)
@@ -288,7 +43,6 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -299,7 +53,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -310,7 +63,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -405,10 +157,276 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "SnipsControllers_Custom:GuliKit_HallStick"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at 0 12.7 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "GuliKit_HallStick"
+				(at 0 -12.7 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "SnipsControllers_Custom:GuliKit_HallStick"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "OEM-replacement-style hall/TMR analog thumbstick with center-push switch (ALPS RKJXV1224 / C&K THB001P footprint family). 2-axis potentiometer-emulation interface, not a simple VCC/GND/X/Y/SW breakout: pins 1/2/3 are the X axis low/wiper/high, pins 1'/2'/3' are the Y axis low/wiper/high, pins a/c are the switch (b/d are mechanically-redundant duplicate switch legs, intentionally unconnected). Drive 1 and 1' to GND, 3 and 3' to 3V3; read wipers 2 (X) and 2' (Y) on ADC pins; wire switch a to a GPIO and c to GND. Adapted from dbenoy/thumbstick-breakout (CC-BY-SA 4.0, Copyright (c) Daniel Benoy)."
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "GuliKit_HallStick_0_1"
+				(polyline
+					(pts
+						(xy -10.16 8.89) (xy 8.89 8.89)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -10.16 -8.89) (xy -10.16 8.89)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 8.89 8.89) (xy 8.89 -8.89)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 8.89 -8.89) (xy -10.16 -8.89)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(text "JOYSTICK"
+					(at 4.826 0.762 0)
+					(effects
+						(font
+							(size 1.778 1.5113)
+						)
+						(justify right top)
+					)
+				)
+			)
+			(symbol "GuliKit_HallStick_1_1"
+				(pin passive line
+					(at -5.08 -11.43 90)
+					(length 2.54)
+					(name "X_LO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -1.27 -11.43 90)
+					(length 2.54)
+					(name "Y_LO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1'"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at -12.7 0 0)
+					(length 2.54)
+					(name "X_OUT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at -12.7 3.81 0)
+					(length 2.54)
+					(name "Y_OUT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2'"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -3.81 11.43 270)
+					(length 2.54)
+					(name "X_HI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 1.27 11.43 270)
+					(length 2.54)
+					(name "Y_HI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3'"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -12.7 -3.81 0)
+					(length 2.54)
+					(name "SW_A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "a"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -11.43 90)
+					(length 2.54)
+					(name "SW_C"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "c"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 129.54 111.76 270)
+		(at 163.83 116.84 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -416,9 +434,32 @@
 			)
 			(justify right)
 		)
-		(uuid "9c19b631-31db-413f-9656-8c5a262694e6")
+		(uuid "2c43514d-8ce1-4f32-985c-c2cb93c1371f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 129.54 111.76 0)
+			(at 163.83 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 128.27 107.95 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "349ec65f-eb41-4594-92f4-2f9509026578")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 128.27 107.95 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -431,17 +472,17 @@
 	)
 	(global_label "3V3"
 		(shape passive)
-		(at 162.56 96.52 180)
+		(at 128.27 100.33 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
-		(uuid "9d13c4a0-bd93-4bfa-b37f-eaccfb2039cb")
+		(uuid "7f72dbf4-812a-46bb-bc03-4e6652331c55")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 162.56 96.52 0)
+			(at 128.27 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -454,7 +495,7 @@
 	)
 	(global_label "3V3"
 		(shape passive)
-		(at 129.54 104.14 90)
+		(at 165.1 93.98 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -462,9 +503,32 @@
 			)
 			(justify left)
 		)
-		(uuid "e0641b83-45dc-45cb-913c-bedcb8bbaed9")
+		(uuid "98e6be53-4a56-4b82-b10a-5ca39a2447b7")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 129.54 104.14 0)
+			(at 165.1 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 170.18 93.98 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d294bae6-0cae-4f07-8e2c-bd27ca8e47ac")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 170.18 93.98 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -477,7 +541,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 162.56 99.06 180)
+		(at 171.45 116.84 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -485,9 +549,9 @@
 			)
 			(justify right)
 		)
-		(uuid "ef9a2814-42c1-4ad2-a542-270a1a55a882")
+		(uuid "de8c761d-2adc-4a65-aff1-869ddf183d9c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 162.56 99.06 0)
+			(at 171.45 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -498,131 +562,65 @@
 			)
 		)
 	)
-	(hierarchical_label "STICK_X"
-		(shape output)
-		(at 162.56 101.6 0)
+	(global_label "GND"
+		(shape passive)
+		(at 167.64 116.84 270)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
-		(uuid "35d7ad88-2430-43fe-b4fb-f8ffde43fba6")
-	)
-	(hierarchical_label "BTN_STICK"
-		(shape output)
-		(at 162.56 106.68 0)
-		(effects
-			(font
-				(size 1.27 1.27)
+		(uuid "f576ab50-eec2-4d40-818d-940373061a9a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 167.64 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
-			(justify left)
 		)
-		(uuid "b5bfd15e-691d-4225-aff3-0d8620e43435")
 	)
 	(hierarchical_label "STICK_Y"
 		(shape output)
-		(at 162.56 104.14 0)
+		(at 156.21 101.6 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "fdb2f626-5b33-4475-8be1-b9556c2695ae")
+		(uuid "6ea7a7bd-f0a5-4f3b-9aa1-d54dde70d2c5")
 	)
-	(symbol
-		(lib_id "Connector_Generic:Conn_01x05")
-		(at 167.64 101.6 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "75a0ca03-845a-4919-9634-117450df1c2a")
-		(property "Reference" "J_STICK1"
-			(at 167.64 109.22 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
+	(hierarchical_label "BTN_STICK"
+		(shape output)
+		(at 156.21 109.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left)
 		)
-		(property "Value" "GuliKit_Thumbstick"
-			(at 167.64 93.98 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
+		(uuid "77510b59-2cb6-4037-a101-664b3b5e639d")
+	)
+	(hierarchical_label "STICK_X"
+		(shape output)
+		(at 156.21 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical"
-			(at 167.64 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 167.64 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 167.64 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "addffa8b-d888-42e8-a546-c19cbb61f86d")
-		)
-		(pin "2"
-			(uuid "7342e627-0437-407f-9eb3-4e30b37cdeb6")
-		)
-		(pin "3"
-			(uuid "565df784-bc6a-4465-b99f-4b1b9b040e56")
-		)
-		(pin "4"
-			(uuid "ecd6038a-ea62-433f-adb7-1b98b726ec81")
-		)
-		(pin "5"
-			(uuid "a551a1b6-5d77-4de6-a3f6-c082ab0e6c04")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/7a3e413b-2e94-4a8b-a1cc-2db3e975d99a"
-					(reference "J_STICK1")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "f3c3b78b-efce-4038-98d0-8a784fe39612")
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 129.54 107.95 0)
+		(at 128.27 104.14 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -631,9 +629,9 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "9671c6a1-30bd-47ab-a046-34211c2b4288")
-		(property "Reference" "C_STICK1"
-			(at 130.175 110.49 0)
+		(uuid "14e00caf-26c5-413e-8b31-be353c7da0f2")
+		(property "Reference" "C_STICK"
+			(at 128.905 106.68 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -644,7 +642,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 130.175 105.41 0)
+			(at 128.905 101.6 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -655,7 +653,84 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 130.5052 104.14 0)
+			(at 129.2352 100.33 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 128.27 104.14 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 128.27 104.14 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "92793e71-39e0-4946-b531-0dc42c278ede")
+		)
+		(pin "2"
+			(uuid "5523e5f3-38f2-4e19-9bf3-2c6cf68d14f1")
+		)
+		(instances
+			(project ""
+				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/d3a109f9-ed10-4138-8f18-30dfb6d6156b"
+					(reference "C_STICK")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "SnipsControllers_Custom:GuliKit_HallStick")
+		(at 168.91 105.41 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2c0338f6-f37a-42a4-8cc2-0c7753c3b2cf")
+		(property "Reference" "J_STICK"
+			(at 168.91 118.11 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GuliKit_Thumbstick"
+			(at 168.91 92.71 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "SnipsControllers_Custom:GuliKit_HallStick"
+			(at 168.91 105.41 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -666,7 +741,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 129.54 107.95 0)
+			(at 168.91 105.41 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -676,8 +751,8 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
-			(at 129.54 107.95 0)
+		(property "Description" "OEM-replacement-style hall/TMR analog thumbstick with center-push switch (ALPS RKJXV1224 / C&K THB001P footprint family). 2-axis potentiometer-emulation interface, not a simple VCC/GND/X/Y/SW breakout: pins 1/2/3 are the X axis low/wiper/high, pins 1'/2'/3' are the Y axis low/wiper/high, pins a/c are the switch (b/d are mechanically-redundant duplicate switch legs, intentionally unconnected). Drive 1 and 1' to GND, 3 and 3' to 3V3; read wipers 2 (X) and 2' (Y) on ADC pins; wire switch a to a GPIO and c to GND. Adapted from dbenoy/thumbstick-breakout (CC-BY-SA 4.0, Copyright (c) Daniel Benoy)."
+			(at 168.91 105.41 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -688,15 +763,33 @@
 			)
 		)
 		(pin "1"
-			(uuid "ecf1d94f-f3d5-4b2e-8697-cf40aff7c4c5")
+			(uuid "ab9ec691-3dad-4d68-8a37-3542ffc82fbc")
+		)
+		(pin "1'"
+			(uuid "6be48367-d7d0-4509-97fd-19f75cac64ed")
 		)
 		(pin "2"
-			(uuid "6fc6890a-a6e1-4e14-ae4a-8e09a19ef31d")
+			(uuid "d89e04ff-e3c6-4216-a07d-a214f83c087d")
+		)
+		(pin "2'"
+			(uuid "212aca20-096d-4d91-b810-4697d1c3c2ef")
+		)
+		(pin "3"
+			(uuid "e7a25eb8-4c45-4f79-90fe-2d64e1ce1402")
+		)
+		(pin "3'"
+			(uuid "a92af379-2c35-435b-886a-2b2e1f7dcfc0")
+		)
+		(pin "a"
+			(uuid "55fd0ff6-8add-4a39-801d-8ba0e11583a7")
+		)
+		(pin "c"
+			(uuid "d85cf799-0fc7-4567-bab7-9efcadd7a037")
 		)
 		(instances
-			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/7a3e413b-2e94-4a8b-a1cc-2db3e975d99a"
-					(reference "C_STICK1")
+			(project ""
+				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/d3a109f9-ed10-4138-8f18-30dfb6d6156b"
+					(reference "J_STICK")
 					(unit 1)
 				)
 			)
