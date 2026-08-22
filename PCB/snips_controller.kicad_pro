@@ -3,6 +3,8 @@
     "3dviewports": [],
     "design_settings": {
       "defaults": {
+        "apply_defaults_to_fp_barcodes": false,
+        "apply_defaults_to_fp_dimensions": false,
         "apply_defaults_to_fp_fields": false,
         "apply_defaults_to_fp_shapes": false,
         "apply_defaults_to_fp_text": false,
@@ -48,7 +50,23 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.5
+          "border_display_style": 2,
+          "border_hatch_pitch": 0.5,
+          "corner_radius": 0.0,
+          "corner_smoothing": 0,
+          "fill_mode": 0,
+          "hatch_gap": 1.5,
+          "hatch_orientation": 0.0,
+          "hatch_smoothing_level": 0,
+          "hatch_smoothing_value": 0.1,
+          "hatch_thickness": 1.0,
+          "min_clearance": 0.5,
+          "min_island_area": 10.0,
+          "min_thickness": 0.25,
+          "pad_connection": 1,
+          "remove_islands": 0,
+          "thermal_relief_gap": 0.5,
+          "thermal_relief_spoke_width": 0.5
         }
       },
       "diff_pair_dimensions": [],
@@ -71,6 +89,7 @@
         "extra_footprint": "warning",
         "footprint": "error",
         "footprint_filters_mismatch": "ignore",
+        "footprint_symbol_field_mismatch": "warning",
         "footprint_symbol_mismatch": "warning",
         "footprint_type_mismatch": "ignore",
         "hole_clearance": "error",
@@ -88,6 +107,7 @@
         "mirrored_text_on_front_layer": "warning",
         "missing_courtyard": "ignore",
         "missing_footprint": "warning",
+        "missing_tuning_profile": "warning",
         "net_conflict": "warning",
         "nonmirrored_text_on_back_layer": "warning",
         "npth_inside_courtyard": "ignore",
@@ -107,9 +127,12 @@
         "too_many_vias": "error",
         "track_angle": "error",
         "track_dangling": "warning",
+        "track_not_centered_on_via": "ignore",
+        "track_on_post_machined_layer": "error",
         "track_segment_length": "error",
         "track_width": "error",
         "tracks_crossing": "error",
+        "tuning_profile_track_geometries": "ignore",
         "unconnected_items": "error",
         "unresolved_variable": "error",
         "via_dangling": "warning",
@@ -239,7 +262,7 @@
   "erc": {
     "erc_exclusions": [
       [
-        "pin_to_pin|2501900|1143000|4ce28f5d-abc7-4f39-9f61-2b4be532b24c|cc2d060b-ad3a-4a89-bb37-f6e2f80843ec|/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6|/868f8289-8434-4465-b2f4-2accc5e40bab/f4ce95ac-f63c-4d24-81c6-83f86b68c3b6|/868f8289-8434-4465-b2f4-2accc5e40bab/aa68e619-4bbe-481c-98b1-65e9f4bd72c4",
+        "pin_to_pin|2501900|1143000|4ce28f5d-abc7-4f39-9f61-2b4be532b24c|cc2d060b-ad3a-4a89-bb37-f6e2f80843ec|||",
         "These shared output pins are intentional"
       ]
     ],
@@ -643,7 +666,7 @@
         "uuid": "868f8289-8434-4465-b2f4-2accc5e40bab"
       }
     ],
-    "used_designators": "",
+    "used_designators": "U_OLED1,SW_VOL_UP1,R_XBEE_RST1,SW_PWR1,R_XBEE_RC1,R_USB_DP1,R_ISET1,Q_PWR1,R_I2C_SCL1,U_BUCK1,SW_TRIG_DIG1,R_TS1,R_VSET1,C_BUCK_IN1,L_BUCK1,R_GATE1,PF_GND1,R_PWR_SENSE1,R_BTN_PU1,SW_BOOT1,R_EN_PU1,R_USB_DM1,U_CHG1,R_BOOT_PU1,U_XBEE1,U_HALL1,R_I2C_SDA1,Q_LATCH1,J_USB1,SW_VOL_DN1,D_RGB1,R_RGB1,C_RGB1,C_HALL1,C_DBNC1,C_BUCK_OUT1,C_XBEE_RC1,R_LATCH_G1,C_STICK1,C_XBEE_VCC1,J_STICK1,U_MCU1,C_BAT1,PF_VSYS1",
     "variants": []
   },
   "sheets": [
@@ -652,51 +675,51 @@
       "snips_controller"
     ],
     [
-      "e6ff3e19-e2b0-4f04-a1cc-1faee1ac6630",
+      "efea6f57-a660-4b9d-97dc-90c00a6de06b",
       "USB_C"
     ],
     [
-      "f4ce95ac-f63c-4d24-81c6-83f86b68c3b6",
+      "1b15ddbb-d83b-44e2-b783-5b6d226c8075",
       "Power_Charger"
     ],
     [
-      "c69a94f8-41dd-441c-96d4-f7b37eb128c5",
+      "456186b5-e5fa-459c-a04e-9d51d6afbbb5",
       "XBee"
     ],
     [
-      "d62b292b-5ada-41ed-8d21-6dd942010aa6",
+      "b13bd16f-d7d9-4a72-b9f8-9089332fe5a3",
       "Power_Buck"
     ],
     [
-      "aa68e619-4bbe-481c-98b1-65e9f4bd72c4",
+      "c3894f85-0389-4f3d-bfa3-88715bea0c3d",
       "MCU_Core"
     ],
     [
-      "9fde31f3-a36d-4ca9-b27d-63e931064f80",
+      "59e39798-299e-4deb-adbf-c10dc57ea668",
       "OLED"
     ],
     [
-      "748cb1dd-d7df-4e73-a93b-27e67a5ba349",
+      "1c35c5cf-c022-4f34-b463-7ba7d15d3ffa",
       "Battery"
     ],
     [
-      "3b2478ec-2890-4ec8-b56f-d58b64ce58ab",
+      "58aa3fea-7023-42af-afb1-45eaa756099e",
       "Hall_Trigger"
     ],
     [
-      "cb7204a8-9133-479c-b60d-b3ae12c76b22",
+      "c56f3d5f-543a-4bd1-90c4-022a9c6f97c6",
       "Power_Control"
     ],
     [
-      "7a3e413b-2e94-4a8b-a1cc-2db3e975d99a",
+      "d3a109f9-ed10-4138-8f18-30dfb6d6156b",
       "Thumbstick"
     ],
     [
-      "735d8d44-e064-4356-9d02-a40b0078b674",
+      "e8a027f5-b0c3-4230-8e98-ef586f634016",
       "RGB_LED"
     ],
     [
-      "d13ef906-1771-4e4b-8ca2-9a54efc5a20e",
+      "e5523a34-26e6-4606-a95c-f5d6b5b43fdf",
       "Buttons_Direct"
     ]
   ],

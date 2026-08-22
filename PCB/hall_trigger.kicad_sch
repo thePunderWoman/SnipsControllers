@@ -2,7 +2,7 @@
 	(version 20260306)
 	(generator "eeschema")
 	(generator_version "10.0")
-	(uuid "145d5d14-72a2-4dc8-9fa9-487fd2e26318")
+	(uuid "b40b16fb-26c4-44d2-8684-4c8fa11f76e5")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Device:C"
@@ -311,29 +311,6 @@
 			(embedded_fonts no)
 		)
 	)
-	(global_label "GND"
-		(shape passive)
-		(at 166.37 116.84 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "6edded92-77a1-4429-8c16-50342eff7ffc")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 166.37 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(global_label "3V3"
 		(shape passive)
 		(at 166.37 109.22 90)
@@ -344,7 +321,7 @@
 			)
 			(justify left)
 		)
-		(uuid "896384e3-b97d-4f68-851c-bb4985a41b14")
+		(uuid "167d8fe0-79c6-42db-9b72-53d273f55012")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 166.37 109.22 0)
 			(hide yes)
@@ -367,9 +344,32 @@
 			)
 			(justify right)
 		)
-		(uuid "9afb7450-320b-472e-a3ff-bc70430712b0")
+		(uuid "3b6d9ca7-5e85-4952-8c13-b404b6c9a193")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 128.27 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 166.37 116.84 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4fbb821d-d204-47d8-80cf-bec8d7dcde34")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 166.37 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -390,7 +390,7 @@
 			)
 			(justify left)
 		)
-		(uuid "d5fb7311-890a-424a-b419-6f0aab589ba3")
+		(uuid "9ba53f11-e6e7-4cea-896b-cc6a54e433ff")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 128.27 86.36 0)
 			(hide yes)
@@ -412,7 +412,7 @@
 			)
 			(justify left)
 		)
-		(uuid "2cd829d0-cd79-4abb-9d84-28b6ec92e410")
+		(uuid "984c5a5d-efb2-4669-981b-bff4ffe81a7f")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -425,7 +425,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "2e166b5d-7fea-4897-8e35-362e48ce3fc9")
+		(uuid "204c5481-8583-4185-b101-a9721af85540")
 		(property "Reference" "C_HALL1"
 			(at 167.005 115.57 0)
 			(show_name no)
@@ -450,7 +450,6 @@
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 167.3352 109.22 0)
-			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -461,7 +460,6 @@
 		)
 		(property "Datasheet" ""
 			(at 166.37 113.03 0)
-			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -472,7 +470,6 @@
 		)
 		(property "Description" "Unpolarized capacitor"
 			(at 166.37 113.03 0)
-			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -482,15 +479,21 @@
 			)
 		)
 		(pin "1"
-			(uuid "06fe6a72-0538-4e45-8ca9-94619dc5790b")
+			(uuid "fdf13b54-c306-4ae7-bfd3-703639aa0e04")
 		)
 		(pin "2"
-			(uuid "6b7ff703-4ce8-4bd6-a35a-8312d2d0ba11")
+			(uuid "a86454bd-b952-4535-9161-284deca36d1b")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/3b2478ec-2890-4ec8-b56f-d58b64ce58ab"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/58aa3fea-7023-42af-afb1-45eaa756099e"
 					(reference "C_HALL1")
+					(unit 1)
+				)
+			)
+			(project ""
+				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/58aa3fea-7023-42af-afb1-45eaa756099e"
+					(reference "C_HALL")
 					(unit 1)
 				)
 			)
@@ -507,7 +510,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "b714ac72-f210-4192-b760-22a1aef38715")
+		(uuid "b2e92270-a8cd-461e-9ba6-d621cce778b2")
 		(property "Reference" "U_HALL1"
 			(at 135.89 109.22 0)
 			(show_name no)
@@ -530,7 +533,6 @@
 		)
 		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
 			(at 130.81 96.52 0)
-			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -541,7 +543,6 @@
 		)
 		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/drv5055-q1.pdf"
 			(at 130.81 96.52 0)
-			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -552,7 +553,6 @@
 		)
 		(property "Description" "50 mV/mT,±42-mT, 20-kHz, 3.3/5V, TO-92"
 			(at 130.81 96.52 0)
-			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -562,18 +562,24 @@
 			)
 		)
 		(pin "1"
-			(uuid "6f8108d4-51e6-4fcd-a54f-131a1b65d078")
+			(uuid "90dedead-8f5f-422d-b834-8f8230a86d3c")
 		)
 		(pin "2"
-			(uuid "bc4906ae-c78b-4fd5-b248-ee11c5c23c6f")
+			(uuid "9cb12016-92a7-443f-8aaf-129593edc249")
 		)
 		(pin "3"
-			(uuid "6c5da54d-aa5f-4976-b2c7-6e4a943c6058")
+			(uuid "3e18ed46-0a3f-47db-a174-d3e2e11b71fa")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/3b2478ec-2890-4ec8-b56f-d58b64ce58ab"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/58aa3fea-7023-42af-afb1-45eaa756099e"
 					(reference "U_HALL1")
+					(unit 1)
+				)
+			)
+			(project ""
+				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/58aa3fea-7023-42af-afb1-45eaa756099e"
+					(reference "U_HALL")
 					(unit 1)
 				)
 			)
