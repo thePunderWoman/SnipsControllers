@@ -43,6 +43,7 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -53,6 +54,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -63,6 +65,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -161,6 +164,9 @@
 			(pin_numbers
 				(hide yes)
 			)
+			(pin_names
+				(offset 0)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -190,6 +196,7 @@
 				(at -1.778 0 90)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -200,6 +207,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -210,6 +218,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -680,7 +689,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2b5fb60a-cf44-47eb-9c92-03fa0a2bfbef")
-		(property "Reference" "U_OLED"
+		(property "Reference" "U_OLED1"
 			(at 214.63 114.41 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -745,6 +754,12 @@
 			(uuid "5f2c1156-eb18-42c0-ad2c-8f66db8c64e1")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/59e39798-299e-4deb-adbf-c10dc57ea668"
+					(reference "U_OLED1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/59e39798-299e-4deb-adbf-c10dc57ea668"
 					(reference "U_OLED")
@@ -765,7 +780,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2dcd769b-caa0-41f0-916e-39ca2141bc5e")
-		(property "Reference" "R_I2C_SCL"
+		(property "Reference" "R_I2C_SCL1"
 			(at 173.482 104.14 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -822,6 +837,12 @@
 			(uuid "f2768c41-c307-4c14-a488-54b5773e3d3e")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/59e39798-299e-4deb-adbf-c10dc57ea668"
+					(reference "R_I2C_SCL1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/59e39798-299e-4deb-adbf-c10dc57ea668"
 					(reference "R_I2C_SCL")
@@ -901,6 +922,12 @@
 			(uuid "0b01a68d-61eb-400f-9c9d-f516c1d781f5")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/59e39798-299e-4deb-adbf-c10dc57ea668"
+					(reference "C_OLED_2")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/59e39798-299e-4deb-adbf-c10dc57ea668"
 					(reference "C_OLED_2")
@@ -980,6 +1007,12 @@
 			(uuid "fdd38dfd-de98-4e5e-a312-6a311439b55e")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/59e39798-299e-4deb-adbf-c10dc57ea668"
+					(reference "C_OLED_1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/59e39798-299e-4deb-adbf-c10dc57ea668"
 					(reference "C_OLED_1")
@@ -1000,7 +1033,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ffa96f89-a02f-46cd-b2e5-fa53b1cb8d6f")
-		(property "Reference" "R_I2C_SDA"
+		(property "Reference" "R_I2C_SDA1"
 			(at 144.272 104.14 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1057,6 +1090,12 @@
 			(uuid "7d13ef75-3b90-400a-8b8c-14c0dcdffeeb")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/59e39798-299e-4deb-adbf-c10dc57ea668"
+					(reference "R_I2C_SDA1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/59e39798-299e-4deb-adbf-c10dc57ea668"
 					(reference "R_I2C_SDA")

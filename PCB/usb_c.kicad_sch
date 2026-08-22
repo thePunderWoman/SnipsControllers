@@ -38,6 +38,7 @@
 				(at 3.81 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -48,6 +49,7 @@
 				(at 3.81 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -58,6 +60,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -511,6 +514,7 @@
 				(pin passive line
 					(at 15.24 15.24 180)
 					(length 5.08)
+					(hide yes)
 					(name "VBUS"
 						(effects
 							(font
@@ -529,6 +533,7 @@
 				(pin passive line
 					(at 0 -22.86 90)
 					(length 5.08)
+					(hide yes)
 					(name "GND"
 						(effects
 							(font
@@ -547,6 +552,7 @@
 				(pin passive line
 					(at 0 -22.86 90)
 					(length 5.08)
+					(hide yes)
 					(name "GND"
 						(effects
 							(font
@@ -565,6 +571,7 @@
 				(pin passive line
 					(at 15.24 15.24 180)
 					(length 5.08)
+					(hide yes)
 					(name "VBUS"
 						(effects
 							(font
@@ -655,6 +662,7 @@
 				(pin passive line
 					(at 15.24 15.24 180)
 					(length 5.08)
+					(hide yes)
 					(name "VBUS"
 						(effects
 							(font
@@ -673,6 +681,7 @@
 				(pin passive line
 					(at 0 -22.86 90)
 					(length 5.08)
+					(hide yes)
 					(name "GND"
 						(effects
 							(font
@@ -713,6 +722,9 @@
 			(pin_numbers
 				(hide yes)
 			)
+			(pin_names
+				(offset 0)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -742,6 +754,7 @@
 				(at -1.778 0 90)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -752,6 +765,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -762,6 +776,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1201,7 +1216,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8580fc28-5ad3-428f-b08e-5560e1f1c0be")
-		(property "Reference" "J_USB"
+		(property "Reference" "J_USB1"
 			(at 148.59 130.175 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1303,6 +1318,12 @@
 			(uuid "c2d92f9d-6423-43e8-a7fb-98604834543b")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/efea6f57-a660-4b9d-97dc-90c00a6de06b"
+					(reference "J_USB1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/efea6f57-a660-4b9d-97dc-90c00a6de06b"
 					(reference "J_USB")
@@ -1380,6 +1401,12 @@
 			(uuid "f046c123-abd2-4827-989d-5b460fa02bdb")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/efea6f57-a660-4b9d-97dc-90c00a6de06b"
+					(reference "R_CC2")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/efea6f57-a660-4b9d-97dc-90c00a6de06b"
 					(reference "R_CC2")
@@ -1457,6 +1484,12 @@
 			(uuid "0be6aaa4-d6d4-4486-a7dc-231b5d82f896")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/efea6f57-a660-4b9d-97dc-90c00a6de06b"
+					(reference "R_CC1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/efea6f57-a660-4b9d-97dc-90c00a6de06b"
 					(reference "R_CC1")

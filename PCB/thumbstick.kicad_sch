@@ -43,6 +43,7 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -53,6 +54,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -63,6 +65,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -630,7 +633,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "14e00caf-26c5-413e-8b31-be353c7da0f2")
-		(property "Reference" "C_STICK"
+		(property "Reference" "C_STICK1"
 			(at 128.905 106.68 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -689,6 +692,12 @@
 			(uuid "5523e5f3-38f2-4e19-9bf3-2c6cf68d14f1")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/d3a109f9-ed10-4138-8f18-30dfb6d6156b"
+					(reference "C_STICK1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/d3a109f9-ed10-4138-8f18-30dfb6d6156b"
 					(reference "C_STICK")
@@ -709,7 +718,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2c0338f6-f37a-42a4-8cc2-0c7753c3b2cf")
-		(property "Reference" "J_STICK"
+		(property "Reference" "J_STICK1"
 			(at 168.91 118.11 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -787,6 +796,12 @@
 			(uuid "d85cf799-0fc7-4567-bab7-9efcadd7a037")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/d3a109f9-ed10-4138-8f18-30dfb6d6156b"
+					(reference "J_STICK1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/d3a109f9-ed10-4138-8f18-30dfb6d6156b"
 					(reference "J_STICK")

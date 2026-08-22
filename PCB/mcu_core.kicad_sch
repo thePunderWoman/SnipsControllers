@@ -43,6 +43,7 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -53,6 +54,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -63,6 +65,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -161,6 +164,9 @@
 			(pin_numbers
 				(hide yes)
 			)
+			(pin_names
+				(offset 0)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -190,6 +196,7 @@
 				(at -1.778 0 90)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -200,6 +207,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -210,6 +218,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1157,6 +1166,7 @@
 				(at 0 5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1167,6 +1177,7 @@
 				(at 0 5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1177,6 +1188,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1281,10 +1293,12 @@
 			(embedded_fonts no)
 		)
 		(symbol "power:PWR_FLAG"
+			(power global)
 			(pin_numbers
 				(hide yes)
 			)
 			(pin_names
+				(offset 0)
 				(hide yes)
 			)
 			(exclude_from_sim no)
@@ -1296,6 +1310,7 @@
 				(at 0 1.905 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1316,6 +1331,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1326,6 +1342,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1336,6 +1353,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -2215,7 +2233,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1ca2a368-0b47-4aed-a4d0-cb7af429583b")
-		(property "Reference" "PF_GND"
+		(property "Reference" "PF_GND01"
 			(at 100.33 53.975 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2269,6 +2287,12 @@
 			(uuid "6f19282f-be4a-4797-8097-8f916e1cb55a")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "PF_GND01")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "PF_GND")
@@ -2289,7 +2313,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "253ce4c7-1d38-4dca-93e8-15204cd5c695")
-		(property "Reference" "U_MCU"
+		(property "Reference" "U_MCU1"
 			(at 181.61 121.92 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2479,6 +2503,12 @@
 			(uuid "d4c50b23-7889-42b7-8cc4-ad20fbd84ee5")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "U_MCU1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "U_MCU")
@@ -2499,7 +2529,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2a6ed08d-f8b5-4eda-97f0-e9f751ab598d")
-		(property "Reference" "R_USB_DM"
+		(property "Reference" "R_USB_DM1"
 			(at 271.272 86.36 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2556,6 +2586,12 @@
 			(uuid "404ff596-d611-42a3-8670-fa9decc65f1c")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "R_USB_DM1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "R_USB_DM")
@@ -2576,7 +2612,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "33ea0eb9-dd38-415e-a1af-b19dff35db8e")
-		(property "Reference" "R_EN_PU"
+		(property "Reference" "R_EN_PU1"
 			(at 168.402 148.59 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2633,6 +2669,12 @@
 			(uuid "5b8d01b9-a6a3-4a2f-b065-fedae179559c")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "R_EN_PU1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "R_EN_PU")
@@ -2653,7 +2695,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "36aa5044-10ec-4067-bf6e-399ca63d72f9")
-		(property "Reference" "PF_VSYS"
+		(property "Reference" "PF_VSYS01"
 			(at 26.67 159.385 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2707,6 +2749,12 @@
 			(uuid "b52f8e61-6e9e-4937-bcb6-6d7f0488f03d")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "PF_VSYS01")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "PF_VSYS")
@@ -2727,7 +2775,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3a0e2874-7433-4c81-8be1-73d678c3e7f1")
-		(property "Reference" "R_BOOT_PU"
+		(property "Reference" "R_BOOT_PU1"
 			(at 137.922 148.59 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2784,6 +2832,12 @@
 			(uuid "7c066be6-2c31-43b8-b038-cd26c6e09973")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "R_BOOT_PU1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "R_BOOT_PU")
@@ -2858,6 +2912,12 @@
 			(uuid "c811e287-e421-4806-8667-db38884b1e1d")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "PF_3V3")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "PF_3V3")
@@ -2935,6 +2995,12 @@
 			(uuid "bc9203c4-372f-426c-b7f1-a62335c49ac6")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "R_VSYS1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "R_VSYS1")
@@ -3014,6 +3080,12 @@
 			(uuid "57db4ed9-1862-40c5-8df3-e209d568ed3e")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "C_3V3_2")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "C_3V3_2")
@@ -3034,7 +3106,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d775ca50-0ed7-42d9-978c-969d4b6e0eff")
-		(property "Reference" "SW_BOOT"
+		(property "Reference" "SW_BOOT1"
 			(at 203.2 149.86 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3092,6 +3164,12 @@
 			(uuid "ac777f30-ba04-4480-b5c4-d4435c6149e1")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "SW_BOOT1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "SW_BOOT")
@@ -3171,6 +3249,12 @@
 			(uuid "45801441-61ad-4e23-8d21-6f939e5941f4")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "C_3V3_1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "C_3V3_1")
@@ -3248,6 +3332,12 @@
 			(uuid "de9f245b-a009-45d2-ab01-4d7981fcd34a")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "R_VSYS2")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "R_VSYS2")
@@ -3268,7 +3358,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fda0b2a2-aff1-4225-a140-4e193ac98648")
-		(property "Reference" "R_USB_DP"
+		(property "Reference" "R_USB_DP1"
 			(at 146.812 93.98 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3325,6 +3415,12 @@
 			(uuid "f44d0033-677d-4420-83dd-3d17ba70cada")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
+					(reference "R_USB_DP1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/c3894f85-0389-4f3d-bfa3-88715bea0c3d"
 					(reference "R_USB_DP")

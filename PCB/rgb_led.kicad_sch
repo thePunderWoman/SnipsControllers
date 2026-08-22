@@ -43,6 +43,7 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -53,6 +54,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -63,6 +65,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -161,6 +164,9 @@
 			(pin_numbers
 				(hide yes)
 			)
+			(pin_names
+				(offset 0)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -190,6 +196,7 @@
 				(at -1.778 0 90)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -200,6 +207,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -210,6 +218,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -326,6 +335,7 @@
 				(at 1.27 -7.62 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -337,6 +347,7 @@
 				(at 2.54 -9.525 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -348,6 +359,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -699,7 +711,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "49e772e4-cc02-4656-8a24-4500afb843a3")
-		(property "Reference" "D_RGB"
+		(property "Reference" "D_RGB1"
 			(at 180.34 100.965 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -721,7 +733,7 @@
 				(justify left top)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm"
+		(property "Footprint" "LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount"
 			(at 176.53 87.63 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -766,6 +778,12 @@
 			(uuid "85c8fd70-25b7-47ad-977f-c78e35e7d50c")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e8a027f5-b0c3-4230-8e98-ef586f634016"
+					(reference "D_RGB1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e8a027f5-b0c3-4230-8e98-ef586f634016"
 					(reference "D_RGB")
@@ -786,7 +804,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c3dd9ac7-56f4-47bd-a923-67c9e4ff56a3")
-		(property "Reference" "C_RGB"
+		(property "Reference" "C_RGB1"
 			(at 137.795 81.28 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -845,6 +863,12 @@
 			(uuid "9ea41d99-b74c-4e9a-9f26-5c3e8f2c729b")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e8a027f5-b0c3-4230-8e98-ef586f634016"
+					(reference "C_RGB1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e8a027f5-b0c3-4230-8e98-ef586f634016"
 					(reference "C_RGB")
@@ -865,7 +889,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c8e38908-a568-491b-95b7-5a8c5ed6f0c3")
-		(property "Reference" "R_RGB"
+		(property "Reference" "R_RGB1"
 			(at 123.952 130.81 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -922,6 +946,12 @@
 			(uuid "2a9e8858-0290-4b46-a74c-81ef15578593")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e8a027f5-b0c3-4230-8e98-ef586f634016"
+					(reference "R_RGB1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e8a027f5-b0c3-4230-8e98-ef586f634016"
 					(reference "R_RGB")

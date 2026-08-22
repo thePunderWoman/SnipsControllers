@@ -43,6 +43,7 @@
 				(at 0 5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -53,6 +54,7 @@
 				(at 0 5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -63,6 +65,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -506,7 +509,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
 			(at 148.59 226.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -543,6 +546,12 @@
 			(uuid "72692302-cd56-45eb-a58a-8ca07df3653a")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+					(reference "SW_MACRO3")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
 					(reference "SW_MACRO3")
@@ -563,7 +572,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0434515d-ffcd-43a6-8c80-b3a48eed5170")
-		(property "Reference" "SW_VOL_UP"
+		(property "Reference" "SW_VOL_UP1"
 			(at 149.86 165.1 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -584,7 +593,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010"
 			(at 148.59 167.64 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -621,6 +630,12 @@
 			(uuid "baa71d5b-3542-483f-9e54-8db1fc57aaf0")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+					(reference "SW_VOL_UP1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
 					(reference "SW_VOL_UP")
@@ -662,7 +677,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
 			(at 148.59 111.76 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -699,6 +714,12 @@
 			(uuid "5f82bd0d-9db4-49e0-9818-9565eea15351")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+					(reference "SW_MACRO6")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
 					(reference "SW_MACRO6")
@@ -719,7 +740,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2f318e94-c8b9-45c8-8677-f31327a90b38")
-		(property "Reference" "SW_VOL_DN"
+		(property "Reference" "SW_VOL_DN1"
 			(at 149.86 52.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -740,7 +761,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010"
 			(at 148.59 54.61 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -777,6 +798,12 @@
 			(uuid "b08ddeba-313f-4c98-a638-4f29274b4ca3")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+					(reference "SW_VOL_DN1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
 					(reference "SW_VOL_DN")
@@ -818,7 +845,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
 			(at 148.59 -5.08 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -855,6 +882,12 @@
 			(uuid "a07adec4-6aa8-4c48-8e9b-73714a3d2316")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+					(reference "SW_MACRO4")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
 					(reference "SW_MACRO4")
@@ -875,7 +908,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "58b76b3d-51c8-4a95-95c2-4bbac0ea99f0")
-		(property "Reference" "SW_TRIG_DIG"
+		(property "Reference" "SW_TRIG_DIG1"
 			(at 149.86 21.59 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -896,7 +929,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010"
 			(at 148.59 24.13 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -933,6 +966,12 @@
 			(uuid "2a7db281-5335-4ad9-93d4-2e5fed6ef00b")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+					(reference "SW_TRIG_DIG1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
 					(reference "SW_TRIG_DIG")
@@ -974,7 +1013,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
 			(at 148.59 82.55 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1011,6 +1050,12 @@
 			(uuid "2b2c8930-0445-4920-8368-be512c3150c3")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+					(reference "SW_MACRO2")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
 					(reference "SW_MACRO2")
@@ -1052,7 +1097,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
 			(at 148.59 138.43 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1089,6 +1134,12 @@
 			(uuid "ee1f09c3-7e00-4024-8403-fad71df86594")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+					(reference "SW_MACRO1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
 					(reference "SW_MACRO1")
@@ -1130,7 +1181,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
 			(at 148.59 196.85 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1167,6 +1218,12 @@
 			(uuid "5e0fb43e-49b9-4d4e-8ecf-a36f5960084b")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+					(reference "SW_MACRO5")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
 					(reference "SW_MACRO5")

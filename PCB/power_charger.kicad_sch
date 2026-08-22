@@ -490,6 +490,7 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -500,6 +501,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -510,6 +512,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -608,6 +611,9 @@
 			(pin_numbers
 				(hide yes)
 			)
+			(pin_names
+				(offset 0)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -637,6 +643,7 @@
 				(at -1.778 0 90)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -647,6 +654,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -657,6 +665,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1356,6 +1365,12 @@
 			(uuid "aff17371-6cb9-4fc7-9424-2cbe7e297fd2")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
+					(reference "C_SYS_1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
 					(reference "C_SYS_1")
@@ -1376,7 +1391,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3afff7d6-8e5e-44e1-b326-fd36af94d762")
-		(property "Reference" "R_TS"
+		(property "Reference" "R_TS1"
 			(at 184.912 125.73 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1433,6 +1448,12 @@
 			(uuid "beaa47ef-bdff-43ac-9ec0-9f32fb1bb361")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
+					(reference "R_TS1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
 					(reference "R_TS")
@@ -1512,6 +1533,12 @@
 			(uuid "dabc5205-7e2f-464e-aa79-98a22c2ffed9")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
+					(reference "C_VIN_2")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
 					(reference "C_VIN_2")
@@ -1532,7 +1559,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "44549762-20c2-49f6-8ce2-e8e541144141")
-		(property "Reference" "C_BAT"
+		(property "Reference" "C_BAT1"
 			(at 95.885 128.27 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1591,6 +1618,12 @@
 			(uuid "2e4fd920-445f-4d2d-b7eb-df0fc12b90b4")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
+					(reference "C_BAT1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
 					(reference "C_BAT")
@@ -1670,6 +1703,12 @@
 			(uuid "ed0fe5e2-e0d9-4a6c-ba49-906f396d50d2")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
+					(reference "C_VIN_1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
 					(reference "C_VIN_1")
@@ -1690,7 +1729,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "676c1d00-df05-4320-a51a-61b1d2e31d4f")
-		(property "Reference" "R_ISET"
+		(property "Reference" "R_ISET1"
 			(at 150.622 92.71 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1747,6 +1786,12 @@
 			(uuid "511423ea-f9fb-43e6-b440-055730f047fc")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
+					(reference "R_ISET1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
 					(reference "R_ISET")
@@ -1824,6 +1869,12 @@
 			(uuid "f07a3858-607e-4a67-8689-d6af987d8e1e")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
+					(reference "R_STAT1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
 					(reference "R_STAT1")
@@ -1903,6 +1954,12 @@
 			(uuid "8a664846-a224-4612-8007-2e993b3a979e")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
+					(reference "C_SYS_2")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
 					(reference "C_SYS_2")
@@ -1923,7 +1980,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7d0ddb71-2098-4262-aa58-0543bba2792c")
-		(property "Reference" "R_VSET"
+		(property "Reference" "R_VSET1"
 			(at 209.042 83.82 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1980,6 +2037,12 @@
 			(uuid "b0f6d17d-8817-42f0-898c-6edef2219c1f")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
+					(reference "R_VSET1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
 					(reference "R_VSET")
@@ -2000,7 +2063,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c132355a-ec3e-47f3-83bf-00da1f6e8dac")
-		(property "Reference" "U_CHG"
+		(property "Reference" "U_CHG1"
 			(at 219.71 142.748 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2258,6 +2321,12 @@
 			(uuid "c1871d6b-e9f6-4e53-8bf8-4f3540d9ae08")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
+					(reference "U_CHG1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/1b15ddbb-d83b-44e2-b783-5b6d226c8075"
 					(reference "U_CHG")

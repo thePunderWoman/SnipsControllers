@@ -43,6 +43,7 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -53,6 +54,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -63,6 +65,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -194,6 +197,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -204,6 +208,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -214,6 +219,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -336,6 +342,9 @@
 			(pin_numbers
 				(hide yes)
 			)
+			(pin_names
+				(offset 0)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -365,6 +374,7 @@
 				(at -1.778 0 90)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -375,6 +385,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -385,6 +396,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -498,9 +510,11 @@
 				(at 1.27 -6.35 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
+						(italic yes)
 					)
 					(justify left)
 				)
@@ -509,6 +523,7 @@
 				(at -6.35 11.43 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -519,6 +534,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -935,7 +951,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "119a24db-92d2-4dd6-a196-c299b0c8ada2")
-		(property "Reference" "C_BUCK_IN"
+		(property "Reference" "C_BUCK_IN1"
 			(at 140.335 143.51 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -994,6 +1010,12 @@
 			(uuid "03a754ac-cb36-4e09-bc92-6b928ad469fd")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
+					(reference "C_BUCK_IN1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
 					(reference "C_BUCK_IN")
@@ -1071,6 +1093,12 @@
 			(uuid "37334f78-6e3e-4fae-83dd-56dd86c7ff95")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
+					(reference "R_FB2")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
 					(reference "R_FB2")
@@ -1148,6 +1176,12 @@
 			(uuid "d74b92c3-8b40-435b-b0b4-7f11a900a559")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
+					(reference "R_FB1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
 					(reference "R_FB1")
@@ -1168,7 +1202,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9339163b-ce31-406c-a662-1b3f416e12d1")
-		(property "Reference" "U_BUCK"
+		(property "Reference" "U_BUCK1"
 			(at 177.8 104.14 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1237,6 +1271,12 @@
 			(uuid "85989974-f458-43c1-9e2f-8329bf3705e7")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
+					(reference "U_BUCK1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
 					(reference "U_BUCK")
@@ -1257,7 +1297,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d38717a1-7c59-48bf-91bc-d495b4b9f86d")
-		(property "Reference" "L_BUCK"
+		(property "Reference" "L_BUCK1"
 			(at 143.51 68.58 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1314,6 +1354,12 @@
 			(uuid "b709f160-2b63-42af-bd7f-cffd40da2b5b")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
+					(reference "L_BUCK1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
 					(reference "L_BUCK")
@@ -1334,7 +1380,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d5a97ba4-170a-4274-af98-92c13197ea85")
-		(property "Reference" "C_BUCK_OUT"
+		(property "Reference" "C_BUCK_OUT1"
 			(at 114.935 111.76 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1393,6 +1439,12 @@
 			(uuid "5cc3e5c8-2459-4368-bba0-850f4354f52d")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
+					(reference "C_BUCK_OUT1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/b13bd16f-d7d9-4a72-b9f8-9089332fe5a3"
 					(reference "C_BUCK_OUT")

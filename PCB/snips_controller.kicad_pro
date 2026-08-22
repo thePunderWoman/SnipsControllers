@@ -666,7 +666,7 @@
         "uuid": "868f8289-8434-4465-b2f4-2accc5e40bab"
       }
     ],
-    "used_designators": "U_OLED1,SW_VOL_UP1,R_XBEE_RST1,SW_PWR1,R_XBEE_RC1,R_USB_DP1,R_ISET1,R_TS1,SW_TRIG_DIG1,R_I2C_SCL1,U_BUCK1,R_VSET1,C_BUCK_IN1,L_BUCK1,R_GATE1,PF_GND1,R_PWR_SENSE1,R_BTN_PU1,SW_BOOT1,R_EN_PU1,Q_PWR1,U_CHG1,R_USB_DM1,R_BOOT_PU1,U_XBEE1,U_HALL1,R_I2C_SDA1,Q_LATCH1,J_USB1,SW_VOL_DN1,D_RGB1,R_RGB1,C_RGB1,C_HALL1,C_XBEE_RC1,C_BUCK_OUT1,R_LATCH_G1,C_STICK1,C_DBNC1,C_XBEE_VCC1,J_STICK1,U_MCU1,C_BAT1,PF_VSYS1",
+    "used_designators": "U_OLED1,SW_VOL_UP1,R_XBEE_RST1,SW_PWR1,R_XBEE_RC1,R_USB_DP1,R_ISET1,Q_PWR1,R_I2C_SCL1,U_BUCK1,SW_TRIG_DIG1,R_TS1,R_VSET1,C_BUCK_IN1,L_BUCK1,R_GATE1,PF_GND1,R_PWR_SENSE1,R_BTN_PU1,SW_BOOT1,R_EN_PU1,R_USB_DM1,U_CHG1,R_BOOT_PU1,U_XBEE1,U_HALL1,R_I2C_SDA1,Q_LATCH1,J_USB1,SW_VOL_DN1,D_RGB1,R_RGB1,C_RGB1,C_HALL1,C_DBNC1,C_BUCK_OUT1,C_XBEE_RC1,R_LATCH_G1,C_STICK1,C_XBEE_VCC1,J_STICK1,U_MCU1,C_BAT1,PF_VSYS1",
     "variants": []
   },
   "sheets": [
@@ -675,51 +675,51 @@
       "snips_controller"
     ],
     [
-      "5565d6cb-1177-4527-8427-f814d87102d9",
+      "efea6f57-a660-4b9d-97dc-90c00a6de06b",
       "USB_C"
     ],
     [
-      "9366489f-1cf0-4c82-ab0e-04a1a43cf072",
+      "1b15ddbb-d83b-44e2-b783-5b6d226c8075",
       "Power_Charger"
     ],
     [
-      "066831ff-c9a3-4393-9ad8-d6918d4bbec6",
+      "456186b5-e5fa-459c-a04e-9d51d6afbbb5",
       "XBee"
     ],
     [
-      "744f6efc-300d-40f0-a3f2-fc1973813e7b",
+      "b13bd16f-d7d9-4a72-b9f8-9089332fe5a3",
       "Power_Buck"
     ],
     [
-      "fc0d275c-5b04-437d-9a96-807cf3a2d7ac",
+      "c3894f85-0389-4f3d-bfa3-88715bea0c3d",
       "MCU_Core"
     ],
     [
-      "b135526e-0aa8-4371-b531-f3f6c82fa727",
+      "59e39798-299e-4deb-adbf-c10dc57ea668",
       "OLED"
     ],
     [
-      "da25d10b-2c9f-4bb3-ad01-bd3b92afaf4d",
+      "1c35c5cf-c022-4f34-b463-7ba7d15d3ffa",
       "Battery"
     ],
     [
-      "3a77a8e5-0775-4b1e-bc3c-1ac0ceb88629",
+      "58aa3fea-7023-42af-afb1-45eaa756099e",
       "Hall_Trigger"
     ],
     [
-      "3d268cb5-c587-4cac-bf5a-30847d522801",
+      "c56f3d5f-543a-4bd1-90c4-022a9c6f97c6",
       "Power_Control"
     ],
     [
-      "284a77ed-6077-4a63-ba53-b24a93ad88f1",
+      "d3a109f9-ed10-4138-8f18-30dfb6d6156b",
       "Thumbstick"
     ],
     [
-      "1665aab4-0695-416c-ad94-c7d0ba206875",
+      "e8a027f5-b0c3-4230-8e98-ef586f634016",
       "RGB_LED"
     ],
     [
-      "2747bfb0-921d-4223-9725-10411a8c39ee",
+      "e5523a34-26e6-4606-a95c-f5d6b5b43fdf",
       "Buttons_Direct"
     ]
   ],

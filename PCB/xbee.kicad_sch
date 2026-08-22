@@ -43,6 +43,7 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -53,6 +54,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -63,6 +65,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -161,6 +164,9 @@
 			(pin_numbers
 				(hide yes)
 			)
+			(pin_names
+				(offset 0)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -190,6 +196,7 @@
 				(at -1.778 0 90)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -200,6 +207,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -210,6 +218,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1121,7 +1130,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1f52e314-50a8-4cd1-b8f1-da069e870141")
-		(property "Reference" "U_XBEE"
+		(property "Reference" "U_XBEE1"
 			(at 161.29 104.14 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1167,7 +1176,7 @@
 				(justify left top)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "Zigbee Modules (802.15.4) XBee3,2.4 Ghz ZB 3.0, U.FL Ant, TH MT"
 			(at 101.6 96.52 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1298,6 +1307,12 @@
 			(uuid "58d1dd23-94a5-44de-ada4-2f4db9126727")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
+					(reference "U_XBEE1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
 					(reference "U_XBEE")
@@ -1318,7 +1333,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "60613bc9-1266-475c-b706-3def0742a97a")
-		(property "Reference" "C_XBEE_RC"
+		(property "Reference" "C_XBEE_RC1"
 			(at 167.005 110.49 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1377,6 +1392,12 @@
 			(uuid "41b2bb5a-35f8-41c7-b452-42fd4ad5450a")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
+					(reference "C_XBEE_RC1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
 					(reference "C_XBEE_RC")
@@ -1397,7 +1418,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "828e1793-9932-416a-8c07-6e47822eb3c1")
-		(property "Reference" "C_XBEE_VCC"
+		(property "Reference" "C_XBEE_VCC1"
 			(at 135.255 142.24 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1456,6 +1477,12 @@
 			(uuid "f4a81642-43bb-46f7-a6cb-2ecd954696f4")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
+					(reference "C_XBEE_VCC1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
 					(reference "C_XBEE_VCC")
@@ -1476,7 +1503,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c2cb75ad-107c-4483-a652-ba64909d60d9")
-		(property "Reference" "R_XBEE_RST"
+		(property "Reference" "R_XBEE_RST1"
 			(at 197.612 110.49 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1533,6 +1560,12 @@
 			(uuid "f0d7c61e-6e2a-4b83-86c3-8376e21e60ce")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
+					(reference "R_XBEE_RST1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
 					(reference "R_XBEE_RST")
@@ -1553,7 +1586,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e2adbb18-96fe-4011-a58f-b511acffbdb0")
-		(property "Reference" "R_XBEE_RC"
+		(property "Reference" "R_XBEE_RC1"
 			(at 168.402 69.85 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1610,6 +1643,12 @@
 			(uuid "ed8674b4-5cfa-4abe-b721-828a96aabc70")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
+					(reference "R_XBEE_RC1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
 					(reference "R_XBEE_RC")

@@ -370,8 +370,8 @@ groups:
       SW_PWR:
         symbol: Switch:SW_Push
         sheet: Power_Control
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
+        value: Alps_SKRTLAE010
+        footprint: Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010
     connections:
       - net: PWR_GATE
         pins: [Q_PWR:G, R_GATE:2, Q_LATCH:D]
@@ -706,8 +706,8 @@ groups:
       D_RGB:
         symbol: LED:SK6812
         sheet: RGB_LED
-        value: SK6812
-        footprint: LED_SMD:LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm
+        value: SK6812MINI-E
+        footprint: LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount
       R_RGB:
         symbol: Device:R
         sheet: RGB_LED
@@ -743,48 +743,48 @@ groups:
       SW_VOL_UP:
         symbol: Switch:SW_Push
         sheet: Buttons_Direct
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
+        value: Alps_SKRTLAE010
+        footprint: Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010
       SW_VOL_DN:
         symbol: Switch:SW_Push
         sheet: Buttons_Direct
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
+        value: Alps_SKRTLAE010
+        footprint: Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010
       SW_TRIG_DIG:
         symbol: Switch:SW_Push
         sheet: Buttons_Direct
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
+        value: Alps_SKRTLAE010
+        footprint: Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010
       SW_MACRO1:
         symbol: Switch:SW_Push
         sheet: Buttons_Direct
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
+        value: 6x6x5mm SMD Tactile
+        footprint: Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm
       SW_MACRO2:
         symbol: Switch:SW_Push
         sheet: Buttons_Direct
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
+        value: 6x6x5mm SMD Tactile
+        footprint: Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm
       SW_MACRO3:
         symbol: Switch:SW_Push
         sheet: Buttons_Direct
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
+        value: 6x6x5mm SMD Tactile
+        footprint: Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm
       SW_MACRO4:
         symbol: Switch:SW_Push
         sheet: Buttons_Direct
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
+        value: 6x6x5mm SMD Tactile
+        footprint: Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm
       SW_MACRO5:
         symbol: Switch:SW_Push
         sheet: Buttons_Direct
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
+        value: 6x6x5mm SMD Tactile
+        footprint: Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm
       SW_MACRO6:
         symbol: Switch:SW_Push
         sheet: Buttons_Direct
-        value: Omron_B3F
-        footprint: Button_Switch_THT:SW_PUSH_6mm
+        value: 6x6x5mm SMD Tactile
+        footprint: Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm
     connections:
       - net: GND
         pins: [SW_VOL_UP:2, SW_VOL_DN:2, SW_TRIG_DIG:2, SW_MACRO1:2,

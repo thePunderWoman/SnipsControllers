@@ -43,6 +43,7 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -53,6 +54,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -63,6 +65,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -187,6 +190,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -197,6 +201,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -207,6 +212,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -420,7 +426,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "204c5481-8583-4185-b101-a9721af85540")
-		(property "Reference" "C_HALL"
+		(property "Reference" "C_HALL1"
 			(at 167.005 115.57 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -479,6 +485,12 @@
 			(uuid "a86454bd-b952-4535-9161-284deca36d1b")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/58aa3fea-7023-42af-afb1-45eaa756099e"
+					(reference "C_HALL1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/58aa3fea-7023-42af-afb1-45eaa756099e"
 					(reference "C_HALL")
@@ -499,7 +511,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b2e92270-a8cd-461e-9ba6-d621cce778b2")
-		(property "Reference" "U_HALL"
+		(property "Reference" "U_HALL1"
 			(at 135.89 109.22 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -559,6 +571,12 @@
 			(uuid "3e18ed46-0a3f-47db-a174-d3e2e11b71fa")
 		)
 		(instances
+			(project "snips_controller"
+				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/58aa3fea-7023-42af-afb1-45eaa756099e"
+					(reference "U_HALL1")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/58aa3fea-7023-42af-afb1-45eaa756099e"
 					(reference "U_HALL")
