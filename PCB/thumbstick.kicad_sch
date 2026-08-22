@@ -2,7 +2,7 @@
 	(version 20260306)
 	(generator "eeschema")
 	(generator_version "10.0")
-	(uuid "d9e1ccdf-8725-4a74-8b43-e47e96eea7ff")
+	(uuid "1c4fd0b5-fdef-4cd7-9a54-ee5fd80636df")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Device:C"
@@ -43,6 +43,7 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -53,6 +54,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -63,6 +65,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -434,32 +437,9 @@
 			)
 			(justify right)
 		)
-		(uuid "0827fa8c-22d1-4d56-b97b-b0da86aafe56")
+		(uuid "09392062-de70-4433-80aa-cb090b598bd4")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 167.64 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 128.27 107.95 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "1b848919-e8b9-464b-8eec-b1290b8b6474")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 128.27 107.95 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -480,55 +460,9 @@
 			)
 			(justify left)
 		)
-		(uuid "1d3435ef-810a-4f64-afc1-608b4823a966")
+		(uuid "0c9856c4-540c-447a-8939-3307b69b067e")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 170.18 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "3V3"
-		(shape passive)
-		(at 128.27 100.33 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "8383f335-6774-4c0e-b8b7-cd43eb4e4b70")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 128.27 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 171.45 116.84 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ae2b275a-4f19-427c-8769-dc3ce5195f25")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 171.45 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -549,9 +483,55 @@
 			)
 			(justify right)
 		)
-		(uuid "bd8daede-1991-452f-b511-b48263db0dc5")
+		(uuid "4c165c82-8913-4f0d-b034-6d6cc91250c5")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 163.83 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 128.27 100.33 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6810b831-6589-44e8-ae2f-b2a098f0cd54")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 128.27 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 128.27 107.95 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "adf0dc52-bcc3-4450-88f6-b3bdf9e88889")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 128.27 107.95 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -572,7 +552,7 @@
 			)
 			(justify left)
 		)
-		(uuid "eae76cef-79ac-4a9d-a7ec-dbf1b30ef3f5")
+		(uuid "be92c6e0-13ff-4d40-b52f-59fc0642a938")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 165.1 93.98 0)
 			(hide yes)
@@ -585,27 +565,28 @@
 			)
 		)
 	)
-	(hierarchical_label "STICK_X"
-		(shape output)
-		(at 156.21 105.41 0)
+	(global_label "GND"
+		(shape passive)
+		(at 171.45 116.84 270)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
-		(uuid "11013d58-c792-4f1f-9d3b-f03c2bc541c2")
-	)
-	(hierarchical_label "BTN_STICK"
-		(shape output)
-		(at 156.21 109.22 0)
-		(effects
-			(font
-				(size 1.27 1.27)
+		(uuid "da633378-4aef-4508-988f-c22b017c442f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 171.45 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
-			(justify left)
 		)
-		(uuid "436e498c-743d-4d03-ade1-67f43953fc95")
 	)
 	(hierarchical_label "STICK_Y"
 		(shape output)
@@ -616,86 +597,29 @@
 			)
 			(justify left)
 		)
-		(uuid "da2f114a-ee62-4a1c-b9d8-5f0e25dafbda")
+		(uuid "5c884537-6175-44a1-9271-92c8a0bb12c7")
 	)
-	(symbol
-		(lib_id "Device:C")
-		(at 128.27 104.14 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "cc38dc6f-1e06-422e-b129-01bd4fe0ac97")
-		(property "Reference" "C_STICK"
-			(at 128.905 106.68 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
+	(hierarchical_label "STICK_X"
+		(shape output)
+		(at 156.21 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left)
 		)
-		(property "Value" "100nF"
-			(at 128.905 101.6 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
+		(uuid "b09580a3-77f0-4e76-b5a8-a986918076da")
+	)
+	(hierarchical_label "BTN_STICK"
+		(shape output)
+		(at 156.21 109.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 129.2352 100.33 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 128.27 104.14 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 128.27 104.14 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "c05af1a1-c532-498e-be1c-c4d0e61dea66")
-		)
-		(pin "2"
-			(uuid "b4f074de-ceac-42d7-9c22-b5f770c537c6")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/0d5246ec-5d9d-43ad-8a08-fe1da78eed54"
-					(reference "C_STICK")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "d1385106-39b1-4eaa-bdc1-a172dd9995b5")
 	)
 	(symbol
 		(lib_id "SnipsControllers_Custom:GuliKit_HallStick")
@@ -708,8 +632,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "e183ab2a-0e5b-4861-abde-91395177cf14")
-		(property "Reference" "J_STICK"
+		(uuid "09d203d2-9c88-47ce-be04-6aa98f53257d")
+		(property "Reference" "J_STICK1"
 			(at 168.91 118.11 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -763,33 +687,112 @@
 			)
 		)
 		(pin "1"
-			(uuid "a8f618be-9b46-46ac-84e6-b3efc9c8a20c")
+			(uuid "f34d5808-cf57-4bad-b948-052f578b3501")
 		)
 		(pin "1'"
-			(uuid "0cb76406-d9a9-4dc2-8338-40fa0341a855")
+			(uuid "a2321c77-6fc5-4229-be2a-7c815229ba9c")
 		)
 		(pin "2"
-			(uuid "992fdf41-e064-49ab-a720-726218dfcbdb")
+			(uuid "ff3af9f0-a9f8-4f5f-8aea-bc3c13665f65")
 		)
 		(pin "2'"
-			(uuid "9434ba8d-6664-4037-91ea-ac3069377874")
+			(uuid "fba39a53-4c92-48e3-ae77-3ca57579a7d5")
 		)
 		(pin "3"
-			(uuid "f0b03e36-00fc-4b3e-a3b4-264bd48850fd")
+			(uuid "5c30e7b4-08b0-433b-939e-ac8837f0517c")
 		)
 		(pin "3'"
-			(uuid "75b3c4d0-b718-420d-a29f-ad84019009ad")
+			(uuid "a9d6a125-b4fc-407e-b425-e9f31a61f90c")
 		)
 		(pin "a"
-			(uuid "b767d734-8e66-4604-b27e-ad5c77e43366")
+			(uuid "457857a7-5210-45de-8215-d8501d8361bd")
 		)
 		(pin "c"
-			(uuid "3e3f2f71-7cbd-4c2d-804a-b00a5a9c28a1")
+			(uuid "ef1ddd3b-dd85-457c-ac2c-f99c7f7a257c")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/0d5246ec-5d9d-43ad-8a08-fe1da78eed54"
-					(reference "J_STICK")
+				(path "/21935953-32a0-46ad-8079-8177920c6978/346238e1-b4e6-4959-a557-1b480b53e730"
+					(reference "J_STICK1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 128.27 104.14 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2aa0c597-97d1-4200-b2d4-1232dfdb5ee7")
+		(property "Reference" "C_STICK1"
+			(at 128.905 106.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100nF"
+			(at 128.905 101.6 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 129.2352 100.33 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 128.27 104.14 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 128.27 104.14 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "4f67d023-7a43-47ba-be63-e70fbc7e7ffe")
+		)
+		(pin "2"
+			(uuid "87637315-2057-4e79-9521-9de2d068ee8a")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/21935953-32a0-46ad-8079-8177920c6978/346238e1-b4e6-4959-a557-1b480b53e730"
+					(reference "C_STICK1")
 					(unit 1)
 				)
 			)

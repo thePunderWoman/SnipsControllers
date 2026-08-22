@@ -2,7 +2,7 @@
 	(version 20260306)
 	(generator "eeschema")
 	(generator_version "10.0")
-	(uuid "3452e80f-c7fe-4b5b-8cff-29b7a49c7b0b")
+	(uuid "4add7bf3-a998-4787-afb0-d4b512f9fbaa")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x02"
@@ -39,6 +39,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -49,6 +50,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -59,6 +61,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -171,7 +174,7 @@
 			)
 			(justify right)
 		)
-		(uuid "2287a7f3-3176-495b-9562-4566c3e7649b")
+		(uuid "d3d51668-3b63-4b7c-bf7a-b8796a158b7c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 143.51 107.95 0)
 			(hide yes)
@@ -194,7 +197,7 @@
 			)
 			(justify right)
 		)
-		(uuid "35d6de89-2a4e-4959-ba38-e1fb72cfb0ec")
+		(uuid "d9d31db9-9153-4427-a604-6670bca3c043")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 143.51 105.41 0)
 			(hide yes)
@@ -218,7 +221,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "5b16d68d-482b-42fc-a950-99b8f825ff00")
+		(uuid "a08b08fa-7165-4410-b1d5-feced682372e")
 		(property "Reference" "BT1"
 			(at 148.59 107.95 0)
 			(show_name no)
@@ -270,14 +273,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "f448d806-c290-4c8e-9611-ad570ee7a536")
+			(uuid "47c24e87-e84b-4f2c-aa76-1c8ec1fb0255")
 		)
 		(pin "2"
-			(uuid "a0fb0daf-65c7-40fa-a8b2-83cc5c406bb7")
+			(uuid "f04ca662-1957-4426-a97b-f2e15a15f9fe")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/4f9b61d4-6d11-4d2d-a5a2-c90e20b99588"
+				(path "/21935953-32a0-46ad-8079-8177920c6978/fad91b89-9661-46eb-b0af-354ad1315a11"
 					(reference "BT1")
 					(unit 1)
 				)
