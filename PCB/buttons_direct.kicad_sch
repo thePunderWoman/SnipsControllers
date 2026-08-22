@@ -2,7 +2,7 @@
 	(version 20260306)
 	(generator "eeschema")
 	(generator_version "10.0")
-	(uuid "82be098a-c5ec-4712-b938-f7a6a35dc45e")
+	(uuid "5dcc41bc-a78e-412d-8493-490bf86ea405")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Switch:SW_Push"
@@ -43,7 +43,6 @@
 				(at 0 5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -54,7 +53,6 @@
 				(at 0 5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -65,7 +63,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -172,7 +169,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 153.67 77.47 0)
+		(at 167.64 36.83 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -180,9 +177,9 @@
 			)
 			(justify left)
 		)
-		(uuid "1ed7ea37-2ceb-4534-88f4-a0f7565ee41d")
+		(uuid "0254da19-b142-4527-ac9d-9a4e64211626")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 77.47 0)
+			(at 167.64 36.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -195,7 +192,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 153.67 -10.16 0)
+		(at 168.91 173.99 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -203,9 +200,9 @@
 			)
 			(justify left)
 		)
-		(uuid "200518f3-b851-4d16-9366-826009b0c5e4")
+		(uuid "274286d3-8e58-44c9-b284-9fa7e608d4c1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 -10.16 0)
+			(at 168.91 173.99 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -218,7 +215,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 153.67 162.56 0)
+		(at 138.43 231.14 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -226,9 +223,9 @@
 			)
 			(justify left)
 		)
-		(uuid "64dac0fb-9275-4e69-b00d-8416596ef367")
+		(uuid "607ce21e-6e48-41a0-80d0-69b8cb97d383")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 162.56 0)
+			(at 138.43 231.14 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -241,7 +238,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 153.67 19.05 0)
+		(at 167.64 119.38 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -249,9 +246,9 @@
 			)
 			(justify left)
 		)
-		(uuid "73cb6128-ebc1-447b-9a28-0e5f98acafc9")
+		(uuid "8247f531-1d17-495d-998b-ebc831f84f1e")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 19.05 0)
+			(at 167.64 119.38 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -264,7 +261,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 153.67 191.77 0)
+		(at 167.64 88.9 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -272,9 +269,9 @@
 			)
 			(justify left)
 		)
-		(uuid "76524393-51da-4bd2-933c-176d89858acc")
+		(uuid "890107ce-a1bc-47de-bfad-beb1b5642ba8")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 191.77 0)
+			(at 167.64 88.9 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -287,7 +284,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 153.67 106.68 0)
+		(at 167.64 -20.32 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -295,9 +292,9 @@
 			)
 			(justify left)
 		)
-		(uuid "b459ef16-544d-4115-8028-84db5c6b9582")
+		(uuid "a25374d5-fefe-4c66-875c-7b7213e958ba")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 106.68 0)
+			(at 167.64 -20.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -310,7 +307,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 153.67 220.98 0)
+		(at 167.64 66.04 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -318,9 +315,9 @@
 			)
 			(justify left)
 		)
-		(uuid "c155c0da-572b-44f3-a3f8-416072719571")
+		(uuid "a9bffd1e-c9c9-4511-827a-2a55d0a19555")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 220.98 0)
+			(at 167.64 66.04 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -333,7 +330,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 153.67 133.35 0)
+		(at 167.64 147.32 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -341,9 +338,9 @@
 			)
 			(justify left)
 		)
-		(uuid "dcdf2f38-bc1a-4db5-aec6-2c6ff705a38a")
+		(uuid "b94cb85c-6179-4b3b-93ae-c0ba4c526950")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 133.35 0)
+			(at 167.64 147.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -356,7 +353,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 153.67 49.53 0)
+		(at 167.64 7.62 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -364,9 +361,9 @@
 			)
 			(justify left)
 		)
-		(uuid "f9784922-4ed2-4ca4-bb44-22977a695e1b")
+		(uuid "bca3a877-2061-45e2-aa17-644fc9979627")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 153.67 49.53 0)
+			(at 167.64 7.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -377,108 +374,176 @@
 			)
 		)
 	)
-	(hierarchical_label "BTN_VOL_DN"
+	(global_label "GND"
+		(shape passive)
+		(at 167.64 102.87 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e050b00f-db20-4e0d-a10a-f92ca0f8e391")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 167.64 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 167.64 200.66 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "eff6418b-a4e5-4c9e-9103-5f80a1949845")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 167.64 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(hierarchical_label "BTN_THR_DN"
 		(shape output)
-		(at 143.51 49.53 0)
+		(at 128.27 231.14 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "32d97d98-de01-413c-a324-7987ccc53091")
-	)
-	(hierarchical_label "BTN_MACRO4"
-		(shape output)
-		(at 143.51 -10.16 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "384dcdf5-58d0-4569-aa7c-0df2bd0358fe")
-	)
-	(hierarchical_label "BTN_MACRO2"
-		(shape output)
-		(at 143.51 77.47 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "7028efb6-09d9-4161-a35e-5db80bd0a8df")
-	)
-	(hierarchical_label "BTN_MACRO6"
-		(shape output)
-		(at 143.51 106.68 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "72656638-6a6a-47fb-9481-93e27a362872")
-	)
-	(hierarchical_label "BTN_MACRO3"
-		(shape output)
-		(at 143.51 220.98 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "a4d54bab-030a-40f9-bdc1-2faa00b1d41e")
-	)
-	(hierarchical_label "BTN_MACRO5"
-		(shape output)
-		(at 143.51 191.77 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "a6d905f5-5846-42fc-954e-41d61bd5d9b5")
+		(uuid "46d3a078-ade1-4178-8a35-9d30319e0bc1")
 	)
 	(hierarchical_label "BTN_MACRO1"
 		(shape output)
-		(at 143.51 133.35 0)
+		(at 157.48 88.9 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "d924c441-3ca7-4f60-b7cf-07d40fde911e")
+		(uuid "66b432e1-9265-42a6-a660-bb967a31c7e7")
+	)
+	(hierarchical_label "BTN_VOL_DN"
+		(shape output)
+		(at 157.48 119.38 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7e8a0ec6-6d9f-49bc-9479-8b05f8035409")
+	)
+	(hierarchical_label "BTN_MACRO5"
+		(shape output)
+		(at 157.48 102.87 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "8cc2d274-50be-436b-919b-8e956a53275b")
+	)
+	(hierarchical_label "BTN_THR_UP"
+		(shape output)
+		(at 157.48 66.04 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "98b9d606-5f29-47ef-b109-e80980ae577f")
+	)
+	(hierarchical_label "BTN_MACRO2"
+		(shape output)
+		(at 157.48 -20.32 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a5a8dfa7-408f-462a-97cd-2297734f3968")
+	)
+	(hierarchical_label "BTN_MACRO3"
+		(shape output)
+		(at 157.48 200.66 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d08faaaa-3358-4dad-910b-579c037a81b4")
+	)
+	(hierarchical_label "BTN_MACRO6"
+		(shape output)
+		(at 158.75 173.99 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e2694689-36f2-4992-b5c2-3cb3b428a479")
 	)
 	(hierarchical_label "BTN_TRIG_DIG"
 		(shape output)
-		(at 143.51 19.05 0)
+		(at 157.48 147.32 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "dd949e28-0c11-48d0-af2a-df7d11662cd6")
+		(uuid "e925bdad-78be-4f80-bee2-2d297ff3d968")
+	)
+	(hierarchical_label "BTN_MACRO4"
+		(shape output)
+		(at 157.48 36.83 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f50cf859-adc2-4adb-8965-5e855ba389b7")
 	)
 	(hierarchical_label "BTN_VOL_UP"
 		(shape output)
-		(at 143.51 162.56 0)
+		(at 157.48 7.62 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "f6bb6784-6b5a-458a-84f7-7695aabe57c6")
+		(uuid "ff498994-0679-4397-91c7-3172d8d79cba")
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
-		(at 148.59 220.98 0)
+		(at 162.56 66.04 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -487,9 +552,9 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "00e825c7-3371-49eb-b308-c9c3723659e0")
-		(property "Reference" "SW_MACRO3"
-			(at 149.86 223.52 0)
+		(uuid "222ea1df-e486-423c-960d-61ee5c3629f8")
+		(property "Reference" "SW_THR_UP"
+			(at 163.83 68.58 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -499,92 +564,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Omron_B3F"
-			(at 148.59 219.456 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
-			(at 148.59 226.06 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 148.59 226.06 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 148.59 220.98 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "b20ebacb-e194-41ff-a880-302b4ec115d5")
-		)
-		(pin "2"
-			(uuid "72692302-cd56-45eb-a58a-8ca07df3653a")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_MACRO3")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_MACRO3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 148.59 162.56 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0434515d-ffcd-43a6-8c80-b3a48eed5170")
-		(property "Reference" "SW_VOL_UP1"
-			(at 149.86 165.1 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Omron_B3F"
-			(at 148.59 161.036 0)
+		(property "Value" "Alps_SKRTLAE010"
+			(at 162.56 64.516 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -594,7 +575,7 @@
 			)
 		)
 		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010"
-			(at 148.59 167.64 0)
+			(at 162.56 71.12 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -604,7 +585,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 148.59 167.64 0)
+			(at 162.56 71.12 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -614,7 +595,7 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
-			(at 148.59 162.56 0)
+			(at 162.56 66.04 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -624,21 +605,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "5a5ab2ed-e881-4318-a025-d413689ee333")
+			(uuid "9644ebd4-462e-4573-8596-cafb36c42d7a")
 		)
 		(pin "2"
-			(uuid "baa71d5b-3542-483f-9e54-8db1fc57aaf0")
+			(uuid "907d4ae7-fc8b-41b4-867e-6a1eb61ce8a1")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_VOL_UP1")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_VOL_UP")
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/3522ef96-f605-4e61-ab22-d7b1d8d60a46"
+					(reference "SW_THR_UP")
 					(unit 1)
 				)
 			)
@@ -646,7 +621,7 @@
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
-		(at 148.59 106.68 0)
+		(at 133.35 231.14 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -655,9 +630,165 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "29544a84-636b-439c-be6f-ed53d95e8216")
+		(uuid "2baa802e-801f-4447-be98-a7531a55c0cd")
+		(property "Reference" "SW_THR_DN"
+			(at 134.62 233.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Alps_SKRTLAE010"
+			(at 133.35 229.616 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010"
+			(at 133.35 236.22 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.35 236.22 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 133.35 231.14 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "e73491c0-6daf-4e6e-a3b8-c3888371f1ec")
+		)
+		(pin "2"
+			(uuid "51eda7f5-fa73-464f-8424-7b9698cf8271")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/3522ef96-f605-4e61-ab22-d7b1d8d60a46"
+					(reference "SW_THR_DN")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 162.56 102.87 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2e932777-0e57-4619-9044-ba073afab354")
+		(property "Reference" "SW_MACRO5"
+			(at 163.83 105.41 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "6x6x5mm SMD Tactile"
+			(at 162.56 101.346 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
+			(at 162.56 107.95 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 162.56 107.95 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 162.56 102.87 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "bbd2fd11-e8ef-4e4b-8156-74e28ee3e3ee")
+		)
+		(pin "2"
+			(uuid "51c4a228-b665-4dcd-8189-552898c1576e")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/3522ef96-f605-4e61-ab22-d7b1d8d60a46"
+					(reference "SW_MACRO5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 163.83 173.99 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3325ed72-b245-4874-9213-4ff4ebf93253")
 		(property "Reference" "SW_MACRO6"
-			(at 149.86 109.22 0)
+			(at 165.1 176.53 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -667,8 +798,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Omron_B3F"
-			(at 148.59 105.156 0)
+		(property "Value" "6x6x5mm SMD Tactile"
+			(at 163.83 172.466 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -678,7 +809,7 @@
 			)
 		)
 		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
-			(at 148.59 111.76 0)
+			(at 163.83 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -688,7 +819,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 148.59 111.76 0)
+			(at 163.83 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -698,7 +829,7 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
-			(at 148.59 106.68 0)
+			(at 163.83 173.99 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -708,20 +839,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "7bf57cbe-825b-498a-9e3d-56e373dba5dc")
+			(uuid "3b847af0-e32b-48e8-b14f-33ce34a4bf7c")
 		)
 		(pin "2"
-			(uuid "5f82bd0d-9db4-49e0-9818-9565eea15351")
+			(uuid "eb1a2352-34d4-4f30-a17b-c5a477a9919f")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_MACRO6")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/3522ef96-f605-4e61-ab22-d7b1d8d60a46"
 					(reference "SW_MACRO6")
 					(unit 1)
 				)
@@ -730,7 +855,7 @@
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
-		(at 148.59 49.53 0)
+		(at 162.56 88.9 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -739,9 +864,9 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "2f318e94-c8b9-45c8-8677-f31327a90b38")
-		(property "Reference" "SW_VOL_DN1"
-			(at 149.86 52.07 0)
+		(uuid "4fa4c378-354f-4353-9520-74d62e46d1a5")
+		(property "Reference" "SW_MACRO1"
+			(at 163.83 91.44 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -751,92 +876,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Omron_B3F"
-			(at 148.59 48.006 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010"
-			(at 148.59 54.61 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 148.59 54.61 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 148.59 49.53 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "d4a7fe31-b450-4b7a-bdd7-f5f5e2fe4f61")
-		)
-		(pin "2"
-			(uuid "b08ddeba-313f-4c98-a638-4f29274b4ca3")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_VOL_DN1")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_VOL_DN")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 148.59 -10.16 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "49389e50-9983-4850-b888-142ecc1a3e00")
-		(property "Reference" "SW_MACRO4"
-			(at 149.86 -7.62 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Omron_B3F"
-			(at 148.59 -11.684 0)
+		(property "Value" "6x6x5mm SMD Tactile"
+			(at 162.56 87.376 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -846,7 +887,7 @@
 			)
 		)
 		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
-			(at 148.59 -5.08 0)
+			(at 162.56 93.98 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -856,7 +897,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 148.59 -5.08 0)
+			(at 162.56 93.98 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -866,7 +907,7 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
-			(at 148.59 -10.16 0)
+			(at 162.56 88.9 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -876,21 +917,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "4b0e9793-dd29-4b8b-a643-fe14d520d660")
+			(uuid "9f3ee8e7-d84b-4ba0-91f2-6eeda95c91ed")
 		)
 		(pin "2"
-			(uuid "a07adec4-6aa8-4c48-8e9b-73714a3d2316")
+			(uuid "17df1cbc-53ae-4681-9012-9825676b95a4")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_MACRO4")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_MACRO4")
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/3522ef96-f605-4e61-ab22-d7b1d8d60a46"
+					(reference "SW_MACRO1")
 					(unit 1)
 				)
 			)
@@ -898,7 +933,7 @@
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
-		(at 148.59 19.05 0)
+		(at 162.56 147.32 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -907,9 +942,9 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "58b76b3d-51c8-4a95-95c2-4bbac0ea99f0")
-		(property "Reference" "SW_TRIG_DIG1"
-			(at 149.86 21.59 0)
+		(uuid "aedd1d4f-0259-41cd-a9a6-ac37129bb2ab")
+		(property "Reference" "SW_TRIG_DIG"
+			(at 163.83 149.86 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -919,8 +954,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Omron_B3F"
-			(at 148.59 17.526 0)
+		(property "Value" "Alps_SKRTLAE010"
+			(at 162.56 145.796 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -930,7 +965,7 @@
 			)
 		)
 		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010"
-			(at 148.59 24.13 0)
+			(at 162.56 152.4 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -940,7 +975,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 148.59 24.13 0)
+			(at 162.56 152.4 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -950,7 +985,7 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
-			(at 148.59 19.05 0)
+			(at 162.56 147.32 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -960,20 +995,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "0f50453a-422a-41e7-81d6-cd6e5cecd2b6")
+			(uuid "c0a996bf-51b1-4966-984d-7bc6ce0e7bc2")
 		)
 		(pin "2"
-			(uuid "2a7db281-5335-4ad9-93d4-2e5fed6ef00b")
+			(uuid "e42ebd93-250d-4636-9c63-8a3f8a784d8b")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_TRIG_DIG1")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/3522ef96-f605-4e61-ab22-d7b1d8d60a46"
 					(reference "SW_TRIG_DIG")
 					(unit 1)
 				)
@@ -982,7 +1011,7 @@
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
-		(at 148.59 77.47 0)
+		(at 162.56 119.38 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -991,9 +1020,165 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "76594914-9fa3-4944-87b3-fb6089cbbf96")
+		(uuid "b170ab38-c609-448f-acce-45c34d07b9fb")
+		(property "Reference" "SW_VOL_DN"
+			(at 163.83 121.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Alps_SKRTLAE010"
+			(at 162.56 117.856 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010"
+			(at 162.56 124.46 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 162.56 124.46 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 162.56 119.38 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "185884db-fa09-43a0-b392-2ff56c4610a4")
+		)
+		(pin "2"
+			(uuid "db6b386b-b27b-49eb-8dfe-2064e8243b29")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/3522ef96-f605-4e61-ab22-d7b1d8d60a46"
+					(reference "SW_VOL_DN")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 162.56 36.83 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ba26dd6c-01cb-47c8-bb87-61701cacacf1")
+		(property "Reference" "SW_MACRO4"
+			(at 163.83 39.37 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "6x6x5mm SMD Tactile"
+			(at 162.56 35.306 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
+			(at 162.56 41.91 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 162.56 41.91 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 162.56 36.83 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "81066a12-00f8-45ca-ba93-6bd28622dd47")
+		)
+		(pin "2"
+			(uuid "754c35a6-a1a9-465e-8e16-fce79f31c798")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/3522ef96-f605-4e61-ab22-d7b1d8d60a46"
+					(reference "SW_MACRO4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 162.56 -20.32 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "cabc685d-ad0d-4da7-ad4e-46cd6373f0dd")
 		(property "Reference" "SW_MACRO2"
-			(at 149.86 80.01 0)
+			(at 163.83 -17.78 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1003,8 +1188,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Omron_B3F"
-			(at 148.59 75.946 0)
+		(property "Value" "6x6x5mm SMD Tactile"
+			(at 162.56 -21.844 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1014,7 +1199,7 @@
 			)
 		)
 		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
-			(at 148.59 82.55 0)
+			(at 162.56 -15.24 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1024,7 +1209,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 148.59 82.55 0)
+			(at 162.56 -15.24 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1034,7 +1219,7 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
-			(at 148.59 77.47 0)
+			(at 162.56 -20.32 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1044,20 +1229,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "b7bc4a8c-74c8-4443-90d4-bf4068ef55a5")
+			(uuid "b1bb10cc-684b-48e3-b835-68cdf2277fbb")
 		)
 		(pin "2"
-			(uuid "2b2c8930-0445-4920-8368-be512c3150c3")
+			(uuid "b0bf201a-5cb9-4e7e-9c3a-601634ad0d16")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_MACRO2")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/3522ef96-f605-4e61-ab22-d7b1d8d60a46"
 					(reference "SW_MACRO2")
 					(unit 1)
 				)
@@ -1066,7 +1245,7 @@
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
-		(at 148.59 133.35 0)
+		(at 162.56 7.62 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -1075,9 +1254,9 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "b398b324-1bae-4403-900c-32b8b4e2a7a5")
-		(property "Reference" "SW_MACRO1"
-			(at 149.86 135.89 0)
+		(uuid "d369250f-2dbd-45e7-a2f9-9d72223f6bba")
+		(property "Reference" "SW_VOL_UP"
+			(at 163.83 10.16 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1087,8 +1266,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Omron_B3F"
-			(at 148.59 131.826 0)
+		(property "Value" "Alps_SKRTLAE010"
+			(at 162.56 6.096 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1097,8 +1276,8 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
-			(at 148.59 138.43 0)
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010"
+			(at 162.56 12.7 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1108,7 +1287,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 148.59 138.43 0)
+			(at 162.56 12.7 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1118,7 +1297,7 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
-			(at 148.59 133.35 0)
+			(at 162.56 7.62 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1128,21 +1307,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "758228d8-8460-4098-98c3-36055ffdc623")
+			(uuid "25cb7410-3c70-45b0-a907-4dcc17b2c6e5")
 		)
 		(pin "2"
-			(uuid "ee1f09c3-7e00-4024-8403-fad71df86594")
+			(uuid "c210355d-0ff1-4d2d-aebe-8f803b6bf53f")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_MACRO1")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_MACRO1")
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/3522ef96-f605-4e61-ab22-d7b1d8d60a46"
+					(reference "SW_VOL_UP")
 					(unit 1)
 				)
 			)
@@ -1150,7 +1323,7 @@
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
-		(at 148.59 191.77 0)
+		(at 162.56 200.66 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -1159,9 +1332,9 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "e6fd7dac-9431-4106-ab59-d03c4212f14d")
-		(property "Reference" "SW_MACRO5"
-			(at 149.86 194.31 0)
+		(uuid "d64e1bae-68df-4803-95ef-a77f441b0e36")
+		(property "Reference" "SW_MACRO3"
+			(at 163.83 203.2 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1171,8 +1344,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Omron_B3F"
-			(at 148.59 190.246 0)
+		(property "Value" "6x6x5mm SMD Tactile"
+			(at 162.56 199.136 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1182,7 +1355,7 @@
 			)
 		)
 		(property "Footprint" "Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm"
-			(at 148.59 196.85 0)
+			(at 162.56 205.74 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1192,7 +1365,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 148.59 196.85 0)
+			(at 162.56 205.74 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1202,7 +1375,7 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
-			(at 148.59 191.77 0)
+			(at 162.56 200.66 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1212,21 +1385,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "4a342530-fa93-4ca9-9f26-0dd3eee1a16a")
+			(uuid "c0d834ff-0c26-4fe9-b097-e0d15c570eac")
 		)
 		(pin "2"
-			(uuid "5e0fb43e-49b9-4d4e-8ecf-a36f5960084b")
+			(uuid "e8d71a76-a152-4f43-99d3-21c14255d379")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_MACRO5")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/e5523a34-26e6-4606-a95c-f5d6b5b43fdf"
-					(reference "SW_MACRO5")
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/3522ef96-f605-4e61-ab22-d7b1d8d60a46"
+					(reference "SW_MACRO3")
 					(unit 1)
 				)
 			)

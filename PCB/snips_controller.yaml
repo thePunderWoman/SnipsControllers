@@ -57,8 +57,6 @@ project:
 # Pin 14 (GPIO20)  - USB_D+  (native USB)
 # Pins 1, 40, 41   - GND
 # Pin 2            - 3V3
-# Pins 26-32 (internal, not broken out on the module) - internal SPI flash
-# Pins 33-34 (not broken out on the WROOM-1 module at all)
 #
 # Use with care if ever needed (strapping pins, sampled at boot):
 # Pin 15 (GPIO3), Pin 16 (GPIO46), Pin 26 (GPIO45)
@@ -237,7 +235,10 @@ groups:
   # FB     -> R_FB1/R_FB2 divider sets 3.3V output
   #           VOUT = 0.6V * (1 + R_FB1/R_FB2)
   #           R_FB1=100kΩ, R_FB2=56.2kΩ -> ~3.31V (verify with 1% resistors)
-  # L      - 1µH, >=2A rating, low DCR
+  # L      - 2.2µH (TI's standard recommended value for VOUT >= 1.8V, paired
+  #          with 22µF COUT -- see TLV62569 datasheet Table 4), Bourns
+  #          SRN4018-2R2M: 3.0A Isat, 44mΩ DCR, 4x4x1.8mm -- much smaller
+  #          than a 12x12mm shielded inductor for a rail this small.
   # Decoupling: 10µF on VIN, 22µF on VOUT
   Power_Buck:
     components:
@@ -249,8 +250,8 @@ groups:
       L_BUCK:
         symbol: Device:L
         sheet: Power_Buck
-        value: 1µH
-        footprint: Inductor_SMD:L_Bourns_SRR1260
+        value: 2.2µH
+        footprint: Inductor_SMD:L_Bourns-SRN4018
       C_BUCK_IN:
         symbol: Device:C
         sheet: Power_Buck
@@ -284,21 +285,26 @@ groups:
         pins: [U_BUCK:GND, C_BUCK_IN:2, C_BUCK_OUT:2, R_FB2:2]
 
   # -------------------------------------------------------------------------
-  # 4. Battery Holder
+  # 4. Battery Connector
   # -------------------------------------------------------------------------
-  # Single cell Li-ion (18650 or 14500 — to be determined empirically)
+  # External Li-ion/LiPo pack via JST-PH 2-pin pigtail, not an on-PCB cell
+  # holder -- the battery is mounted/molded into the controller shell itself
+  # (shape TBD), wired back to this connector. Right-angle/horizontal mount
+  # to keep the connector low-profile against the PCB.
+  # JST-PH 2-pin battery packs are conventionally pin 1 = +, pin 2 = - —
+  # double-check polarity against the actual pack before first power-up.
   Battery:
     components:
       BT1:
-        symbol: Device:Battery
+        symbol: Connector_Generic:Conn_01x02
         sheet: Battery
-        value: Li-ion_18650_or_14500
-        footprint: Battery:BatteryHolder_Keystone_1042_1x18650
+        value: JST-PH_2Pin_Battery
+        footprint: Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal
     connections:
       - net: VBAT
-        pins: [BT1:+]
+        pins: [BT1:1]
       - net: GND
-        pins: [BT1:-]
+        pins: [BT1:2]
 
   # -------------------------------------------------------------------------
   # 5. Power Control Circuit (soft latch, hybrid hardware+firmware)
@@ -514,6 +520,13 @@ groups:
         pins: [U_MCU:9, SW_VOL_UP:1]
       - net: BTN_VOL_DN
         pins: [U_MCU:10, SW_VOL_DN:1]
+      # Mirrored pair on the opposite edge, for the second (opposite-handed)
+      # controller — same board, buttons remapped in firmware/Amidala rather
+      # than building two mirrored PCB variants.
+      - net: BTN_THR_UP
+        pins: [U_MCU:32, SW_THR_UP:1]
+      - net: BTN_THR_DN
+        pins: [U_MCU:33, SW_THR_DN:1]
       - net: BTN_TRIG_DIG
         pins: [U_MCU:11, SW_TRIG_DIG:1]
       - net: BTN_STICK
@@ -539,11 +552,11 @@ groups:
         pins: [R_VSYS1:2, R_VSYS2:1, U_MCU:7]
       - net: GND
         pins: [R_VSYS2:2]
-      # Spare GPIO: 15/16/26 usable-with-care (strapping), 32-35 clean
-      # (default JTAG, fully reusable as plain GPIO). See RESERVED GPIO
-      # header comment for details.
-      - no_connect: [U_MCU:15, U_MCU:16, U_MCU:26, U_MCU:32, U_MCU:33,
-                     U_MCU:34, U_MCU:35]
+      # Spare GPIO: 15/16/26 usable-with-care (strapping), 34/35 clean
+      # (default JTAG, fully reusable as plain GPIO; 32/33 from the same
+      # clean JTAG group now used above for BTN_THR_UP/BTN_THR_DN). See
+      # RESERVED GPIO header comment for details.
+      - no_connect: [U_MCU:15, U_MCU:16, U_MCU:26, U_MCU:34, U_MCU:35]
 
   # -------------------------------------------------------------------------
   # 7. XBee3 Radio (SPI mode, THT socket)
@@ -605,13 +618,15 @@ groups:
   # I2C address: 0x3C (default). I2C pull-ups included as 4.7kΩ.
   # Mark R_I2C_SDA and R_I2C_SCL as DNP if OLED breakout has them onboard.
   # Decoupling: 10µF + 100nF on VCC.
+  # Display isn't on this PCB -- U_OLED is just a JST-SH 4-pin connector
+  # (VCC/GND/SCL/SDA) wired out to it, right-angle mount for low profile.
   OLED:
     components:
       U_OLED:
         symbol: SnipsControllers:SSD1306_OLED_4pin
         sheet: OLED
-        value: SSD1306_1.3in
-        footprint: Display:Adafruit_SSD1306
+        value: JST-SH_4Pin_OLED
+        footprint: Connector_JST:JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal
       C_OLED_1:
         symbol: Device:C
         sheet: OLED
@@ -750,6 +765,16 @@ groups:
         sheet: Buttons_Direct
         value: Alps_SKRTLAE010
         footprint: Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010
+      SW_THR_UP:
+        symbol: Switch:SW_Push
+        sheet: Buttons_Direct
+        value: Alps_SKRTLAE010
+        footprint: Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010
+      SW_THR_DN:
+        symbol: Switch:SW_Push
+        sheet: Buttons_Direct
+        value: Alps_SKRTLAE010
+        footprint: Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010
       SW_TRIG_DIG:
         symbol: Switch:SW_Push
         sheet: Buttons_Direct
@@ -787,9 +812,9 @@ groups:
         footprint: Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm
     connections:
       - net: GND
-        pins: [SW_VOL_UP:2, SW_VOL_DN:2, SW_TRIG_DIG:2, SW_MACRO1:2,
-               SW_MACRO2:2, SW_MACRO3:2, SW_MACRO4:2, SW_MACRO5:2,
-               SW_MACRO6:2]
+        pins: [SW_VOL_UP:2, SW_VOL_DN:2, SW_THR_UP:2, SW_THR_DN:2,
+               SW_TRIG_DIG:2, SW_MACRO1:2, SW_MACRO2:2, SW_MACRO3:2,
+               SW_MACRO4:2, SW_MACRO5:2, SW_MACRO6:2]
 
   # -------------------------------------------------------------------------
   # 14. ERC power flags
@@ -898,7 +923,8 @@ groups:
 #     trace antenna, but still a real layout-stage requirement.
 #
 # 16. Spare GPIO: pins 15/16/26 (strapping, usable with care) and pins
-#     32-35 (default JTAG, cleanly reusable). See RESERVED GPIO header.
+#     34/35 (default JTAG, cleanly reusable; 32/33 from the same group now
+#     used for BTN_THR_UP/BTN_THR_DN). See RESERVED GPIO header.
 
 sheets:
   USB_C:
@@ -977,6 +1003,12 @@ sheets:
       - name: "RGB_DIN"
         shape: output
         position: [1049.02, 350.52]
+      - name: "BTN_THR_UP"
+        shape: input
+        position: [1106.17, 350.52]
+      - name: "BTN_THR_DN"
+        shape: input
+        position: [1163.32, 350.52]
       - name: "SPI_SCK"
         shape: bidirectional
         position: [751.84, 849.63]
@@ -1128,3 +1160,9 @@ sheets:
       - name: "BTN_MACRO6"
         shape: output
         position: [2073.91, 999.49]
+      - name: "BTN_THR_UP"
+        shape: output
+        position: [1769.11, 1200.15]
+      - name: "BTN_THR_DN"
+        shape: output
+        position: [1807.21, 1200.15]

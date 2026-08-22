@@ -2,7 +2,7 @@
 	(version 20260306)
 	(generator "eeschema")
 	(generator_version "10.0")
-	(uuid "b40b16fb-26c4-44d2-8684-4c8fa11f76e5")
+	(uuid "c36187f3-e19a-45ec-bda6-7a9ed08c89f3")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Device:C"
@@ -43,7 +43,6 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -54,7 +53,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -65,7 +63,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -190,7 +187,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -201,7 +197,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -212,7 +207,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -321,7 +315,7 @@
 			)
 			(justify left)
 		)
-		(uuid "167d8fe0-79c6-42db-9b72-53d273f55012")
+		(uuid "91692d14-a9db-4232-be3a-efdf945a0f2b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 166.37 109.22 0)
 			(hide yes)
@@ -344,7 +338,7 @@
 			)
 			(justify right)
 		)
-		(uuid "3b6d9ca7-5e85-4952-8c13-b404b6c9a193")
+		(uuid "a0385ce4-78fa-4f74-ab04-dba2c812ed70")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 128.27 106.68 0)
 			(hide yes)
@@ -367,7 +361,7 @@
 			)
 			(justify right)
 		)
-		(uuid "4fbb821d-d204-47d8-80cf-bec8d7dcde34")
+		(uuid "c9ad4b5d-5c63-4247-9bb6-192135fe0685")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 166.37 116.84 0)
 			(hide yes)
@@ -390,7 +384,7 @@
 			)
 			(justify left)
 		)
-		(uuid "9ba53f11-e6e7-4cea-896b-cc6a54e433ff")
+		(uuid "e3562bcb-abb1-46cb-b563-06a79d489086")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 128.27 86.36 0)
 			(hide yes)
@@ -412,7 +406,7 @@
 			)
 			(justify left)
 		)
-		(uuid "984c5a5d-efb2-4669-981b-bff4ffe81a7f")
+		(uuid "fb9e30b6-e7fb-4157-a636-e6b599509d21")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -425,8 +419,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "204c5481-8583-4185-b101-a9721af85540")
-		(property "Reference" "C_HALL1"
+		(uuid "68a9a0f7-a69d-46b0-8724-c1efbc7c0503")
+		(property "Reference" "C_HALL"
 			(at 167.005 115.57 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -479,20 +473,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "fdf13b54-c306-4ae7-bfd3-703639aa0e04")
+			(uuid "769b8324-d569-429e-8543-286931029fcf")
 		)
 		(pin "2"
-			(uuid "a86454bd-b952-4535-9161-284deca36d1b")
+			(uuid "5507c0a6-22cb-49ac-8c56-bf856d5590f0")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/58aa3fea-7023-42af-afb1-45eaa756099e"
-					(reference "C_HALL1")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/58aa3fea-7023-42af-afb1-45eaa756099e"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/8effc149-159c-4301-a85e-5bb660fe4c99"
 					(reference "C_HALL")
 					(unit 1)
 				)
@@ -510,8 +498,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "b2e92270-a8cd-461e-9ba6-d621cce778b2")
-		(property "Reference" "U_HALL1"
+		(uuid "f351ca36-3004-49e2-8561-0ad3a6f2ffc8")
+		(property "Reference" "U_HALL"
 			(at 135.89 109.22 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -562,23 +550,17 @@
 			)
 		)
 		(pin "1"
-			(uuid "90dedead-8f5f-422d-b834-8f8230a86d3c")
+			(uuid "4ecc6b75-f974-4a7a-8582-00a3ddbc23dd")
 		)
 		(pin "2"
-			(uuid "9cb12016-92a7-443f-8aaf-129593edc249")
+			(uuid "fb10dcd5-bd17-48dc-8967-e5217f8b62a8")
 		)
 		(pin "3"
-			(uuid "3e18ed46-0a3f-47db-a174-d3e2e11b71fa")
+			(uuid "e130a8d2-9700-4887-88eb-df6d64998a8f")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/58aa3fea-7023-42af-afb1-45eaa756099e"
-					(reference "U_HALL1")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/58aa3fea-7023-42af-afb1-45eaa756099e"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/8effc149-159c-4301-a85e-5bb660fe4c99"
 					(reference "U_HALL")
 					(unit 1)
 				)
