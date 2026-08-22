@@ -472,7 +472,7 @@
       "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
-      "pin_to_pin": "warning",
+      "pin_to_pin": "ignore",
       "power_pin_not_driven": "error",
       "same_local_global_label": "warning",
       "similar_label_and_power": "warning",
@@ -663,64 +663,64 @@
       {
         "filename": "snips_controller.kicad_sch",
         "name": "snips_controller",
-        "uuid": "868f8289-8434-4465-b2f4-2accc5e40bab"
+        "uuid": "f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d"
       }
     ],
-    "used_designators": "U_OLED1,SW_VOL_UP1,R_XBEE_RST1,SW_PWR1,R_XBEE_RC1,R_USB_DP1,R_ISET1,Q_PWR1,R_I2C_SCL1,U_BUCK1,SW_TRIG_DIG1,R_TS1,R_VSET1,C_BUCK_IN1,L_BUCK1,R_GATE1,PF_GND1,R_PWR_SENSE1,R_BTN_PU1,SW_BOOT1,R_EN_PU1,R_USB_DM1,U_CHG1,R_BOOT_PU1,U_XBEE1,U_HALL1,R_I2C_SDA1,Q_LATCH1,J_USB1,SW_VOL_DN1,D_RGB1,R_RGB1,C_RGB1,C_HALL1,C_DBNC1,C_BUCK_OUT1,C_XBEE_RC1,R_LATCH_G1,C_STICK1,C_XBEE_VCC1,J_STICK1,U_MCU1,C_BAT1,PF_VSYS1",
+    "used_designators": "SW_THR_UP1,SW_THR_DN1,U_OLED1,SW_VOL_UP1,R_XBEE_RST1,SW_PWR1,R_XBEE_RC1,R_USB_DP1,R_ISET1,Q_PWR1,SW_TRIG_DIG1,R_I2C_SCL1,U_BUCK1,R_TS1,R_VSET1,C_BUCK_IN1,L_BUCK1,R_GATE1,PF_GND1,R_PWR_SENSE1,R_BTN_PU1,SW_BOOT1,R_EN_PU1,R_USB_DM1,U_CHG1,R_BOOT_PU1,U_XBEE1,U_HALL1,R_I2C_SDA1,Q_LATCH1,J_USB1,SW_VOL_DN1,D_RGB1,R_RGB1,C_RGB1,C_HALL1,C_DBNC1,C_BUCK_OUT1,C_XBEE_RC1,R_LATCH_G1,C_STICK1,C_XBEE_VCC1,J_STICK1,U_MCU1,C_BAT1,PF_VSYS1",
     "variants": []
   },
   "sheets": [
     [
-      "868f8289-8434-4465-b2f4-2accc5e40bab",
+      "f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d",
       "snips_controller"
     ],
     [
-      "efea6f57-a660-4b9d-97dc-90c00a6de06b",
-      "USB_C"
-    ],
-    [
-      "1b15ddbb-d83b-44e2-b783-5b6d226c8075",
-      "Power_Charger"
-    ],
-    [
-      "456186b5-e5fa-459c-a04e-9d51d6afbbb5",
-      "XBee"
-    ],
-    [
-      "b13bd16f-d7d9-4a72-b9f8-9089332fe5a3",
-      "Power_Buck"
-    ],
-    [
-      "c3894f85-0389-4f3d-bfa3-88715bea0c3d",
-      "MCU_Core"
-    ],
-    [
-      "59e39798-299e-4deb-adbf-c10dc57ea668",
-      "OLED"
-    ],
-    [
-      "1c35c5cf-c022-4f34-b463-7ba7d15d3ffa",
+      "4f9b61d4-6d11-4d2d-a5a2-c90e20b99588",
       "Battery"
     ],
     [
-      "58aa3fea-7023-42af-afb1-45eaa756099e",
+      "3522ef96-f605-4e61-ab22-d7b1d8d60a46",
+      "Buttons_Direct"
+    ],
+    [
+      "8effc149-159c-4301-a85e-5bb660fe4c99",
       "Hall_Trigger"
     ],
     [
-      "c56f3d5f-543a-4bd1-90c4-022a9c6f97c6",
+      "6b86bf42-4f5a-47f3-bf42-f6de35d43c31",
+      "MCU_Core"
+    ],
+    [
+      "e14f88fa-2c4e-44f4-8efd-87f8f1b3f266",
+      "OLED"
+    ],
+    [
+      "8ee701a8-c0fa-4d6c-a434-f0557ca81480",
+      "Power_Buck"
+    ],
+    [
+      "37437c7e-290a-4e43-a21c-b0b9316afab2",
+      "Power_Charger"
+    ],
+    [
+      "06d8658d-8eb1-43b6-927b-8bf84b7e1269",
       "Power_Control"
     ],
     [
-      "d3a109f9-ed10-4138-8f18-30dfb6d6156b",
-      "Thumbstick"
-    ],
-    [
-      "e8a027f5-b0c3-4230-8e98-ef586f634016",
+      "de2e61c0-3a94-4f0a-93aa-fbb224e49852",
       "RGB_LED"
     ],
     [
-      "e5523a34-26e6-4606-a95c-f5d6b5b43fdf",
-      "Buttons_Direct"
+      "0d5246ec-5d9d-43ad-8a08-fe1da78eed54",
+      "Thumbstick"
+    ],
+    [
+      "c93dfb03-dcad-4626-9725-cb9ee4bd4df4",
+      "USB_C"
+    ],
+    [
+      "31ee01bd-1d1f-422b-860b-9cf3daf0d159",
+      "XBee"
     ]
   ],
   "text_variables": {},

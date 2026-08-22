@@ -2,7 +2,7 @@
 	(version 20260306)
 	(generator "eeschema")
 	(generator_version "10.0")
-	(uuid "181bbd1e-7daf-40cd-af84-acf9911ecbb5")
+	(uuid "4fc96b4f-be06-4db9-a756-5e6f00ab1793")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Device:C"
@@ -43,7 +43,6 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -54,7 +53,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -65,7 +63,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -164,9 +161,6 @@
 			(pin_numbers
 				(hide yes)
 			)
-			(pin_names
-				(offset 0)
-			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -196,7 +190,6 @@
 				(at -1.778 0 90)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -207,7 +200,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -218,7 +210,6 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -802,64 +793,44 @@
 		)
 	)
 	(no_connect
-		(at 165.1 96.52)
-		(uuid "27821884-3850-4965-9e3b-c810f2aae183")
-	)
-	(no_connect
-		(at 101.6 101.6)
-		(uuid "3a97c9fa-9f48-4110-9521-fa7fe7b1bb73")
+		(at 101.6 99.06)
+		(uuid "033fb0a7-fb15-4492-8fc7-34f9f621b3c9")
 	)
 	(no_connect
 		(at 101.6 114.3)
-		(uuid "571716c3-7448-4304-978f-216f5c3a79bf")
-	)
-	(no_connect
-		(at 101.6 99.06)
-		(uuid "77a15552-a4ac-4b38-a7d4-193e412090ca")
-	)
-	(no_connect
-		(at 165.1 106.68)
-		(uuid "7a068257-06bb-41ab-80ca-e2c8000302d9")
-	)
-	(no_connect
-		(at 165.1 111.76)
-		(uuid "add2dfbf-7121-4990-b6f3-560ca3656f3c")
-	)
-	(no_connect
-		(at 101.6 109.22)
-		(uuid "d307d591-6c86-4b1c-88e4-9d0554cdd17c")
-	)
-	(no_connect
-		(at 165.1 116.84)
-		(uuid "dc9a41f9-d526-4e11-9578-b8af25fd91e3")
+		(uuid "08687ea5-0f62-4a76-ad36-a8512f6e182b")
 	)
 	(no_connect
 		(at 101.6 111.76)
-		(uuid "e7fe43d1-6f4e-46c4-a5ed-6e0856e0e261")
+		(uuid "087c7a93-6f5f-4ef4-9685-806795df7fe8")
+	)
+	(no_connect
+		(at 165.1 116.84)
+		(uuid "09767d5d-7c15-44c2-bf93-dfe5f8dd7fd7")
+	)
+	(no_connect
+		(at 165.1 111.76)
+		(uuid "111b9182-c431-42e2-b9b9-67109e45b147")
+	)
+	(no_connect
+		(at 165.1 96.52)
+		(uuid "4a31beb4-0eed-4018-a7fe-f84d23144828")
+	)
+	(no_connect
+		(at 165.1 106.68)
+		(uuid "73595776-aa29-4c68-82de-ac59d2db0b50")
+	)
+	(no_connect
+		(at 101.6 109.22)
+		(uuid "9a0b51e6-996e-4859-837a-f391c697bd42")
+	)
+	(no_connect
+		(at 101.6 101.6)
+		(uuid "a74c44ea-b2c6-411c-839b-3df08f996cb8")
 	)
 	(no_connect
 		(at 165.1 109.22)
-		(uuid "f55b8c68-4b4c-44f7-9346-9daf7cee7b1f")
-	)
-	(label "XBEE_RESET"
-		(at 101.6 106.68 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "09441487-8ee1-4d0e-b5b8-518c738e0cac")
-	)
-	(label "XBEE_RST_PU"
-		(at 166.37 66.04 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "10ea481f-eddf-4753-b878-6a3aa003b51c")
+		(uuid "e3ac8e54-33bb-4273-9416-00caad75d1a0")
 	)
 	(label "XBEE_RST_PU"
 		(at 195.58 114.3 270)
@@ -869,7 +840,7 @@
 			)
 			(justify right)
 		)
-		(uuid "7f257580-597d-4d3b-98c0-bd9d8ccd372e")
+		(uuid "0b19f1e0-6994-442a-9bdd-b98e87aeca96")
 	)
 	(label "XBEE_RST_PU"
 		(at 166.37 104.14 90)
@@ -879,7 +850,7 @@
 			)
 			(justify left)
 		)
-		(uuid "9b402742-04b0-4e4e-ae2a-e88ebbbef136")
+		(uuid "97014518-4bcf-48a8-b506-8501178761e2")
 	)
 	(label "XBEE_RESET"
 		(at 166.37 73.66 270)
@@ -889,11 +860,31 @@
 			)
 			(justify right)
 		)
-		(uuid "ae3bd6b5-800c-4df4-b6bd-f70766c62866")
+		(uuid "ba81daef-6faf-41ae-a6b5-476b59b1b927")
+	)
+	(label "XBEE_RST_PU"
+		(at 166.37 66.04 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "bc1f4f29-c895-46cf-b0c5-f7176f786ab4")
+	)
+	(label "XBEE_RESET"
+		(at 101.6 106.68 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f1c52e70-7188-476c-ac15-973057164788")
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 134.62 143.51 270)
+		(at 166.37 111.76 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -901,9 +892,9 @@
 			)
 			(justify right)
 		)
-		(uuid "14a4a540-f73c-4e6e-8cec-eb698d93fb32")
+		(uuid "00a3bda6-5a94-49f9-bdba-39c2c2d146e3")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 134.62 143.51 0)
+			(at 166.37 111.76 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -924,9 +915,55 @@
 			)
 			(justify right)
 		)
-		(uuid "40a241e7-5c2f-4ed9-916e-6a4f40f71af0")
+		(uuid "501f8edd-ecc5-4ae2-8b7d-91a0177fae28")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 101.6 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 101.6 96.52 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "62bcf68e-6fce-411a-bd82-4ee60a5dda8c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 101.6 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 101.6 119.38 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "8336fd2f-804c-4089-b2fd-24d40515860c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 101.6 119.38 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -947,7 +984,7 @@
 			)
 			(justify left)
 		)
-		(uuid "8bdd0edb-e203-4a3a-ab3e-a757879459d8")
+		(uuid "87b2bb75-5bf1-4bea-a5fb-8ff9f34ced76")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 134.62 135.89 0)
 			(hide yes)
@@ -970,7 +1007,7 @@
 			)
 			(justify left)
 		)
-		(uuid "9fc7f81f-e54d-4610-b68f-d10b76794c43")
+		(uuid "ab5bdc2b-bd52-4701-b044-b1df9a874d1f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 195.58 106.68 0)
 			(hide yes)
@@ -983,32 +1020,9 @@
 			)
 		)
 	)
-	(global_label "3V3"
-		(shape passive)
-		(at 101.6 96.52 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "d1377bd3-8b92-48af-892c-a20bce4f4e31")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 101.6 96.52 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(global_label "GND"
 		(shape passive)
-		(at 166.37 111.76 270)
+		(at 134.62 143.51 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -1016,32 +1030,9 @@
 			)
 			(justify right)
 		)
-		(uuid "f65a91ac-c765-441d-bd7c-607a82900faf")
+		(uuid "e9f2fac3-80ea-44b4-b875-67c0037c664a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 166.37 111.76 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 101.6 119.38 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "f82f1904-6e26-406b-8a6b-c82dd1f053a9")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 101.6 119.38 0)
+			(at 134.62 143.51 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1061,51 +1052,7 @@
 			)
 			(justify left)
 		)
-		(uuid "39cadc4a-7a39-45bf-918f-b3dfbb0037cd")
-	)
-	(hierarchical_label "XBee_CS"
-		(shape bidirectional)
-		(at 165.1 104.14 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "539cb411-8c85-4417-ba78-b1178e99cca9")
-	)
-	(hierarchical_label "SPI_SCK"
-		(shape bidirectional)
-		(at 165.1 101.6 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "87b222bd-8697-4508-abba-038248df5a58")
-	)
-	(hierarchical_label "SPI_MISO"
-		(shape bidirectional)
-		(at 101.6 104.14 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "94e8345a-38cc-4ac4-8838-357a66635069")
-	)
-	(hierarchical_label "SPI_MOSI"
-		(shape bidirectional)
-		(at 165.1 119.38 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "d6325285-dcf4-42da-941f-e6be264ce802")
+		(uuid "1441f521-ba3c-49f4-8a4d-a172c5bbe145")
 	)
 	(hierarchical_label "XBEE_ON_SLEEP"
 		(shape bidirectional)
@@ -1116,7 +1063,209 @@
 			)
 			(justify left)
 		)
-		(uuid "e08598d6-d9fd-48b9-a58f-c9c8664f02fd")
+		(uuid "1cf88606-158d-4fca-91ac-5629c8f41870")
+	)
+	(hierarchical_label "SPI_SCK"
+		(shape bidirectional)
+		(at 165.1 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "22cd7d2b-6adb-4517-b67d-315dfe2424b4")
+	)
+	(hierarchical_label "XBee_CS"
+		(shape bidirectional)
+		(at 165.1 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b8e1bb8b-aa28-4049-8077-48c78f89ce7f")
+	)
+	(hierarchical_label "SPI_MOSI"
+		(shape bidirectional)
+		(at 165.1 119.38 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "ba116263-914d-4446-a123-2c8647d229df")
+	)
+	(hierarchical_label "SPI_MISO"
+		(shape bidirectional)
+		(at 101.6 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "fcaa2397-619e-4554-ad5d-8b2889e1d17e")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 166.37 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "11a8b0a4-e8f0-4d6a-b5c8-9be8cded704d")
+		(property "Reference" "C_XBEE_RC"
+			(at 167.005 110.49 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100nF"
+			(at 167.005 105.41 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 167.3352 104.14 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 166.37 107.95 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 166.37 107.95 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "4c260f57-7213-4f4b-abff-2982b7aed66d")
+		)
+		(pin "2"
+			(uuid "5ad235f8-7cee-441f-8520-44c9e0a85661")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/31ee01bd-1d1f-422b-860b-9cf3daf0d159"
+					(reference "C_XBEE_RC")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 134.62 139.7 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3698439c-fe81-4cfc-8e1a-a505a0b65057")
+		(property "Reference" "C_XBEE_VCC"
+			(at 135.255 142.24 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100nF"
+			(at 135.255 137.16 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 135.5852 135.89 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 134.62 139.7 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 134.62 139.7 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "29e1210a-a2f1-4975-948e-9c715c0b1af2")
+		)
+		(pin "2"
+			(uuid "734966a6-f0d0-4ea4-8134-4d73ba5aec54")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/31ee01bd-1d1f-422b-860b-9cf3daf0d159"
+					(reference "C_XBEE_VCC")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Xbee3:XB3-24Z8UT-J")
@@ -1129,8 +1278,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "1f52e314-50a8-4cd1-b8f1-da069e870141")
-		(property "Reference" "U_XBEE1"
+		(uuid "5e6a1265-16e2-4643-8dd9-eb2100319b97")
+		(property "Reference" "U_XBEE"
 			(at 161.29 104.14 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1176,7 +1325,7 @@
 				(justify left top)
 			)
 		)
-		(property "Description" "Zigbee Modules (802.15.4) XBee3,2.4 Ghz ZB 3.0, U.FL Ant, TH MT"
+		(property "Description" ""
 			(at 101.6 96.52 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1247,328 +1396,69 @@
 			)
 		)
 		(pin "1"
-			(uuid "d4b2c010-1591-42d4-95f6-85dd248e3143")
+			(uuid "136eb85c-e18b-46db-9224-eda05e80d35b")
 		)
 		(pin "10"
-			(uuid "610ce45c-5528-44b3-9468-2d109176d2d1")
+			(uuid "9c05b29e-b4ed-4a52-8f70-3e876fd01246")
 		)
 		(pin "11"
-			(uuid "8e682c00-389b-4809-afa1-92c10f87c73b")
+			(uuid "86900842-c81d-40b4-aa8b-b8489649f195")
 		)
 		(pin "12"
-			(uuid "4205d634-618a-40c2-a8a5-52911822b081")
+			(uuid "3ccee3d3-77d1-4f57-9783-e662895fa492")
 		)
 		(pin "13"
-			(uuid "19b771bf-a4c9-49d5-bbe0-d7b9702f8ae0")
+			(uuid "db322f29-6bcc-4059-bd65-fe96f0ba644d")
 		)
 		(pin "14"
-			(uuid "e655a600-31a8-4048-8dae-0f576f7575aa")
+			(uuid "e60aee02-a9ae-45d0-bbd4-13e47a8577a4")
 		)
 		(pin "15"
-			(uuid "d1cfbb29-3116-4681-83ff-231a805b806c")
+			(uuid "6a20b91f-44ee-4e1b-972d-d95c6623cd7e")
 		)
 		(pin "16"
-			(uuid "9835e64b-4dcd-4f1a-bbe2-aab1546d1016")
+			(uuid "7c301b2c-0993-4179-b86f-ab27a371d9cf")
 		)
 		(pin "17"
-			(uuid "e44843cb-cfa1-4274-a394-958c3a444d5f")
+			(uuid "17962aea-1c63-44b4-96d7-e402796c7850")
 		)
 		(pin "18"
-			(uuid "babac11a-6517-41ed-b555-56b0ea322490")
+			(uuid "8a818ce7-eaf9-4a11-8470-711e34155a36")
 		)
 		(pin "19"
-			(uuid "055d77af-1af9-4929-90be-1bea5a2e7c6d")
+			(uuid "6ea5d092-331a-4087-bb1b-efb7e0c08346")
 		)
 		(pin "2"
-			(uuid "2945d980-79dc-40b6-88e9-77ae4aff1dae")
+			(uuid "f54b9d49-5bb4-44c4-bc60-93287f1eb53b")
 		)
 		(pin "20"
-			(uuid "d304aa52-eb3c-4d06-a0a4-bdc67c732a92")
+			(uuid "ee71a3ce-52ad-4e93-ad91-d5e1d75ad646")
 		)
 		(pin "3"
-			(uuid "1a70f8d0-2f31-4cc3-9ae9-9f31f6a614af")
+			(uuid "93873510-911c-43b6-b5c8-fc3fe6bfe851")
 		)
 		(pin "4"
-			(uuid "7f1968a7-7a2a-426f-ab1f-9c550ce3f37a")
+			(uuid "5022d965-46b3-48c4-9348-3f4eea27d74c")
 		)
 		(pin "5"
-			(uuid "535ce504-adf2-4f8b-968b-ea4003e44056")
+			(uuid "1a09f109-c474-410f-aa93-0141a4117eff")
 		)
 		(pin "6"
-			(uuid "9373ff7b-11e7-4371-bc17-f558193d2f4b")
+			(uuid "1067c322-06cc-44d3-b1f2-289b9675eaea")
 		)
 		(pin "7"
-			(uuid "ea96d19a-e9ac-4e75-9707-b61b75d604b3")
+			(uuid "05009691-5e72-48fa-a129-5814e79608dd")
 		)
 		(pin "8"
-			(uuid "da1f9324-72cc-4af3-a6ee-a0957fff9cb6")
+			(uuid "bb1c2f20-a22d-46c7-ae8e-a276fda6ca1d")
 		)
 		(pin "9"
-			(uuid "58d1dd23-94a5-44de-ada4-2f4db9126727")
+			(uuid "b8ae6332-f2aa-4b39-b73d-859e9eaed0c1")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
-					(reference "U_XBEE1")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/31ee01bd-1d1f-422b-860b-9cf3daf0d159"
 					(reference "U_XBEE")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 166.37 107.95 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "60613bc9-1266-475c-b706-3def0742a97a")
-		(property "Reference" "C_XBEE_RC1"
-			(at 167.005 110.49 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "100nF"
-			(at 167.005 105.41 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 167.3352 104.14 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 166.37 107.95 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 166.37 107.95 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "b3cdfb05-0520-4cf6-bb85-5ad103d9b5dc")
-		)
-		(pin "2"
-			(uuid "41b2bb5a-35f8-41c7-b452-42fd4ad5450a")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
-					(reference "C_XBEE_RC1")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
-					(reference "C_XBEE_RC")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 134.62 139.7 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "828e1793-9932-416a-8c07-6e47822eb3c1")
-		(property "Reference" "C_XBEE_VCC1"
-			(at 135.255 142.24 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "100nF"
-			(at 135.255 137.16 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 135.5852 135.89 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 134.62 139.7 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 134.62 139.7 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "6d461850-8346-43b0-9828-0c56d305df9c")
-		)
-		(pin "2"
-			(uuid "f4a81642-43bb-46f7-a6cb-2ecd954696f4")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
-					(reference "C_XBEE_VCC1")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
-					(reference "C_XBEE_VCC")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 195.58 110.49 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c2cb75ad-107c-4483-a652-ba64909d60d9")
-		(property "Reference" "R_XBEE_RST1"
-			(at 197.612 110.49 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10kΩ"
-			(at 195.58 110.49 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 193.802 110.49 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 195.58 110.49 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 195.58 110.49 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "2f758bbc-d0a1-43a2-99b0-9035df9ccffb")
-		)
-		(pin "2"
-			(uuid "f0d7c61e-6e2a-4b83-86c3-8376e21e60ce")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
-					(reference "R_XBEE_RST1")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
-					(reference "R_XBEE_RST")
 					(unit 1)
 				)
 			)
@@ -1585,8 +1475,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "e2adbb18-96fe-4011-a58f-b511acffbdb0")
-		(property "Reference" "R_XBEE_RC1"
+		(uuid "c2e905ed-333b-4d77-ba99-3641444fb8f8")
+		(property "Reference" "R_XBEE_RC"
 			(at 168.402 69.85 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1637,21 +1527,92 @@
 			)
 		)
 		(pin "1"
-			(uuid "c75deeff-4551-4152-845d-7a8328f688bd")
+			(uuid "a42e0818-da65-435e-aeac-23ade9e0b728")
 		)
 		(pin "2"
-			(uuid "ed8674b4-5cfa-4abe-b721-828a96aabc70")
+			(uuid "8f7d57e3-8026-4779-8dbe-07c3e4c01385")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/868f8289-8434-4465-b2f4-2accc5e40bab/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
-					(reference "R_XBEE_RC1")
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/31ee01bd-1d1f-422b-860b-9cf3daf0d159"
+					(reference "R_XBEE_RC")
 					(unit 1)
 				)
 			)
-			(project ""
-				(path "/d0f5b7d7-b2b6-4492-958c-e60265d3c6b4/456186b5-e5fa-459c-a04e-9d51d6afbbb5"
-					(reference "R_XBEE_RC")
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 195.58 110.49 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c30df835-f998-4a63-b783-e7ab005bc1f2")
+		(property "Reference" "R_XBEE_RST"
+			(at 197.612 110.49 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10kΩ"
+			(at 195.58 110.49 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 193.802 110.49 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 195.58 110.49 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 195.58 110.49 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f04fb1f1-fd8f-423a-bef1-7830c844dbf5")
+		)
+		(pin "2"
+			(uuid "d6d06913-3bed-4505-8cb6-105c6f0d8cd7")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/31ee01bd-1d1f-422b-860b-9cf3daf0d159"
+					(reference "R_XBEE_RST")
 					(unit 1)
 				)
 			)
