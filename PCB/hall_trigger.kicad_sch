@@ -2,7 +2,7 @@
 	(version 20260306)
 	(generator "eeschema")
 	(generator_version "10.0")
-	(uuid "c36187f3-e19a-45ec-bda6-7a9ed08c89f3")
+	(uuid "b08d65fe-2e8c-4037-bf79-930fbe3412e6")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Device:C"
@@ -43,6 +43,7 @@
 				(at 0.9652 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -53,6 +54,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -63,6 +65,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -187,6 +190,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -197,6 +201,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -207,6 +212,7 @@
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -305,29 +311,6 @@
 			(embedded_fonts no)
 		)
 	)
-	(global_label "3V3"
-		(shape passive)
-		(at 166.37 109.22 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "91692d14-a9db-4232-be3a-efdf945a0f2b")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 166.37 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(global_label "GND"
 		(shape passive)
 		(at 128.27 106.68 270)
@@ -338,9 +321,32 @@
 			)
 			(justify right)
 		)
-		(uuid "a0385ce4-78fa-4f74-ab04-dba2c812ed70")
+		(uuid "55d0b7a5-8582-461b-911b-3401f391222c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 128.27 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 166.37 109.22 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "64499792-dc1b-4fdb-a3fe-78905e6b0032")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 166.37 109.22 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -361,7 +367,7 @@
 			)
 			(justify right)
 		)
-		(uuid "c9ad4b5d-5c63-4247-9bb6-192135fe0685")
+		(uuid "c8a4904d-d326-4115-bcf8-2607a8539f25")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 166.37 116.84 0)
 			(hide yes)
@@ -384,7 +390,7 @@
 			)
 			(justify left)
 		)
-		(uuid "e3562bcb-abb1-46cb-b563-06a79d489086")
+		(uuid "e35839c0-692d-4d31-8a0c-aead40185c39")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 128.27 86.36 0)
 			(hide yes)
@@ -406,7 +412,87 @@
 			)
 			(justify left)
 		)
-		(uuid "fb9e30b6-e7fb-4157-a636-e6b599509d21")
+		(uuid "3b0cd5e4-949c-4e69-a850-bd6b460cc5c5")
+	)
+	(symbol
+		(lib_id "Sensor_Magnetic:DRV5055A2xLPGxQ1")
+		(at 130.81 96.52 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "481913e8-b25e-4f94-8825-53ef1c156f3e")
+		(property "Reference" "U_HALL1"
+			(at 135.89 109.22 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "DRV5055A2"
+			(at 138.43 106.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
+			(at 130.81 96.52 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/drv5055-q1.pdf"
+			(at 130.81 96.52 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "50 mV/mT,±42-mT, 20-kHz, 3.3/5V, TO-92"
+			(at 130.81 96.52 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "111da45a-e4d8-4e15-a9e1-a67967f0c1fd")
+		)
+		(pin "2"
+			(uuid "3d04ff2c-ef2e-4d89-b48b-929b9d2ae01d")
+		)
+		(pin "3"
+			(uuid "78fde860-beb7-41b5-991f-4a56f63f5961")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/21935953-32a0-46ad-8079-8177920c6978/15cccc75-ae28-44d0-aa53-203a86ee0065"
+					(reference "U_HALL1")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -419,8 +505,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "68a9a0f7-a69d-46b0-8724-c1efbc7c0503")
-		(property "Reference" "C_HALL"
+		(uuid "53b6c895-5e9c-438a-9eb4-6f57a8d867bf")
+		(property "Reference" "C_HALL1"
 			(at 167.005 115.57 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -473,95 +559,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "769b8324-d569-429e-8543-286931029fcf")
+			(uuid "f35b55d5-d3ef-4479-8d04-3478a4e5c87c")
 		)
 		(pin "2"
-			(uuid "5507c0a6-22cb-49ac-8c56-bf856d5590f0")
+			(uuid "0886d568-3b16-408d-aa5d-eb89524dda5a")
 		)
 		(instances
 			(project "snips_controller"
-				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/8effc149-159c-4301-a85e-5bb660fe4c99"
-					(reference "C_HALL")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Sensor_Magnetic:DRV5055A2xLPGxQ1")
-		(at 130.81 96.52 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f351ca36-3004-49e2-8561-0ad3a6f2ffc8")
-		(property "Reference" "U_HALL"
-			(at 135.89 109.22 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "DRV5055A2"
-			(at 138.43 106.68 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
-			(at 130.81 96.52 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/drv5055-q1.pdf"
-			(at 130.81 96.52 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "50 mV/mT,±42-mT, 20-kHz, 3.3/5V, TO-92"
-			(at 130.81 96.52 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "4ecc6b75-f974-4a7a-8582-00a3ddbc23dd")
-		)
-		(pin "2"
-			(uuid "fb10dcd5-bd17-48dc-8967-e5217f8b62a8")
-		)
-		(pin "3"
-			(uuid "e130a8d2-9700-4887-88eb-df6d64998a8f")
-		)
-		(instances
-			(project "snips_controller"
-				(path "/f9d779c6-e1a6-4677-9004-6e9cc3d2fa8d/8effc149-159c-4301-a85e-5bb660fe4c99"
-					(reference "U_HALL")
+				(path "/21935953-32a0-46ad-8079-8177920c6978/15cccc75-ae28-44d0-aa53-203a86ee0065"
+					(reference "C_HALL1")
 					(unit 1)
 				)
 			)

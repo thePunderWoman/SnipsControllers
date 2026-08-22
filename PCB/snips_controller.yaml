@@ -342,12 +342,12 @@ groups:
         symbol: Device:D_Small
         sheet: Power_Control
         value: 1N4148W
-        footprint: Package_TO_SOT_SMD:SOT-23
+        footprint: Diode_SMD:D_SOD-123
       D_OR2:
         symbol: Device:D_Small
         sheet: Power_Control
         value: 1N4148W
-        footprint: Package_TO_SOT_SMD:SOT-23
+        footprint: Diode_SMD:D_SOD-123
       R_GATE:
         symbol: Device:R
         sheet: Power_Control
@@ -431,8 +431,8 @@ groups:
       SW_BOOT:
         symbol: Switch:SW_Push
         sheet: MCU_Core
-        value: TP-1221U-K9K5325
-        footprint: Button_Switch_SMD:SW_SPST_TL3342
+        value: Panasonic_EVQP2
+        footprint: Button_Switch_SMD:SW_SPST_EVQP2_ShortPushTravel_H2.1mm
       R_BOOT_PU:
         symbol: Device:R
         sheet: MCU_Core
@@ -840,18 +840,24 @@ groups:
         value: PWR_FLAG
         footprint: ""
         power: true
+        on_board: false
+        in_bom: false
       PF_GND:
         symbol: power:PWR_FLAG
         sheet: MCU_Core
         value: PWR_FLAG
         footprint: ""
         power: true
+        on_board: false
+        in_bom: false
       PF_VSYS:
         symbol: power:PWR_FLAG
         sheet: MCU_Core
         value: PWR_FLAG
         footprint: ""
         power: true
+        on_board: false
+        in_bom: false
     connections:
       - net: 3V3
         pins: [PF_3V3:1]
