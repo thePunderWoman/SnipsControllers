@@ -4,19 +4,32 @@ A wireless handheld controller for R2-D2 droid operation, designed for use at pu
 
 ## Hardware Overview
 
-| Component | Part | Notes |
-|---|---|---|
-| MCU | ESP32-S3-WROOM-1 module | Pre-certified: integrated flash, crystal, WiFi/BT radio + antenna. Same MCU family as Amidala. See `GPIO_table.md` for the full support circuitry |
-| Display | SSD1306 1.3" OLED | 128x64, monochrome, I2C |
-| Radio | XBee3 | Zigbee, SPI mode, THT socket (proto) |
-| Hall trigger | DRV5055A2 | Ratiometric linear hall effect, 3.3V |
-| Thumbstick | GuliKit hall effect module | Native 3.3V, analog X/Y + click |
-| Buttons | Omron B3F series | Tactile momentary clicky |
-| RGB LED | SK6812 NeoPixel-compatible | RMT-driven, 3.3V native, single LED status indicator |
-| Charger | bq25185 | USB/DC input, power path, 4.2V/500mA |
-| Buck | TLV62569 | 3.3V output, 1A |
-| Battery | 18650 or 14500 Li-ion | Swappable single cell, TBD empirically |
-| Power switch | DMG2305UX + 2N7002 | Soft latch, hybrid hardware+firmware |
+| Component | Part | Notes | Layout diagram |
+|---|---|---|---|
+| MCU | ESP32-S3-WROOM-1 module | Pre-certified: integrated flash, crystal, WiFi/BT radio + antenna. Same MCU family as Amidala. See `GPIO_table.md` for the full support circuitry | — |
+| Display | SSD1306 1.3" OLED | 128x64, monochrome, I2C | — |
+| Radio | XBee3 | Zigbee, SPI mode, THT socket (proto) | — |
+| Hall trigger | DRV5055A2 | Ratiometric linear hall effect, 3.3V | — |
+| Thumbstick | GuliKit hall effect module | Native 3.3V, analog X/Y + click | — |
+| Buttons | Omron B3F series | Tactile momentary clicky | — |
+| RGB LED | SK6812 NeoPixel-compatible | RMT-driven, 3.3V native, single LED status indicator | — |
+| Charger | bq25185 | USB/DC input, power path, 4.2V/500mA | [diagram](diagrams/power_charger_layout.md) |
+| Buck | TLV62569 | 3.3V output, 1A | [diagram](diagrams/power_buck_layout.md) |
+| Battery | 18650 or 14500 Li-ion | Swappable single cell, TBD empirically | — |
+| Power switch | DMG2305UX + 2N7002 | Soft latch, hybrid hardware+firmware | [diagram](diagrams/power_control_layout.md) |
+
+## Layout Diagrams
+
+Suggested top-copper floorplans for the three sheets with real layout
+stakes — a switching regulator, a linear charger with a thermal pad, and
+the transistor carrying the whole board's current. Each is checked
+against the actual component datasheet, not just the schematic. See
+[`diagrams/README.md`](diagrams/README.md) for the full list and how the
+files are organized.
+
+- [Buck converter](diagrams/power_buck_layout.md) — `power_buck.kicad_sch`
+- [Charger](diagrams/power_charger_layout.md) — `power_charger.kicad_sch`
+- [Power latch](diagrams/power_control_layout.md) — `power_control.kicad_sch`
 
 ## GPIO Assignment
 
