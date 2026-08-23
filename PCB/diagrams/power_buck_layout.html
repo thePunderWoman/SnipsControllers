@@ -1,0 +1,492 @@
+<title>Buck Converter Layout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --bg:#f3f5f1;
+  --surface:#ffffff;
+  --surface-2:#eaeee8;
+  --text:#161f18;
+  --muted:#57665c;
+  --border:#dde2da;
+  --copper:#a35a22;
+  --green:#1f6b4c;
+  --focus:#a35a22;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f130f;
+    --surface:#171c17;
+    --surface-2:#1f251e;
+    --text:#e8ece5;
+    --muted:#98a394;
+    --border:#2b322a;
+    --copper:#d68a45;
+    --green:#3fa578;
+    --focus:#d68a45;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f130f;
+  --surface:#171c17;
+  --surface-2:#1f251e;
+  --text:#e8ece5;
+  --muted:#98a394;
+  --border:#2b322a;
+  --copper:#d68a45;
+  --green:#3fa578;
+  --focus:#d68a45;
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Public Sans",system-ui,sans-serif;
+  line-height:1.55;
+}
+::selection{ background:var(--copper); color:#100b06; }
+:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+
+.wrap{
+  max-width:860px;
+  margin:0 auto;
+  padding:56px 24px 96px;
+  display:flex;
+  flex-direction:column;
+  gap:44px;
+}
+
+.eyebrow{
+  font-family:"JetBrains Mono",monospace;
+  font-size:12.5px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--copper);
+  font-weight:500;
+}
+h1{
+  font-family:"Barlow Semi Condensed",sans-serif;
+  font-weight:700;
+  font-size:clamp(32px,5vw,46px);
+  line-height:1.05;
+  margin:6px 0 0;
+  text-wrap:balance;
+  letter-spacing:-0.01em;
+}
+.dek{
+  color:var(--muted);
+  font-size:16px;
+  max-width:62ch;
+  margin-top:12px;
+}
+header .meta{
+  margin-top:18px;
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  font-family:"JetBrains Mono",monospace;
+  font-size:12.5px;
+  color:var(--muted);
+}
+header .meta b{ color:var(--text); font-weight:600; }
+
+h2{
+  font-family:"Barlow Semi Condensed",sans-serif;
+  font-weight:700;
+  font-size:22px;
+  letter-spacing:0.01em;
+  margin:0 0 4px;
+  text-wrap:balance;
+}
+section > .lede{
+  color:var(--muted);
+  font-size:14.5px;
+  max-width:68ch;
+  margin:0 0 16px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+}
+caption{ caption-side:bottom; }
+thead th{
+  text-align:left;
+  font-family:"JetBrains Mono",monospace;
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:500;
+  padding:11px 14px;
+  background:var(--surface-2);
+  border-bottom:1px solid var(--border);
+}
+tbody td{
+  padding:11px 14px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+tbody tr:last-child td{ border-bottom:none; }
+td.ref, td.val{
+  font-family:"JetBrains Mono",monospace;
+  font-size:13px;
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+td.ref{ color:var(--copper); font-weight:600; }
+td.role{ color:var(--muted); }
+.table-scroll{ overflow-x:auto; }
+
+figure{ margin:0; }
+.board-card{
+  background:#0d1a13;
+  border:1px solid #051009;
+  border-radius:14px;
+  padding:18px 18px 14px;
+  box-shadow:0 1px 0 rgba(255,255,255,0.03) inset;
+}
+.board-card .scroller{ overflow-x:auto; }
+.board-card svg{ display:block; width:100%; height:auto; min-width:640px; }
+figcaption{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:14px;
+  max-width:70ch;
+}
+figcaption b{ color:var(--text); font-weight:600; }
+
+.legend{
+  list-style:none;
+  margin:16px 0 0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px 26px;
+  font-size:13px;
+  color:var(--muted);
+}
+.legend li{ display:flex; align-items:center; gap:8px; }
+.legend svg{ flex:none; }
+
+.callouts{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.callouts li{
+  display:grid;
+  grid-template-columns:30px 1fr;
+  gap:12px;
+  align-items:start;
+}
+.badge{
+  width:26px;height:26px;border-radius:50%;
+  background:#ff8a3d;
+  color:#231205;
+  font-family:"JetBrains Mono",monospace;
+  font-weight:700;
+  font-size:13px;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:1px;
+}
+.callouts p{ margin:0; font-size:14.5px; }
+.callouts b{ font-weight:600; }
+.callouts .why{ color:var(--muted); font-size:13.5px; display:block; margin-top:2px; }
+
+ol.priority{
+  margin:0;
+  padding:0;
+  list-style:none;
+  counter-reset:step;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+ol.priority li{
+  counter-increment:step;
+  display:grid;
+  grid-template-columns:28px 1fr;
+  gap:12px;
+  font-size:14.5px;
+}
+ol.priority li::before{
+  content:counter(step);
+  font-family:"JetBrains Mono",monospace;
+  font-weight:600;
+  color:var(--green);
+  border:1px solid var(--border);
+  background:var(--surface);
+  width:28px;height:28px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;
+}
+
+.note{
+  border-left:3px solid var(--copper);
+  background:var(--surface);
+  border-radius:0 8px 8px 0;
+  padding:12px 16px;
+  font-size:14px;
+  color:var(--muted);
+}
+.note b{ color:var(--text); }
+
+footer{
+  border-top:1px solid var(--border);
+  padding-top:20px;
+  font-size:12.5px;
+  color:var(--muted);
+  font-family:"JetBrains Mono",monospace;
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">PCB Layout Reference · Synchronous Buck</div>
+  <h1>Where every part in the buck stage wants to sit</h1>
+  <p class="dek">U_BUCK1 (TLV62569DBV) switches at ~2–3 MHz and delivers up to 2 A — placement determines whether it's quiet or noisy. This maps the schematic to a suggested top-copper floorplan you can model your PCB after.</p>
+  <div class="meta">
+    <span>Source: <b>PCB/power_buck.kicad_sch</b></span>
+    <span>Nets: <b>VSYS → 3V3</b></span>
+    <span>Package: <b>SOT-23-5</b></span>
+  </div>
+</header>
+
+<section>
+  <h2>What's on this sheet</h2>
+  <p class="lede">Six parts, one power stage. Values as drawn in the schematic.</p>
+  <div class="table-scroll">
+  <table>
+    <thead>
+      <tr><th>Ref</th><th>Value</th><th>Footprint</th><th>Role</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="ref">U_BUCK1</td><td class="val">TLV62569DBV</td><td class="val">SOT-23-5</td><td class="role">Synchronous buck IC, 2A, adjustable 0.6–5.5V out</td></tr>
+      <tr><td class="ref">C_BUCK_IN1</td><td class="val">10 µF</td><td class="val">0805</td><td class="role">Input bulk/decoupling — absorbs the IC's pulsed input current</td></tr>
+      <tr><td class="ref">L_BUCK1</td><td class="val">2.2 µH</td><td class="val">Bourns SRN4018</td><td class="role">Power inductor</td></tr>
+      <tr><td class="ref">C_BUCK_OUT1</td><td class="val">22 µF</td><td class="val">0805</td><td class="role">Output filter cap</td></tr>
+      <tr><td class="ref">R_FB1</td><td class="val">100 kΩ</td><td class="val">0402</td><td class="role">Feedback divider, VOUT side</td></tr>
+      <tr><td class="ref">R_FB2</td><td class="val">56.2 kΩ</td><td class="val">0402</td><td class="role">Feedback divider, GND side</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Suggested floorplan</h2>
+  <p class="lede">Top copper layer, drawn roughly to scale. Trace weight signals current, not just wire — the input loop and switch node get thick, short, direct copper; the feedback path gets thin copper routed the long way around to stay quiet.</p>
+
+  <figure>
+    <div class="board-card">
+      <div class="scroller">
+      <svg viewBox="0 0 900 560" role="img" aria-label="Top-down PCB floorplan for the TLV62569 buck stage, showing the input capacitor and IC placed in a tight loop, the inductor placed directly off the switch pin, the output capacitor next to the inductor, and the feedback divider routed on a separate quiet path back to the IC's FB pin, away from the switch-node copper.">
+        <defs>
+          <linearGradient id="boardGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#134127"/>
+            <stop offset="1" stop-color="#0e2d1c"/>
+          </linearGradient>
+          <pattern id="gndhatch" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <rect width="10" height="10" fill="#134127"/>
+            <line x1="0" y1="0" x2="0" y2="10" stroke="#1d5c39" stroke-width="2"/>
+          </pattern>
+          <marker id="arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L8,4 L0,8 z" fill="#c9d6cd"/>
+          </marker>
+        </defs>
+
+        <rect x="30" y="50" width="840" height="470" rx="12" fill="url(#boardGrad)" stroke="#061309" stroke-width="3"/>
+
+        <text x="52" y="82" font-family="JetBrains Mono, monospace" font-size="13" fill="#eef2ea" font-weight="600">U_BUCK1 — TLV62569 buck stage</text>
+        <text x="52" y="100" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#7fa08d">top copper (F.Cu) · rings = via to GND plane (B.Cu)</text>
+
+        <!-- ground pour legend swatch -->
+        <rect x="742" y="66" width="98" height="34" rx="3" fill="url(#gndhatch)" stroke="#3a6e4f" stroke-width="1"/>
+        <text x="791" y="114" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#7fa08d">GND pour, layer 2</text>
+
+        <!-- ================= TRACES ================= -->
+        <!-- VSYS -> C_IN -->
+        <path d="M80,150 L352,150" fill="none" stroke="#d9a441" stroke-width="6" stroke-linecap="round"/>
+        <!-- C_IN -> VIN -->
+        <path d="M352,150 L352,192 L362,204 L362,232" fill="none" stroke="#d9a441" stroke-width="5" stroke-linecap="round"/>
+        <!-- C_IN gnd pad -> via -->
+        <path d="M372,150 L400,150" fill="none" stroke="#d9a441" stroke-width="5" stroke-linecap="round"/>
+        <!-- IC GND pin -> via -->
+        <path d="M340,288 L340,320" fill="none" stroke="#d9a441" stroke-width="5" stroke-linecap="round"/>
+        <!-- SW -> L1 -->
+        <path d="M362,288 L390,288 L412,310 L440,330" fill="none" stroke="#e0862b" stroke-width="8" stroke-linecap="round"/>
+        <!-- L1 -> node -->
+        <path d="M500,330 L555,330" fill="none" stroke="#d9a441" stroke-width="7" stroke-linecap="round"/>
+        <!-- node -> C_OUT top pad -->
+        <path d="M555,330 L560,323 L570,320" fill="none" stroke="#d9a441" stroke-width="6" stroke-linecap="round"/>
+        <!-- node -> edge (3V3 out) -->
+        <path d="M555,330 L818,330" fill="none" stroke="#d9a441" stroke-width="6" stroke-linecap="round"/>
+        <!-- C_OUT bottom pad -> via -->
+        <path d="M570,345 L570,375" fill="none" stroke="#d9a441" stroke-width="5" stroke-linecap="round"/>
+
+        <!-- FB sense: tap at C_OUT pad -> R_FB1 -->
+        <path d="M570,320 L570,362 L562,380 L555,392" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <!-- R_FB1 -> node -->
+        <path d="M555,414 L555,424" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <!-- node -> R_FB2 -->
+        <path d="M555,424 L555,434" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <!-- FB node -> long way to IC FB pin, clear of SW/L1 copper -->
+        <path d="M555,424 L300,424 L280,404 L280,250 L300,232 L318,232" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <!-- R_FB2 -> gnd via -->
+        <path d="M555,456 L555,486" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- EN -> edge -->
+        <path d="M318,288 L318,340 L290,360 L100,360" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- ================= VIAS ================= -->
+        <g>
+          <circle cx="400" cy="150" r="7" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="400" cy="150" r="3" fill="#0e2d1c"/>
+          <circle cx="340" cy="320" r="7" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="340" cy="320" r="3" fill="#0e2d1c"/>
+          <circle cx="570" cy="375" r="7" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="570" cy="375" r="3" fill="#0e2d1c"/>
+          <circle cx="555" cy="486" r="7" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="555" cy="486" r="3" fill="#0e2d1c"/>
+        </g>
+
+        <!-- ================= COMPONENTS ================= -->
+        <!-- IC -->
+        <rect x="300" y="232" width="80" height="56" rx="4" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <circle cx="309" cy="240" r="3" fill="#eef2ea"/>
+        <text x="340" y="223" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="13" fill="#e0b563">U1</text>
+        <text x="340" y="304" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#7fa08d">TLV62569DBV</text>
+        <rect x="311" y="284" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="333" y="284" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="355" y="284" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="311" y="228" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="355" y="228" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <text x="291" y="308" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#c9d6cd">1 EN</text>
+        <text x="340" y="308" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#c9d6cd">2 GND</text>
+        <text x="389" y="308" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="10" fill="#c9d6cd">3 SW</text>
+        <text x="291" y="216" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#c9d6cd">5 FB</text>
+        <text x="389" y="216" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="10" fill="#c9d6cd">4 VIN</text>
+
+        <!-- C_IN -->
+        <rect x="347" y="141" width="30" height="18" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <rect x="347" y="145" width="10" height="10" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="367" y="145" width="10" height="10" fill="#e0b563" stroke="#8a672f"/>
+        <text x="362" y="129" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#e0b563">C_IN 10µF</text>
+        <text x="416" y="154" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#7fa08d">GND</text>
+
+        <!-- L1 -->
+        <rect x="435" y="295" width="70" height="70" rx="5" fill="#33383a" stroke="#565c5f" stroke-width="1.5"/>
+        <rect x="433" y="322" width="16" height="18" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="491" y="322" width="16" height="18" fill="#e0b563" stroke="#8a672f"/>
+        <text x="470" y="284" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#e0b563">L1 · 2.2µH</text>
+        <text x="470" y="380" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#7fa08d">SRN4018</text>
+
+        <!-- C_OUT -->
+        <rect x="561" y="311" width="18" height="42" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <rect x="565" y="313" width="10" height="10" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="565" y="339" width="10" height="10" fill="#e0b563" stroke="#8a672f"/>
+        <text x="596" y="317" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#e0b563">C_OUT 22µF</text>
+        <text x="586" y="379" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#7fa08d">GND</text>
+
+        <!-- R_FB1 -->
+        <rect x="548" y="390" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <rect x="550" y="390" width="10" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="550" y="408" width="10" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <text x="578" y="407" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#e0b563">R_FB1 · 100kΩ</text>
+
+        <!-- FB node dot -->
+        <circle cx="555" cy="424" r="3.5" fill="#8fd3ff"/>
+
+        <!-- R_FB2 -->
+        <rect x="548" y="432" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <rect x="550" y="432" width="10" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="550" y="450" width="10" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <text x="578" y="449" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#e0b563">R_FB2 · 56.2kΩ</text>
+        <text x="586" y="497" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#7fa08d">GND</text>
+
+        <!-- edge connectors -->
+        <circle cx="80" cy="150" r="8" fill="#e0b563" stroke="#8a672f" stroke-width="1.5"/>
+        <text x="80" y="132" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#eef2ea">VSYS_IN</text>
+
+        <circle cx="80" cy="360" r="8" fill="#e0b563" stroke="#8a672f" stroke-width="1.5"/>
+        <text x="80" y="342" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#eef2ea">PWR_EN</text>
+
+        <circle cx="820" cy="330" r="8" fill="#e0b563" stroke="#8a672f" stroke-width="1.5"/>
+        <text x="820" y="312" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#eef2ea">3V3_OUT</text>
+
+        <!-- ================= CALLOUTS ================= -->
+        <g font-family="JetBrains Mono, monospace">
+          <line x1="420" y1="118" x2="357" y2="188" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="420" cy="110" r="12" fill="#ff8a3d"/>
+          <text x="420" y="114.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">A</text>
+
+          <line x1="402" y1="263" x2="414" y2="303" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="402" cy="255" r="12" fill="#ff8a3d"/>
+          <text x="402" y="259.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">B</text>
+
+          <line x1="612" y1="304" x2="571" y2="322" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="622" cy="300" r="12" fill="#ff8a3d"/>
+          <text x="622" y="304.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">C</text>
+
+          <line x1="262" y1="333" x2="336" y2="322" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="250" cy="335" r="12" fill="#ff8a3d"/>
+          <text x="250" y="339.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">D</text>
+
+          <line x1="212" y1="415" x2="277" y2="352" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="200" cy="422" r="12" fill="#ff8a3d"/>
+          <text x="200" y="426.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">E</text>
+        </g>
+      </svg>
+      </div>
+    </div>
+    <figcaption>Top-layer placement and routing for U_BUCK1, sized roughly to real footprint proportions. <b>Gold copper</b> carries the input, switch, and output power path; <b>pale blue</b> carries the low-current FB and EN signals; rings mark vias dropping straight to the ground plane. Board edges shown are the crop of this local zone, not the full board.</figcaption>
+  </figure>
+
+  <ul class="legend">
+    <li><svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#c17f3a" stroke-width="5" stroke-linecap="round"/></svg> Power copper (VSYS, SW, VOUT)</li>
+    <li><svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#6fb3d9" stroke-width="3" stroke-linecap="round"/></svg> Feedback / enable signal</li>
+    <li><svg width="16" height="16"><circle cx="8" cy="8" r="6" fill="#cf9a4c"/><circle cx="8" cy="8" r="2.5" fill="var(--bg)"/></svg> Via to GND plane</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Why it's arranged this way</h2>
+  <ol class="callouts">
+    <li><span class="badge">A</span><p><b>Input loop stays tiny.</b> C_BUCK_IN1 sits directly on top of VIN, with its ground pad dropping straight to a via. VIN, the cap, and the return path form the loop the IC's fast input-current pulses actually flow through — keep its area small and this is one of the highest-leverage placements on the board for both efficiency and radiated noise.<span class="why"></span></p></li>
+    <li><span class="badge">B</span><p><b>SW node is short and alone.</b> The trace from pin 3 to L_BUCK1 carries the full switched current at the IC's switching frequency and acts as an antenna if it's long or fat. Keep it the shortest, most direct copper on the board and don't route anything else near or under it.</p></li>
+    <li><span class="badge">C</span><p><b>Feedback taps the output cap, not the inductor.</b> R_FB1 picks up VOUT right at C_BUCK_OUT1's pad — the point that's actually regulated — instead of further upstream where switching ripple is still settling.</p></li>
+    <li><span class="badge">D</span><p><b>Every return pad gets its own via.</b> C_BUCK_IN1, U_BUCK1, C_BUCK_OUT1, and R_FB2 each drop to the ground plane independently rather than daisy-chaining through each other on the top layer, so switching return current can't inject noise into the quiet feedback ground.</p></li>
+    <li><span class="badge">E</span><p><b>FB takes the long way home.</b> Once through the divider, the FB signal is thin and high-impedance — a few millivolts of coupled switching noise here shows up directly as output ripple. It's routed around the left side of the IC, clear of the SW/L1 copper, even though that's a longer path.</p></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Routing order</h2>
+  <p class="lede">If you're placing copper by hand, do it roughly in this order — later steps have less freedom once earlier ones are locked in.</p>
+  <ol class="priority">
+    <li>Pour ground on the bottom layer first; treat everything else as carving space out of it.</li>
+    <li>Place U_BUCK1, then butt C_BUCK_IN1 against its VIN pin before anything else claims that space.</li>
+    <li>Route SW to L_BUCK1 — shortest path wins, width sized for 2 A.</li>
+    <li>Place C_BUCK_OUT1 off the inductor's far pad, then fan VOUT out to the load.</li>
+    <li>Tap FB at C_BUCK_OUT1, place R_FB1/R_FB2 close together, route the sense line back around the IC last — by now you know exactly what copper it has to avoid.</li>
+    <li>Stitch a via at every ground pad (C_IN, IC, C_OUT, R_FB2).</li>
+  </ol>
+</section>
+
+<div class="note">
+  <b>Worth double-checking:</b> R_FB1/R_FB2 (100 kΩ / 56.2 kΩ) work out to roughly <b>1.67 V</b> at the TLV62569's 0.6 V typical reference (V<sub>OUT</sub> = 0.6 × (1 + R_FB1⁄R_FB2)), not the 3.3 V implied by the "3V3" net label on that rail. Worth confirming which one is intended before you commit to this floorplan — it doesn't change the layout, but it's a five-minute check now versus a respin later.
+</div>
+
+<footer>
+  Generated from PCB/power_buck.kicad_sch — a placement reference, not a manufacturing drawing. Model your actual footprints and DRC against your fab's rules.
+</footer>
+
+</div>
