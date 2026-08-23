@@ -1993,7 +1993,7 @@
 		)
 		(uuid "2c578b9f-32b5-49da-b54c-ae614d5ea8ed")
 	)
-	(hierarchical_label "BTN_VOL_DN"
+	(hierarchical_label "BTN_THR_DN"
 		(shape input)
 		(at 176.53 88.9 0)
 		(effects
@@ -2004,7 +2004,7 @@
 		)
 		(uuid "2cae71ff-5f43-4afa-b53d-1d801de4ec24")
 	)
-	(hierarchical_label "BTN_THR_DN"
+	(hierarchical_label "BTN_VOL_UP"
 		(shape input)
 		(at 237.49 93.98 0)
 		(effects
@@ -2015,7 +2015,7 @@
 		)
 		(uuid "356b22c9-cd73-4de0-92a9-18048200906c")
 	)
-	(hierarchical_label "BTN_VOL_UP"
+	(hierarchical_label "BTN_THR_UP"
 		(shape input)
 		(at 176.53 86.36 0)
 		(effects
@@ -2026,7 +2026,7 @@
 		)
 		(uuid "3c613379-d769-4570-ba38-e6d5760c17af")
 	)
-	(hierarchical_label "BTN_THR_UP"
+	(hierarchical_label "BTN_VOL_DN"
 		(shape input)
 		(at 237.49 91.44 0)
 		(effects

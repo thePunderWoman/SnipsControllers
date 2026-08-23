@@ -93,8 +93,10 @@ board now, so the pin roles map over conceptually).
 ## Digital Inputs / Outputs
 | Function | Pin | Notes |
 |---|---|---|
-| Vol up | 9 (GPIO16) | Internal pull-up, active low |
-| Vol down | 10 (GPIO17) | Internal pull-up, active low |
+| Vol up | 33 (GPIO40) | Internal pull-up, active low |
+| Vol down | 32 (GPIO39) | Internal pull-up, active low |
+| Trigger up (mirrored VOL pair, opposite-handed variant) | 9 (GPIO16) | Internal pull-up, active low |
+| Trigger down (mirrored VOL pair, opposite-handed variant) | 10 (GPIO17) | Internal pull-up, active low |
 | Digital trigger (bumper) | 11 (GPIO18) | Internal pull-up, active low |
 | Thumbstick click (KEY) | 23 (GPIO21) | Internal pull-up, active low |
 | Macro button 1-6 | 24, 25, 28, 29, 30, 31 (GPIO47, 48, 35, 36, 37, 38) | Internal pull-up, active low — direct-wired, no scan matrix |
@@ -212,6 +214,7 @@ exposed GPIO/ADC path with this sense pin.
 ---
 
 ## Spare GPIO
-Pins 32-35 (GPIO39-42, default JTAG) — clean, no caveats.
+Pins 34-35 (GPIO41-42, default JTAG) — clean, no caveats. Pins 32/33 from
+the same JTAG group are now used by BTN_VOL_DN/BTN_VOL_UP.
 Pins 15, 16, 26 (GPIO3/46/45) — usable, but strapping pins, best for a
 static/non-boot-critical signal.

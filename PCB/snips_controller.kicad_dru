@@ -1,0 +1,23 @@
+(version 1)
+
+(rule "Alps SKRTLAE010 locating-peg clearance"
+   (constraint hole_clearance (min 0.08mm))
+   (condition "(A.Reference == 'SW_PWR1' || A.Reference == 'SW_VOL_UP1' || A.Reference == 'SW_VOL_DN1' || A.Reference == 'SW_THR_UP1' || A.Reference == 'SW_THR_DN1' || A.Reference == 'SW_TRIG_DIG1') && A.Reference == B.Reference")
+)
+
+(rule "XBee3 THT courtyard exception"
+   (constraint courtyard_clearance (min -1mm))
+   (condition "A.Reference == 'U_XBEE1' || B.Reference == 'U_XBEE1'")
+)
+
+(rule "BQ25185 thermal-pad via clearance"
+   (constraint clearance (min 0mm))
+   (constraint hole_clearance (min 0mm))
+   (condition "A.Reference == 'U_CHG1' && A.Reference == B.Reference")
+)
+
+(rule "BQ25185 thermal-pad via geometry"
+   (constraint hole_size (min 0.15mm))
+   (constraint annular_width (min 0.04mm))
+   (condition "A.Reference == 'U_CHG1'")
+)
