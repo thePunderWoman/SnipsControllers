@@ -51,7 +51,7 @@ files are organized.
 | 22 (GPIO18) | XBee ON_SLEEP status input |
 
 Usable with care (strapping pins, sampled at boot): 15 (GPIO3), 16 (GPIO46), 26 (GPIO45).
-Clean spares (default JTAG): 32-35 (GPIO39-42).
+Clean spares (default JTAG): 34-35 (GPIO41-42). 32/33 from the same group are used by BTN_VOL_DN/BTN_VOL_UP.
 
 The module integrates the WiFi/BT radio, antenna, flash, and crystal
 internally — no external wireless component, no bit-banged interface
@@ -84,8 +84,10 @@ consuming GPIO, unlike the bare-RP2350A design this replaced.
 ### Digital Inputs / Outputs
 | Function | Pin | Notes |
 |---|---|---|
-| Vol up | 9 | Active low, internal pull-up |
-| Vol down | 10 | Active low, internal pull-up |
+| Vol up | 33 | Active low, internal pull-up |
+| Vol down | 32 | Active low, internal pull-up |
+| Trigger up (mirrored VOL pair, opposite-handed variant) | 9 | Active low, internal pull-up |
+| Trigger down (mirrored VOL pair, opposite-handed variant) | 10 | Active low, internal pull-up |
 | Digital trigger (bumper) | 11 | Active low, internal pull-up |
 | Thumbstick click (KEY) | 23 | Active low, internal pull-up |
 | Macro buttons 1-6 | 24, 25, 28, 29, 30, 31 | Active low, internal pull-up — direct-wired, no scan matrix |
@@ -102,7 +104,8 @@ give isn't worth the added complexity, unlike the bare-RP2350A design
 (only 1 spare pin) this replaced.
 
 ### Spare GPIO
-Pins 32-35 (default JTAG, clean) and 15/16/26 (strapping, usable with care).
+Pins 34-35 (default JTAG, clean) and 15/16/26 (strapping, usable with care).
+32/33 from the same JTAG group are used by BTN_VOL_DN/BTN_VOL_UP.
 
 ---
 

@@ -500,11 +500,11 @@ groups:
         pins: [U_MCU:22, U_XBEE:ON_SLEEP]
       - net: XBEE_SPI_ATTN
         pins: [U_MCU:8, U_XBEE:SPI_ATTN]
-      # I2C - OLED
+      # I2C - OLED (no local pull-ups — Adafruit #938 breakout has them onboard)
       - net: I2C_SDA
-        pins: [U_MCU:12, U_OLED:SDA, R_I2C_SDA:2]
+        pins: [U_MCU:12, U_OLED:SDA]
       - net: I2C_SCL
-        pins: [U_MCU:17, U_OLED:SCL, R_I2C_SCL:2]
+        pins: [U_MCU:17, U_OLED:SCL]
       # ADC inputs (ADC1-only, see note above)
       - net: TRIG_ANALOG
         pins: [U_MCU:4, U_HALL:OUT]
@@ -516,17 +516,19 @@ groups:
       - net: RGB_DIN
         pins: [U_MCU:37, R_RGB:2]
       # Digital buttons (internal pull-ups in firmware)
+      # VOL_UP/DN and THR_UP/DN swapped edges (9/10 <-> 32/33) from the
+      # original assignment for easier routing — still a mirrored pair on
+      # the opposite edge for the second (opposite-handed) controller, same
+      # board, buttons remapped in firmware/Amidala rather than building two
+      # mirrored PCB variants; only which pair sits on which edge changed.
       - net: BTN_VOL_UP
-        pins: [U_MCU:9, SW_VOL_UP:1]
+        pins: [U_MCU:33, SW_VOL_UP:1]
       - net: BTN_VOL_DN
-        pins: [U_MCU:10, SW_VOL_DN:1]
-      # Mirrored pair on the opposite edge, for the second (opposite-handed)
-      # controller — same board, buttons remapped in firmware/Amidala rather
-      # than building two mirrored PCB variants.
+        pins: [U_MCU:32, SW_VOL_DN:1]
       - net: BTN_THR_UP
-        pins: [U_MCU:32, SW_THR_UP:1]
+        pins: [U_MCU:9, SW_THR_UP:1]
       - net: BTN_THR_DN
-        pins: [U_MCU:33, SW_THR_DN:1]
+        pins: [U_MCU:10, SW_THR_DN:1]
       - net: BTN_TRIG_DIG
         pins: [U_MCU:11, SW_TRIG_DIG:1]
       - net: BTN_STICK
@@ -554,7 +556,7 @@ groups:
         pins: [R_VSYS2:2]
       # Spare GPIO: 15/16/26 usable-with-care (strapping), 34/35 clean
       # (default JTAG, fully reusable as plain GPIO; 32/33 from the same
-      # clean JTAG group now used above for BTN_THR_UP/BTN_THR_DN). See
+      # clean JTAG group now used above for BTN_VOL_UP/BTN_VOL_DN). See
       # RESERVED GPIO header comment for details.
       - no_connect: [U_MCU:15, U_MCU:16, U_MCU:26, U_MCU:34, U_MCU:35]
 
@@ -640,8 +642,11 @@ groups:
   # -------------------------------------------------------------------------
   # 8. SSD1306 OLED Display (1.3", 128x64, I2C)
   # -------------------------------------------------------------------------
-  # I2C address: 0x3C (default). I2C pull-ups included as 4.7kΩ.
-  # Mark R_I2C_SDA and R_I2C_SCL as DNP if OLED breakout has them onboard.
+  # I2C address: 0x3C (default).
+  # No local I2C pull-ups — Adafruit #938 breakout has them onboard, and this
+  # board is committed to that breakout (not a bare OLED panel), so there's
+  # no future revision that would need R_I2C_SDA/R_I2C_SCL. Removed rather
+  # than kept as DNP to save the footprint space on a tight board.
   # Decoupling: 10µF + 100nF on VCC.
   # Display isn't on this PCB -- U_OLED is just a JST-SH 4-pin connector
   # (VCC/GND/SCL/SDA) wired out to it, right-angle mount for low profile.
@@ -662,23 +667,9 @@ groups:
         sheet: OLED
         value: 100nF
         footprint: Capacitor_SMD:C_0402_1005Metric
-      R_I2C_SDA:
-        symbol: Device:R
-        sheet: OLED
-        value: 4.7kΩ
-        footprint: Resistor_SMD:R_0402_1005Metric
-        # DNP when using Adafruit #938 breakout — pull-ups already onboard
-        # Populate only when using bare OLED panel on final custom PCB
-      R_I2C_SCL:
-        symbol: Device:R
-        sheet: OLED
-        value: 4.7kΩ
-        footprint: Resistor_SMD:R_0402_1005Metric
-        # DNP when using Adafruit #938 breakout — pull-ups already onboard
-        # Populate only when using bare OLED panel on final custom PCB
     connections:
       - net: 3V3
-        pins: [U_OLED:VCC, C_OLED_1:1, C_OLED_2:1, R_I2C_SDA:1, R_I2C_SCL:1]
+        pins: [U_OLED:VCC, C_OLED_1:1, C_OLED_2:1]
       - net: GND
         pins: [U_OLED:GND, C_OLED_1:2, C_OLED_2:2]
 
@@ -901,10 +892,10 @@ groups:
 # 3. USB-C CC resistors (R_CC1, R_CC2 = 5.1kΩ to GND) REQUIRED for
 #    USB-C chargers to negotiate power. Omitting = no charging from USB-C.
 #
-# 4. I2C pull-ups (R_I2C_SDA, R_I2C_SCL): DNP for prototyping.
-#    Adafruit #938 breakout has onboard pull-ups — do not populate externally
-#    or effective resistance will be halved causing I2C issues.
-#    Populate only on final custom PCB using bare OLED panel without breakout.
+# 4. I2C pull-ups: intentionally absent. Adafruit #938 breakout has onboard
+#    pull-ups — adding local ones would halve the effective resistance and
+#    cause I2C issues. Only relevant if a future revision drops the breakout
+#    for a bare OLED panel, which this board doesn't plan to do.
 #
 # 5. XBee RESET RC filter: same as AmidalaShield V1.2.
 #    10kΩ pull-up to 3V3, 100Ω series + 100nF to GND at RESET pin.
@@ -955,7 +946,7 @@ groups:
 #
 # 16. Spare GPIO: pins 15/16/26 (strapping, usable with care) and pins
 #     34/35 (default JTAG, cleanly reusable; 32/33 from the same group now
-#     used for BTN_THR_UP/BTN_THR_DN). See RESERVED GPIO header.
+#     used for BTN_VOL_UP/BTN_VOL_DN). See RESERVED GPIO header.
 
 sheets:
   USB_C:
