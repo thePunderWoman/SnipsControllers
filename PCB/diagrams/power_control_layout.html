@@ -1,0 +1,504 @@
+<title>Power Latch Layout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --bg:#f3f5f1;
+  --surface:#ffffff;
+  --surface-2:#eaeee8;
+  --text:#161f18;
+  --muted:#57665c;
+  --border:#dde2da;
+  --copper:#a35a22;
+  --green:#1f6b4c;
+  --focus:#a35a22;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f130f;
+    --surface:#171c17;
+    --surface-2:#1f251e;
+    --text:#e8ece5;
+    --muted:#98a394;
+    --border:#2b322a;
+    --copper:#d68a45;
+    --green:#3fa578;
+    --focus:#d68a45;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f130f;
+  --surface:#171c17;
+  --surface-2:#1f251e;
+  --text:#e8ece5;
+  --muted:#98a394;
+  --border:#2b322a;
+  --copper:#d68a45;
+  --green:#3fa578;
+  --focus:#d68a45;
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Public Sans",system-ui,sans-serif;
+  line-height:1.55;
+}
+::selection{ background:var(--copper); color:#100b06; }
+:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+
+.wrap{
+  max-width:860px;
+  margin:0 auto;
+  padding:56px 24px 96px;
+  display:flex;
+  flex-direction:column;
+  gap:44px;
+}
+
+.eyebrow{
+  font-family:"JetBrains Mono",monospace;
+  font-size:12.5px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--copper);
+  font-weight:500;
+}
+h1{
+  font-family:"Barlow Semi Condensed",sans-serif;
+  font-weight:700;
+  font-size:clamp(32px,5vw,46px);
+  line-height:1.05;
+  margin:6px 0 0;
+  text-wrap:balance;
+  letter-spacing:-0.01em;
+}
+.dek{
+  color:var(--muted);
+  font-size:16px;
+  max-width:62ch;
+  margin-top:12px;
+}
+header .meta{
+  margin-top:18px;
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  font-family:"JetBrains Mono",monospace;
+  font-size:12.5px;
+  color:var(--muted);
+}
+header .meta b{ color:var(--text); font-weight:600; }
+
+h2{
+  font-family:"Barlow Semi Condensed",sans-serif;
+  font-weight:700;
+  font-size:22px;
+  letter-spacing:0.01em;
+  margin:0 0 4px;
+  text-wrap:balance;
+}
+section > .lede{
+  color:var(--muted);
+  font-size:14.5px;
+  max-width:68ch;
+  margin:0 0 16px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+}
+caption{ caption-side:bottom; }
+thead th{
+  text-align:left;
+  font-family:"JetBrains Mono",monospace;
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:500;
+  padding:11px 14px;
+  background:var(--surface-2);
+  border-bottom:1px solid var(--border);
+}
+tbody td{
+  padding:11px 14px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+tbody tr:last-child td{ border-bottom:none; }
+td.ref, td.val{
+  font-family:"JetBrains Mono",monospace;
+  font-size:13px;
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+td.ref{ color:var(--copper); font-weight:600; }
+td.role{ color:var(--muted); }
+.table-scroll{ overflow-x:auto; }
+
+figure{ margin:0; }
+.board-card{
+  background:#0d1a13;
+  border:1px solid #051009;
+  border-radius:14px;
+  padding:18px 18px 14px;
+  box-shadow:0 1px 0 rgba(255,255,255,0.03) inset;
+}
+.board-card .scroller{ overflow-x:auto; }
+.board-card svg{ display:block; width:100%; height:auto; min-width:640px; }
+figcaption{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:14px;
+  max-width:70ch;
+}
+figcaption b{ color:var(--text); font-weight:600; }
+
+.legend{
+  list-style:none;
+  margin:16px 0 0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px 26px;
+  font-size:13px;
+  color:var(--muted);
+}
+.legend li{ display:flex; align-items:center; gap:8px; }
+.legend svg{ flex:none; }
+
+.callouts{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.callouts li{
+  display:grid;
+  grid-template-columns:30px 1fr;
+  gap:12px;
+  align-items:start;
+}
+.badge{
+  width:26px;height:26px;border-radius:50%;
+  background:#ff8a3d;
+  color:#231205;
+  font-family:"JetBrains Mono",monospace;
+  font-weight:700;
+  font-size:13px;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:1px;
+}
+.callouts p{ margin:0; font-size:14.5px; }
+.callouts b{ font-weight:600; }
+.callouts .why{ color:var(--muted); font-size:13.5px; display:block; margin-top:2px; }
+
+ol.priority{
+  margin:0;
+  padding:0;
+  list-style:none;
+  counter-reset:step;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+ol.priority li{
+  counter-increment:step;
+  display:grid;
+  grid-template-columns:28px 1fr;
+  gap:12px;
+  font-size:14.5px;
+}
+ol.priority li::before{
+  content:counter(step);
+  font-family:"JetBrains Mono",monospace;
+  font-weight:600;
+  color:var(--green);
+  border:1px solid var(--border);
+  background:var(--surface);
+  width:28px;height:28px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;
+}
+
+.note{
+  border-left:3px solid var(--copper);
+  background:var(--surface);
+  border-radius:0 8px 8px 0;
+  padding:12px 16px;
+  font-size:14px;
+  color:var(--muted);
+}
+.note b{ color:var(--text); }
+
+footer{
+  border-top:1px solid var(--border);
+  padding-top:20px;
+  font-size:12.5px;
+  color:var(--muted);
+  font-family:"JetBrains Mono",monospace;
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">PCB Layout Reference · Soft-Latch Power Switch</div>
+  <h1>Half of this circuit is electrical, half is where your thumb goes</h1>
+  <p class="dek">Q_PWR1 carries the entire board's current — every milliamp the ESP32, XBee, OLED, and everything else draws passes through one SOT-23 PMOS. But the layout-driving constraint here isn't electrical at all: SW_PWR1 is a physical button that has to land under a hole in your enclosure.</p>
+  <div class="meta">
+    <span>Source: <b>PCB/power_control.kicad_sch</b></span>
+    <span>Nets: <b>VSYS → PWR_EN</b></span>
+    <span>Package: <b>SOT-23 ×2, SOD-123 ×2</b></span>
+  </div>
+</header>
+
+<section>
+  <h2>What's on this sheet</h2>
+  <p class="lede">A press-to-start, software-held latch: the button turns the board on, the MCU has to grab the hold line before the button is released, and either side of a diode-OR can keep power on.</p>
+  <div class="table-scroll">
+  <table>
+    <thead>
+      <tr><th>Ref</th><th>Value</th><th>Footprint</th><th>Role</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="ref">Q_PWR1</td><td class="val">DMG2305UX</td><td class="val">SOT-23</td><td class="role">Main power switch — VSYS to PWR_EN, carries full system current</td></tr>
+      <tr><td class="ref">Q_LATCH1</td><td class="val">2N7002</td><td class="val">SOT-23</td><td class="role">Pulls Q_PWR1's gate low to turn it on</td></tr>
+      <tr><td class="ref">D_OR1 / D_OR2</td><td class="val">1N4148W</td><td class="val">SOD-123</td><td class="role">Diode-OR: button press or MCU hold, either one latches power on</td></tr>
+      <tr><td class="ref">R_GATE1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">Q_PWR1 gate pull-up — off by default</td></tr>
+      <tr><td class="ref">R_LATCH_G1</td><td class="val">10kΩ</td><td class="val">0402</td><td class="role">Q_LATCH1 gate pull-down — off by default</td></tr>
+      <tr><td class="ref">R_BTN_PU1 / R_PWR_SENSE1</td><td class="val">100kΩ / 100kΩ</td><td class="val">0402</td><td class="role">Button sense divider — MCU reads pressed (0V) vs idle (½VSYS)</td></tr>
+      <tr><td class="ref">C_DBNC1</td><td class="val">100nF</td><td class="val">0402</td><td class="role">Button debounce, right at the switch</td></tr>
+      <tr><td class="ref">SW_PWR1</td><td class="val">Alps SKRTLAE010</td><td class="val">SMD tactile</td><td class="role">Physical power button — must reach the enclosure surface</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Suggested floorplan</h2>
+  <p class="lede">Top copper layer. The VSYS→PWR_EN path runs straight across the top as one thick lane; the latch logic hangs underneath it as a compact, low-current block; the button sits wherever your enclosure needs it to.</p>
+
+  <figure>
+    <div class="board-card">
+      <div class="scroller">
+      <svg viewBox="0 0 900 560" role="img" aria-label="Top-down PCB floorplan for the soft-latch power switch, showing VSYS entering the PMOS source and exiting the drain as PWR_EN in one straight lane across the top, the NMOS latch and diode-OR logic clustered in a compact low-current block beneath it, and the physical power button placed near the board edge with its debounce capacitor right at its pins.">
+        <defs>
+          <linearGradient id="boardGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#134127"/>
+            <stop offset="1" stop-color="#0e2d1c"/>
+          </linearGradient>
+          <pattern id="gndhatch" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <rect width="10" height="10" fill="#134127"/>
+            <line x1="0" y1="0" x2="0" y2="10" stroke="#1d5c39" stroke-width="2"/>
+          </pattern>
+        </defs>
+
+        <rect x="30" y="50" width="840" height="470" rx="12" fill="url(#boardGrad)" stroke="#061309" stroke-width="3"/>
+
+        <text x="52" y="82" font-family="JetBrains Mono, monospace" font-size="13" fill="#eef2ea" font-weight="600">Power_Control — soft-latch switch</text>
+        <text x="52" y="100" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#7fa08d">top copper (F.Cu) · rings = via to GND plane (B.Cu)</text>
+
+        <rect x="742" y="66" width="98" height="34" rx="3" fill="url(#gndhatch)" stroke="#3a6e4f" stroke-width="1"/>
+        <text x="791" y="114" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#7fa08d">GND pour, layer 2</text>
+
+        <!-- ================= TRACES ================= -->
+        <!-- main VSYS -> Q_PWR -> PWR_EN lane -->
+        <path d="M80,155 L216,155" fill="none" stroke="#d9a441" stroke-width="9" stroke-linecap="round"/>
+        <path d="M264,155 L820,155" fill="none" stroke="#d9a441" stroke-width="9" stroke-linecap="round"/>
+
+        <!-- VSYS tap -> R_GATE -->
+        <path d="M210,155 L210,190" fill="none" stroke="#d9a441" stroke-width="4" stroke-linecap="round"/>
+        <!-- R_GATE bottom (PWR_GATE) -> Q_LATCH drain, and Q_PWR gate -> same node -->
+        <path d="M210,229 L210,255" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M240,175 L240,215 L225,229 L210,229" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="210" cy="229" r="3.5" fill="#8fd3ff"/>
+
+        <!-- Q_LATCH source -> GND via -->
+        <path d="M210,295 L210,320" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <!-- Q_LATCH gate -> OR junction -->
+        <path d="M230,275 L300,275 L320,300 L340,320" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="340" cy="320" r="4" fill="#8fd3ff"/>
+
+        <!-- R_LATCH_G -->
+        <path d="M340,320 L340,341" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M340,369 L340,395" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- D_OR1 cathode -> junction, anode -> bus -->
+        <path d="M375,376 L365,350 L340,320" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M375,404 L375,455" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- D_OR2 cathode -> junction, anode -> PWR_HOLD edge -->
+        <path d="M400,284 L380,300 L340,320" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M400,256 L400,220 L820,220" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- PWR_BTN_SENSE bus -->
+        <path d="M125,455 L820,455" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M125,495 L125,455" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M175,495 L175,518" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M210,455 L210,472" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M210,484 L210,505" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M280,406 L280,390" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M280,434 L280,455" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M340,455 L340,472" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M340,484 L340,505" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- ================= VIAS ================= -->
+        <g>
+          <circle cx="210" cy="320" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="210" cy="320" r="2.5" fill="#0e2d1c"/>
+          <circle cx="340" cy="395" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="340" cy="395" r="2.5" fill="#0e2d1c"/>
+          <circle cx="175" cy="518" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="175" cy="518" r="2.5" fill="#0e2d1c"/>
+          <circle cx="210" cy="505" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="210" cy="505" r="2.5" fill="#0e2d1c"/>
+          <circle cx="340" cy="505" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="340" cy="505" r="2.5" fill="#0e2d1c"/>
+        </g>
+
+        <!-- ================= COMPONENTS ================= -->
+        <!-- Q_PWR1 -->
+        <rect x="210" y="135" width="60" height="40" rx="4" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="240" y="127" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="12" fill="#e0b563">Q_PWR1</text>
+        <text x="240" y="196" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#7fa08d">DMG2305UX (PMOS)</text>
+        <rect x="209" y="151" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="257" y="151" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="233" y="171" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <text x="216" y="149" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#20241f" font-weight="600">S</text>
+        <text x="264" y="149" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#20241f" font-weight="600">D</text>
+        <text x="240" y="184" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#20241f" font-weight="600">G</text>
+
+        <!-- R_GATE1 -->
+        <rect x="203" y="192" width="14" height="24" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="185" y="182" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#e0b563">VSYS</text>
+        <text x="222" y="207" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_GATE1 100k</text>
+
+        <!-- Q_LATCH1 -->
+        <rect x="195" y="250" width="30" height="50" rx="4" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="210" y="243" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" fill="#e0b563">Q_LATCH1</text>
+        <text x="210" y="315" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#7fa08d">2N7002 (NMOS)</text>
+        <text x="238" y="279" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9" fill="#c9d6cd">G</text>
+
+        <!-- R_LATCH_G1 -->
+        <rect x="333" y="343" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="352" y="360" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_LATCH_G1 10k</text>
+
+        <!-- D_OR1 -->
+        <rect x="368" y="376" width="14" height="28" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="386" y="395" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">D_OR1 (from button)</text>
+
+        <!-- D_OR2 -->
+        <rect x="393" y="256" width="14" height="28" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="411" y="264" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">D_OR2 (from MCU hold)</text>
+        <text x="340" y="308" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">PWR_LATCH_G</text>
+
+        <!-- switch cluster -->
+        <rect x="120" y="480" width="60" height="30" rx="4" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <circle cx="150" cy="495" r="9" fill="#33383a" stroke="#cf9a4c" stroke-width="1.5"/>
+        <text x="150" y="472" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" fill="#e0b563">SW_PWR1</text>
+        <rect x="119" y="491" width="10" height="8" fill="#e0b563" stroke="#8a672f"/>
+        <rect x="171" y="491" width="10" height="8" fill="#e0b563" stroke="#8a672f"/>
+
+        <!-- C_DBNC1 -->
+        <rect x="203" y="470" width="14" height="16" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="185" y="481" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">C_DBNC1</text>
+
+        <!-- R_BTN_PU1 -->
+        <rect x="273" y="408" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="262" y="382" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#e0b563">VSYS</text>
+        <text x="292" y="425" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_BTN_PU1 100k</text>
+
+        <!-- R_PWR_SENSE1 -->
+        <rect x="333" y="472" width="14" height="16" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="352" y="483" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_PWR_SENSE1 100k</text>
+
+        <text x="450" y="447" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#c9d6cd">PWR_BTN_SENSE</text>
+
+        <!-- edge connectors -->
+        <circle cx="80" cy="155" r="8" fill="#e0b563" stroke="#8a672f" stroke-width="1.5"/>
+        <text x="80" y="137" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#eef2ea">VSYS_IN</text>
+
+        <circle cx="820" cy="155" r="8" fill="#e0b563" stroke="#8a672f" stroke-width="1.5"/>
+        <text x="820" y="137" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#eef2ea">PWR_EN → BUCK VIN</text>
+
+        <circle cx="820" cy="220" r="8" fill="#8fd3ff" stroke="#4a80a0" stroke-width="1.5"/>
+        <text x="820" y="202" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#eef2ea">← MCU pin 36 (PWR_HOLD)</text>
+
+        <circle cx="820" cy="455" r="8" fill="#8fd3ff" stroke="#4a80a0" stroke-width="1.5"/>
+        <text x="820" y="437" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#eef2ea">→ MCU pin 38 (ADC)</text>
+
+        <!-- ================= CALLOUTS ================= -->
+        <g font-family="JetBrains Mono, monospace">
+          <line x1="140" y1="115" x2="220" y2="145" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="130" cy="108" r="12" fill="#ff8a3d"/>
+          <text x="130" y="112.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">A</text>
+
+          <line x1="95" y1="450" x2="140" y2="485" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="85" cy="440" r="12" fill="#ff8a3d"/>
+          <text x="85" y="444.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">B</text>
+
+          <line x1="245" y1="440" x2="212" y2="478" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="255" cy="435" r="12" fill="#ff8a3d"/>
+          <text x="255" y="439.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">C</text>
+
+          <line x1="455" y1="330" x2="405" y2="320" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="467" cy="332" r="12" fill="#ff8a3d"/>
+          <text x="467" y="336.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">D</text>
+
+          <line x1="700" y1="200" x2="700" y2="220" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="700" cy="190" r="12" fill="#ff8a3d"/>
+          <text x="700" y="194.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">E</text>
+        </g>
+      </svg>
+      </div>
+    </div>
+    <figcaption>Top-layer placement for the soft-latch switch. <b>Gold copper</b> is the VSYS→PWR_EN power path; <b>pale blue</b> is the low-current gate-drive, sense, and control logic; rings mark vias to the ground plane.</figcaption>
+  </figure>
+
+  <ul class="legend">
+    <li><svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#c17f3a" stroke-width="5" stroke-linecap="round"/></svg> Power copper (VSYS, PWR_EN)</li>
+    <li><svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#6fb3d9" stroke-width="3" stroke-linecap="round"/></svg> Gate-drive / sense / control</li>
+    <li><svg width="16" height="16"><circle cx="8" cy="8" r="6" fill="#cf9a4c"/><circle cx="8" cy="8" r="2.5" fill="var(--bg)"/></svg> Via to GND plane</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Why it's arranged this way</h2>
+  <ol class="callouts">
+    <li><span class="badge">A</span><p><b>Q_PWR1 is the one part on this sheet that isn't low-current.</b> Every downstream milliamp — MCU, XBee, OLED, everything — flows through its source-drain path. DMG2305UX's RDS(on) (~35–50mΩ) keeps drop and heat trivial at this board's current budget, but a SOT-23 has no separate thermal pad — the source/drain copper itself is the heatsink, so give those pads real copper, not just a skinny trace.</p></li>
+    <li><span class="badge">B</span><p><b>SW_PWR1's position isn't yours to optimize electrically.</b> It has to land under a hole in whatever enclosure this board sits in — mechanical placement drives this part, and the rest of the latch logic has to route to wherever that ends up, not the other way around.</p></li>
+    <li><span class="badge">C</span><p><b>C_DBNC1 sits right on the switch's own pins.</b> Same principle as the charger's pushbutton guidance in its own datasheet: the debounce cap does its job by being close to the contact bounce it's filtering, not by being close to anything else.</p></li>
+    <li><span class="badge">D</span><p><b>The diode-OR and its pull-down are one compact decision node.</b> D_OR1, D_OR2, R_LATCH_G1, and Q_LATCH1's gate all meet at PWR_LATCH_G — keeping that cluster tight matters less for noise than for just keeping the logic legible on the board.</p></li>
+    <li><span class="badge">E</span><p><b>PWR_HOLD arriving late is a hard failure, not a glitch.</b> Per this project's own GPIO notes, pin 36 (PWR_HOLD) must go high as the MCU's very first instruction — release the button before that happens and R_LATCH_G1's pull-down turns everything back off. Not a layout fix, but it's the reason D_OR2's path exists at all.</p></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Routing priority</h2>
+  <p class="lede">The button's position is fixed by the enclosure before you start — everything else routes around it.</p>
+  <ol class="priority">
+    <li>Place SW_PWR1 wherever the enclosure cutout requires; that position is a constraint, not a choice.</li>
+    <li>Put C_DBNC1 directly on SW_PWR1's sense pin before routing anything else nearby.</li>
+    <li>Route the VSYS→Q_PWR1→PWR_EN lane as one straight, generously-wide path across the board.</li>
+    <li>Cluster Q_LATCH1, R_GATE1, R_LATCH_G1, D_OR1, and D_OR2 into one compact low-current block under the main lane.</li>
+    <li>Bring PWR_BTN_SENSE and PWR_HOLD in from wherever the MCU sheet actually sits — these are off-sheet nets, not local components.</li>
+  </ol>
+</section>
+
+<div class="note">
+  <b>Checked, not just assumed:</b> DMG2305UX is rated for ~4A continuous with 35–50mΩ RDS(on) in this SOT-23 package — comfortably oversized for a handheld controller's sub-2A system budget, so this isn't a thermal risk the way the charger's WSON is. Nothing on this sheet needed correcting.
+</div>
+
+<footer>
+  Generated from PCB/power_control.kicad_sch — a placement reference, not a manufacturing drawing. Model your actual footprints and DRC against your fab's rules.
+</footer>
+
+</div>

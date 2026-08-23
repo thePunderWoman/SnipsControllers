@@ -563,7 +563,15 @@ groups:
   # -------------------------------------------------------------------------
   # THT socket for prototyping. Update footprint for SMT module on final PCB.
   # RESET: 10kΩ pull-up to 3V3 + RC filter (100Ω + 100nF) per AmidalaShield.
-  # Decoupling: 100nF on VCC.
+  # Decoupling: 100nF + 1µF + 47pF + 10µF on VCC, per the Digi XBee3 RF
+  # Module Hardware Reference Manual (doc 90001543, "Power supply design",
+  # p.52): "place a 1.0µF and 47pF capacitor as near as possible to the VCC
+  # connection... adding a 10µF decoupling capacitor is also recommended
+  # ... place the lower capacitance capacitors closest to the module."
+  # AmidalaShield used 8.2pF instead of 47pF here (likely inherited from
+  # older XBee/S2C guidance) — verified against the current XBee3-specific
+  # manual and corrected. At layout time, place in this order moving away
+  # from the module: 47pF closest, then 1µF, then 10µF, then the 100nF.
   XBee:
     components:
       U_XBEE:
@@ -576,6 +584,21 @@ groups:
         sheet: XBee
         value: 100nF
         footprint: Capacitor_SMD:C_0402_1005Metric
+      C_XBEE_VCC2:
+        symbol: Device:C
+        sheet: XBee
+        value: 1µF
+        footprint: Capacitor_SMD:C_0603_1608Metric
+      C_XBEE_VCC3:
+        symbol: Device:C
+        sheet: XBee
+        value: 47pF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+      C_XBEE_VCC4:
+        symbol: Device:C
+        sheet: XBee
+        value: 10µF
+        footprint: Capacitor_SMD:C_0603_1608Metric
       R_XBEE_RST:
         symbol: Device:R
         sheet: XBee
@@ -593,9 +616,11 @@ groups:
         footprint: Capacitor_SMD:C_0402_1005Metric
     connections:
       - net: 3V3
-        pins: [U_XBEE:VCC, C_XBEE_VCC:1, R_XBEE_RST:1]
+        pins: [U_XBEE:VCC, C_XBEE_VCC:1, C_XBEE_VCC2:1, C_XBEE_VCC3:1,
+               C_XBEE_VCC4:1, R_XBEE_RST:1]
       - net: GND
-        pins: [U_XBEE:GND, C_XBEE_VCC:2, C_XBEE_RC:2]
+        pins: [U_XBEE:GND, C_XBEE_VCC:2, C_XBEE_VCC2:2, C_XBEE_VCC3:2,
+               C_XBEE_VCC4:2, C_XBEE_RC:2]
       - net: XBEE_RST_PU
         pins: [R_XBEE_RST:2, R_XBEE_RC:1, C_XBEE_RC:1]
       - net: XBEE_RESET

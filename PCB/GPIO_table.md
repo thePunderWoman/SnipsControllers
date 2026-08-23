@@ -186,6 +186,14 @@ wired per Amidala's actual netlist: DTR tied to GND, ON_SLEEP and SPI_ATTN
 to pins 22/8. SPI_ATTN in particular is the XBee's data-ready interrupt —
 needed for reliable SPI transfers, not just a nice-to-have.
 
+VCC decoupling: 100nF + 1µF + 47pF + 10µF (C_XBEE_VCC1-4), per the Digi
+XBee3 RF Module Hardware Reference Manual (doc 90001543, p.52) rather than
+guessed — the manual calls for 1.0µF + 47pF near VCC plus a 10µF, placed
+smallest-value-closest to the module. AmidalaShield's schematic used 8.2pF
+here instead of 47pF, which the current XBee3-specific manual doesn't
+support (that value traces to older XBee/S2C-family guidance); corrected
+here rather than copied.
+
 ### Power Control Circuit
 See power control section of schematic. Uses pin 38 (power button sense
 input) and pin 36 (latch hold output). Pin 36 must be driven HIGH as the
