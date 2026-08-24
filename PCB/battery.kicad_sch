@@ -272,6 +272,22 @@
 				)
 			)
 		)
+		(property "MF" "JST" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "S2B-PH-K" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "47c24e87-e84b-4f2c-aa76-1c8ec1fb0255")
 		)
