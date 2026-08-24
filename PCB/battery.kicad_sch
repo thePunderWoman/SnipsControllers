@@ -272,20 +272,26 @@
 				)
 			)
 		)
-		(property "MF" "JST" (at 0 0 0)
+		(property "MF" "JST"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "S2B-PH-K" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "S2B-PH-K"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"

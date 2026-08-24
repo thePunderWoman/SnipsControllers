@@ -45,13 +45,12 @@ don't need hardware debugging):
 |---|---|
 | 32 (GPIO39) | MTCK |
 | 33 (GPIO40) | MTDO |
-| 34 (GPIO41) | MTDI |
 | 35 (GPIO42) | MTMS |
 
 ## XBee Auxiliary Pins
 | Pin | Reason |
 |---|---|
-| 22 (GPIO18) | XBee ON_SLEEP status input |
+| 22 (GPIO14) | XBee ON_SLEEP status input |
 | 8 (GPIO15) | XBee SPI_ATTN — data-ready interrupt, needed for reliable SPI transfers |
 
 Pulled directly from Amidala's actual AmidalaShield netlist (IPC-2581
@@ -68,7 +67,7 @@ board now, so the pin roles map over conceptually).
 | XBee MOSI | 19 (GPIO11) |
 | XBee MISO | 20 (GPIO12) |
 | XBee CS | 21 (GPIO13) |
-| XBee ON_SLEEP | 22 (GPIO18) |
+| XBee ON_SLEEP | 22 (GPIO14) |
 | XBee SPI_ATTN | 8 (GPIO15) |
 
 ## I2C (OLED)
@@ -102,6 +101,7 @@ board now, so the pin roles map over conceptually).
 | Macro button 1-6 | 24, 25, 28, 29, 30, 31 (GPIO47, 48, 35, 36, 37, 38) | Internal pull-up, active low — direct-wired, no scan matrix |
 | Power button sense | 38 (GPIO2) | Input, monitors for 3-second hold |
 | Charge status STAT1 (bq25185) | 39 (GPIO1) | Open-drain input, 10kΩ pull-up to 3V3 |
+| Charge status STAT2 (bq25185) | 34 (GPIO41) | Open-drain input, 10kΩ pull-up to 3V3 — with STAT1, fully decodes charging/done/fault |
 | Power latch hold | 36 (GPIO44) | Output, driven HIGH on boot to hold soft latch |
 | RGB LED (WS2812/SK6812) | 37 (GPIO43) | RMT-driven, data line |
 
@@ -167,6 +167,7 @@ a real layout-stage requirement, not just a schematic one.
 | Signal | Value | Notes |
 |---|---|---|
 | bq25185 STAT1 pin | 10kΩ | Open-drain, pull up to 3V3 |
+| bq25185 STAT2 pin | 10kΩ | Open-drain, pull up to 3V3 |
 | I2C SDA/SCL | 4.7kΩ | **DNP for prototyping** — Adafruit #938 has onboard pull-ups. Populate only on final PCB with bare OLED panel |
 
 ### Series Resistors
@@ -205,7 +206,9 @@ very first instruction in firmware or power will cut on button release.
 Pin 7 (ADC1_CH6) reads VSYS/3 via an external R_VSYS1/R_VSYS2 divider —
 same role as the RP2350 design's divider, still needed since
 ESP32-S3-WROOM-1 has no VSYS-style pin of its own either. bq25185 STAT1
-on pin 39 provides charge state (HIGH=idle/done, LOW=charging or fault).
+(pin 39) and STAT2 (pin 34) together fully decode the charger's state:
+charging, done, recoverable fault, or latched fault — see the bq25185
+datasheet's status pin table.
 
 No firmware ADC-gating workaround needed here (unlike the old bit-banged
 RP2350+CYW43439 design) — WiFi is fully on-die and doesn't share any
@@ -214,7 +217,8 @@ exposed GPIO/ADC path with this sense pin.
 ---
 
 ## Spare GPIO
-Pins 34-35 (GPIO41-42, default JTAG) — clean, no caveats. Pins 32/33 from
-the same JTAG group are now used by BTN_VOL_DN/BTN_VOL_UP.
+Pins 32/33 (GPIO39/40, default JTAG) — used by BTN_VOL_DN/BTN_VOL_UP.
+Pin 34 (GPIO41, default JTAG) — used by bq25185 STAT2.
+Pin 35 (GPIO42, default JTAG) — clean, no caveats, still free.
 Pins 15, 16, 26 (GPIO3/46/45) — usable, but strapping pins, best for a
 static/non-boot-critical signal.

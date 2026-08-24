@@ -1478,20 +1478,26 @@
 				)
 			)
 		)
-		(property "MF" "Hroparts Elec" (at 0 0 0)
+		(property "MF" "Hroparts Elec"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "TYPE-C-31-M-12" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "TYPE-C-31-M-12"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "A1"
@@ -1616,20 +1622,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-075K1L" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "RC0402FR-075K1L"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1709,20 +1721,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-075K1L" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "RC0402FR-075K1L"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1802,20 +1820,26 @@
 				)
 			)
 		)
-		(property "MF" "Nexperia" (at 0 0 0)
+		(property "MF" "Nexperia"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "PESD5V0S1BA,115" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "PESD5V0S1BA,115"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"

@@ -267,6 +267,16 @@
 	)
 	(wire
 		(pts
+			(xy 905.51 350.52) (xy 515.62 199.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2f8a5c19-6d3e-4b74-9a2f-8e1d6c4b3a97")
+	)
+	(wire
+		(pts
 			(xy 850.9 849.63) (xy 523.24 999.49)
 		)
 		(stroke
@@ -892,6 +902,16 @@
 				(justify right)
 			)
 		)
+		(pin "STAT2" input
+			(at 905.51 350.52 90)
+			(uuid "4d8e1a6f-2b9c-4e37-a5d8-6f1c9b3e7a52")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
 		(pin "PWR_BTN_SENSE" bidirectional
 			(at 934.72 350.52 90)
 			(uuid "da39cec9-a82a-4d86-ad27-3489e080ebaf")
@@ -1200,6 +1220,16 @@
 		(pin "STAT1" output
 			(at 500.38 199.39 270)
 			(uuid "ad9c3212-9027-4142-b5a4-cdf65088d2f1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "STAT2" output
+			(at 515.62 199.39 270)
+			(uuid "9c3f7e2a-5d1b-4a86-8e2f-3b7c1d9e6f45")
 			(effects
 				(font
 					(size 1.27 1.27)

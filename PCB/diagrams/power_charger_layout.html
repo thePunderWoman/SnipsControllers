@@ -267,7 +267,7 @@ footer{
 
 <section>
   <h2>What's on this sheet</h2>
-  <p class="lede">Ten parts. Every setting resistor's effect is confirmed against the BQ25185 datasheet (SLUSF65A), not assumed.</p>
+  <p class="lede">Eleven parts. Every setting resistor's effect is confirmed against the BQ25185 datasheet (SLUSF65A), not assumed.</p>
   <div class="table-scroll">
   <table>
     <thead>
@@ -282,6 +282,7 @@ footer{
       <tr><td class="ref">R_VSET1</td><td class="val">18kΩ</td><td class="val">0402</td><td class="role">Sets 500mA input limit + 4.2V VBATREG (table 7-1)</td></tr>
       <tr><td class="ref">R_TS1</td><td class="val">10kΩ</td><td class="val">0402</td><td class="role">Disables TS/battery-NTC monitoring, per datasheet §8.3.9</td></tr>
       <tr><td class="ref">R_STAT1</td><td class="val">10kΩ</td><td class="val">0402</td><td class="role">Open-drain STAT1 pull-up to 3V3</td></tr>
+      <tr><td class="ref">R_STAT2</td><td class="val">10kΩ</td><td class="val">0402</td><td class="role">Open-drain STAT2 pull-up to 3V3 — with STAT1, fully decodes charging/done/fault</td></tr>
     </tbody>
   </table>
   </div>
@@ -294,7 +295,7 @@ footer{
   <figure>
     <div class="board-card">
       <div class="scroller">
-      <svg viewBox="0 0 900 560" role="img" aria-label="Top-down PCB floorplan for the BQ25185 linear charger, showing VBUS entering the IN pin on the right, VSYS and VBAT exiting the SYS/BAT pins on the left, decoupling capacitors placed directly at each of those three pins, the ISET/VSET/TS setting resistors clustered tightly on the analog side, and a via array under the center thermal pad tying it to the ground plane.">
+      <svg viewBox="0 0 900 560" role="img" aria-label="Top-down PCB floorplan for the BQ25185 linear charger, showing VBUS entering the IN pin on the right, VSYS and VBAT exiting the SYS/BAT pins on the left, decoupling capacitors placed directly at each of those three pins, the ISET/VSET/TS setting resistors clustered tightly on the analog side, STAT1 and STAT2 pull-ups routed out to the MCU on opposite sides of the package, and a via array under the center thermal pad tying it to the ground plane.">
         <defs>
           <linearGradient id="boardGrad" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stop-color="#134127"/>
@@ -356,6 +357,11 @@ footer{
         <path d="M435,332 L500,332" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
         <path d="M520,345 L520,370" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
 
+        <!-- STAT2 pull-up + trace off to MCU (routed low to clear the VBAT trace) -->
+        <path d="M357,280 L300,280" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M266,280 L150,280 L150,400 L80,400" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M283,270 L283,255" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+
         <!-- ================= VIAS ================= -->
         <g>
           <circle cx="550" cy="230" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="550" cy="230" r="2.5" fill="#0e2d1c"/>
@@ -393,7 +399,7 @@ footer{
         <rect x="357" y="328" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
         <text x="349" y="231" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#c9d6cd">1 SYS</text>
         <text x="349" y="257" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#c9d6cd">2 BAT</text>
-        <text x="349" y="283" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#5a6a5f">3 STAT2 (NC)</text>
+        <text x="349" y="283" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#c9d6cd">3 STAT2</text>
         <text x="349" y="309" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#c9d6cd">4 /CE</text>
         <text x="349" y="335" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#c9d6cd">5 GND</text>
 
@@ -442,6 +448,10 @@ footer{
         <rect x="503" y="370" width="34" height="13" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
         <text x="520" y="393" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_TS1 10k</text>
 
+        <!-- R_STAT2 -->
+        <rect x="266" y="274" width="34" height="13" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="283" y="266" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_STAT2 10k → 3V3</text>
+
         <!-- edge connectors -->
         <circle cx="820" cy="190" r="8" fill="#e0b563" stroke="#8a672f" stroke-width="1.5"/>
         <text x="820" y="172" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#eef2ea">VBUS_IN</text>
@@ -454,6 +464,9 @@ footer{
 
         <circle cx="820" cy="254" r="8" fill="#8fd3ff" stroke="#4a80a0" stroke-width="1.5"/>
         <text x="820" y="236" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#eef2ea">STAT1 → MCU</text>
+
+        <circle cx="80" cy="400" r="8" fill="#8fd3ff" stroke="#4a80a0" stroke-width="1.5"/>
+        <text x="80" y="418" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#eef2ea">STAT2 → MCU</text>
 
         <!-- ================= CALLOUTS ================= -->
         <g font-family="JetBrains Mono, monospace">
@@ -498,6 +511,7 @@ footer{
     <li><span class="badge">C</span><p><b>VBUS in on the right, VSYS out on the left — no doubling back.</b> The package puts IN on one edge and SYS/BAT on the opposite edge. That's not a layout choice, it's a gift from the pinout: route the power path straight through and every trace is as short as it can be.</p></li>
     <li><span class="badge">D</span><p><b>ISET especially wants a short, direct trace.</b> R_ISET1 sets the actual charge current (ICHG = K<sub>ISET</sub>/R<sub>ISET</sub>, K≈300AΩ) — at 600Ω that's ≈500mA, matching TI's own tested value for this exact resistance. Stray resistance or noise pickup on this trace shows up directly as charge-current error.</p></li>
     <li><span class="badge">E</span><p><b>GND pin and thermal pad share one solid pour.</b> TI's guideline is explicit: "a solid ground plane tied to the GND pin and thermal pad should be used" — not two separate ground fills stitched together, one plane doing both jobs.</p></li>
+    <li><span class="badge">—</span><p><b>STAT1 and STAT2 exit on opposite sides of the package, because that's where their pins are.</b> STAT1 (pin 9) is right next to IN on the right; STAT2 (pin 3) is on the left, next to SYS/BAT. Individually they're each still a short, direct pull-up-to-pin trace — the split just reflects the pinout, not a routing choice. Together they let firmware fully decode charging vs. done vs. fault instead of just charging-vs-not.</p></li>
   </ol>
 </section>
 
@@ -508,7 +522,7 @@ footer{
     <li>Place U_CHG1, then lay out the thermal-pad via array before anything else claims that space (aim for 4–6 vias, not the footprint's stock 2).</li>
     <li>Butt C_VIN_1/C_VIN_2 against the IN pin, C_SYS_1/C_SYS_2 against SYS, and C_BAT1 against BAT — three independent short loops.</li>
     <li>Route VBUS in from one edge and VSYS/VBAT out the opposite edge, straight through.</li>
-    <li>Cluster R_ISET1, R_VSET1, and R_TS1 tight against their pins on the analog side — keep them clear of the power copper.</li>
+    <li>Cluster R_ISET1, R_VSET1, R_TS1, and R_STAT2 tight against their pins on the analog side — keep them clear of the power copper.</li>
     <li>Pour ground last, tying the GND pin, the thermal pad array, and every decoupling cap's return into one plane.</li>
   </ol>
 </section>

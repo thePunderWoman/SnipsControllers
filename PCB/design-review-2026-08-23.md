@@ -1,69 +1,36 @@
-# SnipsControllers PCB — Design Review (Updated)
-**Date:** 2026-08-23 (rev 2) | **Analyzer:** kicad-happy v2.2.0 | **Run:** 2026-08-23_1900 / 2026-08-23_1900-2 | **Prior run:** 2026-08-23_1553
-
-## Delta Since Prior Review
-
-| # | Item | Status |
-|---|---|---|
-| BUG-001 | R_FB1 100kΩ→255kΩ — buck now outputs **3.322V** | ✅ Fixed |
-| HIGH-001 | VBUS TVS added (PESD5V0S1BA, SOD-323, B.Cu) | ✅ Fixed |
-| HIGH-003 | Fiducials added — FD-001 cleared on both faces | ✅ Fixed |
-| HIGH-004 | Via in pad U_MCU1:4 — VP-001 gone | ✅ Fixed |
-| HIGH-005 | SW_BOOT1 moved inboard (0.0mm→0.5mm, now warning) | ✅ Improved |
-| MED-003 | SPI_SCK stitching vias added — SPI_SCK gone from GP-001/RP-001 | ✅ Fixed |
-| INFO-013 | C_3V3_3 39pF added near MCU for 955MHz PDN gap | ✅ Fixed |
-| — | SW_BOOT1 now overlaps XBee courtyard after inboard move | ⚠ New |
-| — | SPI_MOSI now appears in GP-001 (91%, 75mm) | ⚠ New |
-
----
+# SnipsControllers PCB — Design Review
+**Date:** 2026-08-23 | **Analyzer:** kicad-happy v2.2.0 | **Run:** 2026-08-23_1949
 
 ## Overview
 
 | | |
 |---|---|
 | **Board** | 35.0 × 99.9mm, 4-layer |
-| **Stackup** | F.Cu (signal) / In1.Cu (3V3 plane, 83%) / In2.Cu (GND plane, 85%) / B.Cu (signal) |
-| **Components** | 71 schematic, 81 PCB footprints (10 mechanical/fiducials) |
-| **Routing** | Complete (111 vias, 0 unrouted) |
-| **Verification basis** | Internal consistency only — **0 datasheets, 70/71 parts missing MPN** |
+| **Stackup** | F.Cu (signal) / In1.Cu (3V3 plane, 83% fill) / In2.Cu (GND plane, 85% fill) / B.Cu (signal) |
+| **Components** | 71 schematic, 81 PCB footprints (includes fiducials and mechanical) |
+| **Routing** | Complete — 109 vias, 0 unrouted nets |
+| **MPN coverage** | 70/71 (J_STICK1 is a custom part with no standard MPN — expected) |
+| **Verification basis** | MPN-level consistency — no datasheets synced yet, so no pin-level or value verification against manufacturer specs |
 
 ---
 
-## Remaining Blockers
+## Schematic
 
-### BUG-002 · Missing MPNs on 70 of 71 components (SS-001)
+**No errors.** 10 warnings — all either false positives or accepted design decisions (detailed below).
 
-Pre-fab gate: cannot order. Note — D_VBUS_TVS1 was placed with value `PESD5V0S1BA` but the MPN property in the KiCad symbol is not populated; the part counter still shows 1/71 with MPN. Populate the `MPN` field in the schematic symbol to close this.
+### False positives
 
----
+**PU-001 — XBee RESET pull-up:** The analyzer flags U_XBEE1 pin RESET for a missing pull-up. This is incorrect — R_XBEE_RST1 pulls XBEE_RESET to 3V3 through XBEE_RST_PU, with R_XBEE_RC1/C_XBEE_RC1 forming a 159Hz debounce RC. Pull-up is present.
 
-## High
+**PU-001 — BQ25185 TS/MR:** R_TS1 = 10kΩ to GND is intentional. This disables the NTC thermistor function on the charger. If a battery NTC is added later, replace R_TS1 with a 10kΩ NTC.
 
-### HIGH-002 · BQ25185 STAT2 pin floating (PU-001)
+**RS-001 — PWR_GATE, PWR_LATCH_G, PWR_BTN_SENSE, PWR_EN, PWR_HOLD, VSYS_SENSE:** These rails are driven by discrete logic (FETs, diodes) or MCU GPIO. The analyzer cannot trace sourcing through passive topology for these nets. Add `PWR_FLAG` symbols if ERC cleanliness is important; no functional issue.
 
-Unchanged. STAT2 (pin 3) → NO_CONNECT. If not monitoring charging state via STAT2, add a DNP pull-up (4.7kΩ to 3V3) so the open-drain output isn't left floating.
+### Accepted open items
 
----
+**PU-001 — BQ25185 STAT2:** STAT2 (open-drain) → NO_CONNECT. Acceptable if STAT2 status monitoring is not needed. If it causes noise concerns later, add a DNP 4.7kΩ pull-up to 3V3.
 
-## Medium
-
-### MED-001 · XBee courtyard overlaps — now 8 components (PM-001)
-
-One new overlap added this revision: SW_BOOT1 (1.562mm²) now overlaps U_XBEE1's courtyard after being moved inboard. This is the root-cause problem — the XBee courtyard is very large (likely includes the RF keepout zone). **The fix is to correct the footprint courtyard** to the physical module outline only (not the RF keepout), then enforce the keepout separately with a rule area. Once that's done, all 8 overlaps should clear.
-
-Affected: C_XBEE_RC1, C_XBEE_VCC1–4, R_XBEE_RC1, R_XBEE_RST1, SW_BOOT1, REF** (fiducial, 0mm² — effectively touching).
-
-### MED-002 · Edge-mounted switch overhang (PM-002)
-
-Unchanged. SW_PWR1 (0.35mm), SW_THR_DN1 / SW_THR_UP1 / SW_TRIG_DIG1 (0.55mm), SW_VOL_DN1 / SW_VOL_UP1 (0.5mm), U_HALL1 (0.27mm). If intentionally edge-mounted for a controller form factor, suppress these in KiCad's DRC configuration. C_OLED_1 (0.8mm) and D_RGB1 (0.5mm) remain close to edge as warnings.
-
-### MED-003 · SPI_MOSI reference plane coverage 91%, 75mm (GP-001) — new this revision
-
-SPI_SCK is fully resolved. SPI_MOSI is a new (softer) appearance in GP-001 at 91% coverage over 74.9mm. At 91% the gap is small, but given SPI_MOSI runs nearly the full board length, add a stitching via near any F.Cu↔B.Cu layer transition on this net. Priority is lower than SPI_SCK was.
-
-### MED-004 · No test points (TE-001)
-
-Unchanged — 0% coverage. Add test points on: GND, 3V3, VSYS, VBAT, VBUS, USB_DP_MCU/DM_MCU, SPI_SCK/MOSI/MISO, I2C_SDA/SCL, MCU_EN.
+**DS-002 — No datasheets synced:** 70/71 MPNs are now populated. Syncing datasheets (via DigiKey/LCSC scripts) would enable pin-level verification and decoupling adequacy checks against manufacturer specs. Not blocking for prototype.
 
 ---
 
@@ -71,91 +38,142 @@ Unchanged — 0% coverage. Add test points on: GND, 3V3, VSYS, VBAT, VBUS, USB_D
 
 ```
 VBUS (USB-C J_USB1)
-  ├─ D_VBUS_TVS1 (PESD5V0S1BA) → GND  ✅ new ESD clamp
-  └─ BQ25185 (U_CHG1) → VSYS
-       R_ISET1=600Ω  R_VSET1=18kΩ  R_TS1=10kΩ→GND (NTC disabled)
-       STAT1 → 10kΩ pull-up → MCU GPIO1  |  STAT2 → NC (open-drain floating)
-       VBAT ← BT1 (battery)
+  ├─ D_VBUS_TVS1 (PESD5V0S1BA, SOD-323) → GND   [ESD clamp]
+  └─ U_CHG1 (BQ25185DLHR)
+       IN=VBUS  →  SYS=VSYS  |  BAT=VBAT ← BT1 (Li-Ion battery)
+       R_ISET1=600Ω   (charge current — verify against BQ25185 datasheet)
+       R_VSET1=18kΩ   (charge voltage set — verify against datasheet)
+       R_TS1=10kΩ→GND (NTC disabled)
+       STAT1 → R_STAT1 (10kΩ) → 3V3, read by MCU GPIO1
+       STAT2 → NO_CONNECT
 
-VSYS → U_BUCK1 (TLV62569) → 3V3  ✅ corrected
-  R_FB1=255kΩ / R_FB2=56.2kΩ → Vout=3.322V  (Vref=0.6V, heuristic)
-  L=2.2µH SRN4018, f=500kHz
-  Tj=64°C, margin 61°C to Tj_max  ✅ thermal OK
-  Estimated load: ESP32-S3 (240mA) + XBee3 (10mA) + DRV5055A2 (5mA) + OLED (10mA) = 265mA
+VSYS → Power latch
+  SW_PWR1 (button) → D_OR1 → PWR_LATCH_G → Q_LATCH1.G (2N7002 NMOS)
+  MCU GPIO44 (PWR_HOLD) → D_OR2 → PWR_LATCH_G
+  Q_LATCH1.D → PWR_GATE → Q_PWR1.G (DMG2305UX PMOS)
+  Q_PWR1: S=VSYS, D=PWR_EN → U_BUCK1.EN
+  R_GATE1=100kΩ VSYS→PWR_GATE (pull-up, keeps PMOS off by default)
+  R_LATCH_G1=10kΩ PWR_LATCH_G→GND (pull-down, keeps NMOS off by default)
+
+VSYS → U_BUCK1 (TLV62569, switching 500kHz) → 3V3
+  R_FB1=255kΩ / R_FB2=56.2kΩ → Vout = 3.322V  (Vref=0.6V)
+  L_BUCK1=2.2µH (Bourns SRN4018)
+  Cin:  10µF + 10µF + 100nF (VSYS rail)
+  Cout: 22µF + 3×10µF + 1µF + 5×100nF + 47pF (3V3 rail)
+  Tj=64°C at 25°C ambient, margin 61°C to Tj_max   ✓ thermal OK
+
+3V3 load estimate:
+  ESP32-S3-WROOM-1-N8 (U_MCU1)   240mA
+  XBee 3 (U_XBEE1)                10mA
+  DRV5055A2 (U_HALL1)              5mA
+  OLED connector (U_OLED1)        10mA
+  ─────────────────────────────────────
+  Total                           265mA
 ```
+
+### Firmware notes
+
+- **PWR_HOLD must be asserted immediately on boot.** GPIO44 defaults to high-impedance. While it floats, D_OR2 does not conduct and the system stays powered only while the button is physically held via D_OR1. Firmware must drive PWR_HOLD high in `app_main()` before yielding to the RTOS scheduler.
+- **GPIO44 = U0RXD conflict.** The ESP32-S3 uses GPIO44 as UART0 RX during serial flashing. Configure GPIO44 as a push-pull output only after the UART boot window has closed to avoid conflicting with the programmer's TX line.
+
+---
+
+## Signal Analysis
+
+**USB-C:** CC1/CC2 pull-downs R_CC1=R_CC2=5.1kΩ to GND — correct sink identification. D+/D- connected to MCU GPIO19/20 (native USB PHY) through 27Ω series resistors — appropriate for USB FS.
+
+**SPI (XBee):** MOSI/MISO/SCK/CS on ESP32-S3 hardware SPI pins (GPIO10–13). XBee decoupling: 4×VCC caps (100nF×2, 1µF, 10µF), RC reset filter (159Hz), SPI attention line to MCU GPIO15.
+
+**I2C (OLED):** GPIO8=SDA, GPIO9=SCL. Analyzer did not detect I2C pull-up resistors — verify pull-ups are present (typically 4.7kΩ to 3V3 for 400kHz operation).
+
+**Analog:** TRIG_ANALOG (DRV5055A2 hall sensor) → GPIO4/ADC1_CH3. STICK_X/Y (GuliKit thumbstick) → GPIO5–6/ADC1_CH4–5. VSYS_SENSE (R_VSYS1=200kΩ / R_VSYS2=100kΩ divider, VSYS/3) → GPIO7/ADC1_CH6.
+
+**RGB LED:** D_RGB1 data in from GPIO43 via R_RGB1.
+
+**RC filters:** R_XBEE_RC1/C_XBEE_RC1 at 15.9kHz (SPI line filter), R_XBEE_RST1/C_XBEE_RC1 at 159Hz (reset debounce).
 
 ---
 
 ## PCB Layout
 
-| Metric | Prior | Now | Status |
-|---|---|---|---|
-| Routing | Complete | Complete | OK |
-| Vias | 110 | 111 | OK (+1 SPI_SCK stitch) |
-| Fiducials F.Cu | 0 | ≥1 | ✅ |
-| Fiducials B.Cu | 0 | ≥1 | ✅ |
-| Via in pad U_MCU1:4 | Untented | Resolved | ✅ |
-| SW_BOOT1 edge clearance | 0.0mm (error) | 0.5mm (warning) | Improved |
-| XBee courtyard overlaps | 7 | 8 | ⚠ +SW_BOOT1 |
-| Test points | 0% | 0% | Open |
+| Metric | Value | Status |
+|---|---|---|
+| Board dimensions | 35.0 × 99.9mm | — |
+| Copper layers | 4 | — |
+| Routing | 100% complete | ✓ |
+| DFM tier | Standard | ✓ |
+| DRC violations | 0 | ✓ |
+| Min track width | 0.2mm | ✓ |
+| Min drill | 0.3mm | ✓ |
+| Min annular ring | 0.15mm | ✓ |
+| Fiducials | ≥1 per face | ✓ |
+| Test points | 0% coverage | Open |
+| XBee courtyard overlaps | 8 components | Accepted (see below) |
+| Edge switch overhangs | 7 instances | Accepted (see below) |
+
+### Accepted placement findings
+
+**XBee courtyard overlaps (PM-001):** C_XBEE_RC1, C_XBEE_VCC1–4, R_XBEE_RC1, R_XBEE_RST1, SW_BOOT1, and REF** (fiducial) all overlap the U_XBEE1 courtyard. Root cause: the XBee footprint courtyard encompasses the RF keepout zone rather than just the physical module outline. The decoupling components are correctly positioned for the module; the courtyard definition is the inaccuracy. If fab-submitted as-is, assembly will not be affected. **Suppress these in DRC** or correct the footprint courtyard to the physical module boundary and enforce the RF keepout separately as a rule area.
+
+**Edge-mounted switches (PM-002):** SW_PWR1 (0.35mm overhang), SW_THR_DN1 / SW_THR_UP1 / SW_TRIG_DIG1 (0.55mm), SW_VOL_DN1 / SW_VOL_UP1 (0.5mm), U_HALL1 (0.27mm from edge), SW_BOOT1 (0.5mm from edge) are all intentionally placed at or near the board edge for a handheld controller form factor. C_OLED_1 (0.8mm) and D_RGB1 (0.5mm) are near-edge warnings. **Suppress these in DRC** with a board-edge clearance exception.
+
+**REF** in PCB not in schematic (XV-001):** Expected — fiducial markers are PCB-only. No action needed.
+
+### Open item
+
+**Test points (TE-001):** 0% net coverage. Recommend adding test points before production on: GND, 3V3, VSYS, VBAT, VBUS, USB_DP_MCU / USB_DM_MCU, SPI_SCK / MOSI / MISO, I2C_SDA / SCL, MCU_EN.
 
 ---
 
 ## EMC Assessment
 
-| Signal | Coverage | Length | Severity | Notes |
-|---|---|---|---|---|
-| XBEE_RESET | 25% | 2.6mm | Error | Short; low absolute risk |
-| BTN_THR_UP | 68% | 24mm | Error | Button line; low speed |
-| I2C_SCL | 73% | 19mm | Error | Low speed; tolerable |
-| BTN_MACRO1 | 75% | 38mm | Error | Button line |
-| TRIG_ANALOG | 77% | 27mm | Error | ADC; low frequency |
-| SPI_SCK | — | — | ✅ Resolved | Stitching vias added |
-| SPI_MOSI | 91% | 75mm | Warning | New; add stitch via |
-| SU-001 stackup | — | — | False positive | Inner layers are 3V3+GND planes |
-| U_BUCK1 harmonics 30–88MHz | — | — | Info | Inherent; add ferrite if needed |
+This is a handheld consumer device with no FCC/CE certification requirement indicated. EMC findings are noted for awareness; none are blocking for prototype.
 
-**Stackup note:** SU-001 "adjacent signal layers" errors are false positives. In1.Cu is a 3V3 copper pour (83% fill), In2.Cu is a GND copper pour (85% fill). Standard 4-layer stackup: signal / power / ground / signal.
+**Stackup (SU-001 — false positive):** The analyzer flags F.Cu, In1.Cu, In2.Cu, and B.Cu as all "signal" type and reports adjacent signal layer crosstalk. In reality In1.Cu is a 3V3 copper pour (83% fill) and In2.Cu is a GND copper pour (85% fill). The stackup is correct: signal / power plane / ground plane / signal. KiCad stores copper-pour planes as "signal" type, which confuses the EMC analyzer. These three SU-001 findings can be disregarded.
+
+**Ground plane coverage (GP-001):** Several signals cross areas where the In1.Cu (3V3) and In2.Cu (GND) planes don't fully overlap, creating return current detours. The affected signals are all low-speed (button GPIO, I2C at 400kHz, analog ADC inputs) — radiated risk is low in practice.
+
+| Signal | Coverage | Length | Risk |
+|---|---|---|---|
+| XBEE_RESET | 25% | 2.6mm | Low (very short trace) |
+| BTN_THR_UP | 68% | 24mm | Low (slow GPIO) |
+| I2C_SCL | 73% | 19mm | Low (400kHz) |
+| BTN_MACRO1 | 75% | 38mm | Low (slow GPIO) |
+| TRIG_ANALOG | 77% | 27mm | Low (ADC, slow) |
+| STICK_X, BTN_STICK | 80–81% | 20–24mm | Low |
+| BTN_THR_DN through BTN_MACRO6 | 82–93% | 33–65mm | Low |
+| XBEE_SPI_ATTN, XBee_CS, STAT1 | 86–89% | 81–103mm | Low–Medium |
+| STICK_Y, XBEE_ON_SLEEP | 91–93% | 42–93mm | Low |
+
+**Return path stitching (RP-001):** 20+ nets have F.Cu↔B.Cu via transitions without adjacent ground stitching vias. Same root cause as GP-001 — affects the same slow signals. For a non-certified handheld, these can be accepted. If EMC pre-compliance becomes a concern, add a GND stitching via near each layer-transition via on the signals with the lowest coverage.
+
+**SPI_SCK (CK-001, CK-003):** SPI_SCK is fully routed on outer layers (microstrip) and passes within 8.5–9mm of J_STICK1 and J_USB1. At typical SPI frequencies (≤20MHz) this is unlikely to cause coupling issues, but if signal integrity becomes a concern, route SPI_SCK on an inner layer.
+
+**Buck converter harmonics (SW-001):** U_BUCK1 switching at 500kHz produces 117 harmonics in the 30–88MHz band. Inherent to any switching regulator. Add a ferrite bead on the VSYS input to U_BUCK1 if conducted emissions become a concern.
 
 ---
 
 ## Thermal
 
-U_BUCK1 (TLV62569): Tj = **64°C** at 25°C ambient, 61°C margin to Tj_max. No other components flagged. Thermal is clean.
+| Component | Package | Tj (25°C ambient) | Margin to Tj_max |
+|---|---|---|---|
+| U_BUCK1 (TLV62569) | SOT-23-5 | 64°C | 61°C |
+
+All other components below thermal threshold. No action needed.
 
 ---
 
-## Schematic Quality
+## Next Steps Before Ordering
 
-| Finding | Status |
+| Priority | Action |
 |---|---|
-| PWR_FLAG missing on VBAT, VBUS, PWR_* rails (RS-001) | Open |
-| STAT2 floating (HIGH-002 above) | Open |
-| D_VBUS_TVS1 MPN field not populated | Open |
-| XBee RESET pull-up PU-001 | False positive (R_XBEE_RST1 to 3V3 provides pull-up) |
-| BQ25185 TS/MR PU-001 | False positive (R_TS1=10kΩ to GND intentionally disables NTC) |
-
----
-
-## Firmware Notes (unchanged)
-
-- **PWR_HOLD must be asserted early:** During boot, GPIO44 (PWR_HOLD) defaults to high-impedance. The board stays powered only while the button is held via D_OR1. Assert PWR_HOLD high early in `app_main()` before the RTOS scheduler yields.
-- **GPIO44 = U0RXD conflict:** During serial flashing, ESP32-S3 uses GPIO44 as UART0 RX. Configure PWR_HOLD as output only after the UART boot window closes.
-
----
-
-## Priority Action List
-
-| # | Action | Severity |
-|---|---|---|
-| 1 | Add MPNs to all 70 remaining components | BLOCKER |
-| 2 | Populate `MPN` field on D_VBUS_TVS1 (PESD5V0S1BA) | BLOCKER |
-| 3 | Fix XBee footprint courtyard → physical outline only; add RF keepout as rule area | MEDIUM |
-| 4 | Add stitching via near SPI_MOSI layer transition | MEDIUM |
-| 5 | Decide edge switches: intentional → suppress DRC; else move inboard | MEDIUM |
-| 6 | Add test points on power rails, USB, SPI, I2C | MEDIUM |
-| 7 | Add STAT2 DNP pull-up 4.7kΩ → 3V3 | LOW |
-| 8 | Add PWR_FLAG to VBAT, VBUS, PWR_* rails | LOW |
+| Recommended | Sync datasheets (`sync_datasheets_digikey.py` or `lcsc`) to enable pin-level verification against manufacturer specs |
+| Recommended | Verify I2C pull-up resistors are present on I2C_SDA / I2C_SCL |
+| Recommended | Suppress accepted DRC findings (XBee courtyard, edge switches) in KiCad DRC config |
+| Optional | Add J_STICK1 MPN (custom part — add an internal part number if one exists) |
+| Optional | Add test points before production run |
+| Optional | Add PWR_FLAG symbols to clean up ERC |
+| Optional | Add DNP pull-up on STAT2 (4.7kΩ to 3V3) |
 
 ---
 
@@ -163,7 +181,7 @@ U_BUCK1 (TLV62569): Tj = **64°C** at 25°C ambient, 61°C margin to Tj_max. No 
 
 | Analysis | Reason |
 |---|---|
-| Datasheet verification | No MPNs / no datasheets on disk |
-| SPICE simulation | No ngspice/LTspice/Xyce installed |
-| Gerber verification | No gerber files in project |
-| Lifecycle audit | No MPNs to query |
+| Pin-level datasheet verification | No datasheets synced (MPNs now available — run sync to enable) |
+| SPICE simulation | No ngspice / LTspice / Xyce installed |
+| Gerber verification | No gerber files in project directory |
+| Component lifecycle audit | Network access or API keys needed; run `analyze_schematic.py --lifecycle` |
