@@ -961,7 +961,7 @@
 				)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "255kΩ"
 			(at 144.78 101.6 90)
 			(show_name no)
 			(do_not_autoplace no)

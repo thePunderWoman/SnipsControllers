@@ -278,7 +278,7 @@ footer{
       <tr><td class="ref">C_BUCK_IN1</td><td class="val">10 µF</td><td class="val">0805</td><td class="role">Input bulk/decoupling — absorbs the IC's pulsed input current</td></tr>
       <tr><td class="ref">L_BUCK1</td><td class="val">2.2 µH</td><td class="val">Bourns SRN4018</td><td class="role">Power inductor</td></tr>
       <tr><td class="ref">C_BUCK_OUT1</td><td class="val">22 µF</td><td class="val">0805</td><td class="role">Output filter cap</td></tr>
-      <tr><td class="ref">R_FB1</td><td class="val">100 kΩ</td><td class="val">0402</td><td class="role">Feedback divider, VOUT side</td></tr>
+      <tr><td class="ref">R_FB1</td><td class="val">255 kΩ</td><td class="val">0402</td><td class="role">Feedback divider, VOUT side</td></tr>
       <tr><td class="ref">R_FB2</td><td class="val">56.2 kΩ</td><td class="val">0402</td><td class="role">Feedback divider, GND side</td></tr>
     </tbody>
   </table>
@@ -400,7 +400,7 @@ footer{
         <rect x="548" y="390" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
         <rect x="550" y="390" width="10" height="8" fill="#e0b563" stroke="#8a672f"/>
         <rect x="550" y="408" width="10" height="8" fill="#e0b563" stroke="#8a672f"/>
-        <text x="578" y="407" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#e0b563">R_FB1 · 100kΩ</text>
+        <text x="578" y="407" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#e0b563">R_FB1 · 255kΩ</text>
 
         <!-- FB node dot -->
         <circle cx="555" cy="424" r="3.5" fill="#8fd3ff"/>
@@ -482,7 +482,7 @@ footer{
 </section>
 
 <div class="note">
-  <b>Worth double-checking:</b> R_FB1/R_FB2 (100 kΩ / 56.2 kΩ) work out to roughly <b>1.67 V</b> at the TLV62569's 0.6 V typical reference (V<sub>OUT</sub> = 0.6 × (1 + R_FB1⁄R_FB2)), not the 3.3 V implied by the "3V3" net label on that rail. Worth confirming which one is intended before you commit to this floorplan — it doesn't change the layout, but it's a five-minute check now versus a respin later.
+  <b>Fixed:</b> R_FB1 was originally 100 kΩ, which works out to 1.67 V at the TLV62569's 0.6 V typical reference (V<sub>OUT</sub> = 0.6 × (1 + R_FB1⁄R_FB2)) — not the 3.3 V the "3V3" net label promised. Verified against TI's datasheet (SLVSDG1C): V<sub>FB</sub> = 0.6 V typ (0.588–0.612 V), confirmed by their own 200k/100k → 1.8 V reference design. R_FB1 is now 255 kΩ (nearest E96), giving 3.322 V with R_FB2 unchanged at 56.2 kΩ.
 </div>
 
 <footer>

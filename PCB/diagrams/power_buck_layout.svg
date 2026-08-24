@@ -107,7 +107,7 @@
         <rect x="548" y="390" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
         <rect x="550" y="390" width="10" height="8" fill="#e0b563" stroke="#8a672f"/>
         <rect x="550" y="408" width="10" height="8" fill="#e0b563" stroke="#8a672f"/>
-        <text x="578" y="407" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#e0b563">R_FB1 · 100kΩ</text>
+        <text x="578" y="407" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#e0b563">R_FB1 · 255kΩ</text>
 
         <!-- FB node dot -->
         <circle cx="555" cy="424" r="3.5" fill="#8fd3ff"/>

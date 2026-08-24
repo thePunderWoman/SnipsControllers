@@ -16,7 +16,7 @@ Six parts, one power stage. Values as drawn in the schematic.
 | C_BUCK_IN1 | 10µF | 0805 | Input bulk/decoupling — absorbs the IC's pulsed input current |
 | L_BUCK1 | 2.2µH | Bourns SRN4018 | Power inductor |
 | C_BUCK_OUT1 | 22µF | 0805 | Output filter cap |
-| R_FB1 | 100kΩ | 0402 | Feedback divider, VOUT side |
+| R_FB1 | 255kΩ | 0402 | Feedback divider, VOUT side |
 | R_FB2 | 56.2kΩ | 0402 | Feedback divider, GND side |
 
 ## Suggested floorplan
@@ -52,7 +52,7 @@ If you're placing copper by hand, do it roughly in this order — later steps ha
 5. Tap FB at C_BUCK_OUT1, place R_FB1/R_FB2 close together, route the sense line back around the IC last — by now you know exactly what copper it has to avoid.
 6. Stitch a via at every ground pad (C_IN, IC, C_OUT, R_FB2).
 
-> **Worth double-checking:** R_FB1/R_FB2 (100kΩ / 56.2kΩ) work out to roughly **1.67V** at the TLV62569's 0.6V typical reference (V<sub>OUT</sub> = 0.6 × (1 + R_FB1⁄R_FB2)), not the 3.3V implied by the "3V3" net label on that rail. Worth confirming which one is intended before you commit to this floorplan — it doesn't change the layout, but it's a five-minute check now versus a respin later.
+> **Fixed:** R_FB1 was originally 100kΩ, which works out to 1.67V at the TLV62569's 0.6V typical reference (V<sub>OUT</sub> = 0.6 × (1 + R_FB1⁄R_FB2)) — not the 3.3V the "3V3" net label promised. Verified against TI's datasheet (SLVSDG1C): VFB = 0.6V typ (0.588–0.612V), confirmed by their own 200k/100k → 1.8V reference design. R_FB1 is now 255kΩ (nearest E96), giving 3.322V with R_FB2 unchanged at 56.2kΩ.
 
 ---
 *Generated from `PCB/power_buck.kicad_sch` — a placement reference, not a manufacturing drawing. Model your actual footprints and DRC against your fab's rules. A richer standalone version with the full interactive design lives in [power_buck_layout.html](power_buck_layout.html).*
