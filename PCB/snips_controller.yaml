@@ -97,6 +97,15 @@ groups:
         sheet: USB_C
         value: 5.1kΩ
         footprint: Resistor_SMD:R_0402_1005Metric
+      D_VBUS_TVS:
+        symbol: Device:D_TVS
+        sheet: USB_C
+        value: PESD5V0S1BA
+        footprint: Diode_SMD:D_SOD-323
+        # Bidirectional ESD/surge protection on VBUS. Both pins are cathodes
+        # internally (symmetric device) — no polarity to get wrong. Place as
+        # close to J_USB1's VBUS/GND pins as possible, upstream of C_VIN_1/
+        # C_VIN_2, so a surge is clamped before it reaches U_CHG1's IN pin.
     connections:
       # USB-C receptacle duplicates VBUS/GND/D+/D- across the A and B rows
       # for cable-flip support — both instances of each must be tied
@@ -111,14 +120,16 @@ groups:
                J_USB:B9,
                U_CHG:IN,
                C_VIN_1:1,
-               C_VIN_2:1]
+               C_VIN_2:1,
+               PF_VBUS:1,
+               D_VBUS_TVS:1]
       - net: USB_DP
         pins: [J_USB:D+, J_USB:B6, R_USB_DP:1]
       - net: USB_DM
         pins: [J_USB:D-, J_USB:B7, R_USB_DM:1]
       - net: GND
         pins: [J_USB:GND, J_USB:A12, J_USB:B1, J_USB:B12, J_USB:SHIELD,
-               R_CC1:2, R_CC2:2]
+               R_CC1:2, R_CC2:2, D_VBUS_TVS:2]
       - net: USB_CC1
         pins: [J_USB:CC1, R_CC1:1]
       - net: USB_CC2
@@ -208,7 +219,7 @@ groups:
                R_VSYS1:1,
                PF_VSYS:1]
       - net: VBAT
-        pins: [U_CHG:BAT, C_BAT:1]
+        pins: [U_CHG:BAT, C_BAT:1, PF_VBAT:1]
       - net: STAT1
         pins: [U_CHG:STAT1, R_STAT1:1, U_MCU:39]
       - net: 3V3
@@ -265,7 +276,7 @@ groups:
       R_FB1:
         symbol: Device:R
         sheet: Power_Buck
-        value: 100kΩ
+        value: 255kΩ
         footprint: Resistor_SMD:R_0402_1005Metric
       R_FB2:
         symbol: Device:R
@@ -463,6 +474,16 @@ groups:
         sheet: MCU_Core
         value: 100nF
         footprint: Capacitor_SMD:C_0402_1005Metric
+      C_3V3_3:
+        symbol: Device:C
+        sheet: MCU_Core
+        value: 39pF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+        # Third decoupling tier — plugs the PDN impedance gap between
+        # C_3V3_2's bypass and the parasitic inductance feeding it (analyzer
+        # flagged an anti-resonance near 955MHz). Value isn't precision-
+        # critical, anything ~10-100pF serves the same purpose. Place right
+        # at U_MCU1 pins 1/2, same corner as C_3V3_1/C_3V3_2.
       R_VSYS1:
         symbol: Device:R
         sheet: MCU_Core
@@ -475,9 +496,9 @@ groups:
         footprint: Resistor_SMD:R_0402_1005Metric
     connections:
       - net: 3V3
-        pins: [U_MCU:2, R_EN_PU:2, R_BOOT_PU:2, C_3V3_1:1, C_3V3_2:1]
+        pins: [U_MCU:2, R_EN_PU:2, R_BOOT_PU:2, C_3V3_1:1, C_3V3_2:1, C_3V3_3:1]
       - net: GND
-        pins: [U_MCU:1, U_MCU:40, U_MCU:41, C_3V3_1:2, C_3V3_2:2, SW_BOOT:1]
+        pins: [U_MCU:1, U_MCU:40, U_MCU:41, C_3V3_1:2, C_3V3_2:2, C_3V3_3:2, SW_BOOT:1]
       - net: MCU_EN
         pins: [U_MCU:3, R_EN_PU:1]
       - net: MCU_BOOT
@@ -867,6 +888,22 @@ groups:
         on_board: false
         in_bom: false
       PF_VSYS:
+        symbol: power:PWR_FLAG
+        sheet: MCU_Core
+        value: PWR_FLAG
+        footprint: ""
+        power: true
+        on_board: false
+        in_bom: false
+      PF_VBUS:
+        symbol: power:PWR_FLAG
+        sheet: MCU_Core
+        value: PWR_FLAG
+        footprint: ""
+        power: true
+        on_board: false
+        in_bom: false
+      PF_VBAT:
         symbol: power:PWR_FLAG
         sheet: MCU_Core
         value: PWR_FLAG
