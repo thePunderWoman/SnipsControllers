@@ -607,6 +607,22 @@
 				)
 			)
 		)
+		(property "MF" "Hongyuan Precision" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d98db61b-cdcd-43be-b87e-10e2b598a203")
 		)
@@ -683,6 +699,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Hongyuan Precision" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -763,6 +795,22 @@
 				)
 			)
 		)
+		(property "MF" "Hongyuan Precision" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "6e4a1a37-d985-4553-bee4-00cef3aee69a")
 		)
@@ -839,6 +887,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Alps Alpine" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SKRTLAE010" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -919,6 +983,22 @@
 				)
 			)
 		)
+		(property "MF" "Alps Alpine" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SKRTLAE010" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "3e4669c1-d567-46d8-a1ae-19681ac02b5f")
 		)
@@ -995,6 +1075,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Hongyuan Precision" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1075,6 +1171,22 @@
 				)
 			)
 		)
+		(property "MF" "Alps Alpine" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SKRTLAE010" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "98ee9d84-536a-4f62-a44b-8833206fcaf1")
 		)
@@ -1151,6 +1263,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Hongyuan Precision" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1231,6 +1359,22 @@
 				)
 			)
 		)
+		(property "MF" "Alps Alpine" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SKRTLAE010" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "8ae6c6a1-e874-46ac-a3e4-8df8636b5d37")
 		)
@@ -1309,6 +1453,22 @@
 				)
 			)
 		)
+		(property "MF" "Alps Alpine" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SKRTLAE010" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "4d98b3bb-c537-4ba7-84b2-fc6010606435")
 		)
@@ -1385,6 +1545,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Hongyuan Precision" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"

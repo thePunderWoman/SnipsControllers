@@ -1652,6 +1652,22 @@
 				)
 			)
 		)
+		(property "MF" "Yageo" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "adc0845c-5137-4e20-aa77-1b482ba57b1d")
 		)
@@ -1728,6 +1744,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Alps Alpine" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SKRTLAE010" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1807,6 +1839,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Diodes Incorporated" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "DMG2305UX-7" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1911,6 +1959,22 @@
 				)
 			)
 		)
+		(property "MF" "Diodes Incorporated" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "1N4148W-7-F" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "8fcb9524-a62c-4f93-93e2-eafde0ad4316")
 		)
@@ -1986,6 +2050,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Yageo" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0402FR-07100KL" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -2065,6 +2145,22 @@
 				)
 			)
 		)
+		(property "MF" "Yageo" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0402FR-0710KL" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "7deb50b5-ee5b-421f-a669-53c335e6988a")
 		)
@@ -2140,6 +2236,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Yageo" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0402FR-07100KL" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -2241,6 +2353,22 @@
 				)
 			)
 		)
+		(property "MF" "Diodes Incorporated" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "1N4148W-7-F" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "fc80ef79-702e-402d-a793-ae3c245085eb")
 		)
@@ -2318,6 +2446,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "onsemi" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "2N7002LT1G" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -2398,6 +2542,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Yageo" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0402FR-07100KL" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"

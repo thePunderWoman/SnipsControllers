@@ -1478,6 +1478,22 @@
 				)
 			)
 		)
+		(property "MF" "Hroparts Elec" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "TYPE-C-31-M-12" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "A1"
 			(uuid "f52999cc-5a46-499f-b5d2-d01c958a10d9")
 		)
@@ -1600,6 +1616,22 @@
 				)
 			)
 		)
+		(property "MF" "Yageo" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0402FR-075K1L" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "7fa224d0-dc31-454f-aea7-bd60f9eb8642")
 		)
@@ -1677,6 +1709,22 @@
 				)
 			)
 		)
+		(property "MF" "Yageo" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0402FR-075K1L" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "890a4137-2d4b-4392-84ea-88318f7765b5")
 		)
@@ -1752,6 +1800,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Nexperia" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "PESD5V0S1BA,115" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
