@@ -2465,20 +2465,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0603KRX5R7BB106" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "CC0603KRX5R7BB106"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -2574,12 +2580,15 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "ESP32-S3-WROOM-1-N8" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "ESP32-S3-WROOM-1-N8"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -2850,20 +2859,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -2945,20 +2960,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402JRNPO9BN390" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "CC0402JRNPO9BN390"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -3038,20 +3059,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -3131,20 +3158,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07200KL" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "RC0402FR-07200KL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -3299,20 +3332,26 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "EVQP2T02M" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "EVQP2T02M"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "MF" "Panasonic" (at 0 0 0)
+		(property "MF" "Panasonic"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -3392,20 +3431,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0727RL" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "RC0402FR-0727RL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -3485,20 +3530,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07100KL" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "RC0402FR-07100KL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -3580,20 +3631,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -3821,20 +3878,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0727RL" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "RC0402FR-0727RL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "snips_controller.kicad_pro",
-  "current": "2026-08-23_1900-2",
+  "current": "2026-08-23_1949",
   "runs": {
     "2026-08-23_1553": {
       "source_hashes": {
@@ -47,6 +47,22 @@
         "pcb": "analyze_pcb.py snips_controller.kicad_pcb"
       },
       "generated": "2026-08-23T19:00:26-07:00",
+      "pinned": false
+    },
+    "2026-08-23_1949": {
+      "source_hashes": {
+        "snips_controller.kicad_sch": "sha256:cf90c4f3c03b85f10092538646e2b66c9e4240d9a6e33c719814f62294ab58b1",
+        "snips_controller.kicad_pcb": "sha256:38c2f50bd36a7de1d25692288cb3c082d2b346ac6ec2648f3e86d284d8836024"
+      },
+      "outputs": {
+        "schematic": "schematic.json",
+        "pcb": "pcb.json",
+        "cross_analysis": "cross_analysis.json"
+      },
+      "scripts": {
+        "schematic": "analyze_schematic.py snips_controller.kicad_sch"
+      },
+      "generated": "2026-08-23T19:49:53-07:00",
       "pinned": false
     }
   }

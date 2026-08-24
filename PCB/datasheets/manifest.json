@@ -1,0 +1,446 @@
+{
+  "schematic": "snips_controller.kicad_sch",
+  "last_sync": "2026-08-24T03:08:34.440045+00:00",
+  "parts": {
+    "CC0402JRNPO9BN390": {
+      "manufacturer": "",
+      "description": "Unpolarized capacitor",
+      "value": "39pF",
+      "references": [
+        "C_3V3_3"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:22.346489+00:00"
+    },
+    "CC0805KRX5R7BB106": {
+      "manufacturer": "",
+      "description": "Unpolarized capacitor",
+      "value": "10\u00b5F",
+      "references": [
+        "C_BUCK_IN1",
+        "C_SYS_1",
+        "C_BAT1",
+        "C_VIN_1",
+        "C_OLED_1"
+      ],
+      "status": "not_found",
+      "error": "No LCSC results for 'CC0805KRX5R7BB106'",
+      "last_attempt": "2026-08-24T03:08:22.346615+00:00"
+    },
+    "S2B-PH-K": {
+      "manufacturer": "",
+      "description": "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)",
+      "value": "JST-PH_2Pin_Battery",
+      "references": [
+        "BT1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:22.346236+00:00"
+    },
+    "CC0805KRX5R7BB226": {
+      "manufacturer": "",
+      "description": "Unpolarized capacitor",
+      "value": "22\u00b5F",
+      "references": [
+        "C_BUCK_OUT1"
+      ],
+      "status": "not_found",
+      "error": "No LCSC results for 'CC0805KRX5R7BB226'",
+      "last_attempt": "2026-08-24T03:08:23.329360+00:00"
+    },
+    "CC0402KRX7R9BB104": {
+      "manufacturer": "",
+      "description": "Unpolarized capacitor",
+      "value": "100nF",
+      "references": [
+        "C_DBNC1",
+        "C_HALL1",
+        "C_STICK1",
+        "C_XBEE_RC1",
+        "C_XBEE_VCC1",
+        "C_3V3_2",
+        "C_SYS_2",
+        "C_VIN_2",
+        "C_OLED_2",
+        "C_RGB1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:24.559449+00:00"
+    },
+    "CC0603KRX5R7BB105": {
+      "manufacturer": "",
+      "description": "Unpolarized capacitor",
+      "value": "1\u00b5F",
+      "references": [
+        "C_XBEE_VCC2"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:24.560429+00:00"
+    },
+    "CC0402JRNPO9BN470": {
+      "manufacturer": "",
+      "description": "Unpolarized capacitor",
+      "value": "47pF",
+      "references": [
+        "C_XBEE_VCC3"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:24.560398+00:00"
+    },
+    "1N4148W-7-F": {
+      "manufacturer": "",
+      "description": "Diode, small symbol",
+      "value": "1N4148W",
+      "references": [
+        "D_OR2",
+        "D_OR1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:25.585855+00:00"
+    },
+    "SK6812MINI-E": {
+      "file": "SK6812MINI-E_RGB_LED_with_integrated_controller.pdf",
+      "manufacturer": "",
+      "description": "RGB LED with integrated controller",
+      "value": "SK6812MINI-E",
+      "datasheet_url": "https://cdn-shop.adafruit.com/product-files/1138/SK6812+LED+datasheet+.pdf",
+      "downloaded_date": "2026-08-24T03:08:25.840572+00:00",
+      "source": "schematic",
+      "status": "ok",
+      "references": [
+        "D_RGB1"
+      ],
+      "size_bytes": 451375,
+      "verification": "likely"
+    },
+    "CC0603KRX5R7BB106": {
+      "manufacturer": "",
+      "description": "Unpolarized capacitor",
+      "value": "10\u00b5F",
+      "references": [
+        "C_XBEE_VCC4",
+        "C_3V3_1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:25.460805+00:00"
+    },
+    "PESD5V0S1BA,115": {
+      "manufacturer": "",
+      "description": "Bidirectional transient-voltage-suppression diode",
+      "value": "PESD5V0S1BA",
+      "references": [
+        "D_VBUS_TVS1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:26.322390+00:00"
+    },
+    "2N7002LT1G": {
+      "manufacturer": "",
+      "description": "N-MOSFET transistor, gate/source/drain",
+      "value": "2N7002",
+      "references": [
+        "Q_LATCH1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:27.043526+00:00"
+    },
+    "TYPE-C-31-M-12": {
+      "manufacturer": "",
+      "description": "USB 2.0-only 16P Type-C Receptacle connector",
+      "value": "USB-C",
+      "references": [
+        "J_USB1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:26.435767+00:00"
+    },
+    "SRN4018-2R2M": {
+      "manufacturer": "",
+      "description": "Inductor",
+      "value": "2.2\u00b5H",
+      "references": [
+        "L_BUCK1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:26.610270+00:00"
+    },
+    "RC0402FR-07100KL": {
+      "manufacturer": "",
+      "description": "Resistor",
+      "value": "100k\u03a9",
+      "references": [
+        "R_BTN_PU1",
+        "R_GATE1",
+        "R_PWR_SENSE1",
+        "R_VSYS2"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:27.898173+00:00"
+    },
+    "DMG2305UX-7": {
+      "manufacturer": "",
+      "description": "P-MOSFET transistor, gate/source/drain",
+      "value": "DMG2305UX",
+      "references": [
+        "Q_PWR1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:27.755972+00:00"
+    },
+    "RC0402FR-075K1L": {
+      "manufacturer": "",
+      "description": "Resistor",
+      "value": "5.1k\u03a9",
+      "references": [
+        "R_CC1",
+        "R_CC2"
+      ],
+      "status": "not_found",
+      "error": "No LCSC results for 'RC0402FR-075K1L'",
+      "last_attempt": "2026-08-24T03:08:28.282848+00:00"
+    },
+    "RC0402FR-07255KL": {
+      "manufacturer": "",
+      "description": "Resistor",
+      "value": "255k\u03a9",
+      "references": [
+        "R_FB1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:28.603506+00:00"
+    },
+    "RC0402FR-0756K2L": {
+      "manufacturer": "",
+      "description": "Resistor",
+      "value": "56.2k\u03a9",
+      "references": [
+        "R_FB2"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:28.742413+00:00"
+    },
+    "RC0402FR-0710KL": {
+      "manufacturer": "",
+      "description": "Resistor",
+      "value": "10k\u03a9",
+      "references": [
+        "R_LATCH_G1",
+        "R_XBEE_RST1",
+        "R_BOOT_PU1",
+        "R_EN_PU1",
+        "R_STAT1",
+        "R_TS1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:29.583038+00:00"
+    },
+    "RC0402FR-07330RL": {
+      "manufacturer": "",
+      "description": "Resistor",
+      "value": "330\u03a9",
+      "references": [
+        "R_RGB1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:29.724727+00:00"
+    },
+    "RC0402FR-0727RL": {
+      "manufacturer": "",
+      "description": "Resistor",
+      "value": "27\u03a9",
+      "references": [
+        "R_USB_DP1",
+        "R_USB_DM1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:30.281466+00:00"
+    },
+    "RC0402FR-0718KL": {
+      "manufacturer": "",
+      "description": "Resistor",
+      "value": "18k\u03a9",
+      "references": [
+        "R_VSET1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:30.459227+00:00"
+    },
+    "RC0402FR-07600RL": {
+      "manufacturer": "",
+      "description": "Resistor",
+      "value": "600\u03a9",
+      "references": [
+        "R_ISET1"
+      ],
+      "status": "not_found",
+      "error": "No LCSC results for 'RC0402FR-07600RL'",
+      "last_attempt": "2026-08-24T03:08:28.973473+00:00"
+    },
+    "RC0402FR-07200KL": {
+      "manufacturer": "",
+      "description": "Resistor",
+      "value": "200k\u03a9",
+      "references": [
+        "R_VSYS1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:31.029805+00:00"
+    },
+    "RC0402FR-07100RL": {
+      "manufacturer": "",
+      "description": "Resistor",
+      "value": "100\u03a9",
+      "references": [
+        "R_XBEE_RC1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:31.232314+00:00"
+    },
+    "EVQP2T02M": {
+      "manufacturer": "",
+      "description": "Push button switch, generic, two pins",
+      "value": "Panasonic_EVQP2",
+      "references": [
+        "SW_BOOT1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:31.411919+00:00"
+    },
+    "SKRTLAE010": {
+      "manufacturer": "",
+      "description": "Push button switch, generic, two pins",
+      "value": "Alps_SKRTLAE010",
+      "references": [
+        "SW_PWR1",
+        "SW_TRIG_DIG1",
+        "SW_VOL_DN1",
+        "SW_THR_UP1",
+        "SW_VOL_UP1",
+        "SW_THR_DN1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:31.957065+00:00"
+    },
+    "TLV62569DBV": {
+      "file": "TLV62569DBV_High_Efficiency_Synchronous_Buck_Converter_Adjustable_Output_0.6V-5.5V_2A.pdf",
+      "manufacturer": "",
+      "description": "High Efficiency Synchronous Buck Converter, Adjustable Output 0.6V-5.5V, 2A, SOT-23-5",
+      "value": "TLV62569",
+      "datasheet_url": "http://www.ti.com/lit/ds/symlink/tlv62569.pdf",
+      "downloaded_date": "2026-08-24T03:08:32.646942+00:00",
+      "source": "schematic",
+      "status": "ok",
+      "references": [
+        "U_BUCK1"
+      ],
+      "size_bytes": 1357133,
+      "verification": "verified"
+    },
+    "1TS009A-1800-5000-CT": {
+      "manufacturer": "",
+      "description": "Push button switch, generic, two pins",
+      "value": "6x6x5mm SMD Tactile",
+      "references": [
+        "SW_MACRO1",
+        "SW_MACRO2",
+        "SW_MACRO5",
+        "SW_MACRO3",
+        "SW_MACRO4",
+        "SW_MACRO6"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:31.787112+00:00"
+    },
+    "BQ25185DLHR": {
+      "manufacturer": "Texas Instruments",
+      "description": "1-cell, 1-A stand-alone linear battery charger with power path and solar input support",
+      "value": "bq25185",
+      "references": [
+        "U_CHG1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:32.726786+00:00"
+    },
+    "ESP32-S3-WROOM-1-N8": {
+      "file": "ESP32-S3-WROOM-1-N8_WiFi_BT_module_integrated_flash+crystal+antenna_ESP32-S3_(Xtensa.pdf",
+      "manufacturer": "",
+      "description": "WiFi/BT module, integrated flash+crystal+antenna, ESP32-S3 (Xtensa dual-core, native USB)",
+      "value": "ESP32-S3-WROOM-1-N8",
+      "datasheet_url": "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf",
+      "downloaded_date": "2026-08-24T03:08:33.382326+00:00",
+      "source": "schematic",
+      "status": "ok",
+      "references": [
+        "U_MCU1"
+      ],
+      "size_bytes": 1280501,
+      "verification": "verified"
+    },
+    "DRV5055A2QLPGM": {
+      "file": "DRV5055A2QLPGM_50_mV_mT_\u00b142-mT_20-kHz_3.3_5V_TO-92.pdf",
+      "manufacturer": "",
+      "description": "50 mV/mT,\u00b142-mT, 20-kHz, 3.3/5V, TO-92",
+      "value": "DRV5055A2",
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/drv5055-q1.pdf",
+      "downloaded_date": "2026-08-24T03:08:33.333686+00:00",
+      "source": "schematic",
+      "status": "ok",
+      "references": [
+        "U_HALL1"
+      ],
+      "size_bytes": 1322741,
+      "verification": "likely"
+    },
+    "SM04B-SRSS-TB": {
+      "manufacturer": "",
+      "description": "Generic 4-pin I2C SSD1306 OLED breakout module (VCC, GND, SCL, SDA). Hand-authored project-local symbol, no vendor-specific pinout assumed.",
+      "value": "JST-SH_4Pin_OLED",
+      "references": [
+        "U_OLED1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-08-24T03:08:33.518185+00:00"
+    },
+    "XB3-24Z8UT-J": {
+      "file": "XB3-24Z8UT-J_Zigbee_Modules_(802.15.4)_XBee3_2.4_Ghz_ZB_3.0_U.FL_Ant_TH_MT.pdf",
+      "manufacturer": "",
+      "description": "Zigbee Modules (802.15.4) XBee3,2.4 Ghz ZB 3.0, U.FL Ant, TH MT",
+      "value": "XBee3",
+      "datasheet_url": "https://componentsearchengine.com/Datasheets/1/XB3-24Z8UT-J.pdf",
+      "downloaded_date": "2026-08-24T03:08:33.567713+00:00",
+      "source": "schematic",
+      "status": "ok",
+      "references": [
+        "U_XBEE1"
+      ],
+      "size_bytes": 302985,
+      "verification": "verified"
+    }
+  }
+}

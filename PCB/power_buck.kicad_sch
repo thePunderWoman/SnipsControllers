@@ -1001,20 +1001,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07255KL" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "RC0402FR-07255KL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1094,20 +1100,26 @@
 				)
 			)
 		)
-		(property "MF" "Bourns" (at 0 0 0)
+		(property "MF" "Bourns"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "SRN4018-2R2M" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "SRN4018-2R2M"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1190,20 +1202,26 @@
 				)
 			)
 		)
-		(property "MF" "Texas Instruments" (at 0 0 0)
+		(property "MF" "Texas Instruments"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "TLV62569DBV" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "TLV62569DBV"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1294,20 +1312,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0805KRX5R7BB106" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "CC0805KRX5R7BB106"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1389,20 +1413,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0805KRX5R7BB226" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "CC0805KRX5R7BB226"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1482,20 +1512,26 @@
 				)
 			)
 		)
-		(property "MF" "Yageo" (at 0 0 0)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0756K2L" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "RC0402FR-0756K2L"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"

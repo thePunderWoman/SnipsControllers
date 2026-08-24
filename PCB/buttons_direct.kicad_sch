@@ -607,20 +607,26 @@
 				)
 			)
 		)
-		(property "MF" "Hongyuan Precision" (at 0 0 0)
+		(property "MF" "Hongyuan Precision"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -701,20 +707,26 @@
 				)
 			)
 		)
-		(property "MF" "Hongyuan Precision" (at 0 0 0)
+		(property "MF" "Hongyuan Precision"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -795,20 +807,26 @@
 				)
 			)
 		)
-		(property "MF" "Hongyuan Precision" (at 0 0 0)
+		(property "MF" "Hongyuan Precision"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -889,20 +907,26 @@
 				)
 			)
 		)
-		(property "MF" "Alps Alpine" (at 0 0 0)
+		(property "MF" "Alps Alpine"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "SKRTLAE010" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "SKRTLAE010"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -983,20 +1007,26 @@
 				)
 			)
 		)
-		(property "MF" "Alps Alpine" (at 0 0 0)
+		(property "MF" "Alps Alpine"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "SKRTLAE010" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "SKRTLAE010"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1077,20 +1107,26 @@
 				)
 			)
 		)
-		(property "MF" "Hongyuan Precision" (at 0 0 0)
+		(property "MF" "Hongyuan Precision"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1171,20 +1207,26 @@
 				)
 			)
 		)
-		(property "MF" "Alps Alpine" (at 0 0 0)
+		(property "MF" "Alps Alpine"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "SKRTLAE010" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "SKRTLAE010"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1265,20 +1307,26 @@
 				)
 			)
 		)
-		(property "MF" "Hongyuan Precision" (at 0 0 0)
+		(property "MF" "Hongyuan Precision"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1359,20 +1407,26 @@
 				)
 			)
 		)
-		(property "MF" "Alps Alpine" (at 0 0 0)
+		(property "MF" "Alps Alpine"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "SKRTLAE010" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "SKRTLAE010"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1453,20 +1507,26 @@
 				)
 			)
 		)
-		(property "MF" "Alps Alpine" (at 0 0 0)
+		(property "MF" "Alps Alpine"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "SKRTLAE010" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "SKRTLAE010"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -1547,20 +1607,26 @@
 				)
 			)
 		)
-		(property "MF" "Hongyuan Precision" (at 0 0 0)
+		(property "MF" "Hongyuan Precision"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT" (at 0 0 0)
+		(property "Manufacturer_Part_Number" "1TS009A-1800-5000-CT"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
