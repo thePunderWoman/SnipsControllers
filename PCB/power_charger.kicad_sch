@@ -1294,6 +1294,17 @@
 		)
 		(uuid "e9706347-7b62-4ffd-b46b-5fcec604d026")
 	)
+	(hierarchical_label "STAT2"
+		(shape output)
+		(at 214.63 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b3f4a7e1-6c9d-4f2a-8e5b-1a7d9c6e4f28")
+	)
 	(symbol
 		(lib_id "Device:R")
 		(at 207.01 83.82 0)
@@ -1489,6 +1500,128 @@
 			(project "snips_controller"
 				(path "/21935953-32a0-46ad-8079-8177920c6978/a161eba2-5cf9-4e54-b23a-cab3e9f70ed0"
 					(reference "C_SYS_2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(hierarchical_label "STAT2"
+		(shape output)
+		(at 80.01 102.87 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c7a2e9d4-3b8f-4a15-9d6e-2f8c1b5a7e93")
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 80.01 110.49 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d18f6b3a-9e4c-4f27-8a1d-5c9b3e7f2a64")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 80.01 106.68 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f6e3a9c1-8d47-4b2e-9a5f-7c1e6d3b8a92")
+		(property "Reference" "R_STAT2"
+			(at 82.042 106.68 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10kΩ"
+			(at 80.01 106.68 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 78.232 106.68 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 80.01 106.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 80.01 106.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a4e8d2c6-5f19-4b3a-8e6d-9c2f5a7b1e84")
+		)
+		(pin "2"
+			(uuid "b9f3e6a2-7c8d-4e1f-9a3b-6d5c8e2f4a17")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/21935953-32a0-46ad-8079-8177920c6978/a161eba2-5cf9-4e54-b23a-cab3e9f70ed0"
+					(reference "R_STAT2")
 					(unit 1)
 				)
 			)

@@ -33,6 +33,8 @@ project:
 # STICK_X     - Thumbstick X axis (pin 5, ADC1_CH4)
 # STICK_Y     - Thumbstick Y axis (pin 6, ADC1_CH5)
 # STAT1       - bq25185 charge status pin 1 (open-drain, pin 39)
+# STAT2       - bq25185 charge status pin 2 (open-drain, pin 34) — combined
+#               with STAT1 to fully decode charging/done/fault states
 # RGB_DIN     - WS2812 NeoPixel data in (pin 37)
 # PWR_EN      - TLV62569 EN signal, driven by soft latch PFET drain
 # PWR_GATE    - PFET gate node (pulled HIGH by default = off)
@@ -143,8 +145,9 @@ groups:
   # VIN    <- VBUS (5V USB)
   # SYS    -> VSYS rail
   # BAT    <-> VBAT
-  # STAT1  -> GP20 (open-drain, 10kΩ pull-up to 3V3)
-  # STAT2  -> not connected (left floating)
+  # STAT1  -> MCU pin 39 (GPIO1, open-drain, 10kΩ pull-up to 3V3)
+  # STAT2  -> MCU pin 34 (GPIO41, open-drain, 10kΩ pull-up to 3V3) — STAT1+
+  #           STAT2 together fully decode charging/done/fault states
   # ISET   -> R_ISET to GND. ICHG = 300 AΩ / RISET.
   #           RISET = 600Ω -> ~500mA charge current
   # ILIM/VSET -> R_VSET = 18kΩ -> 4.2V VBATREG, 500mA input limit
@@ -205,6 +208,11 @@ groups:
         sheet: Power_Charger
         value: 10kΩ
         footprint: Resistor_SMD:R_0402_1005Metric
+      R_STAT2:
+        symbol: Device:R
+        sheet: Power_Charger
+        value: 10kΩ
+        footprint: Resistor_SMD:R_0402_1005Metric
     connections:
       - net: VSYS
         global: true
@@ -222,8 +230,10 @@ groups:
         pins: [U_CHG:BAT, C_BAT:1, PF_VBAT:1]
       - net: STAT1
         pins: [U_CHG:STAT1, R_STAT1:1, U_MCU:39]
+      - net: STAT2
+        pins: [U_CHG:STAT2, R_STAT2:1, U_MCU:34]
       - net: 3V3
-        pins: [R_STAT1:2]
+        pins: [R_STAT1:2, R_STAT2:2]
       - net: GND
         pins: [U_CHG:GND, C_VIN_1:2, C_VIN_2:2, C_SYS_1:2, C_SYS_2:2,
                C_BAT:2, R_ISET:2, R_VSET:2, R_TS:2, "U_CHG:~{CE}",
@@ -966,8 +976,10 @@ groups:
 # 12. Macro buttons are direct-wired (no scan matrix, no anti-ghosting
 #     diodes needed) — see MCU_Core section for why.
 #
-# 13. STAT2 on bq25185 left floating (not connected). STAT1 alone provides
-#     sufficient charge state indication for firmware/display use.
+# 13. STAT2 on bq25185 wired to R_STAT2 (10kΩ pull-up to 3V3) and MCU pin 34
+#     (GPIO41). STAT1 alone only tells firmware "charging vs not" — STAT1+
+#     STAT2 together fully decode the charger's 4 states (charging, done,
+#     recoverable fault, latched fault) per the datasheet's status table.
 #
 # 14. XBee footprint: Xbee3:XB324Z8UTJ (real THT footprint, same one
 #     already validated on the Amidala board — sourced from the vendor's
@@ -1005,6 +1017,9 @@ sheets:
       - name: "STAT1"
         shape: output
         position: [500.38, 199.39]
+      - name: "STAT2"
+        shape: output
+        position: [515.62, 199.39]
   Power_Buck:
     path: power_buck
     position: [699.77, 0]
@@ -1053,6 +1068,9 @@ sheets:
       - name: "STAT1"
         shape: input
         position: [877.57, 350.52]
+      - name: "STAT2"
+        shape: input
+        position: [905.51, 350.52]
       - name: "PWR_BTN_SENSE"
         shape: bidirectional
         position: [934.72, 350.52]
