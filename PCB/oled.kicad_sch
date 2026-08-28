@@ -684,7 +684,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "SM04B-SRSS-TB"
+		(property "Manufacturer_Part_Number" "SM04B-SRSS-TB(LF)(SN)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)

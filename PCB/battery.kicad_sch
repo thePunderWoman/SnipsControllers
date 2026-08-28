@@ -283,7 +283,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "S2B-PH-K"
+		(property "Manufacturer_Part_Number" "S2B-PH-K(LF)(SN)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
