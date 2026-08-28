@@ -1500,6 +1500,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C165948"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "A1"
 			(uuid "f52999cc-5a46-499f-b5d2-d01c958a10d9")
 		)
@@ -1644,6 +1655,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C105872"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "7fa224d0-dc31-454f-aea7-bd60f9eb8642")
 		)
@@ -1743,6 +1765,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C105872"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "890a4137-2d4b-4392-84ea-88318f7765b5")
 		)
@@ -1832,6 +1865,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "PESD5V0S1BA,115"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C19224"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)

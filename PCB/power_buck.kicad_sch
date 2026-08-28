@@ -1023,6 +1023,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C327361"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "05dcd6f6-387e-48f4-9064-0f4acb53209e")
 		)
@@ -1112,6 +1123,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "SRN4018-2R2M"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C913207"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1214,6 +1236,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "TLV62569DBVR"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C141836"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1334,6 +1367,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C2982567"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "b86fe2e6-6f7e-4e4b-9160-dc51d3242465")
 		)
@@ -1413,7 +1457,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "TDK"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1424,7 +1468,18 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0805KRX5R7BB226"
+		(property "Manufacturer_Part_Number" "C2012X5R1C226KT000E"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C76637"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1524,6 +1579,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "RC0402FR-0756K2L"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C183355"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
