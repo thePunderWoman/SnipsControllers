@@ -189,6 +189,11 @@ wired per Amidala's actual netlist: DTR tied to GND, ON_SLEEP and SPI_ATTN
 to pins 22/8. SPI_ATTN in particular is the XBee's data-ready interrupt —
 needed for reliable SPI transfers, not just a nice-to-have.
 
+SPI_ATTN also doubles as the module's BOOTMODE strap; Digi's XBee3 Hardware
+Reference Manual (doc 90001543) says not to let it be tied/pulled low at
+reset. R_XBEE_ATTN_PU1 (10kΩ to 3V3) holds it high before firmware
+configures the pin, same pattern as R_XBEE_RST1 on RESET.
+
 VCC decoupling: 100nF + 1µF + 47pF + 10µF (C_XBEE_VCC1-4), per the Digi
 XBee3 RF Module Hardware Reference Manual (doc 90001543, p.52) rather than
 guessed — the manual calls for 1.0µF + 47pF near VCC plus a 10µF, placed

@@ -891,6 +891,16 @@
 		)
 		(uuid "9c881093-001b-4586-ae33-4f55021ee85c")
 	)
+	(label "XBEE_SPI_ATTN"
+		(at 210.82 114.3 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f5bee5e8-57b6-40b8-8373-8d6f306ee530")
+	)
 	(global_label "GND"
 		(shape passive)
 		(at 134.62 143.51 270)
@@ -950,6 +960,29 @@
 		(uuid "0f723e96-bb6c-4096-a5f6-c3c3717fe93c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 195.58 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape passive)
+		(at 210.82 106.68 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "320abc8b-7ca8-4525-b42a-a8e1c0ae61c6")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 210.82 106.68 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1962,6 +1995,105 @@
 			(project "snips_controller"
 				(path "/21935953-32a0-46ad-8079-8177920c6978/4f95850f-f8fc-4b0b-b598-e710af0bb56d"
 					(reference "R_XBEE_RST1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 210.82 110.49 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9535c349-ffaa-4655-81d6-86e39b3c7625")
+		(property "Reference" "R_XBEE_ATTN_PU1"
+			(at 212.852 110.49 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10kΩ"
+			(at 210.82 110.49 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 209.042 110.49 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 210.82 110.49 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 210.82 110.49 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "Yageo"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "06ecee8b-6f4f-46aa-9a13-d93986cfd509")
+		)
+		(pin "2"
+			(uuid "367f11d9-834d-4363-9d6c-5f876bcbdd17")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/21935953-32a0-46ad-8079-8177920c6978/4f95850f-f8fc-4b0b-b598-e710af0bb56d"
+					(reference "R_XBEE_ATTN_PU1")
 					(unit 1)
 				)
 			)
