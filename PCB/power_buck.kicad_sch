@@ -1213,7 +1213,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "TLV62569DBV"
+		(property "Manufacturer_Part_Number" "TLV62569DBVR"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
