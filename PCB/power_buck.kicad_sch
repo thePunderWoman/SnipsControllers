@@ -1457,7 +1457,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "TDK"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1468,7 +1468,18 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0805KRX5R7BB226"
+		(property "Manufacturer_Part_Number" "C2012X5R1C226KT000E"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C76637"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)

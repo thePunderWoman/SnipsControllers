@@ -2428,7 +2428,7 @@
 				)
 			)
 		)
-		(property "Value" "600Ω"
+		(property "Value" "604Ω"
 			(at 148.59 92.71 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2479,7 +2479,18 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07600RL"
+		(property "Manufacturer_Part_Number" "AC0402FR-07604RL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C227167"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
