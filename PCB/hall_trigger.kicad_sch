@@ -602,6 +602,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C131394"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "f35b55d5-d3ef-4479-8d04-3478a4e5c87c")
 		)

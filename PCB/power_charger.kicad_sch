@@ -1389,6 +1389,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C138044"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "254ddaa5-b7fe-46c5-a222-c897dfd02cb1")
 		)
@@ -1480,6 +1491,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C131394"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1612,6 +1634,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C60490"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "a4e8d2c6-5f19-4b3a-8e6d-9c2f5a7b1e84")
 		)
@@ -1701,6 +1734,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C60490"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1802,6 +1846,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "CC0805KRX5R7BB106"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C2982567"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2074,6 +2129,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C19725033"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "9ace214d-7a94-4eb6-9ba0-38a30223f2ff")
 		)
@@ -2202,6 +2268,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C2982567"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "d9a03c3e-b52d-47f5-a8ea-2cf993b37b69")
 		)
@@ -2293,6 +2370,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C131394"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2503,6 +2591,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C2982567"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "6fb08fba-3ab2-4023-b8a8-141de06f8e51")
 		)
@@ -2592,6 +2691,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C60490"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)

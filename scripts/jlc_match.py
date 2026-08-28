@@ -55,6 +55,7 @@ def export_bom(kicad_cli, sch_path):
                 "--fields", "Reference,Value,Footprint,MF,Manufacturer_Part_Number,DNP",
                 "--labels", "Refs,Value,Footprint,MF,MPN,DNP",
                 "--group-by", "MF,Manufacturer_Part_Number,Value,Footprint",
+                "--ref-range-delimiter", "",
                 "-o", out_path,
                 str(sch_path),
             ],

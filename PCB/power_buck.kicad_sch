@@ -1023,6 +1023,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C327361"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "05dcd6f6-387e-48f4-9064-0f4acb53209e")
 		)
@@ -1112,6 +1123,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "SRN4018-2R2M"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C913207"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1224,6 +1246,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C141836"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "2b633135-0da7-428b-89ee-962eb0120cfc")
 		)
@@ -1324,6 +1357,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "CC0805KRX5R7BB106"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C2982567"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1524,6 +1568,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "RC0402FR-0756K2L"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C183355"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)

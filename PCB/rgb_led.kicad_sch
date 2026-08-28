@@ -785,6 +785,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C131394"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "68137eea-831c-4412-9eee-b018aeb9163a")
 		)
@@ -874,6 +885,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "RC0402FR-07330RL"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C105875"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -977,6 +999,17 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "SK6812MINI-E"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C5149201"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
