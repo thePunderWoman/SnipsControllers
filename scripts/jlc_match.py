@@ -33,7 +33,19 @@ JLC_SEARCH_URL = (
     "https://jlcpcb.com/api/overseas-pcb-order/v1/"
     "shoppingCart/smtGood/selectSmtComponentList/v2"
 )
-FIELDNAMES = ["Refs", "Value", "Footprint", "MF", "MPN", "LCSC", "LibraryType", "Status"]
+FIELDNAMES = [
+    "Refs", "Value", "Footprint", "MF", "MPN", "LCSC", "LibraryType", "BasicAlt", "Status",
+]
+
+# JLC's "Extended" library carries a per-unique-part setup fee on top of unit
+# price; "Basic" doesn't. That fee doesn't amortize well on a board with many
+# distinct low-quantity parts, so it's worth flagging a cheaper Basic-library
+# equivalent whenever the real match landed on Extended.
+PACKAGE_RE = re.compile(
+    r"(0201|0402|0603|0805|1206|1210|1812|2010|2512|"
+    r"SOT-?23-?\d*|SOD-?\d+|SOIC-?\d*|SOP-?\d*|QFN-?\d*|TO-?\d+|SMA|SMB|SMC)",
+    re.IGNORECASE,
+)
 
 
 def find_kicad_cli():
@@ -147,6 +159,40 @@ def match_row(mf, mpn):
     return best_match(mf, candidates)
 
 
+def extract_package(footprint):
+    m = PACKAGE_RE.search(footprint or "")
+    return m.group(1) if m else None
+
+
+def clean_value(value):
+    return (value or "").replace("Ω", "").replace("µ", "u").strip()
+
+
+def find_basic_alternative(value, footprint, exclude_lcsc):
+    """Best-effort search for a Basic-library part with the same value/package.
+
+    Only meaningful for generic passives (resistors/caps/etc.) where JLC's
+    Basic library commonly stocks an equivalent -- for branded/mechanical
+    parts (connectors, modules, specific ICs) this will usually just find
+    nothing, which is the correct answer to report.
+    """
+    package = extract_package(footprint)
+    if not package:
+        return None
+    keyword = f"{clean_value(value)} {package}".strip()
+    if not keyword:
+        return None
+    candidates = [
+        c for c in search_jlc(keyword)
+        if normalize(c.get("componentLibraryType")) == "BASE"
+        and c.get("componentCode") != exclude_lcsc
+        and package.upper() in (c.get("componentSpecificationEn") or "").upper()
+    ]
+    if not candidates:
+        return None
+    return max(candidates, key=lambda c: c.get("stockCount", 0))
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
@@ -163,23 +209,40 @@ def main():
     for row in rows:
         mf, mpn, dnp = row["MF"].strip(), row["MPN"].strip(), row.get("DNP", "").strip()
         if dnp:
-            results.append({**row, "LCSC": "", "LibraryType": "", "Status": "DNP, skipped"})
+            results.append({**row, "LCSC": "", "LibraryType": "", "BasicAlt": "", "Status": "DNP, skipped"})
             continue
         if not mf or not mpn:
-            results.append({**row, "LCSC": "", "LibraryType": "", "Status": "missing MF/MPN"})
+            results.append({**row, "LCSC": "", "LibraryType": "", "BasicAlt": "", "Status": "missing MF/MPN"})
             continue
         try:
             match, status = match_row(mf, mpn)
         except (urllib.error.URLError, TimeoutError) as e:
-            results.append({**row, "LCSC": "", "LibraryType": "", "Status": f"lookup failed: {e}"})
+            results.append({**row, "LCSC": "", "LibraryType": "", "BasicAlt": "", "Status": f"lookup failed: {e}"})
             continue
+        time.sleep(args.delay)
+
+        lcsc = (match or {}).get("componentCode", "")
+        library_type = (match or {}).get("componentLibraryType", "")
+        basic_alt = ""
+        if match and normalize(library_type) != "BASE":
+            try:
+                alt = find_basic_alternative(row["Value"], row["Footprint"], lcsc)
+            except (urllib.error.URLError, TimeoutError):
+                alt = None
+            if alt:
+                basic_alt = alt.get("componentCode", "")
+                status += f" | ALERT: Basic-library alternative available ({basic_alt}, stock={alt.get('stockCount', 0)}) -- review before ordering"
+            else:
+                status += " | Extended library, no Basic-library alternative found"
+            time.sleep(args.delay)
+
         results.append({
             **row,
-            "LCSC": (match or {}).get("componentCode", ""),
-            "LibraryType": (match or {}).get("componentLibraryType", ""),
+            "LCSC": lcsc,
+            "LibraryType": library_type,
+            "BasicAlt": basic_alt,
             "Status": status,
         })
-        time.sleep(args.delay)
 
     width = {k: max(len(k), *(len(r.get(k, "")) for r in results)) for k in FIELDNAMES}
     header = "  ".join(k.ljust(width[k]) for k in FIELDNAMES)
