@@ -2014,7 +2014,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2027,7 +2027,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2040,7 +2040,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2537,7 +2537,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2550,7 +2550,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2563,7 +2563,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3225,7 +3225,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3238,7 +3238,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3251,7 +3251,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3913,7 +3913,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3926,7 +3926,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3939,7 +3939,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -4099,7 +4099,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -4112,7 +4112,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07100RL"
+		(property "Manufacturer_Part_Number" "0402WGF1000TCE"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -4125,7 +4125,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C106232"
+		(property "LCSC" "C25076"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -4898,7 +4898,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -4911,7 +4911,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -4924,7 +4924,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -6781,7 +6781,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -6794,7 +6794,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-075K1L"
+		(property "Manufacturer_Part_Number" "0402WGF5101TCE"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -6807,7 +6807,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C105872"
+		(property "LCSC" "C25905"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -6967,7 +6967,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -6980,7 +6980,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0603KRX5R7BB106"
+		(property "Manufacturer_Part_Number" "CL10A106KP8NNNC"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -6993,7 +6993,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C2936601"
+		(property "LCSC" "C19702"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -7261,7 +7261,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -7274,7 +7274,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -7287,7 +7287,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -9359,7 +9359,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -9372,7 +9372,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0603KRX5R7BB105"
+		(property "Manufacturer_Part_Number" "CL10A105KB8NNNC"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -9385,7 +9385,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C106215"
+		(property "LCSC" "C15849"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -9801,7 +9801,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -9814,7 +9814,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -9827,7 +9827,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -9954,7 +9954,7 @@
 				)
 			)
 		)
-		(property "Value" "330Ω"
+		(property "Value" "470Ω"
 			(at 0 1 90)
 			(layer "F.Fab")
 			(uuid "ae970078-388a-4ae9-a4f0-de4b2bf6cdbe")
@@ -9987,7 +9987,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10000,7 +10000,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07330RL"
+		(property "Manufacturer_Part_Number" "0402WGF4700TCE"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10013,7 +10013,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C105875"
+		(property "LCSC" "C25117"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10173,7 +10173,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10186,7 +10186,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-075K1L"
+		(property "Manufacturer_Part_Number" "0402WGF5101TCE"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10199,7 +10199,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C105872"
+		(property "LCSC" "C25905"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10359,7 +10359,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10372,7 +10372,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10385,7 +10385,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10653,7 +10653,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10666,7 +10666,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0603KRX5R7BB106"
+		(property "Manufacturer_Part_Number" "CL10A106KP8NNNC"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10679,7 +10679,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C2936601"
+		(property "LCSC" "C19702"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10840,7 +10840,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10853,7 +10853,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07200KL"
+		(property "Manufacturer_Part_Number" "0402WGF2003TCE"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -10866,7 +10866,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C114763"
+		(property "LCSC" "C25764"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -11639,7 +11639,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "FH (Guangdong Fenghua Advanced Tech)"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -11652,7 +11652,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402JRNPO9BN470"
+		(property "Manufacturer_Part_Number" "0402CG470J500NT"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -11665,7 +11665,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60137"
+		(property "LCSC" "C1567"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -12252,7 +12252,7 @@
 				)
 			)
 		)
-		(property "MF" "HRE"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -12265,7 +12265,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CGA0805X5R106K160MT"
+		(property "Manufacturer_Part_Number" "CL21A106KAYNNNE"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -12278,7 +12278,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C6119886"
+		(property "LCSC" "C15850"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -13049,7 +13049,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -13062,7 +13062,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07100KL"
+		(property "Manufacturer_Part_Number" "0402WGF1003TCE"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -13075,7 +13075,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60491"
+		(property "LCSC" "C25741"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -13343,7 +13343,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -13356,7 +13356,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -13369,7 +13369,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -13542,7 +13542,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -13555,7 +13555,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -13568,7 +13568,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -14354,7 +14354,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -14367,7 +14367,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -14380,7 +14380,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -14544,7 +14544,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -14558,7 +14558,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07100KL"
+		(property "Manufacturer_Part_Number" "0402WGF1003TCE"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -14572,7 +14572,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C60491"
+		(property "LCSC" "C25741"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -14738,7 +14738,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "HRE"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -14752,7 +14752,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CGA0805X5R106K160MT"
+		(property "Manufacturer_Part_Number" "CL21A106KAYNNNE"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -14766,7 +14766,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C6119886"
+		(property "LCSC" "C15850"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16148,7 +16148,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16162,7 +16162,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16176,7 +16176,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16342,7 +16342,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "HRE"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16356,7 +16356,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CGA0805X5R106K160MT"
+		(property "Manufacturer_Part_Number" "CL21A106KAYNNNE"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16370,7 +16370,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C6119886"
+		(property "LCSC" "C15850"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16536,7 +16536,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "TDK"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16550,7 +16550,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "C2012X5R1C226KT000E"
+		(property "Manufacturer_Part_Number" "CL21A226MAQNNNE"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16564,7 +16564,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C76637"
+		(property "LCSC" "C45783"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16730,7 +16730,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16744,7 +16744,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07100KL"
+		(property "Manufacturer_Part_Number" "0402WGF1003TCE"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16758,7 +16758,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C60491"
+		(property "LCSC" "C25741"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16956,7 +16956,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Diodes Incorporated"
+		(property "MF" "ST(Semtech)"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16970,7 +16970,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "1N4148W-7-F"
+		(property "Manufacturer_Part_Number" "1N4148W"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16984,7 +16984,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C83528"
+		(property "LCSC" "C81598"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18282,7 +18282,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "HRE"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18296,7 +18296,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CGA0805X5R106K160MT"
+		(property "Manufacturer_Part_Number" "CL21A106KAYNNNE"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18310,7 +18310,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C6119886"
+		(property "LCSC" "C15850"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18476,7 +18476,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18490,7 +18490,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18504,7 +18504,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18670,7 +18670,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18684,7 +18684,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07100KL"
+		(property "Manufacturer_Part_Number" "0402WGF1003TCE"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18698,7 +18698,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C60491"
+		(property "LCSC" "C25741"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18864,7 +18864,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "onsemi"
+		(property "MF" "Jiangsu Changjing Electronics Technology Co., Ltd."
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18878,7 +18878,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "2N7002LT1G"
+		(property "Manufacturer_Part_Number" "2N7002"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18892,7 +18892,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C16338"
+		(property "LCSC" "C8545"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19281,7 +19281,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19295,7 +19295,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19309,7 +19309,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19754,7 +19754,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "HRE"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19768,7 +19768,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CGA0805X5R106K160MT"
+		(property "Manufacturer_Part_Number" "CL21A106KAYNNNE"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19782,7 +19782,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C6119886"
+		(property "LCSC" "C15850"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -20896,7 +20896,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -20910,7 +20910,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -20924,7 +20924,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -21497,7 +21497,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Diodes Incorporated"
+		(property "MF" "ST(Semtech)"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -21511,7 +21511,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "1N4148W-7-F"
+		(property "Manufacturer_Part_Number" "1N4148W"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -21525,7 +21525,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C83528"
+		(property "LCSC" "C81598"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -22055,7 +22055,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -22069,7 +22069,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -22083,7 +22083,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -22637,7 +22637,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -22651,7 +22651,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -22665,7 +22665,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -24087,7 +24087,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -24101,7 +24101,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -24115,7 +24115,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
