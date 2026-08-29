@@ -763,7 +763,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -774,7 +774,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -785,7 +785,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)

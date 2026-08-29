@@ -2476,7 +2476,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2487,7 +2487,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0603KRX5R7BB106"
+		(property "Manufacturer_Part_Number" "CL10A106KP8NNNC"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2498,7 +2498,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C2936601"
+		(property "LCSC" "C19702"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2892,7 +2892,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2903,7 +2903,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2914,7 +2914,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3114,7 +3114,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3125,7 +3125,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3136,7 +3136,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3224,7 +3224,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3235,7 +3235,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07200KL"
+		(property "Manufacturer_Part_Number" "0402WGF2003TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3246,7 +3246,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C114763"
+		(property "LCSC" "C25764"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3629,7 +3629,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3640,7 +3640,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07100KL"
+		(property "Manufacturer_Part_Number" "0402WGF1003TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3651,7 +3651,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60491"
+		(property "LCSC" "C25741"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3741,7 +3741,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3752,7 +3752,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3763,7 +3763,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
