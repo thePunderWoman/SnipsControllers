@@ -833,7 +833,7 @@
 				)
 			)
 		)
-		(property "Value" "330Ω"
+		(property "Value" "470Ω"
 			(at 121.92 130.81 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -873,7 +873,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -884,7 +884,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07330RL"
+		(property "Manufacturer_Part_Number" "0402WGF4700TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -895,7 +895,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C105875"
+		(property "LCSC" "C25117"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
