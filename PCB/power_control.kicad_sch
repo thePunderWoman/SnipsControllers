@@ -1652,7 +1652,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1663,7 +1663,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1674,7 +1674,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2010,7 +2010,7 @@
 				)
 			)
 		)
-		(property "MF" "Diodes Incorporated"
+		(property "MF" "ST(Semtech)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2021,7 +2021,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "1N4148W-7-F"
+		(property "Manufacturer_Part_Number" "1N4148W"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2032,7 +2032,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C83528"
+		(property "LCSC" "C81598"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2120,7 +2120,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2131,7 +2131,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07100KL"
+		(property "Manufacturer_Part_Number" "0402WGF1003TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2142,7 +2142,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60491"
+		(property "LCSC" "C25741"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2230,7 +2230,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2241,7 +2241,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2252,7 +2252,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2340,7 +2340,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2351,7 +2351,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07100KL"
+		(property "Manufacturer_Part_Number" "0402WGF1003TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2362,7 +2362,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60491"
+		(property "LCSC" "C25741"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2472,7 +2472,7 @@
 				)
 			)
 		)
-		(property "MF" "Diodes Incorporated"
+		(property "MF" "ST(Semtech)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2483,7 +2483,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "1N4148W-7-F"
+		(property "Manufacturer_Part_Number" "1N4148W"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2494,7 +2494,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C83528"
+		(property "LCSC" "C81598"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2584,7 +2584,7 @@
 				)
 			)
 		)
-		(property "MF" "onsemi"
+		(property "MF" "Jiangsu Changjing Electronics Technology Co., Ltd."
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2595,7 +2595,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "2N7002LT1G"
+		(property "Manufacturer_Part_Number" "2N7002"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2606,7 +2606,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C16338"
+		(property "LCSC" "C8545"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2697,7 +2697,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2708,7 +2708,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07100KL"
+		(property "Manufacturer_Part_Number" "0402WGF1003TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2719,7 +2719,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60491"
+		(property "LCSC" "C25741"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)

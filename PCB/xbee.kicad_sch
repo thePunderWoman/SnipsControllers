@@ -1353,7 +1353,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "FH (Guangdong Fenghua Advanced Tech)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1364,7 +1364,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402JRNPO9BN470"
+		(property "Manufacturer_Part_Number" "0402CG470J500NT"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1375,7 +1375,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60137"
+		(property "LCSC" "C1567"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1673,7 +1673,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1684,7 +1684,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0603KRX5R7BB105"
+		(property "Manufacturer_Part_Number" "CL10A105KB8NNNC"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1695,7 +1695,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C106215"
+		(property "LCSC" "C15849"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1785,7 +1785,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1796,7 +1796,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0603KRX5R7BB106"
+		(property "Manufacturer_Part_Number" "CL10A106KP8NNNC"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1807,7 +1807,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C2936601"
+		(property "LCSC" "C19702"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1897,7 +1897,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1908,7 +1908,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1919,7 +1919,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2007,7 +2007,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2018,7 +2018,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2029,7 +2029,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2117,7 +2117,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2128,7 +2128,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-0710KL"
+		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2139,7 +2139,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C60490"
+		(property "LCSC" "C25744"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2227,7 +2227,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2238,7 +2238,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-07100RL"
+		(property "Manufacturer_Part_Number" "0402WGF1000TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2249,7 +2249,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C106232"
+		(property "LCSC" "C25076"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2339,7 +2339,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2350,7 +2350,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0402KRX7R9BB104"
+		(property "Manufacturer_Part_Number" "CL05B104KO5NNNC"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2361,7 +2361,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C131394"
+		(property "LCSC" "C1525"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)

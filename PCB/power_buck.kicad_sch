@@ -1345,7 +1345,7 @@
 				)
 			)
 		)
-		(property "MF" "HRE"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1356,7 +1356,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CGA0805X5R106K160MT"
+		(property "Manufacturer_Part_Number" "CL21A106KAYNNNE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1367,7 +1367,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C6119886"
+		(property "LCSC" "C15850"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1457,7 +1457,7 @@
 				)
 			)
 		)
-		(property "MF" "TDK"
+		(property "MF" "Samsung Electro-Mechanics"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1468,7 +1468,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "C2012X5R1C226KT000E"
+		(property "Manufacturer_Part_Number" "CL21A226MAQNNNE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1479,7 +1479,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C76637"
+		(property "LCSC" "C45783"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)

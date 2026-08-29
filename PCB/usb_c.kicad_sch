@@ -1633,7 +1633,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1644,7 +1644,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-075K1L"
+		(property "Manufacturer_Part_Number" "0402WGF5101TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1655,7 +1655,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C105872"
+		(property "LCSC" "C25905"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1743,7 +1743,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1754,7 +1754,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "RC0402FR-075K1L"
+		(property "Manufacturer_Part_Number" "0402WGF5101TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1765,7 +1765,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C105872"
+		(property "LCSC" "C25905"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
