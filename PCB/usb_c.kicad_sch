@@ -1853,7 +1853,7 @@
 				)
 			)
 		)
-		(property "MF" "Nexperia"
+		(property "MF" "TECH PUBLIC"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1864,7 +1864,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "PESD5V0S1BA,115"
+		(property "Manufacturer_Part_Number" "TPPESD5V0S1BA"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1875,7 +1875,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C19224"
+		(property "LCSC" "C587144"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)

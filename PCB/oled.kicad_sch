@@ -791,7 +791,7 @@
 				)
 			)
 		)
-		(property "MF" "Yageo"
+		(property "MF" "HRE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -802,7 +802,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CC0805KRX5R7BB106"
+		(property "Manufacturer_Part_Number" "CGA0805X5R106K160MT"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -813,7 +813,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C2982567"
+		(property "LCSC" "C6119886"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)

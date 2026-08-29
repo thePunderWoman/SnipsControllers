@@ -1886,7 +1886,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "DMG2305UX-7"
+		(property "Manufacturer_Part_Number" "DMG2305UX-13"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -1897,7 +1897,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C150470"
+		(property "LCSC" "C144153"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
