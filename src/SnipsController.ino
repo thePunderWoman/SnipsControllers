@@ -4,7 +4,9 @@
 #include "oled.h"
 #include "pin_assignment.h"
 #include "power_latch.h"
+#include "rgb_led.h"
 #include "screen.h"
+#include "status_led.h"
 
 // Pure entry point — wiring only. All real logic lives in dedicated
 // subsystem files under src/ + include/; this file just owns real
@@ -15,6 +17,8 @@ namespace {
 PowerOffDetector powerOffDetector;
 ButtonPanel buttonPanel;
 OledDisplay oledDisplay;
+RgbLed rgbLed;
+StatusLedController statusLedController;
 bool lastReportedPressed[Buttons::kCount] = {};
 
 const char *buttonName(size_t index) {
@@ -74,6 +78,23 @@ void setup() {
   } else {
     Serial.println("OLED not found at boot.");
   }
+
+  // Bring-up check per PCB/README.md's recommended order: cycle through
+  // every status color once to prove RMT output on the real LED. Real
+  // state (connected/charging/error) gets driven by later PRs once there's
+  // an XBee link and charge-status reading to base it on; for now this
+  // just settles on "disconnected," which is accurate today.
+  rgbLed.begin();
+  const SystemState bringUpSequence[] = {
+      SystemState::kBooting, SystemState::kConnected,
+      SystemState::kDisconnected, SystemState::kCharging,
+      SystemState::kError,
+  };
+  for (SystemState state : bringUpSequence) {
+    rgbLed.show(statusLedController.colorFor(state));
+    delay(300);
+  }
+  rgbLed.show(statusLedController.colorFor(SystemState::kDisconnected));
 }
 
 void loop() {
