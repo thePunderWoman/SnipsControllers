@@ -1,8 +1,10 @@
 #include <Arduino.h>
 
 #include "buttons.h"
+#include "oled.h"
 #include "pin_assignment.h"
 #include "power_latch.h"
+#include "screen.h"
 
 // Pure entry point — wiring only. All real logic lives in dedicated
 // subsystem files under src/ + include/; this file just owns real
@@ -12,6 +14,7 @@ namespace {
 
 PowerOffDetector powerOffDetector;
 ButtonPanel buttonPanel;
+OledDisplay oledDisplay;
 bool lastReportedPressed[Buttons::kCount] = {};
 
 const char *buttonName(size_t index) {
@@ -59,6 +62,17 @@ void setup() {
   // for now state changes are just logged for bring-up).
   for (size_t i = 0; i < Buttons::kCount; ++i) {
     pinMode(Buttons::kPins[i], INPUT_PULLUP);
+  }
+
+  // Real screen content (menus, complications, gesture feedback) lands in
+  // later PRs. For now this just proves the display works end to end.
+  if (oledDisplay.begin()) {
+    ScreenBuffer bootScreen;
+    bootScreen.setLine(0, "Snips Controller");
+    bootScreen.setLine(1, "OLED OK");
+    oledDisplay.render(bootScreen);
+  } else {
+    Serial.println("OLED not found at boot.");
   }
 }
 
