@@ -1,5 +1,6 @@
 #include <Arduino.h>
 
+#include "buttons.h"
 #include "pin_assignment.h"
 #include "power_latch.h"
 
@@ -10,6 +11,26 @@
 namespace {
 
 PowerOffDetector powerOffDetector;
+ButtonPanel buttonPanel;
+bool lastReportedPressed[Buttons::kCount] = {};
+
+const char *buttonName(size_t index) {
+  switch (index) {
+    case Buttons::kMacro1: return "Macro1";
+    case Buttons::kMacro2: return "Macro2";
+    case Buttons::kMacro3: return "Macro3";
+    case Buttons::kMacro4: return "Macro4";
+    case Buttons::kMacro5: return "Macro5";
+    case Buttons::kMacro6: return "Macro6";
+    case Buttons::kBumper: return "Bumper";
+    case Buttons::kStickClick: return "StickClick";
+    case Buttons::kLeftUp: return "LeftUp";
+    case Buttons::kLeftDown: return "LeftDown";
+    case Buttons::kRightUp: return "RightUp";
+    case Buttons::kRightDown: return "RightDown";
+    default: return "Unknown";
+  }
+}
 
 }  // namespace
 
@@ -30,17 +51,40 @@ void setup() {
   // held), no internal pull needed. Confirm against real hardware during
   // this PR's bring-up milestone and flip here if wrong.
   pinMode(PinAssignment::kPowerButtonSense, INPUT);
+
+  // All buttons wire to GND with the internal pull-up enabled, so LOW =
+  // pressed. No classification happens here — Amidala owns single/double/
+  // long-press and alt semantics centrally; this firmware only reports
+  // debounced raw press/release (packet protocol lands in a later PR, so
+  // for now state changes are just logged for bring-up).
+  for (size_t i = 0; i < Buttons::kCount; ++i) {
+    pinMode(Buttons::kPins[i], INPUT_PULLUP);
+  }
 }
 
 void loop() {
+  const unsigned long now = millis();
+
   const bool powerButtonHeld =
       digitalRead(PinAssignment::kPowerButtonSense) == HIGH;
 
-  if (powerOffDetector.update(powerButtonHeld, millis())) {
+  if (powerOffDetector.update(powerButtonHeld, now)) {
     // The real graceful-shutdown sequence (notify Amidala, OLED message,
     // then drive the latch pin low) lands in a later PR once the packet
     // protocol and display exist. For now, just prove the hold is detected.
     Serial.println(
         "Power button held 3s - shutdown sequence would run here (PR 9).");
+  }
+
+  for (size_t i = 0; i < Buttons::kCount; ++i) {
+    const bool rawPressed = digitalRead(Buttons::kPins[i]) == LOW;
+    buttonPanel.update(i, rawPressed, now);
+
+    const bool pressed = buttonPanel.isPressed(i);
+    if (pressed != lastReportedPressed[i]) {
+      lastReportedPressed[i] = pressed;
+      Serial.print(buttonName(i));
+      Serial.println(pressed ? " pressed" : " released");
+    }
   }
 }
