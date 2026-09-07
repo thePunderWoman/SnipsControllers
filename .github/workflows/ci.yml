@@ -32,10 +32,10 @@ jobs:
 
       - name: Coverage report
         run: |
-          output=$(gcovr --root . --filter 'src/' --exclude 'src/SnipsController\.ino' --print-summary --fail-under-line 90)
+          output=$(gcovr --root . --filter 'src/' --exclude 'src/SnipsController\.ino' --exclude 'src/oled\.cpp' --print-summary --fail-under-line 90)
           status=$?
           {
-            echo '### Coverage (src/, excluding SnipsController.ino)'
+            echo '### Coverage (src/, excluding SnipsController.ino and hardware adapters)'
             echo '```'
             echo "$output"
             echo '```'
