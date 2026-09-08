@@ -521,6 +521,22 @@ void test_render_device_info() {
   menu.onEnter(0, 0, 0);
   renderMenuScreen(menu, &screen);
   TEST_ASSERT_EQUAL_STRING("Device Info", screen.line(0));
+  // Default before SnipsController.ino ever calls setDeviceSerialLow().
+  TEST_ASSERT_EQUAL_STRING("(unknown)", screen.line(2));
+}
+
+void test_device_serial_low_defaults_then_reflects_what_was_set() {
+  MenuController menu;
+  ScreenBuffer screen;
+  TEST_ASSERT_EQUAL_STRING("(unknown)", menu.deviceSerialLow());
+
+  menu.setDeviceSerialLow("41A7B3C2");
+  TEST_ASSERT_EQUAL_STRING("41A7B3C2", menu.deviceSerialLow());
+
+  selectMainMenuItem(&menu, MainMenuItem::kDeviceInfo);
+  menu.onEnter(0, 0, 0);
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("41A7B3C2", screen.line(2));
 }
 
 void test_render_factory_reset_confirm() {
@@ -675,6 +691,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_render_stick_calibration_awaiting_center_step_text);
   RUN_TEST(test_render_stick_calibration_rolling_step_text);
   RUN_TEST(test_render_device_info);
+  RUN_TEST(test_device_serial_low_defaults_then_reflects_what_was_set);
   RUN_TEST(test_render_factory_reset_confirm);
   RUN_TEST(test_render_switch_droid_list_empty);
   RUN_TEST(test_render_switch_droid_list_marks_selected);

@@ -469,7 +469,7 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
     case MenuScreen::kDeviceInfo:
       screen->setLine(0, "Device Info");
       screen->setLine(1, "XBee SL:");
-      screen->setLine(2, "(needs PR 8)");
+      screen->setLine(2, menu.deviceSerialLow());
       break;
 
     case MenuScreen::kFactoryResetConfirm:

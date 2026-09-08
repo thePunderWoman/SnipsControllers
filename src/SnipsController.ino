@@ -28,7 +28,8 @@ StatusLedController statusLedController;
 BatteryMonitor batteryMonitor;
 CalibrationData calibrationData;
 MenuController menuController;
-XbeeControl xbeeControl;  // stub pending PR 8's real XBee SPI transport
+XbeeControl xbeeControl;
+char deviceSerialLowBuf[9] = {};  // must outlive setup() — see its use below
 bool lastReportedPressed[Buttons::kCount] = {};
 unsigned long lastTelemetryLogMs = 0;
 constexpr unsigned long kTelemetryLogIntervalMs = 1000;
@@ -111,10 +112,22 @@ void setup() {
   calibrationData = CalibrationStore::load();
 
   // Restores any previously-saved droid list; defaults to empty if none
-  // has been saved yet. Switching still won't actually work over radio
-  // until PR 8's real XBee SPI transport replaces the XbeeControl stub.
+  // has been saved yet.
   menuController.setDroidStore(DroidPersistence::load());
+
+  xbeeControl.begin();
   menuController.setXbeeTransport(&xbeeControl);
+
+  // The module's SL is fixed hardware, so querying it once at boot (for
+  // the Device Info screen) is enough — no need to re-query per menu
+  // visit. deviceSerialLowBuf must outlive setup() since MenuController
+  // only stores the pointer it's given, not a copy.
+  if (xbeeControl.querySerialLow(deviceSerialLowBuf,
+                                 sizeof(deviceSerialLowBuf))) {
+    menuController.setDeviceSerialLow(deviceSerialLowBuf);
+  } else {
+    Serial.println("XBee SL query failed at boot.");
+  }
 
   // Real "normal operating" screen content (complications) lands in a
   // later PR. For now this just proves the display works end to end, and

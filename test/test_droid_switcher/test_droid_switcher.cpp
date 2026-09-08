@@ -1,6 +1,6 @@
 #include <unity.h>
 
-#include "xbee_control.h"
+#include "droid_switcher.h"
 
 void setUp(void) {}
 void tearDown(void) {}
@@ -78,14 +78,10 @@ void test_switch_reports_rejoin_failure() {
                     DroidSwitcher::switchTo("1111111111111111", &transport));
 }
 
-// ---- XbeeControl — honest stub pending PR 8's real SPI transport --------
-
-void test_xbee_control_stub_reports_failure() {
-  XbeeControl control;
-  TEST_ASSERT_FALSE(control.leaveNetwork());
-  TEST_ASSERT_FALSE(control.setPanId("1111111111111111"));
-  TEST_ASSERT_FALSE(control.rejoinNetwork());
-}
+// XbeeControl itself (the real XbeeTransport, using XbeeSpi) is
+// hardware-dependent now and excluded from native builds — see
+// platformio.ini. Nothing here instantiates it directly; DroidSwitcher is
+// tested purely against FakeTransport above.
 
 int main(int argc, char **argv) {
   UNITY_BEGIN();
@@ -94,6 +90,5 @@ int main(int argc, char **argv) {
   RUN_TEST(test_switch_stops_after_leave_failure);
   RUN_TEST(test_switch_stops_after_set_pan_failure);
   RUN_TEST(test_switch_reports_rejoin_failure);
-  RUN_TEST(test_xbee_control_stub_reports_failure);
   return UNITY_END();
 }
