@@ -32,7 +32,7 @@ jobs:
 
       - name: Coverage report
         run: |
-          output=$(gcovr --root . --filter 'src/' --exclude 'src/SnipsController\.ino' --exclude 'src/oled\.cpp' --exclude 'src/rgb_led\.cpp' --exclude 'src/calibration_store\.cpp' --exclude 'src/droid_persistence\.cpp' --exclude 'src/xbee_spi\.cpp' --exclude 'src/xbee_control\.cpp' --print-summary --fail-under-line 90)
+          output=$(gcovr --root . --filter 'src/' --exclude 'src/SnipsController\.ino' --exclude 'src/oled\.cpp' --exclude 'src/rgb_led\.cpp' --exclude 'src/calibration_store\.cpp' --exclude 'src/droid_persistence\.cpp' --exclude 'src/xbee_spi\.cpp' --exclude 'src/xbee_control\.cpp' --exclude 'src/complication_persistence\.cpp' --print-summary --fail-under-line 90)
           status=$?
           {
             echo '### Coverage (src/, excluding SnipsController.ino and hardware adapters)'

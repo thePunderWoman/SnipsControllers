@@ -38,6 +38,7 @@ size_t Packet::encodeUplink(const UplinkPacket &packet, uint8_t *outBuf,
   outBuf[4] = static_cast<uint8_t>(packet.stickYPercent);
   outBuf[5] = packet.batteryPercent;
   outBuf[6] = static_cast<uint8_t>(packet.chargeState);
+  outBuf[7] = packet.flags;
   return kUplinkEncodedSize;
 }
 
@@ -52,6 +53,7 @@ bool Packet::decodeUplink(const uint8_t *buf, size_t length,
   out->stickYPercent = static_cast<int8_t>(buf[4]);
   out->batteryPercent = buf[5];
   out->chargeState = static_cast<ChargeState>(buf[6]);
+  out->flags = buf[7];
   return true;
 }
 

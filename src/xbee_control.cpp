@@ -70,3 +70,15 @@ bool XbeeControl::querySerialLow(char *outHex, size_t outHexCapacity) {
   bytesToHexString(value, sizeof(value), outHex);
   return true;
 }
+
+bool XbeeControl::queryLocalRssiDbm(int *outDbm) {
+  uint8_t value[1];
+  uint8_t valueLength = 0;
+  if (!spi_.sendAtCommand("DB", nullptr, 0, value, sizeof(value),
+                          &valueLength) ||
+      valueLength != sizeof(value)) {
+    return false;
+  }
+  *outDbm = -static_cast<int>(value[0]);
+  return true;
+}

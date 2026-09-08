@@ -20,12 +20,18 @@
 // gesture classification — see the rewrite plan's Context section) plus
 // calibrated analog and battery/charge status.
 struct UplinkPacket {
+  static constexpr uint8_t kFlagShuttingDown = 0x01;
+
   uint16_t buttonMask = 0;  // bit i = Buttons::Index i is pressed
   uint8_t triggerPercent = 0;      // 0-100
   int8_t stickXPercent = 0;        // -100..100
   int8_t stickYPercent = 0;        // -100..100
   uint8_t batteryPercent = 0;      // 0-100
   ChargeState chargeState = ChargeState::kDone;
+  // Bitfield, currently just kFlagShuttingDown — set on the final few
+  // uplinks before power cuts so Amidala can mark this controller
+  // disconnected immediately instead of waiting out a timeout.
+  uint8_t flags = 0;
 };
 
 // Amidala -> controller. Handedness is sent once at connect and is static
@@ -46,7 +52,7 @@ struct DownlinkPacket {
 
 namespace Packet {
 
-constexpr size_t kUplinkEncodedSize = 7;
+constexpr size_t kUplinkEncodedSize = 8;
 constexpr size_t kDownlinkEncodedSize =
     1 + 4 * DownlinkPacket::kFieldLength;  // 33
 

@@ -1,9 +1,12 @@
 #include <Arduino.h>
+#include <cstring>
 
 #include "battery.h"
 #include "buttons.h"
 #include "calibration.h"
 #include "calibration_store.h"
+#include "complication_persistence.h"
+#include "complications.h"
 #include "droid_persistence.h"
 #include "menu.h"
 #include "oled.h"
@@ -30,12 +33,16 @@ BatteryMonitor batteryMonitor;
 CalibrationData calibrationData;
 MenuController menuController;
 XbeeControl xbeeControl;
+ComplicationRegistry complications;
+ComplicationData complicationData;
 char deviceSerialLowBuf[9] = {};  // must outlive setup() — see its use below
 bool lastReportedPressed[Buttons::kCount] = {};
 unsigned long lastTelemetryLogMs = 0;
 constexpr unsigned long kTelemetryLogIntervalMs = 1000;
 unsigned long lastUplinkSendMs = 0;
 constexpr unsigned long kUplinkSendIntervalMs = 50;
+unsigned long lastDownlinkMs = 0;  // 0 = never received one
+constexpr unsigned long kConnectionTimeoutMs = 5000;
 MenuScreen previousMenuScreen = MenuScreen::kInactive;
 MainMenuItem previousMainMenuItem = MainMenuItem::kSwitchDroid;
 
@@ -44,6 +51,54 @@ void showBootScreen() {
   bootScreen.setLine(0, "Snips Controller");
   bootScreen.setLine(1, "OLED OK");
   oledDisplay.render(bootScreen);
+}
+
+// The "normal operating" screen, shown whenever the on-device menu is
+// closed — smartwatch-style complications, user-assignable via Display
+// Config.
+void showOperatingScreen() {
+  ScreenBuffer screen;
+  complications.render(&screen);
+  oledDisplay.render(screen);
+}
+
+void copyField(char *dest, size_t destCapacity, const char *src) {
+  std::strncpy(dest, src, destCapacity - 1);
+  dest[destCapacity - 1] = '\0';
+}
+
+// Notifies Amidala this controller is powering off intentionally (so it
+// doesn't wait out a stale-connection timeout), shows a brief message,
+// then cuts power. Capped total duration (a few hundred ms) so a
+// non-responsive radio can't hang the shutdown indefinitely.
+void performGracefulShutdown() {
+  Serial.println("Shutting down...");
+
+  ScreenBuffer shutdownScreen;
+  shutdownScreen.setLine(0, "Powering Off...");
+  oledDisplay.render(shutdownScreen);
+
+  UplinkPacket shutdownPacket;
+  shutdownPacket.flags = UplinkPacket::kFlagShuttingDown;
+  uint8_t buf[Packet::kUplinkEncodedSize];
+  const size_t length =
+      Packet::encodeUplink(shutdownPacket, buf, sizeof(buf));
+
+  constexpr int kShutdownRetries = 3;
+  constexpr unsigned long kShutdownRetryDelayMs = 100;
+  for (int i = 0; i < kShutdownRetries; ++i) {
+    if (length > 0) {
+      xbeeControl.sendPacket(buf, static_cast<uint16_t>(length));
+    }
+    delay(kShutdownRetryDelayMs);
+  }
+
+  digitalWrite(PinAssignment::kPowerLatchHold, LOW);
+  // The rail should collapse almost immediately; spin here rather than
+  // falling back into loop() in an undefined half-shutdown state in case
+  // it doesn't.
+  while (true) {
+  }
 }
 
 const char *buttonName(size_t index) {
@@ -108,14 +163,17 @@ void setup() {
   pinMode(PinAssignment::kChargeStat2, INPUT);
 
   // Restores any previously-run trigger/stick calibration; defaults to an
-  // uncalibrated full ADC range if none has been saved yet. The guided
-  // calibration flows that produce new values live in calibration.h and
-  // get wired to the on-device menu in a later PR.
+  // uncalibrated full ADC range if none has been saved yet.
   calibrationData = CalibrationStore::load();
 
   // Restores any previously-saved droid list; defaults to empty if none
   // has been saved yet.
   menuController.setDroidStore(DroidPersistence::load());
+
+  // Restores any previously-saved Display Config slot assignments;
+  // defaults are left in place for anything never saved.
+  ComplicationPersistence::load(&complications);
+  menuController.setComplications(&complications);
 
   xbeeControl.begin();
   menuController.setXbeeTransport(&xbeeControl);
@@ -131,9 +189,8 @@ void setup() {
     Serial.println("XBee SL query failed at boot.");
   }
 
-  // Real "normal operating" screen content (complications) lands in a
-  // later PR. For now this just proves the display works end to end, and
-  // is what's restored whenever the on-device menu closes.
+  // Brief boot confirmation — loop() takes over with the real complications
+  // screen once real sensor data starts flowing.
   if (oledDisplay.begin()) {
     showBootScreen();
   } else {
@@ -142,9 +199,8 @@ void setup() {
 
   // Bring-up check per PCB/README.md's recommended order: cycle through
   // every status color once to prove RMT output on the real LED. Real
-  // state (connected/charging/error) gets driven by later PRs once there's
-  // an XBee link and charge-status reading to base it on; for now this
-  // just settles on "disconnected," which is accurate today.
+  // state takes over once loop() starts running (see the once-a-second
+  // block below).
   rgbLed.begin();
   const SystemState bringUpSequence[] = {
       SystemState::kBooting, SystemState::kConnected,
@@ -165,11 +221,7 @@ void loop() {
       digitalRead(PinAssignment::kPowerButtonSense) == HIGH;
 
   if (powerOffDetector.update(powerButtonHeld, now)) {
-    // The real graceful-shutdown sequence (notify Amidala, OLED message,
-    // then drive the latch pin low) lands in PR 10. For now, just prove
-    // the hold is detected.
-    Serial.println(
-        "Power button held 3s - shutdown sequence would run here (PR 10).");
+    performGracefulShutdown();  // never returns
   }
 
   // Read every tick (not just on the telemetry throttle below) — the menu
@@ -197,8 +249,9 @@ void loop() {
   // On-device menu: Left Up+Down held together opens it; once open, Left
   // Up/Down scroll, Stick Click confirms, Bumper backs out. These four
   // buttons are "stolen" for navigation only while the menu is active —
-  // Amidala never sees them any differently either way, since the packet
-  // protocol (PR 8) doesn't exist yet.
+  // their uplink bits get suppressed below so Amidala doesn't see spurious
+  // presses from menu use (e.g. nudging whatever the Left slot is assigned
+  // to while the user is just scrolling a menu).
   menuController.updateOpenCombo(buttonPanel.isPressed(Buttons::kLeftUp),
                                  buttonPanel.isPressed(Buttons::kLeftDown),
                                  now);
@@ -260,8 +313,13 @@ void loop() {
       renderMenuScreen(menuController, &menuScreen);
       oledDisplay.render(menuScreen);
     } else {
-      showBootScreen();
+      showOperatingScreen();
     }
+  }
+
+  if (menuController.consumeComplicationsChanged()) {
+    ComplicationPersistence::save(complications);
+    Serial.println("Display config saved.");
   }
 
   const int rawVsys = analogRead(PinAssignment::kVsysSense);
@@ -286,9 +344,16 @@ void loop() {
   if (now - lastUplinkSendMs >= kUplinkSendIntervalMs) {
     lastUplinkSendMs = now;
 
+    const bool menuActive =
+        menuController.currentScreen() != MenuScreen::kInactive;
+
     UplinkPacket uplink;
     for (size_t i = 0; i < Buttons::kCount; ++i) {
-      if (buttonPanel.isPressed(i)) {
+      const bool isMenuNavButton = i == Buttons::kLeftUp ||
+                                   i == Buttons::kLeftDown ||
+                                   i == Buttons::kStickClick ||
+                                   i == Buttons::kBumper;
+      if (buttonPanel.isPressed(i) && !(menuActive && isMenuNavButton)) {
         uplink.buttonMask |= static_cast<uint16_t>(1u << i);
       }
     }
@@ -306,32 +371,68 @@ void loop() {
     }
   }
 
-  // Downlink: non-blocking poll every tick. Nothing consumes handedness
-  // or the Left/Right label+value yet — that's the complications system,
-  // PR 10 — so for now this just proves the round trip works.
+  // Downlink: non-blocking poll every tick. Handedness and the Left/Right
+  // label+value feed the complications system directly — a received
+  // field is sticky (kept displayed) until a newer downlink updates it.
   uint8_t downlinkBuf[Packet::kDownlinkEncodedSize];
   uint16_t downlinkLength = 0;
   if (xbeeControl.pollForPacket(downlinkBuf, sizeof(downlinkBuf),
                                 &downlinkLength)) {
     DownlinkPacket downlink;
     if (Packet::decodeDownlink(downlinkBuf, downlinkLength, &downlink)) {
-      Serial.print("Downlink: hand=");
-      Serial.print(static_cast<int>(downlink.handedness));
-      Serial.print(" L=");
-      Serial.print(downlink.leftLabel);
-      Serial.print(":");
-      Serial.print(downlink.leftValue);
-      Serial.print(" R=");
-      Serial.print(downlink.rightLabel);
-      Serial.print(":");
-      Serial.println(downlink.rightValue);
+      lastDownlinkMs = now;
+      complicationData.handedness = downlink.handedness;
+      copyField(complicationData.leftLabel, sizeof(complicationData.leftLabel),
+               downlink.leftLabel);
+      copyField(complicationData.leftValue, sizeof(complicationData.leftValue),
+               downlink.leftValue);
+      copyField(complicationData.rightLabel,
+               sizeof(complicationData.rightLabel), downlink.rightLabel);
+      copyField(complicationData.rightValue,
+               sizeof(complicationData.rightValue), downlink.rightValue);
+      Serial.println("Downlink packet received.");
     }
   }
 
-  // Human-readable Serial telemetry — not what Amidala sees, just a
-  // slower-cadence bring-up check that the values above look right.
+  // Feed the complications system every tick — cheap, and keeps the
+  // operating screen's next scheduled redraw (below) always showing
+  // current data.
+  complicationData.batteryPercent = batteryPercent;
+  copyField(complicationData.droidName, sizeof(complicationData.droidName),
+           menuController.currentDroidName());
+  complications.setData(complicationData);
+
+  // Once a second: query local signal strength (blocking, up to ~200ms —
+  // too slow to do every tick), update the status LED, refresh the
+  // operating screen so it doesn't just sit stale between menu-state
+  // changes, and log human-readable telemetry (not what Amidala sees,
+  // just a bring-up check that the values above look right).
   if (now - lastTelemetryLogMs >= kTelemetryLogIntervalMs) {
     lastTelemetryLogMs = now;
+
+    int rssiDbm = 0;
+    if (xbeeControl.queryLocalRssiDbm(&rssiDbm)) {
+      complicationData.signalDbm = rssiDbm;
+      complicationData.signalKnown = true;
+      complications.setData(complicationData);
+    }
+
+    SystemState ledState;
+    if (chargeState == ChargeState::kLatchedFault) {
+      ledState = SystemState::kError;
+    } else if (chargeState == ChargeState::kCharging) {
+      ledState = SystemState::kCharging;
+    } else if (lastDownlinkMs != 0 &&
+               now - lastDownlinkMs < kConnectionTimeoutMs) {
+      ledState = SystemState::kConnected;
+    } else {
+      ledState = SystemState::kDisconnected;
+    }
+    rgbLed.show(statusLedController.colorFor(ledState));
+
+    if (menuController.currentScreen() == MenuScreen::kInactive) {
+      showOperatingScreen();
+    }
 
     Serial.print("Battery ");
     Serial.print(batteryPercent);
