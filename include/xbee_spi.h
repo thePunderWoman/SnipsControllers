@@ -34,4 +34,18 @@ class XbeeSpi {
                      uint8_t valueLength, uint8_t *outValue,
                      uint8_t outValueCapacity, uint8_t *outValueLength,
                      unsigned long timeoutMs = 200);
+
+  // Sends our own application payload to the coordinator as a Transmit
+  // Request (0x10) — non-blocking, fire-and-forget (no response is
+  // expected or waited for; XBee's own ACK/retry handles reliability at
+  // the radio level).
+  void sendPacket(const uint8_t *payload, uint16_t payloadLength);
+
+  // Non-blocking: drains any queued frames, returning the payload of the
+  // first Receive Packet (0x90) found (frames of any other type are
+  // silently discarded — this firmware only expects AT Command Responses,
+  // handled synchronously by sendAtCommand(), or Receive Packets here).
+  // Returns false if nothing was available this call.
+  bool pollForPacket(uint8_t *outPayload, uint16_t outPayloadCapacity,
+                     uint16_t *outPayloadLength);
 };

@@ -7,6 +7,7 @@
 #include "droid_persistence.h"
 #include "menu.h"
 #include "oled.h"
+#include "packet.h"
 #include "pin_assignment.h"
 #include "power_latch.h"
 #include "rgb_led.h"
@@ -33,6 +34,8 @@ char deviceSerialLowBuf[9] = {};  // must outlive setup() — see its use below
 bool lastReportedPressed[Buttons::kCount] = {};
 unsigned long lastTelemetryLogMs = 0;
 constexpr unsigned long kTelemetryLogIntervalMs = 1000;
+unsigned long lastUplinkSendMs = 0;
+constexpr unsigned long kUplinkSendIntervalMs = 50;
 MenuScreen previousMenuScreen = MenuScreen::kInactive;
 MainMenuItem previousMainMenuItem = MainMenuItem::kSwitchDroid;
 
@@ -94,8 +97,7 @@ void setup() {
   // All buttons wire to GND with the internal pull-up enabled, so LOW =
   // pressed. No classification happens here — Amidala owns single/double/
   // long-press and alt semantics centrally; this firmware only reports
-  // debounced raw press/release (packet protocol lands in a later PR, so
-  // for now state changes are just logged for bring-up).
+  // debounced raw press/release, via the uplink packet below.
   for (size_t i = 0; i < Buttons::kCount; ++i) {
     pinMode(Buttons::kPins[i], INPUT_PULLUP);
   }
@@ -164,10 +166,10 @@ void loop() {
 
   if (powerOffDetector.update(powerButtonHeld, now)) {
     // The real graceful-shutdown sequence (notify Amidala, OLED message,
-    // then drive the latch pin low) lands in a later PR once the packet
-    // protocol and display exist. For now, just prove the hold is detected.
+    // then drive the latch pin low) lands in PR 10. For now, just prove
+    // the hold is detected.
     Serial.println(
-        "Power button held 3s - shutdown sequence would run here (PR 9).");
+        "Power button held 3s - shutdown sequence would run here (PR 10).");
   }
 
   // Read every tick (not just on the telemetry throttle below) — the menu
@@ -262,26 +264,74 @@ void loop() {
     }
   }
 
-  // Packet protocol lands in PR 8 — for now, just log periodically (not
-  // every tick) so bring-up can confirm these readings look right.
+  const int rawVsys = analogRead(PinAssignment::kVsysSense);
+  const bool stat1High = digitalRead(PinAssignment::kChargeStat1) == HIGH;
+  const bool stat2High = digitalRead(PinAssignment::kChargeStat2) == HIGH;
+
+  const int triggerPercent =
+      AnalogCalibration::calibrateTrigger(rawTrigger, calibrationData);
+  const int stickXPercent = AnalogCalibration::calibrateStickAxis(
+      rawStickX, calibrationData.stickXMin, calibrationData.stickXCenter,
+      calibrationData.stickXMax);
+  const int stickYPercent = AnalogCalibration::calibrateStickAxis(
+      rawStickY, calibrationData.stickYMin, calibrationData.stickYCenter,
+      calibrationData.stickYMax);
+  const int batteryPercent = batteryMonitor.percentFor(rawVsys);
+  const ChargeState chargeState =
+      batteryMonitor.chargeStateFor(stat1High, stat2High);
+
+  // Uplink: sent periodically over the radio, faster than the
+  // human-readable Serial telemetry below — this is what Amidala
+  // actually sees.
+  if (now - lastUplinkSendMs >= kUplinkSendIntervalMs) {
+    lastUplinkSendMs = now;
+
+    UplinkPacket uplink;
+    for (size_t i = 0; i < Buttons::kCount; ++i) {
+      if (buttonPanel.isPressed(i)) {
+        uplink.buttonMask |= static_cast<uint16_t>(1u << i);
+      }
+    }
+    uplink.triggerPercent = static_cast<uint8_t>(triggerPercent);
+    uplink.stickXPercent = static_cast<int8_t>(stickXPercent);
+    uplink.stickYPercent = static_cast<int8_t>(stickYPercent);
+    uplink.batteryPercent = static_cast<uint8_t>(batteryPercent);
+    uplink.chargeState = chargeState;
+
+    uint8_t uplinkBuf[Packet::kUplinkEncodedSize];
+    const size_t uplinkLength =
+        Packet::encodeUplink(uplink, uplinkBuf, sizeof(uplinkBuf));
+    if (uplinkLength > 0) {
+      xbeeControl.sendPacket(uplinkBuf, static_cast<uint16_t>(uplinkLength));
+    }
+  }
+
+  // Downlink: non-blocking poll every tick. Nothing consumes handedness
+  // or the Left/Right label+value yet — that's the complications system,
+  // PR 10 — so for now this just proves the round trip works.
+  uint8_t downlinkBuf[Packet::kDownlinkEncodedSize];
+  uint16_t downlinkLength = 0;
+  if (xbeeControl.pollForPacket(downlinkBuf, sizeof(downlinkBuf),
+                                &downlinkLength)) {
+    DownlinkPacket downlink;
+    if (Packet::decodeDownlink(downlinkBuf, downlinkLength, &downlink)) {
+      Serial.print("Downlink: hand=");
+      Serial.print(static_cast<int>(downlink.handedness));
+      Serial.print(" L=");
+      Serial.print(downlink.leftLabel);
+      Serial.print(":");
+      Serial.print(downlink.leftValue);
+      Serial.print(" R=");
+      Serial.print(downlink.rightLabel);
+      Serial.print(":");
+      Serial.println(downlink.rightValue);
+    }
+  }
+
+  // Human-readable Serial telemetry — not what Amidala sees, just a
+  // slower-cadence bring-up check that the values above look right.
   if (now - lastTelemetryLogMs >= kTelemetryLogIntervalMs) {
     lastTelemetryLogMs = now;
-
-    const int rawVsys = analogRead(PinAssignment::kVsysSense);
-    const bool stat1High = digitalRead(PinAssignment::kChargeStat1) == HIGH;
-    const bool stat2High = digitalRead(PinAssignment::kChargeStat2) == HIGH;
-
-    const int triggerPercent =
-        AnalogCalibration::calibrateTrigger(rawTrigger, calibrationData);
-    const int stickXPercent = AnalogCalibration::calibrateStickAxis(
-        rawStickX, calibrationData.stickXMin, calibrationData.stickXCenter,
-        calibrationData.stickXMax);
-    const int stickYPercent = AnalogCalibration::calibrateStickAxis(
-        rawStickY, calibrationData.stickYMin, calibrationData.stickYCenter,
-        calibrationData.stickYMax);
-    const int batteryPercent = batteryMonitor.percentFor(rawVsys);
-    const ChargeState chargeState =
-        batteryMonitor.chargeStateFor(stat1High, stat2High);
 
     Serial.print("Battery ");
     Serial.print(batteryPercent);

@@ -26,6 +26,18 @@ class XbeeControl : public XbeeTransport {
   // query failure, leaving outHex untouched.
   bool querySerialLow(char *outHex, size_t outHexCapacity);
 
+  // Passthroughs to the owned XbeeSpi — see xbee_spi.h. XbeeControl is
+  // kept as the single facade over the one physical XBee connection
+  // rather than SnipsController.ino owning a second XbeeSpi instance.
+  void sendPacket(const uint8_t *payload, uint16_t payloadLength) {
+    spi_.sendPacket(payload, payloadLength);
+  }
+  bool pollForPacket(uint8_t *outPayload, uint16_t outPayloadCapacity,
+                     uint16_t *outPayloadLength) {
+    return spi_.pollForPacket(outPayload, outPayloadCapacity,
+                              outPayloadLength);
+  }
+
  private:
   XbeeSpi spi_;
 };
