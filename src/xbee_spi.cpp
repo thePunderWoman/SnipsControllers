@@ -140,3 +140,42 @@ bool XbeeSpi::sendAtCommand(const char *atCmd, const uint8_t *value,
   }
   return false;  // timed out
 }
+
+void XbeeSpi::sendPacket(const uint8_t *payload, uint16_t payloadLength) {
+  constexpr uint8_t kFrameId = 0x02;  // distinct from sendAtCommand's 0x01
+  uint8_t frame[32];
+  const uint16_t length = XbeeFrame::buildTransmitRequestFrame(
+      frame, sizeof(frame), kFrameId, payload, payloadLength);
+  if (length == 0) {
+    return;  // payload too large for the frame buffer — drop it
+  }
+  writeFrame(frame, length);
+}
+
+bool XbeeSpi::pollForPacket(uint8_t *outPayload, uint16_t outPayloadCapacity,
+                            uint16_t *outPayloadLength) {
+  if (!frameAvailable()) {
+    return false;
+  }
+
+  uint8_t frame[64];
+  const int32_t length = readFrame(frame, sizeof(frame));
+  if (length <= 0) {
+    return false;  // no delimiter yet, or a bad frame was drained
+  }
+
+  XbeeFrame::ReceivePacket packet;
+  if (!XbeeFrame::parseReceivePacket(frame, static_cast<uint16_t>(length),
+                                     &packet)) {
+    return false;  // some other frame type — not what we're looking for
+  }
+
+  const uint16_t copyLength = packet.payloadLength < outPayloadCapacity
+                                  ? packet.payloadLength
+                                  : outPayloadCapacity;
+  for (uint16_t i = 0; i < copyLength; i++) {
+    outPayload[i] = packet.payload[i];
+  }
+  *outPayloadLength = copyLength;
+  return true;
+}

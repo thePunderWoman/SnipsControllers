@@ -55,4 +55,37 @@ struct AtCommandResponse {
 bool parseAtCommandResponse(const uint8_t *frameData, uint16_t length,
                             AtCommandResponse *out);
 
+constexpr uint8_t kFrameTypeTransmitRequest = 0x10;
+constexpr uint8_t kFrameTypeReceivePacket = 0x90;
+
+// The ZigBee coordinator's network address is always 0x0000; per Digi's
+// convention, a 64-bit destination of all-zero paired with this means
+// "route by 16-bit address, 64-bit unknown" — i.e. exactly "send to the
+// coordinator" without needing to know its actual 64-bit address. Not yet
+// validated against real hardware — flagged for this PR's bring-up.
+constexpr uint64_t kCoordinatorAddress64 = 0;
+constexpr uint16_t kCoordinatorAddress16 = 0x0000;
+
+// Builds a Transmit Request frame's data (type 0x10) into `outFrameData`,
+// addressed to dest64/dest16 (default: the coordinator, see above).
+// Returns the number of bytes written, or 0 if outCapacity is too small.
+uint16_t buildTransmitRequestFrame(uint8_t *outFrameData,
+                                   uint16_t outCapacity, uint8_t frameId,
+                                   const uint8_t *payload,
+                                   uint16_t payloadLength,
+                                   uint64_t dest64 = kCoordinatorAddress64,
+                                   uint16_t dest16 = kCoordinatorAddress16);
+
+struct ReceivePacket {
+  uint64_t sourceAddress64;
+  const uint8_t *payload;  // points into the buffer passed to parse()
+  uint16_t payloadLength;
+};
+
+// Parses a Receive Packet frame's data (type 0x90). `frameData` must stay
+// valid as long as `out->payload` is used. Returns false if `frameData`
+// isn't a recognized/well-formed Receive Packet.
+bool parseReceivePacket(const uint8_t *frameData, uint16_t length,
+                        ReceivePacket *out);
+
 }  // namespace XbeeFrame
