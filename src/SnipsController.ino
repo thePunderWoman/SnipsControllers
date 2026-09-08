@@ -4,6 +4,7 @@
 #include "buttons.h"
 #include "calibration.h"
 #include "calibration_store.h"
+#include "menu.h"
 #include "oled.h"
 #include "pin_assignment.h"
 #include "power_latch.h"
@@ -24,9 +25,19 @@ RgbLed rgbLed;
 StatusLedController statusLedController;
 BatteryMonitor batteryMonitor;
 CalibrationData calibrationData;
+MenuController menuController;
 bool lastReportedPressed[Buttons::kCount] = {};
 unsigned long lastTelemetryLogMs = 0;
 constexpr unsigned long kTelemetryLogIntervalMs = 1000;
+MenuScreen previousMenuScreen = MenuScreen::kInactive;
+MainMenuItem previousMainMenuItem = MainMenuItem::kCalibrateStick;
+
+void showBootScreen() {
+  ScreenBuffer bootScreen;
+  bootScreen.setLine(0, "Snips Controller");
+  bootScreen.setLine(1, "OLED OK");
+  oledDisplay.render(bootScreen);
+}
 
 const char *buttonName(size_t index) {
   switch (index) {
@@ -96,13 +107,11 @@ void setup() {
   // get wired to the on-device menu in a later PR.
   calibrationData = CalibrationStore::load();
 
-  // Real screen content (menus, complications, gesture feedback) lands in
-  // later PRs. For now this just proves the display works end to end.
+  // Real "normal operating" screen content (complications) lands in a
+  // later PR. For now this just proves the display works end to end, and
+  // is what's restored whenever the on-device menu closes.
   if (oledDisplay.begin()) {
-    ScreenBuffer bootScreen;
-    bootScreen.setLine(0, "Snips Controller");
-    bootScreen.setLine(1, "OLED OK");
-    oledDisplay.render(bootScreen);
+    showBootScreen();
   } else {
     Serial.println("OLED not found at boot.");
   }
@@ -139,15 +148,89 @@ void loop() {
         "Power button held 3s - shutdown sequence would run here (PR 9).");
   }
 
+  // Read every tick (not just on the telemetry throttle below) — the menu
+  // needs a fresh sample at the exact moment of each button press for
+  // calibration, and the stick's "roll to extremes" step needs continuous
+  // per-tick sampling.
+  const int rawTrigger = analogRead(PinAssignment::kAnalogTrigger);
+  const int rawStickX = analogRead(PinAssignment::kThumbstickX);
+  const int rawStickY = analogRead(PinAssignment::kThumbstickY);
+
+  bool justPressed[Buttons::kCount] = {};
   for (size_t i = 0; i < Buttons::kCount; ++i) {
     const bool rawPressed = digitalRead(Buttons::kPins[i]) == LOW;
     buttonPanel.update(i, rawPressed, now);
 
     const bool pressed = buttonPanel.isPressed(i);
+    justPressed[i] = pressed && !lastReportedPressed[i];
     if (pressed != lastReportedPressed[i]) {
       lastReportedPressed[i] = pressed;
       Serial.print(buttonName(i));
       Serial.println(pressed ? " pressed" : " released");
+    }
+  }
+
+  // On-device menu: Left Up+Down held together opens it; once open, Left
+  // Up/Down scroll, Stick Click confirms, Bumper backs out. These four
+  // buttons are "stolen" for navigation only while the menu is active —
+  // Amidala never sees them any differently either way, since the packet
+  // protocol (PR 8) doesn't exist yet.
+  menuController.updateOpenCombo(buttonPanel.isPressed(Buttons::kLeftUp),
+                                 buttonPanel.isPressed(Buttons::kLeftDown),
+                                 now);
+  menuController.tick(rawStickX, rawStickY);
+  if (justPressed[Buttons::kLeftUp]) menuController.onUp();
+  if (justPressed[Buttons::kLeftDown]) menuController.onDown();
+  if (justPressed[Buttons::kStickClick]) {
+    menuController.onEnter(rawTrigger, rawStickX, rawStickY);
+  }
+  if (justPressed[Buttons::kBumper]) menuController.onBack();
+
+  int newTriggerMin, newTriggerMax;
+  if (menuController.consumeNewTriggerCalibration(&newTriggerMin,
+                                                  &newTriggerMax)) {
+    calibrationData.triggerMin = newTriggerMin;
+    calibrationData.triggerMax = newTriggerMax;
+    CalibrationStore::save(calibrationData);
+    Serial.println("Trigger calibration saved.");
+  }
+
+  int newCenterX, newCenterY, newMinX, newMaxX, newMinY, newMaxY;
+  if (menuController.consumeNewStickCalibration(&newCenterX, &newCenterY,
+                                                &newMinX, &newMaxX, &newMinY,
+                                                &newMaxY)) {
+    calibrationData.stickXCenter = newCenterX;
+    calibrationData.stickYCenter = newCenterY;
+    calibrationData.stickXMin = newMinX;
+    calibrationData.stickXMax = newMaxX;
+    calibrationData.stickYMin = newMinY;
+    calibrationData.stickYMax = newMaxY;
+    CalibrationStore::save(calibrationData);
+    Serial.println("Stick calibration saved.");
+  }
+
+  if (menuController.consumeFactoryResetConfirmed()) {
+    // Droid list wipe joins this once DroidStore exists (PR 7).
+    calibrationData = CalibrationData();
+    CalibrationStore::save(calibrationData);
+    Serial.println("Factory reset: calibration cleared.");
+  }
+
+  // Only touch the display when something actually changed — a full
+  // redraw every tick would be needless I2C traffic for static text.
+  const bool menuStateChanged =
+      menuController.currentScreen() != previousMenuScreen ||
+      menuController.selectedMainMenuItem() != previousMainMenuItem;
+  previousMenuScreen = menuController.currentScreen();
+  previousMainMenuItem = menuController.selectedMainMenuItem();
+
+  if (menuStateChanged) {
+    if (menuController.currentScreen() != MenuScreen::kInactive) {
+      ScreenBuffer menuScreen;
+      renderMenuScreen(menuController, &menuScreen);
+      oledDisplay.render(menuScreen);
+    } else {
+      showBootScreen();
     }
   }
 
@@ -156,9 +239,6 @@ void loop() {
   if (now - lastTelemetryLogMs >= kTelemetryLogIntervalMs) {
     lastTelemetryLogMs = now;
 
-    const int rawTrigger = analogRead(PinAssignment::kAnalogTrigger);
-    const int rawStickX = analogRead(PinAssignment::kThumbstickX);
-    const int rawStickY = analogRead(PinAssignment::kThumbstickY);
     const int rawVsys = analogRead(PinAssignment::kVsysSense);
     const bool stat1High = digitalRead(PinAssignment::kChargeStat1) == HIGH;
     const bool stat2High = digitalRead(PinAssignment::kChargeStat2) == HIGH;
