@@ -4,7 +4,7 @@
 #include "droid_store.h"
 #include "screen.h"
 #include "text_entry.h"
-#include "xbee_control.h"
+#include "droid_switcher.h"
 
 // Pure on-device menu state machine. Knows nothing about real buttons or
 // the display — SnipsController.ino translates physical button edges into
@@ -100,6 +100,12 @@ class MenuController {
     xbeeTransport_ = transport;
   }
 
+  // The XBee's own SL (queried once at boot, since it's a fixed hardware
+  // address) for the Device Info screen — plain string storage, no
+  // hardware access here.
+  void setDeviceSerialLow(const char *hex) { deviceSerialLow_ = hex; }
+  const char *deviceSerialLow() const { return deviceSerialLow_; }
+
   int selectedDroidListIndex() const { return droidListIndex_; }
   DroidSwitchResult lastSwitchResult() const { return lastSwitchResult_; }
   const TextEntryWidget &nameEntry() const { return nameEntry_; }
@@ -142,6 +148,7 @@ class MenuController {
   TextEntryWidget panIdEntry_{TextEntryWidget::CharSet::kHex};
   DroidSwitchResult lastSwitchResult_ = DroidSwitchResult::kSuccess;
   XbeeTransport *xbeeTransport_ = nullptr;
+  const char *deviceSerialLow_ = "(unknown)";
 };
 
 // Decides what text should be on screen for the menu's current state.

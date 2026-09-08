@@ -1,35 +1,72 @@
 #include "xbee_control.h"
 
-DroidSwitchResult DroidSwitcher::switchTo(const char *panId,
-                                          XbeeTransport *transport) {
-  if (transport == nullptr) {
-    return DroidSwitchResult::kNoTransport;
-  }
-  if (!transport->leaveNetwork()) {
-    return DroidSwitchResult::kLeaveFailed;
-  }
-  if (!transport->setPanId(panId)) {
-    return DroidSwitchResult::kSetPanFailed;
-  }
-  if (!transport->rejoinNetwork()) {
-    return DroidSwitchResult::kRejoinFailed;
-  }
-  return DroidSwitchResult::kSuccess;
+namespace {
+
+int hexNibble(char c) {
+  if (c >= '0' && c <= '9') return c - '0';
+  if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+  if (c >= 'a' && c <= 'f') return c - 'a' + 10;
+  return -1;
 }
 
+// Parses exactly byteCount*2 hex characters from hex into outBytes.
+// Returns false (leaving outBytes untouched) on any non-hex character or
+// a string shorter than expected.
+bool hexStringToBytes(const char *hex, uint8_t *outBytes, size_t byteCount) {
+  for (size_t i = 0; i < byteCount; i++) {
+    const int hi = hexNibble(hex[i * 2]);
+    const int lo = hi >= 0 ? hexNibble(hex[i * 2 + 1]) : -1;
+    if (hi < 0 || lo < 0) return false;
+    outBytes[i] = static_cast<uint8_t>((hi << 4) | lo);
+  }
+  return true;
+}
+
+void bytesToHexString(const uint8_t *bytes, size_t byteCount, char *outHex) {
+  constexpr char kDigits[] = "0123456789ABCDEF";
+  for (size_t i = 0; i < byteCount; i++) {
+    outHex[i * 2] = kDigits[bytes[i] >> 4];
+    outHex[i * 2 + 1] = kDigits[bytes[i] & 0x0F];
+  }
+  outHex[byteCount * 2] = '\0';
+}
+
+}  // namespace
+
 bool XbeeControl::leaveNetwork() {
-  // TODO(PR 8): issue the real XBee API-mode leave-network command over
-  // SPI once the transport exists.
-  return false;
+  // "NR0": local network reset — forces the module to leave its current
+  // network and search again per its (about-to-change) ID setting.
+  uint8_t value[] = {0};
+  return spi_.sendAtCommand("NR", value, sizeof(value), nullptr, 0, nullptr);
 }
 
 bool XbeeControl::setPanId(const char *panId) {
-  (void)panId;
-  // TODO(PR 8): issue the real "ID" AT command over SPI.
-  return false;
+  uint8_t panIdBytes[8];
+  if (!hexStringToBytes(panId, panIdBytes, sizeof(panIdBytes))) {
+    return false;
+  }
+  return spi_.sendAtCommand("ID", panIdBytes, sizeof(panIdBytes), nullptr, 0,
+                            nullptr);
 }
 
 bool XbeeControl::rejoinNetwork() {
-  // TODO(PR 8): trigger rejoin/associate over SPI.
-  return false;
+  // "AC": apply pending parameter changes now, triggering the module to
+  // act on the new ID and (re)associate rather than waiting for its next
+  // natural re-read of that setting.
+  return spi_.sendAtCommand("AC", nullptr, 0, nullptr, 0, nullptr);
+}
+
+bool XbeeControl::querySerialLow(char *outHex, size_t outHexCapacity) {
+  if (outHexCapacity < 9) {
+    return false;  // 8 hex chars + null
+  }
+  uint8_t value[4];
+  uint8_t valueLength = 0;
+  if (!spi_.sendAtCommand("SL", nullptr, 0, value, sizeof(value),
+                          &valueLength) ||
+      valueLength != sizeof(value)) {
+    return false;
+  }
+  bytesToHexString(value, sizeof(value), outHex);
+  return true;
 }

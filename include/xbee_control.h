@@ -1,41 +1,31 @@
 #pragma once
 
-// Abstraction over "the ability to control network membership on the
-// XBee module" — leave the current network, set a new PAN ID, and
-// rejoin. A real implementation using XBee SPI/AT commands lands in
-// PR 8; for now XbeeControl below is an honest stub reporting failure,
-// so the menu's Switch Droid flow is fully wired end to end but not yet
-// functional over real radio.
-class XbeeTransport {
- public:
-  virtual ~XbeeTransport() = default;
-  virtual bool leaveNetwork() = 0;
-  virtual bool setPanId(const char *panId) = 0;
-  virtual bool rejoinNetwork() = 0;
-};
+#include <cstddef>
 
-enum class DroidSwitchResult {
-  kSuccess,
-  kLeaveFailed,
-  kSetPanFailed,
-  kRejoinFailed,
-  kNoTransport,
-};
+#include "droid_switcher.h"
+#include "xbee_spi.h"
 
-// Pure orchestration of the leave/set-PAN/rejoin sequence — testable
-// against any XbeeTransport, fake or real.
-class DroidSwitcher {
- public:
-  // transport may be null (returns kNoTransport without touching it).
-  static DroidSwitchResult switchTo(const char *panId,
-                                    XbeeTransport *transport);
-};
-
-// Stub XbeeTransport — PR 8 replaces the method bodies with the real
-// XBee SPI/API-mode implementation.
+// Real XbeeTransport (see droid_switcher.h), over the SPI transport in
+// xbee_spi.h. Exact AT command sequencing (NR for leave, ID for the new
+// PAN, AC to apply and trigger rejoin) is this class's best-effort
+// reading of Digi's XBee3 manual, not yet validated against real
+// hardware — confirm during this PR's bring-up and adjust here if the
+// sequence needs correcting.
 class XbeeControl : public XbeeTransport {
  public:
+  void begin() { spi_.begin(); }
+
   bool leaveNetwork() override;
   bool setPanId(const char *panId) override;
   bool rejoinNetwork() override;
+
+  // Queries the module's own 64-bit address (low 32 bits, "SL") for
+  // display in the Device Info menu screen — this is what a user reads
+  // off-screen to enter into Amidala. Writes up to 8 hex chars + a null
+  // terminator into outHex (needs a 9-byte buffer). Returns false on
+  // query failure, leaving outHex untouched.
+  bool querySerialLow(char *outHex, size_t outHexCapacity);
+
+ private:
+  XbeeSpi spi_;
 };
