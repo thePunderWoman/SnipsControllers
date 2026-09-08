@@ -15,6 +15,11 @@ class TextEntryWidget {
 
   explicit TextEntryWidget(CharSet charSet, size_t maxLength = 20);
 
+  // Reinitializes in place (empty buffer, not done, highlight reset) —
+  // lets a long-lived owner (e.g. a menu screen) reuse one instance
+  // across separate entry sessions instead of needing to reconstruct it.
+  void reset(CharSet charSet, size_t maxLength = 20);
+
   // Cycles the current slot's highlight forward/backward through the
   // charset, wrapping at both ends (including the trailing "done"
   // position). No-op once done().

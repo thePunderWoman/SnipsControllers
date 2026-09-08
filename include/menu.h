@@ -1,21 +1,28 @@
 #pragma once
 
 #include "calibration.h"
+#include "droid_store.h"
 #include "screen.h"
+#include "text_entry.h"
+#include "xbee_control.h"
 
 // Pure on-device menu state machine. Knows nothing about real buttons or
 // the display — SnipsController.ino translates physical button edges into
-// the four nav calls below (and detects the open combo via
-// updateOpenCombo()), and renderMenuScreen() turns the current state into
-// a ScreenBuffer for the (already-existing, hardware-touching) OledDisplay
-// to draw.
+// the nav calls below (and detects the open combo via updateOpenCombo()),
+// and renderMenuScreen() turns the current state into a ScreenBuffer for
+// the (already-existing, hardware-touching) OledDisplay to draw.
 //
-// Only screens with everything they need already built land here: Manage/
-// Switch Droid (PR 7) and Display Config (PR 9) aren't part of this menu
-// tree yet.
+// Display Config (PR 9) isn't part of this menu tree yet — it needs the
+// packet protocol's label/value data, which doesn't exist yet.
 enum class MenuScreen {
   kInactive,
   kMainMenu,
+  kSwitchDroidList,
+  kSwitchDroidResult,
+  kManageDroidsList,
+  kManageDroidsEnterName,
+  kManageDroidsEnterPanId,
+  kManageDroidsDeleteConfirm,
   kCalibrateStick,
   kCalibrateTrigger,
   kDeviceInfo,
@@ -23,7 +30,9 @@ enum class MenuScreen {
 };
 
 enum class MainMenuItem {
-  kCalibrateStick = 0,
+  kSwitchDroid = 0,
+  kManageDroids,
+  kCalibrateStick,
   kCalibrateTrigger,
   kDeviceInfo,
   kFactoryReset,
@@ -44,7 +53,9 @@ class MenuController {
                        unsigned long nowMs);
 
   // Discrete nav events — call at most once per tick, only on a fresh
-  // button-press edge (not while held).
+  // button-press edge (not while held). Meaning depends on the current
+  // screen: list navigation on list screens, character scroll on text
+  // entry screens.
   void onUp();
   void onDown();
   void onBack();
@@ -75,11 +86,31 @@ class MenuController {
                                    int *outMaxY);
   bool consumeFactoryResetConfirmed();
 
+  // Droid management — the store is owned here so rendering/navigation
+  // can see it directly; SnipsController.ino restores it from
+  // DroidPersistence once at boot and re-persists it whenever
+  // consumeDroidStoreChanged() reports a change.
+  void setDroidStore(const DroidStore &store) { droidStore_ = store; }
+  const DroidStore &droidStore() const { return droidStore_; }
+  bool consumeDroidStoreChanged();
+
+  // Switch Droid needs a way to actually talk to the radio — set once at
+  // boot. May be left null (switching then always reports kNoTransport).
+  void setXbeeTransport(XbeeTransport *transport) {
+    xbeeTransport_ = transport;
+  }
+
+  int selectedDroidListIndex() const { return droidListIndex_; }
+  DroidSwitchResult lastSwitchResult() const { return lastSwitchResult_; }
+  const TextEntryWidget &nameEntry() const { return nameEntry_; }
+  const TextEntryWidget &panIdEntry() const { return panIdEntry_; }
+
  private:
   static constexpr unsigned long kOpenComboHoldMs = 1000;
 
   void open();
   void enterMainMenuItem(MainMenuItem item);
+  static int wrapIndex(int index, int count);
 
   MenuScreen screen_ = MenuScreen::kInactive;
   int mainMenuIndex_ = 0;
@@ -103,6 +134,14 @@ class MenuController {
   int pendingStickMaxY_ = 0;
 
   bool factoryResetConfirmed_ = false;
+
+  DroidStore droidStore_;
+  int droidListIndex_ = 0;
+  bool droidStoreChanged_ = false;
+  TextEntryWidget nameEntry_{TextEntryWidget::CharSet::kAlphanumeric};
+  TextEntryWidget panIdEntry_{TextEntryWidget::CharSet::kHex};
+  DroidSwitchResult lastSwitchResult_ = DroidSwitchResult::kSuccess;
+  XbeeTransport *xbeeTransport_ = nullptr;
 };
 
 // Decides what text should be on screen for the menu's current state.

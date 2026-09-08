@@ -7,6 +7,10 @@ constexpr const char *kHexCharset = "0123456789ABCDEF";
 }  // namespace
 
 TextEntryWidget::TextEntryWidget(CharSet charSet, size_t maxLength) {
+  reset(charSet, maxLength);
+}
+
+void TextEntryWidget::reset(CharSet charSet, size_t maxLength) {
   if (charSet == CharSet::kHex) {
     charset_ = kHexCharset;
     charsetLength_ = 16;
@@ -15,6 +19,10 @@ TextEntryWidget::TextEntryWidget(CharSet charSet, size_t maxLength) {
     charsetLength_ = 37;
   }
   maxLength_ = maxLength > kMaxBufferLength ? kMaxBufferLength : maxLength;
+  cursor_ = 0;
+  buffer_[0] = '\0';
+  length_ = 0;
+  done_ = false;
 }
 
 void TextEntryWidget::scrollNext() {

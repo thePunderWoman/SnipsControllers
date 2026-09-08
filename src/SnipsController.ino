@@ -4,6 +4,7 @@
 #include "buttons.h"
 #include "calibration.h"
 #include "calibration_store.h"
+#include "droid_persistence.h"
 #include "menu.h"
 #include "oled.h"
 #include "pin_assignment.h"
@@ -11,6 +12,7 @@
 #include "rgb_led.h"
 #include "screen.h"
 #include "status_led.h"
+#include "xbee_control.h"
 
 // Pure entry point — wiring only. All real logic lives in dedicated
 // subsystem files under src/ + include/; this file just owns real
@@ -26,11 +28,12 @@ StatusLedController statusLedController;
 BatteryMonitor batteryMonitor;
 CalibrationData calibrationData;
 MenuController menuController;
+XbeeControl xbeeControl;  // stub pending PR 8's real XBee SPI transport
 bool lastReportedPressed[Buttons::kCount] = {};
 unsigned long lastTelemetryLogMs = 0;
 constexpr unsigned long kTelemetryLogIntervalMs = 1000;
 MenuScreen previousMenuScreen = MenuScreen::kInactive;
-MainMenuItem previousMainMenuItem = MainMenuItem::kCalibrateStick;
+MainMenuItem previousMainMenuItem = MainMenuItem::kSwitchDroid;
 
 void showBootScreen() {
   ScreenBuffer bootScreen;
@@ -106,6 +109,12 @@ void setup() {
   // calibration flows that produce new values live in calibration.h and
   // get wired to the on-device menu in a later PR.
   calibrationData = CalibrationStore::load();
+
+  // Restores any previously-saved droid list; defaults to empty if none
+  // has been saved yet. Switching still won't actually work over radio
+  // until PR 8's real XBee SPI transport replaces the XbeeControl stub.
+  menuController.setDroidStore(DroidPersistence::load());
+  menuController.setXbeeTransport(&xbeeControl);
 
   // Real "normal operating" screen content (complications) lands in a
   // later PR. For now this just proves the display works end to end, and
@@ -210,10 +219,16 @@ void loop() {
   }
 
   if (menuController.consumeFactoryResetConfirmed()) {
-    // Droid list wipe joins this once DroidStore exists (PR 7).
     calibrationData = CalibrationData();
     CalibrationStore::save(calibrationData);
     Serial.println("Factory reset: calibration cleared.");
+  }
+
+  // MenuController clears its in-memory droid list as part of factory
+  // reset too, and reports that here like any other droid-list change.
+  if (menuController.consumeDroidStoreChanged()) {
+    DroidPersistence::save(menuController.droidStore());
+    Serial.println("Droid list saved.");
   }
 
   // Only touch the display when something actually changed — a full
