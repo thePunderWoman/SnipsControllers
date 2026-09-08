@@ -130,6 +130,24 @@ void test_all_actions_are_noop_once_done() {
   TEST_ASSERT_EQUAL_STRING("0", widget.text());
 }
 
+void test_reset_reinitializes_in_place() {
+  TextEntryWidget widget(TextEntryWidget::CharSet::kHex, 1);
+  widget.commitChar();  // '0', now full and about to be "done"-able
+  widget.scrollPrev();
+  widget.commitChar();  // done
+  TEST_ASSERT_TRUE(widget.done());
+
+  widget.reset(TextEntryWidget::CharSet::kAlphanumeric, 20);
+  TEST_ASSERT_FALSE(widget.done());
+  TEST_ASSERT_EQUAL_STRING("", widget.text());
+  TEST_ASSERT_EQUAL_INT(' ', widget.currentChar());
+
+  // The new maxLength actually took effect (was 1, now 20).
+  widget.commitChar();
+  widget.commitChar();
+  TEST_ASSERT_EQUAL_INT(2, widget.length());
+}
+
 int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_starts_empty_and_not_done);
@@ -145,5 +163,6 @@ int main(int argc, char **argv) {
   RUN_TEST(test_commit_char_respects_max_length);
   RUN_TEST(test_can_still_finish_via_done_when_buffer_full);
   RUN_TEST(test_all_actions_are_noop_once_done);
+  RUN_TEST(test_reset_reinitializes_in_place);
   return UNITY_END();
 }
