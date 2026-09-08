@@ -14,3 +14,12 @@ DroidStore load();
 void save(const DroidStore &store);
 
 }  // namespace DroidPersistence
+
+// Note on the *currently selected* PAN ID (as opposed to the list above):
+// there's deliberately no persistence for it here. Once XbeeControl::
+// setPanId() commits a PAN ID via "WR", the XBee module remembers it in
+// its own flash across power cycles on its own — it never needs to be
+// re-applied at boot, and never changes except when a Switch Droid action
+// explicitly calls setPanId() again. SnipsController.ino derives the
+// display name for it at boot by querying the module's current PAN ID
+// (XbeeControl::queryPanId()) and matching it against the list above.

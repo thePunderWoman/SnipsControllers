@@ -1,5 +1,6 @@
 #include <unity.h>
 #include <cstring>
+#include <string>
 
 #include "menu.h"
 
@@ -31,9 +32,22 @@ DroidStore twoDroidStore() {
 
 class FakeTransport : public XbeeTransport {
  public:
-  bool leaveNetwork() override { return true; }
-  bool setPanId(const char * /*panId*/) override { return true; }
-  bool rejoinNetwork() override { return true; }
+  bool leaveCalled = false;
+  bool rejoinCalled = false;
+  std::string lastPanId;
+
+  bool leaveNetwork() override {
+    leaveCalled = true;
+    return true;
+  }
+  bool setPanId(const char *panId) override {
+    lastPanId = panId;
+    return true;
+  }
+  bool rejoinNetwork() override {
+    rejoinCalled = true;
+    return true;
+  }
 };
 
 }  // namespace
@@ -156,11 +170,11 @@ void test_enter_factory_reset_confirm_then_back_cancels() {
 }
 
 void test_factory_reset_confirmed_via_enter() {
-  MenuController menu;
+  MenuController menu;  // no transport set — exercises the null guard
   menu.setDroidStore(twoDroidStore());
   selectMainMenuItem(&menu, MainMenuItem::kFactoryReset);
   menu.onEnter(0, 0, 0);  // -> confirm screen
-  menu.onEnter(0, 0, 0);  // confirms
+  menu.onEnter(0, 0, 0);  // confirms — should not crash without a transport
 
   TEST_ASSERT_TRUE(MenuScreen::kMainMenu == menu.currentScreen());
   TEST_ASSERT_TRUE(menu.consumeFactoryResetConfirmed());
@@ -170,6 +184,24 @@ void test_factory_reset_confirmed_via_enter() {
   // Factory reset also clears the droid list, and reports that change.
   TEST_ASSERT_EQUAL_INT(0, menu.droidStore().count());
   TEST_ASSERT_TRUE(menu.consumeDroidStoreChanged());
+
+  // And resets the current-droid display.
+  TEST_ASSERT_EQUAL_STRING("(none)", menu.currentDroidName());
+}
+
+void test_factory_reset_disconnects_the_radio() {
+  MenuController menu;
+  FakeTransport transport;
+  menu.setXbeeTransport(&transport);
+  selectMainMenuItem(&menu, MainMenuItem::kFactoryReset);
+  menu.onEnter(0, 0, 0);  // -> confirm screen
+  menu.onEnter(0, 0, 0);  // confirms
+
+  TEST_ASSERT_TRUE(transport.leaveCalled);
+  TEST_ASSERT_EQUAL_STRING("0000000000000000", transport.lastPanId.c_str());
+  // Deliberately does not rejoin — should sit disconnected until the
+  // user explicitly picks a new droid via Switch Droid.
+  TEST_ASSERT_FALSE(transport.rejoinCalled);
 }
 
 // ---- trigger calibration ---------------------------------------------------
@@ -524,6 +556,14 @@ void test_current_droid_name_unchanged_on_failed_switch() {
   TEST_ASSERT_EQUAL_STRING("(none)", menu.currentDroidName());
 }
 
+void test_set_current_droid_name_seeds_it_directly() {
+  MenuController menu;  // simulates SnipsController.ino restoring a
+                        // persisted selection at boot, before any switch
+  menu.setCurrentDroidName("BB-8");
+  TEST_ASSERT_EQUAL_STRING("BB-8", menu.currentDroidName());
+}
+
+
 // ---- labels ------------------------------------------------------------------
 
 void test_main_menu_item_labels() {
@@ -774,6 +814,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_device_info_enter_or_back_returns_to_main_menu);
   RUN_TEST(test_enter_factory_reset_confirm_then_back_cancels);
   RUN_TEST(test_factory_reset_confirmed_via_enter);
+  RUN_TEST(test_factory_reset_disconnects_the_radio);
   RUN_TEST(test_trigger_calibration_full_flow);
   RUN_TEST(test_back_during_trigger_calibration_cancels_and_resets);
   RUN_TEST(test_stick_calibration_full_flow);
@@ -797,6 +838,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_current_droid_name_defaults_to_none);
   RUN_TEST(test_current_droid_name_set_on_successful_switch);
   RUN_TEST(test_current_droid_name_unchanged_on_failed_switch);
+  RUN_TEST(test_set_current_droid_name_seeds_it_directly);
   RUN_TEST(test_main_menu_item_labels);
   RUN_TEST(test_render_inactive_leaves_screen_blank);
   RUN_TEST(test_render_main_menu_marks_selected_item);

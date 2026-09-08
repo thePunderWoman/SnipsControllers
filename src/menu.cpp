@@ -3,6 +3,14 @@
 #include <cstdio>
 #include <cstring>
 
+namespace {
+// A 64-bit all-zero PAN ID — Digi's convention for "unconfigured," used
+// by Factory Reset to make sure the radio doesn't quietly stay
+// associated with whatever droid it was last on. See the
+// kFactoryResetConfirm case in MenuController::onEnter().
+constexpr const char *kClearedPanId = "0000000000000000";
+}  // namespace
+
 const char *mainMenuItemLabel(MainMenuItem item) {
   switch (item) {
     case MainMenuItem::kSwitchDroid: return "Switch Droid";
@@ -18,6 +26,11 @@ const char *mainMenuItemLabel(MainMenuItem item) {
 
 MainMenuItem MenuController::selectedMainMenuItem() const {
   return static_cast<MainMenuItem>(mainMenuIndex_);
+}
+
+void MenuController::setCurrentDroidName(const char *name) {
+  std::strncpy(currentDroidName_, name, sizeof(currentDroidName_) - 1);
+  currentDroidName_[sizeof(currentDroidName_) - 1] = '\0';
 }
 
 int MenuController::wrapIndex(int index, int count) {
@@ -198,9 +211,7 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
         const DroidEntry &target = droidStore_.at(droidListIndex_);
         lastSwitchResult_ = DroidSwitcher::switchTo(target.panId, xbeeTransport_);
         if (lastSwitchResult_ == DroidSwitchResult::kSuccess) {
-          std::strncpy(currentDroidName_, target.name,
-                       sizeof(currentDroidName_) - 1);
-          currentDroidName_[sizeof(currentDroidName_) - 1] = '\0';
+          setCurrentDroidName(target.name);
         }
         screen_ = MenuScreen::kSwitchDroidResult;
       }
@@ -292,6 +303,19 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
       factoryResetConfirmed_ = true;
       droidStore_ = DroidStore();
       droidStoreChanged_ = true;
+      // A factory reset should genuinely disconnect from whatever droid
+      // this controller was last on — leaving it silently still joined
+      // post-reset would be confusing. Clears the PAN ID to a neutral,
+      // unconfigured value and forces an immediate leave — deliberately
+      // no rejoinNetwork() call after, unlike a normal Switch Droid: it
+      // should sit disconnected until the user explicitly picks a new
+      // droid, not auto-associate with whatever it can find. Everything
+      // else about the radio (SL, etc.) is untouched.
+      if (xbeeTransport_ != nullptr) {
+        xbeeTransport_->leaveNetwork();
+        xbeeTransport_->setPanId(kClearedPanId);
+      }
+      setCurrentDroidName("(none)");
       screen_ = MenuScreen::kMainMenu;
       break;
 

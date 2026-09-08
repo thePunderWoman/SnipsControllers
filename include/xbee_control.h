@@ -26,6 +26,15 @@ class XbeeControl : public XbeeTransport {
   // query failure, leaving outHex untouched.
   bool querySerialLow(char *outHex, size_t outHexCapacity);
 
+  // Queries the module's current PAN ID ("ID"). Once setPanId() commits
+  // one via "WR", the module remembers it in its own flash across power
+  // cycles on its own — this exists so SnipsController.ino can derive
+  // which saved droid (by name) that PAN ID corresponds to at boot,
+  // rather than to re-apply anything. Writes up to 16 hex chars + a null
+  // terminator into outHex (needs a 17-byte buffer). Returns false on
+  // query failure, leaving outHex untouched.
+  bool queryPanId(char *outHex, size_t outHexCapacity);
+
   // Queries the local module's own last-hop received signal strength
   // ("DB" AT command — a single byte, the RSSI magnitude in dBm, e.g. a
   // response of 0x2A means -42dBm). Purely local: no round trip to

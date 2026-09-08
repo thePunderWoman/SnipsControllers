@@ -111,10 +111,14 @@ class MenuController {
   const TextEntryWidget &nameEntry() const { return nameEntry_; }
   const TextEntryWidget &panIdEntry() const { return panIdEntry_; }
 
-  // The most recently successfully-switched-to droid's name, for the
-  // complications system's "Droid Name" source — "(none)" until a switch
-  // has actually succeeded this session (not persisted; resets on boot).
+  // The currently-active droid's name, for the complications system's
+  // "Droid Name" source — "(none)" until either a switch succeeds or
+  // setCurrentDroidName() seeds it. SnipsController.ino calls the setter
+  // once at boot, having derived the name by querying the XBee module's
+  // current PAN ID (which it remembers on its own — see
+  // XbeeControl::queryPanId()) and matching it against the droid list.
   const char *currentDroidName() const { return currentDroidName_; }
+  void setCurrentDroidName(const char *name);
 
   // Display Config edits an externally-owned ComplicationRegistry rather
   // than duplicating its slot-assignment state here — set once at boot.

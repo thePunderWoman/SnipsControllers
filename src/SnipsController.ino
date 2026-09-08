@@ -178,6 +178,25 @@ void setup() {
   xbeeControl.begin();
   menuController.setXbeeTransport(&xbeeControl);
 
+  // The XBee module remembers its own PAN ID across power cycles once
+  // XbeeControl::setPanId() commits one via "WR" — it never needs to be
+  // re-applied here. This just derives which saved droid (by name) that
+  // PAN ID corresponds to, for the "Droid Name" complication; no match
+  // (e.g. first boot, or after a Factory Reset clears the list) leaves
+  // the "(none)" default in place.
+  char currentPanId[17];
+  if (xbeeControl.queryPanId(currentPanId, sizeof(currentPanId))) {
+    const DroidStore &droidStore = menuController.droidStore();
+    for (size_t i = 0; i < droidStore.count(); ++i) {
+      if (std::strcmp(droidStore.at(i).panId, currentPanId) == 0) {
+        menuController.setCurrentDroidName(droidStore.at(i).name);
+        break;
+      }
+    }
+  } else {
+    Serial.println("XBee PAN ID query failed at boot.");
+  }
+
   // The module's SL is fixed hardware, so querying it once at boot (for
   // the Device Info screen) is enough — no need to re-query per menu
   // visit. deviceSerialLowBuf must outlive setup() since MenuController
