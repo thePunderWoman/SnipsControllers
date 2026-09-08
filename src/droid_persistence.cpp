@@ -6,10 +6,6 @@
 
 namespace {
 constexpr const char *kNamespace = "snips_droids";
-// Separate namespace from the list above — DroidPersistence::save()
-// calls prefs.clear() on kNamespace every time the list changes, which
-// would otherwise wipe the current selection out from under it.
-constexpr const char *kCurrentSelectionNamespace = "snips_cursel";
 }  // namespace
 
 DroidStore DroidPersistence::load() {
@@ -57,38 +53,5 @@ void DroidPersistence::save(const DroidStore &store) {
     prefs.putString(panKey, store.at(i).panId);
   }
 
-  prefs.end();
-}
-
-void DroidPersistence::saveCurrentSelection(const DroidEntry &entry) {
-  Preferences prefs;
-  if (!prefs.begin(kCurrentSelectionNamespace, /*readOnly=*/false)) {
-    return;
-  }
-  prefs.putString("name", entry.name);
-  prefs.putString("panId", entry.panId);
-  prefs.end();
-}
-
-bool DroidPersistence::loadCurrentSelection(DroidEntry *outEntry) {
-  Preferences prefs;
-  if (!prefs.begin(kCurrentSelectionNamespace, /*readOnly=*/true)) {
-    return false;
-  }
-  const bool hasSelection = prefs.isKey("panId");
-  if (hasSelection) {
-    prefs.getString("name", outEntry->name, sizeof(outEntry->name));
-    prefs.getString("panId", outEntry->panId, sizeof(outEntry->panId));
-  }
-  prefs.end();
-  return hasSelection;
-}
-
-void DroidPersistence::clearCurrentSelection() {
-  Preferences prefs;
-  if (!prefs.begin(kCurrentSelectionNamespace, /*readOnly=*/false)) {
-    return;
-  }
-  prefs.clear();
   prefs.end();
 }

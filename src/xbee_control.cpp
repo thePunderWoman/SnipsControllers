@@ -49,11 +49,10 @@ bool XbeeControl::setPanId(const char *panId) {
                           nullptr)) {
     return false;
   }
-  // "WR": commit to the module's own flash so it independently remembers
-  // this PAN ID across a power cycle too — a backstop alongside Snips'
-  // own persisted current-selection (see droid_persistence.h), which is
-  // what actually reapplies it at boot regardless of what the module's
-  // flash holds.
+  // "WR": commit to the module's own flash. Once written, the module
+  // remembers this PAN ID across power cycles on its own — nothing needs
+  // to re-apply it at boot, and it never changes again until this method
+  // is called again for a different droid.
   return spi_.sendAtCommand("WR", nullptr, 0, nullptr, 0, nullptr);
 }
 
@@ -71,6 +70,21 @@ bool XbeeControl::querySerialLow(char *outHex, size_t outHexCapacity) {
   uint8_t value[4];
   uint8_t valueLength = 0;
   if (!spi_.sendAtCommand("SL", nullptr, 0, value, sizeof(value),
+                          &valueLength) ||
+      valueLength != sizeof(value)) {
+    return false;
+  }
+  bytesToHexString(value, sizeof(value), outHex);
+  return true;
+}
+
+bool XbeeControl::queryPanId(char *outHex, size_t outHexCapacity) {
+  if (outHexCapacity < 17) {
+    return false;  // 16 hex chars + null
+  }
+  uint8_t value[8];
+  uint8_t valueLength = 0;
+  if (!spi_.sendAtCommand("ID", nullptr, 0, value, sizeof(value),
                           &valueLength) ||
       valueLength != sizeof(value)) {
     return false;
