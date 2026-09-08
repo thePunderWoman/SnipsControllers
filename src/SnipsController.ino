@@ -1,6 +1,9 @@
 #include <Arduino.h>
 
+#include "battery.h"
 #include "buttons.h"
+#include "calibration.h"
+#include "calibration_store.h"
 #include "oled.h"
 #include "pin_assignment.h"
 #include "power_latch.h"
@@ -19,7 +22,11 @@ ButtonPanel buttonPanel;
 OledDisplay oledDisplay;
 RgbLed rgbLed;
 StatusLedController statusLedController;
+BatteryMonitor batteryMonitor;
+CalibrationData calibrationData;
 bool lastReportedPressed[Buttons::kCount] = {};
+unsigned long lastTelemetryLogMs = 0;
+constexpr unsigned long kTelemetryLogIntervalMs = 1000;
 
 const char *buttonName(size_t index) {
   switch (index) {
@@ -36,6 +43,16 @@ const char *buttonName(size_t index) {
     case Buttons::kRightUp: return "RightUp";
     case Buttons::kRightDown: return "RightDown";
     default: return "Unknown";
+  }
+}
+
+const char *chargeStateName(ChargeState state) {
+  switch (state) {
+    case ChargeState::kDone: return "done";
+    case ChargeState::kCharging: return "charging";
+    case ChargeState::kRecoverableFault: return "recoverable-fault";
+    case ChargeState::kLatchedFault: return "latched-fault";
+    default: return "unknown";
   }
 }
 
@@ -67,6 +84,17 @@ void setup() {
   for (size_t i = 0; i < Buttons::kCount; ++i) {
     pinMode(Buttons::kPins[i], INPUT_PULLUP);
   }
+
+  // bq25185 STAT1/STAT2: open-drain, external 10kOhm pull-up to 3V3 (see
+  // PCB/GPIO_table.md) — plain INPUT, no internal pull needed.
+  pinMode(PinAssignment::kChargeStat1, INPUT);
+  pinMode(PinAssignment::kChargeStat2, INPUT);
+
+  // Restores any previously-run trigger/stick calibration; defaults to an
+  // uncalibrated full ADC range if none has been saved yet. The guided
+  // calibration flows that produce new values live in calibration.h and
+  // get wired to the on-device menu in a later PR.
+  calibrationData = CalibrationStore::load();
 
   // Real screen content (menus, complications, gesture feedback) lands in
   // later PRs. For now this just proves the display works end to end.
@@ -121,5 +149,43 @@ void loop() {
       Serial.print(buttonName(i));
       Serial.println(pressed ? " pressed" : " released");
     }
+  }
+
+  // Packet protocol lands in PR 8 — for now, just log periodically (not
+  // every tick) so bring-up can confirm these readings look right.
+  if (now - lastTelemetryLogMs >= kTelemetryLogIntervalMs) {
+    lastTelemetryLogMs = now;
+
+    const int rawTrigger = analogRead(PinAssignment::kAnalogTrigger);
+    const int rawStickX = analogRead(PinAssignment::kThumbstickX);
+    const int rawStickY = analogRead(PinAssignment::kThumbstickY);
+    const int rawVsys = analogRead(PinAssignment::kVsysSense);
+    const bool stat1High = digitalRead(PinAssignment::kChargeStat1) == HIGH;
+    const bool stat2High = digitalRead(PinAssignment::kChargeStat2) == HIGH;
+
+    const int triggerPercent =
+        AnalogCalibration::calibrateTrigger(rawTrigger, calibrationData);
+    const int stickXPercent = AnalogCalibration::calibrateStickAxis(
+        rawStickX, calibrationData.stickXMin, calibrationData.stickXCenter,
+        calibrationData.stickXMax);
+    const int stickYPercent = AnalogCalibration::calibrateStickAxis(
+        rawStickY, calibrationData.stickYMin, calibrationData.stickYCenter,
+        calibrationData.stickYMax);
+    const int batteryPercent = batteryMonitor.percentFor(rawVsys);
+    const ChargeState chargeState =
+        batteryMonitor.chargeStateFor(stat1High, stat2High);
+
+    Serial.print("Battery ");
+    Serial.print(batteryPercent);
+    Serial.print("% (");
+    Serial.print(chargeStateName(chargeState));
+    Serial.println(")");
+    Serial.print("Trigger ");
+    Serial.print(triggerPercent);
+    Serial.println("%");
+    Serial.print("Stick X ");
+    Serial.print(stickXPercent);
+    Serial.print(" Y ");
+    Serial.println(stickYPercent);
   }
 }
