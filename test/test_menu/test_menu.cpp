@@ -94,6 +94,9 @@ void test_down_cycles_through_every_main_menu_item_in_order() {
   TEST_ASSERT_TRUE(MainMenuItem::kCalibrateTrigger ==
                     menu.selectedMainMenuItem());
   menu.onDown();
+  TEST_ASSERT_TRUE(MainMenuItem::kDisplayConfig ==
+                    menu.selectedMainMenuItem());
+  menu.onDown();
   TEST_ASSERT_TRUE(MainMenuItem::kDeviceInfo == menu.selectedMainMenuItem());
   menu.onDown();
   TEST_ASSERT_TRUE(MainMenuItem::kFactoryReset ==
@@ -443,6 +446,84 @@ void test_manage_droids_delete_confirm_back_cancels() {
   TEST_ASSERT_FALSE(menu.consumeDroidStoreChanged());
 }
 
+// ---- display config -----------------------------------------------------------
+
+void test_display_config_cycles_selected_slot_source() {
+  MenuController menu;
+  ComplicationRegistry registry;
+  menu.setComplications(&registry);
+  selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
+  menu.onEnter(0, 0, 0);  // -> kDisplayConfig
+  TEST_ASSERT_TRUE(MenuScreen::kDisplayConfig == menu.currentScreen());
+  TEST_ASSERT_EQUAL_INT(0, menu.selectedDisplayConfigSlot());
+
+  const ComplicationSource before = registry.slotSource(0);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_FALSE(before == registry.slotSource(0));
+  TEST_ASSERT_TRUE(menu.consumeComplicationsChanged());
+  TEST_ASSERT_FALSE(menu.consumeComplicationsChanged());
+}
+
+void test_display_config_up_down_selects_slot_not_source() {
+  MenuController menu;
+  ComplicationRegistry registry;
+  menu.setComplications(&registry);
+  selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
+  menu.onEnter(0, 0, 0);  // -> kDisplayConfig
+
+  menu.onDown();
+  TEST_ASSERT_EQUAL_INT(1, menu.selectedDisplayConfigSlot());
+  menu.onUp();
+  menu.onUp();  // wraps to the last slot
+  TEST_ASSERT_EQUAL_INT(ComplicationRegistry::kSlotCount - 1,
+                        menu.selectedDisplayConfigSlot());
+}
+
+void test_display_config_enter_without_registry_is_noop() {
+  MenuController menu;  // no setComplications() call
+  selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
+  menu.onEnter(0, 0, 0);  // -> kDisplayConfig
+  menu.onEnter(0, 0, 0);  // should not crash
+  TEST_ASSERT_FALSE(menu.consumeComplicationsChanged());
+}
+
+void test_display_config_back_returns_to_main_menu() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
+  menu.onEnter(0, 0, 0);  // -> kDisplayConfig
+  menu.onBack();
+  TEST_ASSERT_TRUE(MenuScreen::kMainMenu == menu.currentScreen());
+}
+
+// ---- current droid name --------------------------------------------------------
+
+void test_current_droid_name_defaults_to_none() {
+  MenuController menu;
+  TEST_ASSERT_EQUAL_STRING("(none)", menu.currentDroidName());
+}
+
+void test_current_droid_name_set_on_successful_switch() {
+  MenuController menu;
+  FakeTransport transport;
+  menu.setXbeeTransport(&transport);
+  menu.setDroidStore(twoDroidStore());
+  selectMainMenuItem(&menu, MainMenuItem::kSwitchDroid);
+  menu.onEnter(0, 0, 0);  // -> kSwitchDroidList
+  menu.onEnter(0, 0, 0);  // select R2-D2, switch succeeds
+
+  TEST_ASSERT_EQUAL_STRING("R2-D2", menu.currentDroidName());
+}
+
+void test_current_droid_name_unchanged_on_failed_switch() {
+  MenuController menu;  // no transport set -> switch fails
+  menu.setDroidStore(twoDroidStore());
+  selectMainMenuItem(&menu, MainMenuItem::kSwitchDroid);
+  menu.onEnter(0, 0, 0);
+  menu.onEnter(0, 0, 0);
+
+  TEST_ASSERT_EQUAL_STRING("(none)", menu.currentDroidName());
+}
+
 // ---- labels ------------------------------------------------------------------
 
 void test_main_menu_item_labels() {
@@ -454,6 +535,8 @@ void test_main_menu_item_labels() {
                            mainMenuItemLabel(MainMenuItem::kCalibrateStick));
   TEST_ASSERT_EQUAL_STRING("Calibrate Trigger",
                            mainMenuItemLabel(MainMenuItem::kCalibrateTrigger));
+  TEST_ASSERT_EQUAL_STRING("Display Config",
+                           mainMenuItemLabel(MainMenuItem::kDisplayConfig));
   TEST_ASSERT_EQUAL_STRING("Device Info",
                            mainMenuItemLabel(MainMenuItem::kDeviceInfo));
   TEST_ASSERT_EQUAL_STRING("Factory Reset",
@@ -548,6 +631,29 @@ void test_render_factory_reset_confirm() {
   TEST_ASSERT_EQUAL_STRING("Factory Reset?", screen.line(0));
 }
 
+void test_render_display_config_shows_slots_and_selection() {
+  MenuController menu;
+  ComplicationRegistry registry;
+  menu.setComplications(&registry);
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
+  menu.onEnter(0, 0, 0);  // -> kDisplayConfig
+  menu.onDown();  // select slot 1
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("Display Config", screen.line(0));
+  TEST_ASSERT_EQUAL_STRING("  1: Battery", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("> 2: Droid Name", screen.line(2));
+}
+
+void test_render_display_config_without_registry_shows_placeholder() {
+  MenuController menu;  // no setComplications() call
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
+  menu.onEnter(0, 0, 0);  // -> kDisplayConfig
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("> 1: (none)", screen.line(1));
+}
+
 void test_render_switch_droid_list_empty() {
   MenuController menu;
   ScreenBuffer screen;
@@ -577,7 +683,7 @@ void test_render_switch_droid_result() {
   menu.onEnter(0, 0, 0);  // -> kSwitchDroidList
   menu.onEnter(0, 0, 0);  // select R2-D2, attempt switch
   renderMenuScreen(menu, &screen);
-  TEST_ASSERT_EQUAL_STRING("No XBee link (PR 8)", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("No XBee link", screen.line(1));
 }
 
 void test_render_manage_droids_list_shows_add_new() {
@@ -684,6 +790,13 @@ int main(int argc, char **argv) {
   RUN_TEST(test_manage_droids_pan_id_backspace_and_cancel);
   RUN_TEST(test_manage_droids_delete_flow_removes_entry);
   RUN_TEST(test_manage_droids_delete_confirm_back_cancels);
+  RUN_TEST(test_display_config_cycles_selected_slot_source);
+  RUN_TEST(test_display_config_up_down_selects_slot_not_source);
+  RUN_TEST(test_display_config_enter_without_registry_is_noop);
+  RUN_TEST(test_display_config_back_returns_to_main_menu);
+  RUN_TEST(test_current_droid_name_defaults_to_none);
+  RUN_TEST(test_current_droid_name_set_on_successful_switch);
+  RUN_TEST(test_current_droid_name_unchanged_on_failed_switch);
   RUN_TEST(test_main_menu_item_labels);
   RUN_TEST(test_render_inactive_leaves_screen_blank);
   RUN_TEST(test_render_main_menu_marks_selected_item);
@@ -693,6 +806,8 @@ int main(int argc, char **argv) {
   RUN_TEST(test_render_device_info);
   RUN_TEST(test_device_serial_low_defaults_then_reflects_what_was_set);
   RUN_TEST(test_render_factory_reset_confirm);
+  RUN_TEST(test_render_display_config_shows_slots_and_selection);
+  RUN_TEST(test_render_display_config_without_registry_shows_placeholder);
   RUN_TEST(test_render_switch_droid_list_empty);
   RUN_TEST(test_render_switch_droid_list_marks_selected);
   RUN_TEST(test_render_switch_droid_result);

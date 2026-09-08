@@ -26,6 +26,13 @@ class XbeeControl : public XbeeTransport {
   // query failure, leaving outHex untouched.
   bool querySerialLow(char *outHex, size_t outHexCapacity);
 
+  // Queries the local module's own last-hop received signal strength
+  // ("DB" AT command — a single byte, the RSSI magnitude in dBm, e.g. a
+  // response of 0x2A means -42dBm). Purely local: no round trip to
+  // Amidala needed, unlike everything else this controller displays.
+  // Returns false on query failure, leaving outDbm untouched.
+  bool queryLocalRssiDbm(int *outDbm);
+
   // Passthroughs to the owned XbeeSpi — see xbee_spi.h. XbeeControl is
   // kept as the single facade over the one physical XBee connection
   // rather than SnipsController.ino owning a second XbeeSpi instance.

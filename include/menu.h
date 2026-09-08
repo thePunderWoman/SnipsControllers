@@ -1,6 +1,7 @@
 #pragma once
 
 #include "calibration.h"
+#include "complications.h"
 #include "droid_store.h"
 #include "screen.h"
 #include "text_entry.h"
@@ -11,9 +12,6 @@
 // the nav calls below (and detects the open combo via updateOpenCombo()),
 // and renderMenuScreen() turns the current state into a ScreenBuffer for
 // the (already-existing, hardware-touching) OledDisplay to draw.
-//
-// Display Config (PR 9) isn't part of this menu tree yet — it needs the
-// packet protocol's label/value data, which doesn't exist yet.
 enum class MenuScreen {
   kInactive,
   kMainMenu,
@@ -25,6 +23,7 @@ enum class MenuScreen {
   kManageDroidsDeleteConfirm,
   kCalibrateStick,
   kCalibrateTrigger,
+  kDisplayConfig,
   kDeviceInfo,
   kFactoryResetConfirm,
 };
@@ -34,6 +33,7 @@ enum class MainMenuItem {
   kManageDroids,
   kCalibrateStick,
   kCalibrateTrigger,
+  kDisplayConfig,
   kDeviceInfo,
   kFactoryReset,
   kCount,
@@ -111,6 +111,21 @@ class MenuController {
   const TextEntryWidget &nameEntry() const { return nameEntry_; }
   const TextEntryWidget &panIdEntry() const { return panIdEntry_; }
 
+  // The most recently successfully-switched-to droid's name, for the
+  // complications system's "Droid Name" source — "(none)" until a switch
+  // has actually succeeded this session (not persisted; resets on boot).
+  const char *currentDroidName() const { return currentDroidName_; }
+
+  // Display Config edits an externally-owned ComplicationRegistry rather
+  // than duplicating its slot-assignment state here — set once at boot.
+  // May be left null (the menu screen then just does nothing on Enter).
+  void setComplications(ComplicationRegistry *registry) {
+    complications_ = registry;
+  }
+  const ComplicationRegistry *complications() const { return complications_; }
+  int selectedDisplayConfigSlot() const { return displayConfigSlotIndex_; }
+  bool consumeComplicationsChanged();
+
  private:
   static constexpr unsigned long kOpenComboHoldMs = 1000;
 
@@ -149,6 +164,11 @@ class MenuController {
   DroidSwitchResult lastSwitchResult_ = DroidSwitchResult::kSuccess;
   XbeeTransport *xbeeTransport_ = nullptr;
   const char *deviceSerialLow_ = "(unknown)";
+  char currentDroidName_[DroidEntry::kMaxNameLength + 1] = "(none)";
+
+  ComplicationRegistry *complications_ = nullptr;
+  int displayConfigSlotIndex_ = 0;
+  bool complicationsChanged_ = false;
 };
 
 // Decides what text should be on screen for the menu's current state.

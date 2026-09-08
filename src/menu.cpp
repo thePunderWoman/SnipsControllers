@@ -1,6 +1,7 @@
 #include "menu.h"
 
 #include <cstdio>
+#include <cstring>
 
 const char *mainMenuItemLabel(MainMenuItem item) {
   switch (item) {
@@ -8,6 +9,7 @@ const char *mainMenuItemLabel(MainMenuItem item) {
     case MainMenuItem::kManageDroids: return "Manage Droids";
     case MainMenuItem::kCalibrateStick: return "Calibrate Stick";
     case MainMenuItem::kCalibrateTrigger: return "Calibrate Trigger";
+    case MainMenuItem::kDisplayConfig: return "Display Config";
     case MainMenuItem::kDeviceInfo: return "Device Info";
     case MainMenuItem::kFactoryReset: return "Factory Reset";
     default: return "Unknown";
@@ -67,6 +69,10 @@ void MenuController::onUp() {
     case MenuScreen::kManageDroidsEnterPanId:
       panIdEntry_.scrollPrev();
       break;
+    case MenuScreen::kDisplayConfig:
+      displayConfigSlotIndex_ =
+          wrapIndex(displayConfigSlotIndex_ - 1, ComplicationRegistry::kSlotCount);
+      break;
     default:
       break;
   }
@@ -93,6 +99,10 @@ void MenuController::onDown() {
       break;
     case MenuScreen::kManageDroidsEnterPanId:
       panIdEntry_.scrollNext();
+      break;
+    case MenuScreen::kDisplayConfig:
+      displayConfigSlotIndex_ =
+          wrapIndex(displayConfigSlotIndex_ + 1, ComplicationRegistry::kSlotCount);
       break;
     default:
       break;
@@ -134,6 +144,7 @@ void MenuController::onBack() {
       triggerFlow_ = TriggerCalibrationFlow();
       screen_ = MenuScreen::kMainMenu;
       break;
+    case MenuScreen::kDisplayConfig:
     case MenuScreen::kDeviceInfo:
     case MenuScreen::kFactoryResetConfirm:
       screen_ = MenuScreen::kMainMenu;
@@ -161,6 +172,10 @@ void MenuController::enterMainMenuItem(MainMenuItem item) {
       triggerFlow_ = TriggerCalibrationFlow();
       screen_ = MenuScreen::kCalibrateTrigger;
       break;
+    case MainMenuItem::kDisplayConfig:
+      displayConfigSlotIndex_ = 0;
+      screen_ = MenuScreen::kDisplayConfig;
+      break;
     case MainMenuItem::kDeviceInfo:
       screen_ = MenuScreen::kDeviceInfo;
       break;
@@ -180,8 +195,13 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
 
     case MenuScreen::kSwitchDroidList:
       if (droidStore_.count() > 0) {
-        lastSwitchResult_ = DroidSwitcher::switchTo(
-            droidStore_.at(droidListIndex_).panId, xbeeTransport_);
+        const DroidEntry &target = droidStore_.at(droidListIndex_);
+        lastSwitchResult_ = DroidSwitcher::switchTo(target.panId, xbeeTransport_);
+        if (lastSwitchResult_ == DroidSwitchResult::kSuccess) {
+          std::strncpy(currentDroidName_, target.name,
+                       sizeof(currentDroidName_) - 1);
+          currentDroidName_[sizeof(currentDroidName_) - 1] = '\0';
+        }
         screen_ = MenuScreen::kSwitchDroidResult;
       }
       break;
@@ -257,6 +277,13 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
       }
       break;
 
+    case MenuScreen::kDisplayConfig:
+      if (complications_ != nullptr) {
+        complications_->cycleSlotSource(displayConfigSlotIndex_);
+        complicationsChanged_ = true;
+      }
+      break;
+
     case MenuScreen::kDeviceInfo:
       screen_ = MenuScreen::kMainMenu;
       break;
@@ -315,6 +342,12 @@ bool MenuController::consumeDroidStoreChanged() {
   return true;
 }
 
+bool MenuController::consumeComplicationsChanged() {
+  if (!complicationsChanged_) return false;
+  complicationsChanged_ = false;
+  return true;
+}
+
 namespace {
 
 void renderTextEntryLine(const TextEntryWidget &widget, ScreenBuffer *screen,
@@ -335,7 +368,7 @@ const char *switchResultText(DroidSwitchResult result) {
     case DroidSwitchResult::kLeaveFailed: return "Leave failed";
     case DroidSwitchResult::kSetPanFailed: return "Set PAN failed";
     case DroidSwitchResult::kRejoinFailed: return "Rejoin failed";
-    case DroidSwitchResult::kNoTransport: return "No XBee link (PR 8)";
+    case DroidSwitchResult::kNoTransport: return "No XBee link";
     default: return "Unknown";
   }
 }
@@ -465,6 +498,22 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
           break;
       }
       break;
+
+    case MenuScreen::kDisplayConfig: {
+      screen->setLine(0, "Display Config");
+      char line[ScreenBuffer::kMaxLineLength + 1];
+      for (int i = 0; i < ComplicationRegistry::kSlotCount; ++i) {
+        const char *sourceLabel =
+            menu.complications() != nullptr
+                ? complicationSourceLabel(menu.complications()->slotSource(i))
+                : "(none)";
+        std::snprintf(line, sizeof(line), "%s%d: %s",
+                      i == menu.selectedDisplayConfigSlot() ? "> " : "  ",
+                      i + 1, sourceLabel);
+        screen->setLine(1 + i, line);
+      }
+      break;
+    }
 
     case MenuScreen::kDeviceInfo:
       screen->setLine(0, "Device Info");

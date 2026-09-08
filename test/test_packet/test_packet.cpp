@@ -16,6 +16,7 @@ void test_uplink_round_trip() {
   packet.stickYPercent = 100;
   packet.batteryPercent = 88;
   packet.chargeState = ChargeState::kCharging;
+  packet.flags = UplinkPacket::kFlagShuttingDown;
 
   uint8_t buf[Packet::kUplinkEncodedSize];
   TEST_ASSERT_EQUAL_UINT(Packet::kUplinkEncodedSize,
@@ -29,6 +30,17 @@ void test_uplink_round_trip() {
   TEST_ASSERT_EQUAL_INT8(100, decoded.stickYPercent);
   TEST_ASSERT_EQUAL_UINT8(88, decoded.batteryPercent);
   TEST_ASSERT_TRUE(ChargeState::kCharging == decoded.chargeState);
+  TEST_ASSERT_EQUAL_UINT8(UplinkPacket::kFlagShuttingDown, decoded.flags);
+}
+
+void test_uplink_flags_default_to_zero() {
+  UplinkPacket packet;
+  uint8_t buf[Packet::kUplinkEncodedSize];
+  Packet::encodeUplink(packet, buf, sizeof(buf));
+
+  UplinkPacket decoded;
+  Packet::decodeUplink(buf, sizeof(buf), &decoded);
+  TEST_ASSERT_EQUAL_UINT8(0, decoded.flags);
 }
 
 void test_uplink_encode_fails_when_buffer_too_small() {
@@ -109,6 +121,7 @@ void test_downlink_decode_fails_when_length_too_short() {
 int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_uplink_round_trip);
+  RUN_TEST(test_uplink_flags_default_to_zero);
   RUN_TEST(test_uplink_encode_fails_when_buffer_too_small);
   RUN_TEST(test_uplink_decode_fails_when_length_too_short);
   RUN_TEST(test_downlink_round_trip);
