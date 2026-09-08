@@ -178,6 +178,21 @@ void setup() {
   xbeeControl.begin();
   menuController.setXbeeTransport(&xbeeControl);
 
+  // Reapplies a previously-selected droid's PAN ID so the controller
+  // reconnects to the same one across a power cycle, regardless of
+  // whatever the module's own flash independently holds (see
+  // droid_persistence.h). No "leave" step — nothing's currently joined
+  // to anything yet this session.
+  DroidEntry currentSelection;
+  if (DroidPersistence::loadCurrentSelection(&currentSelection)) {
+    menuController.setCurrentDroidName(currentSelection.name);
+    if (xbeeControl.setPanId(currentSelection.panId)) {
+      xbeeControl.rejoinNetwork();
+    } else {
+      Serial.println("Failed to reapply saved PAN ID at boot.");
+    }
+  }
+
   // The module's SL is fixed hardware, so querying it once at boot (for
   // the Device Info screen) is enough — no need to re-query per menu
   // visit. deviceSerialLowBuf must outlive setup() since MenuController
@@ -289,7 +304,16 @@ void loop() {
   if (menuController.consumeFactoryResetConfirmed()) {
     calibrationData = CalibrationData();
     CalibrationStore::save(calibrationData);
-    Serial.println("Factory reset: calibration cleared.");
+    DroidPersistence::clearCurrentSelection();
+    Serial.println("Factory reset: calibration and current droid cleared.");
+  }
+
+  // Persists the newly-selected droid so it's reapplied at boot — see
+  // this file's DroidPersistence::loadCurrentSelection() call in setup().
+  DroidEntry newCurrentSelection;
+  if (menuController.consumeCurrentSelectionChanged(&newCurrentSelection)) {
+    DroidPersistence::saveCurrentSelection(newCurrentSelection);
+    Serial.println("Current droid selection saved.");
   }
 
   // MenuController clears its in-memory droid list as part of factory

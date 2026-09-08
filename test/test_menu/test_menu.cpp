@@ -170,6 +170,12 @@ void test_factory_reset_confirmed_via_enter() {
   // Factory reset also clears the droid list, and reports that change.
   TEST_ASSERT_EQUAL_INT(0, menu.droidStore().count());
   TEST_ASSERT_TRUE(menu.consumeDroidStoreChanged());
+
+  // And resets the current-droid display, though there's no persisted
+  // "current selection" change to report here — SnipsController.ino
+  // clears that directly via consumeFactoryResetConfirmed() instead (see
+  // droid_persistence.h's clearCurrentSelection()).
+  TEST_ASSERT_EQUAL_STRING("(none)", menu.currentDroidName());
 }
 
 // ---- trigger calibration ---------------------------------------------------
@@ -524,6 +530,43 @@ void test_current_droid_name_unchanged_on_failed_switch() {
   TEST_ASSERT_EQUAL_STRING("(none)", menu.currentDroidName());
 }
 
+void test_set_current_droid_name_seeds_it_directly() {
+  MenuController menu;  // simulates SnipsController.ino restoring a
+                        // persisted selection at boot, before any switch
+  menu.setCurrentDroidName("BB-8");
+  TEST_ASSERT_EQUAL_STRING("BB-8", menu.currentDroidName());
+}
+
+// ---- current selection persistence signal ---------------------------------
+
+void test_successful_switch_reports_current_selection_changed() {
+  MenuController menu;
+  FakeTransport transport;
+  menu.setXbeeTransport(&transport);
+  menu.setDroidStore(twoDroidStore());
+  selectMainMenuItem(&menu, MainMenuItem::kSwitchDroid);
+  menu.onEnter(0, 0, 0);  // -> kSwitchDroidList
+  menu.onEnter(0, 0, 0);  // select R2-D2, switch succeeds
+
+  DroidEntry entry;
+  TEST_ASSERT_TRUE(menu.consumeCurrentSelectionChanged(&entry));
+  TEST_ASSERT_EQUAL_STRING("R2-D2", entry.name);
+  TEST_ASSERT_EQUAL_STRING("1111111111111111", entry.panId);
+  // Edge-triggered — a second call returns false.
+  TEST_ASSERT_FALSE(menu.consumeCurrentSelectionChanged(&entry));
+}
+
+void test_failed_switch_does_not_report_current_selection_changed() {
+  MenuController menu;  // no transport set -> switch fails
+  menu.setDroidStore(twoDroidStore());
+  selectMainMenuItem(&menu, MainMenuItem::kSwitchDroid);
+  menu.onEnter(0, 0, 0);
+  menu.onEnter(0, 0, 0);
+
+  DroidEntry entry;
+  TEST_ASSERT_FALSE(menu.consumeCurrentSelectionChanged(&entry));
+}
+
 // ---- labels ------------------------------------------------------------------
 
 void test_main_menu_item_labels() {
@@ -797,6 +840,9 @@ int main(int argc, char **argv) {
   RUN_TEST(test_current_droid_name_defaults_to_none);
   RUN_TEST(test_current_droid_name_set_on_successful_switch);
   RUN_TEST(test_current_droid_name_unchanged_on_failed_switch);
+  RUN_TEST(test_set_current_droid_name_seeds_it_directly);
+  RUN_TEST(test_successful_switch_reports_current_selection_changed);
+  RUN_TEST(test_failed_switch_does_not_report_current_selection_changed);
   RUN_TEST(test_main_menu_item_labels);
   RUN_TEST(test_render_inactive_leaves_screen_blank);
   RUN_TEST(test_render_main_menu_marks_selected_item);

@@ -45,8 +45,16 @@ bool XbeeControl::setPanId(const char *panId) {
   if (!hexStringToBytes(panId, panIdBytes, sizeof(panIdBytes))) {
     return false;
   }
-  return spi_.sendAtCommand("ID", panIdBytes, sizeof(panIdBytes), nullptr, 0,
-                            nullptr);
+  if (!spi_.sendAtCommand("ID", panIdBytes, sizeof(panIdBytes), nullptr, 0,
+                          nullptr)) {
+    return false;
+  }
+  // "WR": commit to the module's own flash so it independently remembers
+  // this PAN ID across a power cycle too — a backstop alongside Snips'
+  // own persisted current-selection (see droid_persistence.h), which is
+  // what actually reapplies it at boot regardless of what the module's
+  // flash holds.
+  return spi_.sendAtCommand("WR", nullptr, 0, nullptr, 0, nullptr);
 }
 
 bool XbeeControl::rejoinNetwork() {

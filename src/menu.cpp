@@ -20,6 +20,18 @@ MainMenuItem MenuController::selectedMainMenuItem() const {
   return static_cast<MainMenuItem>(mainMenuIndex_);
 }
 
+void MenuController::setCurrentDroidName(const char *name) {
+  std::strncpy(currentDroidName_, name, sizeof(currentDroidName_) - 1);
+  currentDroidName_[sizeof(currentDroidName_) - 1] = '\0';
+}
+
+bool MenuController::consumeCurrentSelectionChanged(DroidEntry *outEntry) {
+  if (!currentSelectionChanged_) return false;
+  *outEntry = pendingCurrentSelection_;
+  currentSelectionChanged_ = false;
+  return true;
+}
+
 int MenuController::wrapIndex(int index, int count) {
   if (count <= 0) return 0;
   return (index % count + count) % count;
@@ -198,9 +210,9 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
         const DroidEntry &target = droidStore_.at(droidListIndex_);
         lastSwitchResult_ = DroidSwitcher::switchTo(target.panId, xbeeTransport_);
         if (lastSwitchResult_ == DroidSwitchResult::kSuccess) {
-          std::strncpy(currentDroidName_, target.name,
-                       sizeof(currentDroidName_) - 1);
-          currentDroidName_[sizeof(currentDroidName_) - 1] = '\0';
+          setCurrentDroidName(target.name);
+          pendingCurrentSelection_ = target;
+          currentSelectionChanged_ = true;
         }
         screen_ = MenuScreen::kSwitchDroidResult;
       }
@@ -292,6 +304,12 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
       factoryResetConfirmed_ = true;
       droidStore_ = DroidStore();
       droidStoreChanged_ = true;
+      // The persisted current selection is cleared directly by
+      // SnipsController.ino's consumeFactoryResetConfirmed() handler
+      // (droid_persistence.h's clearCurrentSelection()) rather than
+      // routed through consumeCurrentSelectionChanged() here — there's
+      // no real "selection" to hand back, just a wipe.
+      setCurrentDroidName("(none)");
       screen_ = MenuScreen::kMainMenu;
       break;
 

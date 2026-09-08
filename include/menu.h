@@ -112,9 +112,18 @@ class MenuController {
   const TextEntryWidget &panIdEntry() const { return panIdEntry_; }
 
   // The most recently successfully-switched-to droid's name, for the
-  // complications system's "Droid Name" source — "(none)" until a switch
-  // has actually succeeded this session (not persisted; resets on boot).
+  // complications system's "Droid Name" source — "(none)" until either a
+  // switch succeeds or setCurrentDroidName() seeds it (SnipsController.ino
+  // calls this once at boot after restoring a persisted current
+  // selection — see droid_persistence.h).
   const char *currentDroidName() const { return currentDroidName_; }
+  void setCurrentDroidName(const char *name);
+
+  // Reports once, the tick a Switch Droid action succeeds, so
+  // SnipsController.ino can persist the new current selection — separate
+  // from consumeDroidStoreChanged(), which is about the list of known
+  // droids, not which one is currently active.
+  bool consumeCurrentSelectionChanged(DroidEntry *outEntry);
 
   // Display Config edits an externally-owned ComplicationRegistry rather
   // than duplicating its slot-assignment state here — set once at boot.
@@ -162,6 +171,8 @@ class MenuController {
   TextEntryWidget nameEntry_{TextEntryWidget::CharSet::kAlphanumeric};
   TextEntryWidget panIdEntry_{TextEntryWidget::CharSet::kHex};
   DroidSwitchResult lastSwitchResult_ = DroidSwitchResult::kSuccess;
+  bool currentSelectionChanged_ = false;
+  DroidEntry pendingCurrentSelection_;
   XbeeTransport *xbeeTransport_ = nullptr;
   const char *deviceSerialLow_ = "(unknown)";
   char currentDroidName_[DroidEntry::kMaxNameLength + 1] = "(none)";
