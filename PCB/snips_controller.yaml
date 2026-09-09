@@ -531,11 +531,12 @@ groups:
         pins: [U_MCU:22, U_XBEE:ON_SLEEP]
       - net: XBEE_SPI_ATTN
         pins: [U_MCU:8, U_XBEE:SPI_ATTN]
-      # I2C - OLED (no local pull-ups — Adafruit #938 breakout has them onboard)
+      # I2C - OLED + QMA6100P accelerometer, shared bus (no local pull-ups —
+      # Adafruit #938 breakout has them onboard for the OLED side)
       - net: I2C_SDA
-        pins: [U_MCU:12, U_OLED:SDA]
+        pins: [U_MCU:12, U_OLED:SDA, U_ACCEL:SDX]
       - net: I2C_SCL
-        pins: [U_MCU:17, U_OLED:SCL]
+        pins: [U_MCU:17, U_OLED:SCL, U_ACCEL:SCX]
       # ADC inputs (ADC1-only, see note above)
       - net: TRIG_ANALOG
         pins: [U_MCU:4, U_HALL:OUT]
@@ -585,11 +586,27 @@ groups:
         pins: [R_VSYS1:2, R_VSYS2:1, U_MCU:7]
       - net: GND
         pins: [R_VSYS2:2]
-      # Spare GPIO: 15/16/26 usable-with-care (strapping), 34/35 clean
-      # (default JTAG, fully reusable as plain GPIO; 32/33 from the same
-      # clean JTAG group now used above for BTN_VOL_UP/BTN_VOL_DN). See
-      # RESERVED GPIO header comment for details.
-      - no_connect: [U_MCU:15, U_MCU:16, U_MCU:26, U_MCU:34, U_MCU:35]
+      # XBee SLEEP_RQ (DTR): drives the module's pin-sleep request. Was
+      # tied straight to GND (see XBee section below); moved to the last
+      # clean spare GPIO so firmware can actually command sleep/wake
+      # instead of DTR being permanently deasserted. Global rather than
+      # hierarchical (like VBUS/VSYS above) — simpler than adding sheet
+      # boundary pins for a single two-sheet net.
+      - net: XBEE_SLEEP_RQ
+        global: true
+        pins: [U_MCU:35, U_XBEE:DTR]
+      # Accelerometer INT1 (QMA6100P, see Accelerometer section below):
+      # any-motion/no-motion hardware interrupt, lets the MCU light-sleep
+      # instead of polling for wake conditions. Global for the same reason
+      # as XBEE_SLEEP_RQ above.
+      - net: ACCEL_INT1
+        global: true
+        pins: [U_MCU:16, U_ACCEL:INT1]
+      # Spare GPIO: 15/26 usable-with-care (strapping), 34 clean (default
+      # JTAG, fully reusable as plain GPIO; 32/33 from the same clean JTAG
+      # group now used above for BTN_VOL_UP/BTN_VOL_DN). Pins 16/35 (also
+      # strapping/clean-JTAG) are now spoken for above.
+      - no_connect: [U_MCU:15, U_MCU:26, U_MCU:34]
 
   # -------------------------------------------------------------------------
   # 7. XBee3 Radio (SPI mode, THT socket)
@@ -658,13 +675,18 @@ groups:
         pins: [R_XBEE_RST:2, R_XBEE_RC:1, C_XBEE_RC:1]
       - net: XBEE_RESET
         pins: [U_XBEE:RESET, R_XBEE_RC:2]
-      # DTR/ON_SLEEP/SPI_ATTN per Amidala's actual AmidalaShield netlist
-      # (pulled from its IPC-2581 export, not guessed): DTR tied low,
-      # ON_SLEEP and SPI_ATTN go to host GPIO. SPI_ATTN is the XBee's
-      # data-ready interrupt line — needed for reliable SPI transfers
-      # rather than polling, not just a nice-to-have.
-      - net: GND
-        pins: [U_XBEE:DTR]
+      # ON_SLEEP/SPI_ATTN per Amidala's actual AmidalaShield netlist
+      # (pulled from its IPC-2581 export, not guessed): both go to host
+      # GPIO. SPI_ATTN is the XBee's data-ready interrupt line — needed
+      # for reliable SPI transfers rather than polling, not just a
+      # nice-to-have.
+      #
+      # DTR (SLEEP_RQ) diverges from Amidala's netlist on purpose: Amidala
+      # ties it straight to GND (permanently deasserted, no host-commanded
+      # sleep). This board wires it to a host GPIO instead (see
+      # XBEE_SLEEP_RQ net above, MCU pin 35/GPIO42) so firmware can put
+      # the module into pin sleep during low-power mode rather than
+      # keeping the radio powered the whole time.
       # Remaining auxiliary pins unused: DOUT/DIN(secondary UART),
       # RSSI_PWM, PWM1, [RESERVED]x2, CTS, ASSOCIATE, RTS, AD0
       - no_connect: [U_XBEE:2, U_XBEE:3, U_XBEE:6, U_XBEE:7, U_XBEE:8,
@@ -703,6 +725,62 @@ groups:
         pins: [U_OLED:VCC, C_OLED_1:1, C_OLED_2:1]
       - net: GND
         pins: [U_OLED:GND, C_OLED_1:2, C_OLED_2:2]
+
+  # -------------------------------------------------------------------------
+  # 8a. QMA6100P Accelerometer (I2C, shares the OLED's bus) — low-power mode
+  # -------------------------------------------------------------------------
+  # Chosen over MSA311/LIS3DH/ADXL345/MPU-6050 after checking JLCPCB's actual
+  # parts library: none of the candidates are Basic-library, so QMA6100P won
+  # on price ($0.61 @1pc), size (2x2x0.95mm LGA-12), and standby current
+  # (500nA typ., the lowest of the group — it has to stay active watching
+  # for motion through the whole low-power period). See PCB/GPIO_table.md's
+  # Accelerometer section for the full rationale and datasheet citation
+  # (QST Doc #13-52-20 Rev A1).
+  #
+  # Symbol/footprint hand-authored (SnipsControllers_Custom) — no existing
+  # library part for this package. Footprint pad geometry pulled from
+  # JLCPCB/LCSC's own EasyEDA component data (LCSC C2887190), the same
+  # manufacturer-verified footprint used for their PCBA service, rather than
+  # estimated from the preliminary datasheet's low-resolution mechanical
+  # drawing.
+  #
+  # AD0 -> GND selects I2C address 0x12. SENB -> 3V3 selects I2C protocol
+  # (tied high rather than left floating). RESV1/RESV2 -> GND and NC/INT2
+  # left unconnected, all per the datasheet's Figure 4 (I2C Single Supply
+  # Connection) reference schematic. Decoupling per that same figure: 10nF +
+  # 100pF + 2.2nF on VDD, rather than this board's usual single 100nF — the
+  # two smallest values are a best-effort read of small print in a
+  # preliminary-datasheet figure and should be visually re-checked against
+  # the datasheet before fab.
+  Accelerometer:
+    components:
+      U_ACCEL:
+        symbol: SnipsControllers_Custom:QMA6100P
+        sheet: Accelerometer
+        value: QMA6100P
+        footprint: SnipsControllers_Custom:QMA6100P
+      C_ACCEL_1:
+        symbol: Device:C
+        sheet: Accelerometer
+        value: 10nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+      C_ACCEL_2:
+        symbol: Device:C
+        sheet: Accelerometer
+        value: 100pF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+      C_ACCEL_3:
+        symbol: Device:C
+        sheet: Accelerometer
+        value: 2.2nF
+        footprint: Capacitor_SMD:C_0402_1005Metric
+    connections:
+      - net: 3V3
+        pins: [U_ACCEL:VDD, U_ACCEL:SENB, C_ACCEL_1:1, C_ACCEL_2:1, C_ACCEL_3:1]
+      - net: GND
+        pins: [U_ACCEL:AD0, U_ACCEL:RESV1, U_ACCEL:RESV2, U_ACCEL:GNDIO,
+               U_ACCEL:GND, C_ACCEL_1:2, C_ACCEL_2:2, C_ACCEL_3:2]
+      - no_connect: [U_ACCEL:INT2, U_ACCEL:NC]
 
   # -------------------------------------------------------------------------
   # 9. DRV5055 Analog Hall Effect Trigger Sensor
@@ -1183,6 +1261,19 @@ sheets:
       - name: "I2C_SCL"
         shape: bidirectional
         position: [916.94, 999.49]
+  # Empty slot in the layout grid, left of XBee — same footprint size as
+  # its row-3 siblings.
+  Accelerometer:
+    path: accelerometer
+    position: [0, 999.49]
+    size: [299.72, 200.66]
+    pins:
+      - name: "I2C_SDA"
+        shape: bidirectional
+        position: [82.55, 999.49]
+      - name: "I2C_SCL"
+        shape: bidirectional
+        position: [217.17, 999.49]
   Hall_Trigger:
     path: hall_trigger
     position: [1050.29, 999.49]

@@ -5,6 +5,18 @@
 	(uuid "3f32dff9-72bc-4c9f-af07-d4015b130e7b")
 	(paper "A4")
 	(lib_symbols)
+	(junction
+		(at 982.98 849.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "31ba497f-73a4-467d-8774-2320b113cce6")
+	)
+	(junction
+		(at 949.96 849.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ead6c78e-bb1a-4295-b562-b08ebbedd485")
+	)
 	(wire
 		(pts
 			(xy 1049.02 849.63) (xy 1459.23 999.49)
@@ -97,6 +109,16 @@
 	)
 	(wire
 		(pts
+			(xy 905.51 350.52) (xy 515.62 199.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2f8a5c19-6d3e-4b74-9a2f-8e1d6c4b3a97")
+	)
+	(wire
+		(pts
 			(xy 1883.41 999.49) (xy 1247.14 849.63)
 		)
 		(stroke
@@ -124,6 +146,26 @@
 			(type default)
 		)
 		(uuid "373fb23d-6999-4edc-a62f-880ec1d93650")
+	)
+	(wire
+		(pts
+			(xy 217.17 999.49) (xy 982.98 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3ccd92c5-5d67-407c-b334-f0cb40f298ff")
+	)
+	(wire
+		(pts
+			(xy 82.55 999.49) (xy 949.96 849.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3cec839c-ee13-467b-bcbf-688be37ee570")
 	)
 	(wire
 		(pts
@@ -264,16 +306,6 @@
 			(type default)
 		)
 		(uuid "df356484-382a-43a6-b65d-cd7f7e327721")
-	)
-	(wire
-		(pts
-			(xy 905.51 350.52) (xy 515.62 199.39)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2f8a5c19-6d3e-4b74-9a2f-8e1d6c4b3a97")
 	)
 	(wire
 		(pts
@@ -1176,6 +1208,71 @@
 			(project "snips_controller"
 				(path "/21935953-32a0-46ad-8079-8177920c6978"
 					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 0 999.49)
+		(size 299.72 200.66)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "9b8c09c7-1830-43d3-b2aa-0958e14b5b9b")
+		(property "Sheetname" "Accelerometer"
+			(at 0 998.7784 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "accelerometer.kicad_sch"
+			(at 0 1200.7346 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "I2C_SDA" bidirectional
+			(at 82.55 999.49 90)
+			(uuid "02c1af8a-15f5-4fe6-9cf6-521e2ed07ad4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "I2C_SCL" bidirectional
+			(at 217.17 999.49 90)
+			(uuid "5056aa4a-1bae-4975-8566-e8d99b5f9704")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "snips_controller"
+				(path "/21935953-32a0-46ad-8079-8177920c6978"
+					(page "14")
 				)
 			)
 		)

@@ -17,10 +17,25 @@ constexpr int kXbeeSpiMiso = 12;
 constexpr int kXbeeSpiCs = 13;
 constexpr int kXbeeOnSleep = 14;
 constexpr int kXbeeSpiAttn = 15;
+// XBee DTR/SLEEP_RQ, driven by the host to request pin sleep (drive high =
+// request sleep once idle, low = wake immediately). Was hardwired to GND
+// (permanently deasserted) on earlier revisions; must be set to a known
+// level (low = stay awake) as one of the first instructions in setup(),
+// same idiom as kPowerLatchHold, since it's replacing a hard GND tie
+// rather than a pull resistor.
+constexpr int kXbeeSleepRq = 42;
 
-// ---- I2C (OLED) ---------------------------------------------------------
+// ---- I2C (OLED, QMA6100P accelerometer) ----------------------------------
 constexpr int kI2cSda = 8;
 constexpr int kI2cScl = 9;
+
+// ---- Accelerometer (QMA6100P, shares the I2C bus above) ------------------
+// INT1 output, wired so the MCU can light-sleep and wake on the
+// accelerometer's hardware any-motion/no-motion interrupt instead of
+// polling. Strapping pin (GPIO46, boot message control only) — safe here
+// since the accelerometer's interrupt output stays inactive through boot
+// until firmware configures it.
+constexpr int kAccelInterrupt = 46;
 
 // ---- ADC1 (analog trigger, thumbstick, battery sense) -------------------
 constexpr int kAnalogTrigger = 4;
