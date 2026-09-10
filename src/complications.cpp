@@ -40,8 +40,12 @@ void ComplicationRegistry::render(ScreenBuffer *screen) const {
   for (int i = 0; i < kSlotCount; ++i) {
     switch (slots_[i]) {
       case ComplicationSource::kBattery:
-        std::snprintf(line, sizeof(line), "Battery: %d%%",
-                      data_.batteryPercent);
+        if (data_.batteryIndicatorVisible) {
+          std::snprintf(line, sizeof(line), "Battery: %d%%",
+                        data_.batteryPercent);
+        } else {
+          line[0] = '\0';
+        }
         break;
       case ComplicationSource::kLeftSlot:
         std::snprintf(line, sizeof(line), "%s: %s",

@@ -9,6 +9,7 @@
 #include "complication_persistence.h"
 #include "complications.h"
 #include "droid_persistence.h"
+#include "low_battery.h"
 #include "menu.h"
 #include "oled.h"
 #include "packet.h"
@@ -42,6 +43,8 @@ Accelerometer accelerometer;
 PowerManager powerManager;
 PowerConfig powerConfig;
 PowerTier previousPowerTier = PowerTier::kFull;
+LowBatteryMonitor lowBatteryMonitor;
+bool wasInLowBatteryCountdown = false;
 char deviceSerialLowBuf[9] = {};  // must outlive setup() — see its use below
 bool lastReportedPressed[Buttons::kCount] = {};
 unsigned long lastTelemetryLogMs = 0;
@@ -183,6 +186,31 @@ void setup() {
   digitalWrite(PinAssignment::kXbeeSleepRq, LOW);
 
   Serial.begin(115200);
+
+  // If the battery is already at/below the critical threshold the
+  // instant the device is turned on (e.g. it sat unused long enough to
+  // self-discharge), don't run a full boot — show a brief message and
+  // cut power immediately rather than starting a session on a battery
+  // that's already past the safe-shutdown line. No countdown here (see
+  // low_battery.h): unlike the running-countdown case, no session has
+  // started yet, so there's nothing to gracefully wind down.
+  {
+    const int rawVsysAtBoot = analogRead(PinAssignment::kVsysSense);
+    const int bootBatteryPercent = batteryMonitor.percentFor(rawVsysAtBoot);
+    if (bootBatteryPercent <= BatteryThresholds::kCriticalPercent) {
+      Serial.println("Battery critical at boot -- powering off.");
+      if (oledDisplay.begin()) {
+        ScreenBuffer emptyScreen;
+        renderBatteryEmptyScreen(&emptyScreen);
+        oledDisplay.render(emptyScreen);
+      }
+      constexpr unsigned long kBatteryEmptyMessageMs = 3000;
+      delay(kBatteryEmptyMessageMs);
+      digitalWrite(PinAssignment::kPowerLatchHold, LOW);
+      while (true) {
+      }
+    }
+  }
 
   // Polarity of the power-button sense pin isn't documented anywhere in the
   // PCB docs (it's part of the soft-latch circuit, not a simple
@@ -448,6 +476,15 @@ void loop() {
   const ChargeState chargeState =
       batteryMonitor.chargeStateFor(stat1High, stat2High);
 
+  // Low battery warning/safe-shutdown — see low_battery.h. Checked every
+  // tick (not just the once-a-second block below) so the countdown's
+  // poweroff fires promptly once it reaches zero.
+  lowBatteryMonitor.update(batteryPercent,
+                           chargeState == ChargeState::kCharging, now);
+  if (lowBatteryMonitor.consumeShouldPowerOff()) {
+    performGracefulShutdown();  // never returns
+  }
+
   // Uplink: sent periodically over the radio, faster than the
   // human-readable Serial telemetry below — this is what Amidala
   // actually sees.
@@ -508,6 +545,8 @@ void loop() {
   // operating screen's next scheduled redraw (below) always showing
   // current data.
   complicationData.batteryPercent = batteryPercent;
+  complicationData.batteryIndicatorVisible =
+      !lowBatteryMonitor.isWarning() || lowBatteryMonitor.blinkOn();
   copyField(complicationData.droidName, sizeof(complicationData.droidName),
            menuController.currentDroidName());
   complications.setData(complicationData);
@@ -538,9 +577,18 @@ void loop() {
     } else {
       ledState = SystemState::kDisconnected;
     }
-    rgbLed.show(statusLedController.colorFor(ledState));
+    // Blinks the status LED in lockstep with the on-screen battery
+    // indicator (see low_battery.h) rather than showing its normal
+    // color solidly — already suppressed while charging internally.
+    const bool blinkLedOff =
+        (lowBatteryMonitor.isWarning() ||
+         lowBatteryMonitor.isInShutdownCountdown()) &&
+        !lowBatteryMonitor.blinkOn();
+    rgbLed.show(blinkLedOff ? RgbColor{0, 0, 0}
+                            : statusLedController.colorFor(ledState));
 
-    if (menuController.currentScreen() == MenuScreen::kInactive) {
+    if (menuController.currentScreen() == MenuScreen::kInactive &&
+        !lowBatteryMonitor.isInShutdownCountdown()) {
       showOperatingScreen();
     }
 
@@ -557,4 +605,31 @@ void loop() {
     Serial.print(" Y ");
     Serial.println(stickYPercent);
   }
+
+  // Low battery countdown takes over the display unconditionally, as the
+  // very last thing that can touch it this tick — it must win over
+  // anything the menu or the once-a-second operating-screen refresh
+  // above just drew. Redrawn every tick (not just on change) rather than
+  // tracked for cheapness; a few extra I2C writes for at most 30 seconds
+  // is a non-issue.
+  const bool inLowBatteryCountdown = lowBatteryMonitor.isInShutdownCountdown();
+  if (inLowBatteryCountdown) {
+    if (!wasInLowBatteryCountdown) {
+      // Force full power regardless of the current low-power tier, and
+      // sleep the XBee immediately — every bit of saved current extends
+      // the safety margin during the countdown.
+      oledDisplay.setPowerOn(true);
+      digitalWrite(PinAssignment::kXbeeSleepRq, HIGH);
+    }
+    ScreenBuffer countdownScreen;
+    renderLowBatteryCountdownScreen(lowBatteryMonitor.secondsRemaining(),
+                                    &countdownScreen);
+    oledDisplay.render(countdownScreen);
+  } else if (wasInLowBatteryCountdown) {
+    // Cancelled (charging plugged in, or the reading recovered) —
+    // restore whatever the current power tier and menu state say should
+    // actually be showing/powered.
+    applyPowerTier(previousPowerTier);
+  }
+  wasInLowBatteryCountdown = inLowBatteryCountdown;
 }

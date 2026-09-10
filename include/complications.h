@@ -25,6 +25,10 @@ const char *complicationSourceLabel(ComplicationSource source);
 
 struct ComplicationData {
   int batteryPercent = 0;
+  // false blanks the Battery slot's line for one tick — used by
+  // low_battery.h's warning blink. Always true outside a low-battery
+  // condition.
+  bool batteryIndicatorVisible = true;
   char leftLabel[DownlinkPacket::kFieldLength + 1] = {};
   char leftValue[DownlinkPacket::kFieldLength + 1] = {};
   char rightLabel[DownlinkPacket::kFieldLength + 1] = {};

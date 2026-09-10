@@ -87,6 +87,19 @@ void test_render_battery() {
   TEST_ASSERT_EQUAL_STRING("Battery: 73%", screen.line(0));
 }
 
+void test_render_battery_blanks_when_indicator_hidden() {
+  ComplicationRegistry registry;
+  ComplicationData data;
+  data.batteryPercent = 8;
+  data.batteryIndicatorVisible = false;
+  registry.setData(data);
+  registry.setSlotSource(0, ComplicationSource::kBattery);
+
+  ScreenBuffer screen;
+  registry.render(&screen);
+  TEST_ASSERT_EQUAL_STRING("", screen.line(0));
+}
+
 void test_render_left_and_right_slot_with_labels() {
   ComplicationRegistry registry;
   ComplicationData data;
@@ -176,6 +189,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_cycle_slot_source_advances_and_wraps);
   RUN_TEST(test_cycle_slot_source_out_of_range_is_noop);
   RUN_TEST(test_render_battery);
+  RUN_TEST(test_render_battery_blanks_when_indicator_hidden);
   RUN_TEST(test_render_left_and_right_slot_with_labels);
   RUN_TEST(test_render_left_slot_falls_back_when_label_empty);
   RUN_TEST(test_render_signal_known_and_unknown);
