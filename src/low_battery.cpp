@@ -74,3 +74,10 @@ void renderBatteryEmptyScreen(ScreenBuffer *screen) {
   screen->setLine(0, "Battery Empty");
   screen->setLine(1, "Please charge");
 }
+
+void renderChargingFaultScreen(ScreenBuffer *screen) {
+  screen->clear();
+  screen->setLine(0, "Charging Fault!");
+  screen->setLine(1, "Unplug & replug");
+  screen->setLine(2, "charger");
+}
