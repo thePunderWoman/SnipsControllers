@@ -17,3 +17,9 @@ void OledDisplay::render(const ScreenBuffer &content) {
   }
   display_.display();
 }
+
+void OledDisplay::setDimmed(bool dimmed) { display_.dim(dimmed); }
+
+void OledDisplay::setPowerOn(bool on) {
+  display_.ssd1306_command(on ? SSD1306_DISPLAYON : SSD1306_DISPLAYOFF);
+}

@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <cstring>
 
+#include "accelerometer.h"
 #include "battery.h"
 #include "buttons.h"
 #include "calibration.h"
@@ -8,11 +9,14 @@
 #include "complication_persistence.h"
 #include "complications.h"
 #include "droid_persistence.h"
+#include "low_battery.h"
 #include "menu.h"
 #include "oled.h"
 #include "packet.h"
 #include "pin_assignment.h"
+#include "power_config_store.h"
 #include "power_latch.h"
+#include "power_management.h"
 #include "rgb_led.h"
 #include "screen.h"
 #include "status_led.h"
@@ -35,6 +39,12 @@ MenuController menuController;
 XbeeControl xbeeControl;
 ComplicationRegistry complications;
 ComplicationData complicationData;
+Accelerometer accelerometer;
+PowerManager powerManager;
+PowerConfig powerConfig;
+PowerTier previousPowerTier = PowerTier::kFull;
+LowBatteryMonitor lowBatteryMonitor;
+bool wasInLowBatteryCountdown = false;
 char deviceSerialLowBuf[9] = {};  // must outlive setup() — see its use below
 bool lastReportedPressed[Buttons::kCount] = {};
 unsigned long lastTelemetryLogMs = 0;
@@ -60,6 +70,35 @@ void showOperatingScreen() {
   ScreenBuffer screen;
   complications.render(&screen);
   oledDisplay.render(screen);
+}
+
+// Applies one power tier's real hardware effects (see power_management.h)
+// — called only on transition, not every tick. Driving kXbeeSleepRq high
+// on boards where it isn't wired to anything (the first production run —
+// see PCB/GPIO_table.md's Accelerometer section) is a harmless no-op, so
+// this needs no capability check of its own.
+void applyPowerTier(PowerTier tier) {
+  const bool oledShouldBeOn =
+      tier != PowerTier::kOff && tier != PowerTier::kXbeeAsleep;
+  oledDisplay.setPowerOn(oledShouldBeOn);
+  oledDisplay.setDimmed(tier == PowerTier::kDim);
+  digitalWrite(PinAssignment::kXbeeSleepRq,
+              tier == PowerTier::kXbeeAsleep ? HIGH : LOW);
+
+  // Coming back from OLED-off: the panel's GDRAM still has whatever was
+  // last drawn before it powered off, which is fine for the operating
+  // screen (redrawn every second regardless) but could be a stale menu
+  // screen if the user backed out while it was off. Force one fresh
+  // redraw on wake to be safe.
+  if (oledShouldBeOn) {
+    if (menuController.currentScreen() != MenuScreen::kInactive) {
+      ScreenBuffer menuScreen;
+      renderMenuScreen(menuController, &menuScreen);
+      oledDisplay.render(menuScreen);
+    } else {
+      showOperatingScreen();
+    }
+  }
 }
 
 void copyField(char *dest, size_t destCapacity, const char *src) {
@@ -140,7 +179,38 @@ void setup() {
   pinMode(PinAssignment::kPowerLatchHold, OUTPUT);
   digitalWrite(PinAssignment::kPowerLatchHold, HIGH);
 
+  // XBee SLEEP_RQ: must be driven low (stay awake) before anything else
+  // touches it — see pin_assignment.h. Harmless on boards where this pin
+  // isn't wired to the XBee at all (see PCB/GPIO_table.md).
+  pinMode(PinAssignment::kXbeeSleepRq, OUTPUT);
+  digitalWrite(PinAssignment::kXbeeSleepRq, LOW);
+
   Serial.begin(115200);
+
+  // If the battery is already at/below the critical threshold the
+  // instant the device is turned on (e.g. it sat unused long enough to
+  // self-discharge), don't run a full boot — show a brief message and
+  // cut power immediately rather than starting a session on a battery
+  // that's already past the safe-shutdown line. No countdown here (see
+  // low_battery.h): unlike the running-countdown case, no session has
+  // started yet, so there's nothing to gracefully wind down.
+  {
+    const int rawVsysAtBoot = analogRead(PinAssignment::kVsysSense);
+    const int bootBatteryPercent = batteryMonitor.percentFor(rawVsysAtBoot);
+    if (bootBatteryPercent <= BatteryThresholds::kCriticalPercent) {
+      Serial.println("Battery critical at boot -- powering off.");
+      if (oledDisplay.begin()) {
+        ScreenBuffer emptyScreen;
+        renderBatteryEmptyScreen(&emptyScreen);
+        oledDisplay.render(emptyScreen);
+      }
+      constexpr unsigned long kBatteryEmptyMessageMs = 3000;
+      delay(kBatteryEmptyMessageMs);
+      digitalWrite(PinAssignment::kPowerLatchHold, LOW);
+      while (true) {
+      }
+    }
+  }
 
   // Polarity of the power-button sense pin isn't documented anywhere in the
   // PCB docs (it's part of the soft-latch circuit, not a simple
@@ -174,6 +244,20 @@ void setup() {
   // defaults are left in place for anything never saved.
   ComplicationPersistence::load(&complications);
   menuController.setComplications(&complications);
+
+  // Restores any previously-saved power management settings; defaults to
+  // kAlwaysOn (no behavior change) if none has been saved yet.
+  powerConfig = PowerConfigStore::load();
+  powerManager.setConfig(powerConfig);
+  menuController.setPowerConfig(&powerConfig);
+
+  // Absent entirely on the first production boards (see
+  // PCB/GPIO_table.md's Accelerometer section) — motion just never
+  // counts as activity in that case, no special-casing needed elsewhere.
+  if (!accelerometer.begin()) {
+    Serial.println("Accelerometer not found at boot (expected on boards "
+                   "without it).");
+  }
 
   xbeeControl.begin();
   menuController.setXbeeTransport(&xbeeControl);
@@ -341,6 +425,12 @@ void loop() {
     Serial.println("Display config saved.");
   }
 
+  if (menuController.consumePowerConfigChanged()) {
+    PowerConfigStore::save(powerConfig);
+    powerManager.setConfig(powerConfig);
+    Serial.println("Power config saved.");
+  }
+
   const int rawVsys = analogRead(PinAssignment::kVsysSense);
   const bool stat1High = digitalRead(PinAssignment::kChargeStat1) == HIGH;
   const bool stat2High = digitalRead(PinAssignment::kChargeStat2) == HIGH;
@@ -353,9 +443,47 @@ void loop() {
   const int stickYPercent = AnalogCalibration::calibrateStickAxis(
       rawStickY, calibrationData.stickYMin, calibrationData.stickYCenter,
       calibrationData.stickYMax);
+
+  // Low-power mode's idea of "activity" — any button held, the stick or
+  // trigger moved off center/released, or (if present) accelerometer
+  // motion. Buttons use level (isPressed), not just the press edge, so
+  // holding one down doesn't let the screen dim out from under a long
+  // press.
+  bool anyButtonHeld = false;
+  for (size_t i = 0; i < Buttons::kCount; ++i) {
+    if (buttonPanel.isPressed(i)) {
+      anyButtonHeld = true;
+      break;
+    }
+  }
+  const bool activityThisTick =
+      anyButtonHeld || stickXPercent != 0 || stickYPercent != 0 ||
+      triggerPercent != 0 ||
+      (accelerometer.isPresent() && accelerometer.motionDetected());
+  powerManager.update(activityThisTick, now);
+
+  const PowerTier currentPowerTier = powerManager.currentTier();
+  if (currentPowerTier != previousPowerTier) {
+    applyPowerTier(currentPowerTier);
+    previousPowerTier = currentPowerTier;
+  }
+
+  if (powerManager.consumeShouldPowerOff()) {
+    performGracefulShutdown();  // never returns
+  }
+
   const int batteryPercent = batteryMonitor.percentFor(rawVsys);
   const ChargeState chargeState =
       batteryMonitor.chargeStateFor(stat1High, stat2High);
+
+  // Low battery warning/safe-shutdown — see low_battery.h. Checked every
+  // tick (not just the once-a-second block below) so the countdown's
+  // poweroff fires promptly once it reaches zero.
+  lowBatteryMonitor.update(batteryPercent,
+                           chargeState == ChargeState::kCharging, now);
+  if (lowBatteryMonitor.consumeShouldPowerOff()) {
+    performGracefulShutdown();  // never returns
+  }
 
   // Uplink: sent periodically over the radio, faster than the
   // human-readable Serial telemetry below — this is what Amidala
@@ -417,6 +545,8 @@ void loop() {
   // operating screen's next scheduled redraw (below) always showing
   // current data.
   complicationData.batteryPercent = batteryPercent;
+  complicationData.batteryIndicatorVisible =
+      !lowBatteryMonitor.isWarning() || lowBatteryMonitor.blinkOn();
   copyField(complicationData.droidName, sizeof(complicationData.droidName),
            menuController.currentDroidName());
   complications.setData(complicationData);
@@ -447,9 +577,18 @@ void loop() {
     } else {
       ledState = SystemState::kDisconnected;
     }
-    rgbLed.show(statusLedController.colorFor(ledState));
+    // Blinks the status LED in lockstep with the on-screen battery
+    // indicator (see low_battery.h) rather than showing its normal
+    // color solidly — already suppressed while charging internally.
+    const bool blinkLedOff =
+        (lowBatteryMonitor.isWarning() ||
+         lowBatteryMonitor.isInShutdownCountdown()) &&
+        !lowBatteryMonitor.blinkOn();
+    rgbLed.show(blinkLedOff ? RgbColor{0, 0, 0}
+                            : statusLedController.colorFor(ledState));
 
-    if (menuController.currentScreen() == MenuScreen::kInactive) {
+    if (menuController.currentScreen() == MenuScreen::kInactive &&
+        !lowBatteryMonitor.isInShutdownCountdown()) {
       showOperatingScreen();
     }
 
@@ -466,4 +605,31 @@ void loop() {
     Serial.print(" Y ");
     Serial.println(stickYPercent);
   }
+
+  // Low battery countdown takes over the display unconditionally, as the
+  // very last thing that can touch it this tick — it must win over
+  // anything the menu or the once-a-second operating-screen refresh
+  // above just drew. Redrawn every tick (not just on change) rather than
+  // tracked for cheapness; a few extra I2C writes for at most 30 seconds
+  // is a non-issue.
+  const bool inLowBatteryCountdown = lowBatteryMonitor.isInShutdownCountdown();
+  if (inLowBatteryCountdown) {
+    if (!wasInLowBatteryCountdown) {
+      // Force full power regardless of the current low-power tier, and
+      // sleep the XBee immediately — every bit of saved current extends
+      // the safety margin during the countdown.
+      oledDisplay.setPowerOn(true);
+      digitalWrite(PinAssignment::kXbeeSleepRq, HIGH);
+    }
+    ScreenBuffer countdownScreen;
+    renderLowBatteryCountdownScreen(lowBatteryMonitor.secondsRemaining(),
+                                    &countdownScreen);
+    oledDisplay.render(countdownScreen);
+  } else if (wasInLowBatteryCountdown) {
+    // Cancelled (charging plugged in, or the reading recovered) —
+    // restore whatever the current power tier and menu state say should
+    // actually be showing/powered.
+    applyPowerTier(previousPowerTier);
+  }
+  wasInLowBatteryCountdown = inLowBatteryCountdown;
 }

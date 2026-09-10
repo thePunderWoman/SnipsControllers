@@ -36,7 +36,7 @@ for a static signal, avoid anything that toggles during power-up):
 | Pin | Note |
 |---|---|
 | 15 (GPIO3) | Strapping — JTAG signal source select |
-| 16 (GPIO46) | Strapping — boot message control |
+| 16 (GPIO46) | Strapping — boot message control. Used for the QMA6100P accelerometer's INT1 line (see Accelerometer section below) — safe since INT1 stays inactive through boot until firmware configures it. |
 | 26 (GPIO45) | Strapping — flash voltage select |
 
 **Spare, no caveats** (default JTAG — fully reusable as plain GPIO if you
@@ -45,18 +45,26 @@ don't need hardware debugging):
 |---|---|
 | 32 (GPIO39) | MTCK |
 | 33 (GPIO40) | MTDO |
-| 35 (GPIO42) | MTMS |
+| 35 (GPIO42) | MTMS — now used for XBee SLEEP_RQ (see below) |
 
 ## XBee Auxiliary Pins
 | Pin | Reason |
 |---|---|
 | 22 (GPIO14) | XBee ON_SLEEP status input |
+| 35 (GPIO42) | XBee SLEEP_RQ (DTR) — host-driven pin-sleep request, see below |
 | 8 (GPIO15) | XBee SPI_ATTN — data-ready interrupt, needed for reliable SPI transfers |
 
 Pulled directly from Amidala's actual AmidalaShield netlist (IPC-2581
-export), not guessed: DTR is tied low, ON_SLEEP and SPI_ATTN go to host
-GPIO on that board too (ESP32 GPIO15/16 there — same MCU family as this
-board now, so the pin roles map over conceptually).
+export), not guessed: ON_SLEEP and SPI_ATTN go to host GPIO on that board
+too (ESP32 GPIO15/16 there — same MCU family as this board now, so the
+pin roles map over conceptually).
+
+DTR diverges from Amidala's netlist on purpose: Amidala ties it straight
+to GND (permanently deasserted, no host-commanded sleep). This board
+wires it to host GPIO42 instead (see SPI (XBee) table below) so firmware
+can pin-sleep the module during low-power mode rather than keeping the
+radio powered continuously — see the "Low-Power Mode" rationale in the
+Accelerometer section below.
 
 ---
 
@@ -69,12 +77,16 @@ board now, so the pin roles map over conceptually).
 | XBee CS | 21 (GPIO13) |
 | XBee ON_SLEEP | 22 (GPIO14) |
 | XBee SPI_ATTN | 8 (GPIO15) |
+| XBee SLEEP_RQ (DTR) | 35 (GPIO42) |
 
-## I2C (OLED)
+## I2C (OLED, QMA6100P accelerometer)
 | Function | Pin |
 |---|---|
 | SDA | 12 (GPIO8) |
 | SCL | 17 (GPIO9) |
+
+Shared bus — QMA6100P accelerometer joins at I2C address 0x12 (AD0 tied
+to GND), distinct from the OLED's 0x3C. See Accelerometer section below.
 
 ## ADC — ADC1 only, see note below
 | Function | Pin | Notes |
@@ -221,9 +233,70 @@ exposed GPIO/ADC path with this sense pin.
 
 ---
 
+## Accelerometer (QMA6100P) — Low-Power Mode
+
+Added to support an auto low-power mode: after a configurable idle
+timeout (no buttons, no motion), firmware turns the OLED off and puts
+the XBee into pin sleep (see XBee SLEEP_RQ above) instead of keeping the
+radio powered continuously; after a much longer configurable timeout, it
+does a full soft-latch power-off. Button or accelerometer motion wakes
+the device back up.
+
+**Why QMA6100P:** chosen over MSA311/LIS3DH/ADXL345/MPU-6050 after
+checking JLCPCB's actual parts library (as of 2026-09) — none of the
+candidates are Basic-library (that framing was wrong when first floated;
+corrected after verifying against JLCPCB's own part pages and the
+community-maintained `jlcpcb-parts-database` mirror of it), so library
+tier was a wash. QMA6100P won on the remaining criteria: cheapest
+($0.61 @1pc vs $1.88 LIS3DH / $5.98 ADXL345, LCSC pricing), smallest
+(2x2x0.95mm, tied with MSA311), and by far the lowest standby current
+(500nA typ., vs ~2µA+ for the alternatives) — the one spec that matters
+most here, since this chip has to stay active watching for motion
+through the entire low-power period. It also exposes real hardware
+any-motion/no-motion interrupts (not just raw acceleration), which is
+what makes MCU light-sleep-and-wake-on-interrupt possible instead of
+busy-polling. Source: QST "QMA6100P Preliminary Datasheet" (Doc #13-52-20,
+Rev A1).
+
+**I2C wiring** (per the datasheet's Figure 4, I2C Single Supply
+Connection): shares the existing OLED bus (GPIO8/9).
+| QMA6100P pin | Connection |
+|---|---|
+| AD0 (1) | GND — sets I2C address to 0x12 |
+| SDX (2) | I2C_SDA (shared with OLED) |
+| VDD (3) | 3V3 |
+| RESV1 (4) | GND |
+| INT1 (5) | Host GPIO46 (pin 16) — see Reserved/Do Not Use above |
+| INT2 (6) | Unused |
+| NC (7) | No connect |
+| GNDIO (8) | GND |
+| GND (9) | GND |
+| SENB (10) | 3V3 — selects I2C protocol (tied high rather than left floating) |
+| RESV2 (11) | GND |
+| SCX (12) | I2C_SCL (shared with OLED) |
+
+Decoupling per the datasheet's Figure 4 reference schematic: three caps
+on VDD (10nF, 100pF, 2.2nF) rather than this board's usual single
+100nF — **the two smallest values are a best-effort read of small print
+in a preliminary-datasheet figure and should be visually re-checked
+against the datasheet before fab.**
+
+**Status: in the schematic/yaml**, on its own `Accelerometer` sheet
+(`PCB/accelerometer.kicad_sch`), wired into `snips_controller.yaml`, with
+a hand-authored symbol + footprint (`SnipsControllers_Custom:QMA6100P`) —
+pad geometry pulled from JLCPCB/LCSC's own EasyEDA component data (LCSC
+C2887190) rather than estimated from the datasheet's low-resolution
+mechanical drawing. ERC-clean (`kicad-cli sch erc`, 0 violations).
+**Still needs the user's physical continuity check against the real part
+before fab** — same outstanding step as the GuliKit hallstick footprint.
+
+---
+
 ## Spare GPIO
 Pins 32/33 (GPIO39/40, default JTAG) — used by BTN_VOL_DN/BTN_VOL_UP.
 Pin 34 (GPIO41, default JTAG) — used by bq25185 STAT2.
-Pin 35 (GPIO42, default JTAG) — clean, no caveats, still free.
-Pins 15, 16, 26 (GPIO3/46/45) — usable, but strapping pins, best for a
+Pin 35 (GPIO42, default JTAG) — used by XBee SLEEP_RQ (DTR).
+Pin 15, 26 (GPIO3/45) — usable, but strapping pins, best for a
 static/non-boot-critical signal.
+Pin 16 (GPIO46) — strapping pin, reserved for the QMA6100P accelerometer's
+INT1 (not yet wired in the schematic — see Accelerometer section above).

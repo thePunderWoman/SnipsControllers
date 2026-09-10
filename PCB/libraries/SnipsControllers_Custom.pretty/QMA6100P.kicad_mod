@@ -1,0 +1,176 @@
+(footprint "QMA6100P"
+	(version 20240108)
+	(generator "claude")
+	(generator_version "0.1")
+	(layer "F.Cu")
+	(descr "QST QMA6100P, 3-axis accelerometer, LGA-12 (2x2x0.95mm, 0.5mm pitch). Pad geometry (LGA-12_L2.0-W2.0-P0.50-TL_QMA6100) pulled verbatim from JLCPCB/LCSC's EasyEDA component API (LCSC C2887190, the same manufacturer-verified footprint used for their PCBA service), not hand-estimated from the preliminary datasheet's low-resolution mechanical drawing. Pin 1 at top-left in this top-view orientation, numbered clockwise: 1-4 down the left edge, 5-6 across the bottom, 7-10 up the right edge, 11-12 across the top. Verify against the physical part before fab.")
+	(property "Reference" "REF**"
+		(at 0 -1.6 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "31160592-26f0-47be-8dd0-9d86c9009acc")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "QMA6100P"
+		(at 0 1.6 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "f4b4783b-70de-48dd-b7a2-39c356c265ad")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "41aa5be2-c2c3-41b5-9a21-21ec596e909d")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3de783d9-862a-4087-9b86-99743c06333e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "6294e48a-e5ae-4f6a-8dca-76a658d76be8")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start -1 -1)
+		(end 1 1)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(fill none)
+		(layer "F.Fab")
+		(uuid "dd4c1595-f20d-4a66-8249-cd48b71576dd")
+	)
+	(fp_rect
+		(start -1.15 -1.15)
+		(end 1.15 1.15)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "1df8aeb7-6af3-49a1-bb0c-e34018b6dbcc")
+	)
+	(fp_circle
+		(center -1.3 -1.3)
+		(end -1.2 -1.3)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(fill solid)
+		(layer "F.SilkS")
+		(uuid "3993e1b2-da76-441c-9f69-e8ac5565e58b")
+	)
+	(pad "1" smd rect
+		(at -0.75 -0.75)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "17bbbba8-af32-4fc2-bfcc-fc8e22629189")
+	)
+	(pad "2" smd rect
+		(at -0.75 -0.25)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "18727484-51d5-460b-b06f-f57b535b9e0b")
+	)
+	(pad "3" smd rect
+		(at -0.75 0.25)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "f5d9769e-991b-4ab7-93a2-19ce73d93ea6")
+	)
+	(pad "4" smd rect
+		(at -0.75 0.75)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "2d45e752-cf4e-431d-be3c-f282d53d7fa1")
+	)
+	(pad "5" smd rect
+		(at -0.25 0.75)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "d82e58d3-c9e1-4135-b76f-1ebb66b9eb2b")
+	)
+	(pad "6" smd rect
+		(at 0.25 0.75)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "10b79bc3-3165-4708-ada9-7d6598400f74")
+	)
+	(pad "7" smd rect
+		(at 0.75 0.75)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "7a02e4c3-12b7-4f81-a515-7a8b61e1026f")
+	)
+	(pad "8" smd rect
+		(at 0.75 0.25)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "946b0e74-f304-4c73-829f-23f23c94fc44")
+	)
+	(pad "9" smd rect
+		(at 0.75 -0.25)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "d665ab4e-0759-4045-b699-9c332558eee0")
+	)
+	(pad "10" smd rect
+		(at 0.75 -0.75)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "dccf0e28-1317-4b5e-8b6b-57f4af165717")
+	)
+	(pad "11" smd rect
+		(at 0.25 -0.75)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "ea080372-110b-4330-9851-258dd433334b")
+	)
+	(pad "12" smd rect
+		(at -0.25 -0.75)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "0323875c-07f1-4c25-a0a6-76d0e9887b27")
+	)
+)

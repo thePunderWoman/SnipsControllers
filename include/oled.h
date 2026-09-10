@@ -30,6 +30,13 @@ class OledDisplay {
 
   void render(const ScreenBuffer &content);
 
+  // Low-power mode support (see power_management.h). Dimming/undimming
+  // and powering the panel back on take effect immediately; they don't
+  // need a render() call to show existing content again since the
+  // panel's GDRAM is untouched while off.
+  void setDimmed(bool dimmed);
+  void setPowerOn(bool on);
+
  private:
   Adafruit_SSD1306 display_{Oled::kWidth, Oled::kHeight, &Wire, -1};
 };
