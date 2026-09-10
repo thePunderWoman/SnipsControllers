@@ -3,6 +3,7 @@
 #include "calibration.h"
 #include "complications.h"
 #include "droid_store.h"
+#include "power_management.h"
 #include "screen.h"
 #include "text_entry.h"
 #include "droid_switcher.h"
@@ -24,6 +25,7 @@ enum class MenuScreen {
   kCalibrateStick,
   kCalibrateTrigger,
   kDisplayConfig,
+  kPowerConfig,
   kDeviceInfo,
   kFactoryResetConfirm,
 };
@@ -34,8 +36,21 @@ enum class MainMenuItem {
   kCalibrateStick,
   kCalibrateTrigger,
   kDisplayConfig,
+  kPowerConfig,
   kDeviceInfo,
   kFactoryReset,
+  kCount,
+};
+
+// One row of the Power Config screen — Up/Down select a row, Enter
+// cycles that row's value, same interaction pattern as Display Config's
+// slots.
+enum class PowerConfigRow {
+  kMode = 0,
+  kDimTimeout,
+  kOffTimeout,
+  kXbeeSleepTimeout,
+  kAutoPoweroffTimeout,
   kCount,
 };
 
@@ -130,6 +145,17 @@ class MenuController {
   int selectedDisplayConfigSlot() const { return displayConfigSlotIndex_; }
   bool consumeComplicationsChanged();
 
+  // Power Config edits an externally-owned PowerConfig rather than
+  // duplicating its state here — set once at boot, same pattern as
+  // setComplications(). May be left null (the menu screen then just
+  // does nothing on Enter).
+  void setPowerConfig(PowerConfig *config) { powerConfig_ = config; }
+  const PowerConfig *powerConfig() const { return powerConfig_; }
+  PowerConfigRow selectedPowerConfigRow() const {
+    return static_cast<PowerConfigRow>(powerConfigRowIndex_);
+  }
+  bool consumePowerConfigChanged();
+
  private:
   static constexpr unsigned long kOpenComboHoldMs = 1000;
 
@@ -173,6 +199,10 @@ class MenuController {
   ComplicationRegistry *complications_ = nullptr;
   int displayConfigSlotIndex_ = 0;
   bool complicationsChanged_ = false;
+
+  PowerConfig *powerConfig_ = nullptr;
+  int powerConfigRowIndex_ = 0;
+  bool powerConfigChanged_ = false;
 };
 
 // Decides what text should be on screen for the menu's current state.

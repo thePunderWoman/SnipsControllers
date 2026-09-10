@@ -18,6 +18,7 @@ const char *mainMenuItemLabel(MainMenuItem item) {
     case MainMenuItem::kCalibrateStick: return "Calibrate Stick";
     case MainMenuItem::kCalibrateTrigger: return "Calibrate Trigger";
     case MainMenuItem::kDisplayConfig: return "Display Config";
+    case MainMenuItem::kPowerConfig: return "Power Management";
     case MainMenuItem::kDeviceInfo: return "Device Info";
     case MainMenuItem::kFactoryReset: return "Factory Reset";
     default: return "Unknown";
@@ -86,6 +87,10 @@ void MenuController::onUp() {
       displayConfigSlotIndex_ =
           wrapIndex(displayConfigSlotIndex_ - 1, ComplicationRegistry::kSlotCount);
       break;
+    case MenuScreen::kPowerConfig:
+      powerConfigRowIndex_ = wrapIndex(
+          powerConfigRowIndex_ - 1, static_cast<int>(PowerConfigRow::kCount));
+      break;
     default:
       break;
   }
@@ -116,6 +121,10 @@ void MenuController::onDown() {
     case MenuScreen::kDisplayConfig:
       displayConfigSlotIndex_ =
           wrapIndex(displayConfigSlotIndex_ + 1, ComplicationRegistry::kSlotCount);
+      break;
+    case MenuScreen::kPowerConfig:
+      powerConfigRowIndex_ = wrapIndex(
+          powerConfigRowIndex_ + 1, static_cast<int>(PowerConfigRow::kCount));
       break;
     default:
       break;
@@ -158,6 +167,7 @@ void MenuController::onBack() {
       screen_ = MenuScreen::kMainMenu;
       break;
     case MenuScreen::kDisplayConfig:
+    case MenuScreen::kPowerConfig:
     case MenuScreen::kDeviceInfo:
     case MenuScreen::kFactoryResetConfirm:
       screen_ = MenuScreen::kMainMenu;
@@ -188,6 +198,10 @@ void MenuController::enterMainMenuItem(MainMenuItem item) {
     case MainMenuItem::kDisplayConfig:
       displayConfigSlotIndex_ = 0;
       screen_ = MenuScreen::kDisplayConfig;
+      break;
+    case MainMenuItem::kPowerConfig:
+      powerConfigRowIndex_ = 0;
+      screen_ = MenuScreen::kPowerConfig;
       break;
     case MainMenuItem::kDeviceInfo:
       screen_ = MenuScreen::kDeviceInfo;
@@ -295,6 +309,35 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
       }
       break;
 
+    case MenuScreen::kPowerConfig:
+      if (powerConfig_ != nullptr) {
+        switch (selectedPowerConfigRow()) {
+          case PowerConfigRow::kMode:
+            powerConfig_->mode = nextPowerManagementMode(powerConfig_->mode);
+            break;
+          case PowerConfigRow::kDimTimeout:
+            powerConfig_->dimTimeoutSec =
+                nextCascadeTimeoutSec(powerConfig_->dimTimeoutSec);
+            break;
+          case PowerConfigRow::kOffTimeout:
+            powerConfig_->offTimeoutSec =
+                nextCascadeTimeoutSec(powerConfig_->offTimeoutSec);
+            break;
+          case PowerConfigRow::kXbeeSleepTimeout:
+            powerConfig_->xbeeSleepTimeoutSec =
+                nextCascadeTimeoutSec(powerConfig_->xbeeSleepTimeoutSec);
+            break;
+          case PowerConfigRow::kAutoPoweroffTimeout:
+            powerConfig_->autoPoweroffTimeoutSec =
+                nextPoweroffTimeoutSec(powerConfig_->autoPoweroffTimeoutSec);
+            break;
+          case PowerConfigRow::kCount:
+            break;
+        }
+        powerConfigChanged_ = true;
+      }
+      break;
+
     case MenuScreen::kDeviceInfo:
       screen_ = MenuScreen::kMainMenu;
       break;
@@ -372,6 +415,12 @@ bool MenuController::consumeComplicationsChanged() {
   return true;
 }
 
+bool MenuController::consumePowerConfigChanged() {
+  if (!powerConfigChanged_) return false;
+  powerConfigChanged_ = false;
+  return true;
+}
+
 namespace {
 
 void renderTextEntryLine(const TextEntryWidget &widget, ScreenBuffer *screen,
@@ -384,6 +433,27 @@ void renderTextEntryLine(const TextEntryWidget &widget, ScreenBuffer *screen,
                   widget.currentChar());
   }
   screen->setLine(lineIndex, line);
+}
+
+const char *powerModeLabel(PowerManagementMode mode) {
+  switch (mode) {
+    case PowerManagementMode::kAlwaysOn: return "Always on";
+    case PowerManagementMode::kDimOnly: return "Dim OLED";
+    case PowerManagementMode::kDimAndOff: return "Dim+Off OLED";
+    case PowerManagementMode::kDimOffAndXbeeSleep: return "+XBee sleep";
+    default: return "Unknown";
+  }
+}
+
+// Formats a duration in seconds as "Ns" below one minute, "Nm" at exact
+// minutes (the only case that matters for the auto-poweroff row, whose
+// options are all whole minutes).
+void formatSeconds(int totalSeconds, char *out, size_t outCapacity) {
+  if (totalSeconds % 60 == 0) {
+    std::snprintf(out, outCapacity, "%dm", totalSeconds / 60);
+  } else {
+    std::snprintf(out, outCapacity, "%ds", totalSeconds);
+  }
 }
 
 const char *switchResultText(DroidSwitchResult result) {
@@ -409,14 +479,25 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
     case MenuScreen::kMainMenu: {
       screen->setLine(0, "== Menu ==");
       char line[ScreenBuffer::kMaxLineLength + 1];
-      for (int i = 0; i < static_cast<int>(MainMenuItem::kCount); ++i) {
+      // Scrolls to keep the selection visible once there are more items
+      // than fit below the title line — see kVisibleRows below.
+      constexpr int kVisibleRows = static_cast<int>(ScreenBuffer::kMaxLines) - 1;
+      const int totalItems = static_cast<int>(MainMenuItem::kCount);
+      const int selected = static_cast<int>(menu.selectedMainMenuItem());
+      int windowStart = 0;
+      if (totalItems > kVisibleRows) {
+        windowStart = selected - (kVisibleRows - 1);
+        if (windowStart < 0) windowStart = 0;
+        const int maxStart = totalItems - kVisibleRows;
+        if (windowStart > maxStart) windowStart = maxStart;
+      }
+      for (int row = 0; row < kVisibleRows && windowStart + row < totalItems;
+          ++row) {
+        const int i = windowStart + row;
         const auto item = static_cast<MainMenuItem>(i);
         std::snprintf(line, sizeof(line), "%s%s",
-                      i == static_cast<int>(menu.selectedMainMenuItem())
-                          ? "> "
-                          : "  ",
-                      mainMenuItemLabel(item));
-        screen->setLine(1 + i, line);
+                      i == selected ? "> " : "  ", mainMenuItemLabel(item));
+        screen->setLine(1 + row, line);
       }
       break;
     }
@@ -534,6 +615,56 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
         std::snprintf(line, sizeof(line), "%s%d: %s",
                       i == menu.selectedDisplayConfigSlot() ? "> " : "  ",
                       i + 1, sourceLabel);
+        screen->setLine(1 + i, line);
+      }
+      break;
+    }
+
+    case MenuScreen::kPowerConfig: {
+      screen->setLine(0, "Power Management");
+      const PowerConfig fallback;
+      const PowerConfig &config =
+          menu.powerConfig() != nullptr ? *menu.powerConfig() : fallback;
+      char line[ScreenBuffer::kMaxLineLength + 1];
+      char valueBuf[8];
+      for (int i = 0; i < static_cast<int>(PowerConfigRow::kCount); ++i) {
+        const char *rowPrefix = "";
+        const char *rowValue = "";
+        switch (static_cast<PowerConfigRow>(i)) {
+          case PowerConfigRow::kMode:
+            rowPrefix = "Mode: ";
+            rowValue = powerModeLabel(config.mode);
+            break;
+          case PowerConfigRow::kDimTimeout:
+            rowPrefix = "Dim: ";
+            formatSeconds(config.dimTimeoutSec, valueBuf, sizeof(valueBuf));
+            rowValue = valueBuf;
+            break;
+          case PowerConfigRow::kOffTimeout:
+            rowPrefix = "Off: ";
+            formatSeconds(config.offTimeoutSec, valueBuf, sizeof(valueBuf));
+            rowValue = valueBuf;
+            break;
+          case PowerConfigRow::kXbeeSleepTimeout:
+            rowPrefix = "XBee sleep: ";
+            formatSeconds(config.xbeeSleepTimeoutSec, valueBuf,
+                          sizeof(valueBuf));
+            rowValue = valueBuf;
+            break;
+          case PowerConfigRow::kAutoPoweroffTimeout:
+            rowPrefix = "Auto off: ";
+            formatSeconds(config.autoPoweroffTimeoutSec, valueBuf,
+                          sizeof(valueBuf));
+            rowValue = valueBuf;
+            break;
+          case PowerConfigRow::kCount:
+            break;
+        }
+        std::snprintf(line, sizeof(line), "%s%s%s",
+                      i == static_cast<int>(menu.selectedPowerConfigRow())
+                          ? "> "
+                          : "  ",
+                      rowPrefix, rowValue);
         screen->setLine(1 + i, line);
       }
       break;

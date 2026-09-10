@@ -111,6 +111,9 @@ void test_down_cycles_through_every_main_menu_item_in_order() {
   TEST_ASSERT_TRUE(MainMenuItem::kDisplayConfig ==
                     menu.selectedMainMenuItem());
   menu.onDown();
+  TEST_ASSERT_TRUE(MainMenuItem::kPowerConfig ==
+                    menu.selectedMainMenuItem());
+  menu.onDown();
   TEST_ASSERT_TRUE(MainMenuItem::kDeviceInfo == menu.selectedMainMenuItem());
   menu.onDown();
   TEST_ASSERT_TRUE(MainMenuItem::kFactoryReset ==
@@ -527,6 +530,82 @@ void test_display_config_back_returns_to_main_menu() {
   TEST_ASSERT_TRUE(MenuScreen::kMainMenu == menu.currentScreen());
 }
 
+// ---- power config ----------------------------------------------------------
+
+void test_power_config_up_down_wraps_over_rows() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig
+  TEST_ASSERT_TRUE(PowerConfigRow::kMode == menu.selectedPowerConfigRow());
+
+  menu.onUp();  // wraps to the last row
+  TEST_ASSERT_TRUE(PowerConfigRow::kAutoPoweroffTimeout ==
+                   menu.selectedPowerConfigRow());
+  menu.onDown();
+  TEST_ASSERT_TRUE(PowerConfigRow::kMode == menu.selectedPowerConfigRow());
+}
+
+void test_power_config_enter_cycles_mode_row() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig, row 0 (mode)
+
+  TEST_ASSERT_TRUE(PowerManagementMode::kAlwaysOn == config.mode);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_TRUE(PowerManagementMode::kDimOnly == config.mode);
+  TEST_ASSERT_TRUE(menu.consumePowerConfigChanged());
+  TEST_ASSERT_FALSE(menu.consumePowerConfigChanged());
+}
+
+void test_power_config_enter_cycles_dim_timeout_row() {
+  MenuController menu;
+  PowerConfig config;
+  config.dimTimeoutSec = 5;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig
+  menu.onDown();          // row 1: dim timeout
+
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL_INT(10, config.dimTimeoutSec);
+}
+
+void test_power_config_enter_cycles_auto_poweroff_row_through_minute_options() {
+  MenuController menu;
+  PowerConfig config;
+  config.autoPoweroffTimeoutSec = 60;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig
+  for (int i = 0; i < static_cast<int>(PowerConfigRow::kAutoPoweroffTimeout);
+      ++i) {
+    menu.onDown();
+  }
+
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL_INT(300, config.autoPoweroffTimeoutSec);
+}
+
+void test_power_config_enter_without_config_is_noop() {
+  MenuController menu;  // no setPowerConfig() call
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig
+  menu.onEnter(0, 0, 0);  // should not crash
+  TEST_ASSERT_FALSE(menu.consumePowerConfigChanged());
+}
+
+void test_power_config_back_returns_to_main_menu() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig
+  menu.onBack();
+  TEST_ASSERT_TRUE(MenuScreen::kMainMenu == menu.currentScreen());
+}
+
 // ---- current droid name --------------------------------------------------------
 
 void test_current_droid_name_defaults_to_none() {
@@ -577,6 +656,8 @@ void test_main_menu_item_labels() {
                            mainMenuItemLabel(MainMenuItem::kCalibrateTrigger));
   TEST_ASSERT_EQUAL_STRING("Display Config",
                            mainMenuItemLabel(MainMenuItem::kDisplayConfig));
+  TEST_ASSERT_EQUAL_STRING("Power Management",
+                           mainMenuItemLabel(MainMenuItem::kPowerConfig));
   TEST_ASSERT_EQUAL_STRING("Device Info",
                            mainMenuItemLabel(MainMenuItem::kDeviceInfo));
   TEST_ASSERT_EQUAL_STRING("Factory Reset",
@@ -603,6 +684,34 @@ void test_render_main_menu_marks_selected_item() {
   renderMenuScreen(menu, &screen);
   TEST_ASSERT_EQUAL_STRING("  Switch Droid", screen.line(1));
   TEST_ASSERT_EQUAL_STRING("> Manage Droids", screen.line(2));
+}
+
+void test_render_main_menu_scrolls_so_last_item_is_visible() {
+  // Regression test: MainMenuItem::kCount (8) + the title line exceeds
+  // ScreenBuffer::kMaxLines (8), so without scrolling the last item
+  // (Factory Reset) would silently never be drawn at all (setLine()
+  // ignores out-of-range indices rather than failing loudly).
+  MenuController menu;
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kFactoryReset);
+  renderMenuScreen(menu, &screen);
+
+  bool found = false;
+  for (size_t i = 0; i < ScreenBuffer::kMaxLines; ++i) {
+    if (std::strcmp(screen.line(i), "> Factory Reset") == 0) {
+      found = true;
+      break;
+    }
+  }
+  TEST_ASSERT_TRUE(found);
+}
+
+void test_render_main_menu_still_shows_first_item_when_scrolled_to_top() {
+  MenuController menu;
+  ScreenBuffer screen;
+  openMenu(&menu);  // selection starts at the first item
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("> Switch Droid", screen.line(1));
 }
 
 void test_render_trigger_calibration_step_text() {
@@ -692,6 +801,37 @@ void test_render_display_config_without_registry_shows_placeholder() {
   menu.onEnter(0, 0, 0);  // -> kDisplayConfig
   renderMenuScreen(menu, &screen);
   TEST_ASSERT_EQUAL_STRING("> 1: (none)", screen.line(1));
+}
+
+void test_render_power_config_shows_rows_and_selection() {
+  MenuController menu;
+  PowerConfig config;
+  config.mode = PowerManagementMode::kDimOnly;
+  config.dimTimeoutSec = 10;
+  config.offTimeoutSec = 15;
+  config.xbeeSleepTimeoutSec = 30;
+  config.autoPoweroffTimeoutSec = 300;
+  menu.setPowerConfig(&config);
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig
+  menu.onDown();          // select row 1 (dim timeout)
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("Power Management", screen.line(0));
+  TEST_ASSERT_EQUAL_STRING("  Mode: Dim OLED", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("> Dim: 10s", screen.line(2));
+  TEST_ASSERT_EQUAL_STRING("  Off: 15s", screen.line(3));
+  TEST_ASSERT_EQUAL_STRING("  XBee sleep: 30s", screen.line(4));
+  TEST_ASSERT_EQUAL_STRING("  Auto off: 5m", screen.line(5));
+}
+
+void test_render_power_config_without_config_shows_defaults() {
+  MenuController menu;  // no setPowerConfig() call
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("> Mode: Always on", screen.line(1));
 }
 
 void test_render_switch_droid_list_empty() {
@@ -835,6 +975,12 @@ int main(int argc, char **argv) {
   RUN_TEST(test_display_config_up_down_selects_slot_not_source);
   RUN_TEST(test_display_config_enter_without_registry_is_noop);
   RUN_TEST(test_display_config_back_returns_to_main_menu);
+  RUN_TEST(test_power_config_up_down_wraps_over_rows);
+  RUN_TEST(test_power_config_enter_cycles_mode_row);
+  RUN_TEST(test_power_config_enter_cycles_dim_timeout_row);
+  RUN_TEST(test_power_config_enter_cycles_auto_poweroff_row_through_minute_options);
+  RUN_TEST(test_power_config_enter_without_config_is_noop);
+  RUN_TEST(test_power_config_back_returns_to_main_menu);
   RUN_TEST(test_current_droid_name_defaults_to_none);
   RUN_TEST(test_current_droid_name_set_on_successful_switch);
   RUN_TEST(test_current_droid_name_unchanged_on_failed_switch);
@@ -842,6 +988,8 @@ int main(int argc, char **argv) {
   RUN_TEST(test_main_menu_item_labels);
   RUN_TEST(test_render_inactive_leaves_screen_blank);
   RUN_TEST(test_render_main_menu_marks_selected_item);
+  RUN_TEST(test_render_main_menu_scrolls_so_last_item_is_visible);
+  RUN_TEST(test_render_main_menu_still_shows_first_item_when_scrolled_to_top);
   RUN_TEST(test_render_trigger_calibration_step_text);
   RUN_TEST(test_render_stick_calibration_awaiting_center_step_text);
   RUN_TEST(test_render_stick_calibration_rolling_step_text);
@@ -850,6 +998,8 @@ int main(int argc, char **argv) {
   RUN_TEST(test_render_factory_reset_confirm);
   RUN_TEST(test_render_display_config_shows_slots_and_selection);
   RUN_TEST(test_render_display_config_without_registry_shows_placeholder);
+  RUN_TEST(test_render_power_config_shows_rows_and_selection);
+  RUN_TEST(test_render_power_config_without_config_shows_defaults);
   RUN_TEST(test_render_switch_droid_list_empty);
   RUN_TEST(test_render_switch_droid_list_marks_selected);
   RUN_TEST(test_render_switch_droid_result);

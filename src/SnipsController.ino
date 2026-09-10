@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <cstring>
 
+#include "accelerometer.h"
 #include "battery.h"
 #include "buttons.h"
 #include "calibration.h"
@@ -12,7 +13,9 @@
 #include "oled.h"
 #include "packet.h"
 #include "pin_assignment.h"
+#include "power_config_store.h"
 #include "power_latch.h"
+#include "power_management.h"
 #include "rgb_led.h"
 #include "screen.h"
 #include "status_led.h"
@@ -35,6 +38,10 @@ MenuController menuController;
 XbeeControl xbeeControl;
 ComplicationRegistry complications;
 ComplicationData complicationData;
+Accelerometer accelerometer;
+PowerManager powerManager;
+PowerConfig powerConfig;
+PowerTier previousPowerTier = PowerTier::kFull;
 char deviceSerialLowBuf[9] = {};  // must outlive setup() — see its use below
 bool lastReportedPressed[Buttons::kCount] = {};
 unsigned long lastTelemetryLogMs = 0;
@@ -60,6 +67,35 @@ void showOperatingScreen() {
   ScreenBuffer screen;
   complications.render(&screen);
   oledDisplay.render(screen);
+}
+
+// Applies one power tier's real hardware effects (see power_management.h)
+// — called only on transition, not every tick. Driving kXbeeSleepRq high
+// on boards where it isn't wired to anything (the first production run —
+// see PCB/GPIO_table.md's Accelerometer section) is a harmless no-op, so
+// this needs no capability check of its own.
+void applyPowerTier(PowerTier tier) {
+  const bool oledShouldBeOn =
+      tier != PowerTier::kOff && tier != PowerTier::kXbeeAsleep;
+  oledDisplay.setPowerOn(oledShouldBeOn);
+  oledDisplay.setDimmed(tier == PowerTier::kDim);
+  digitalWrite(PinAssignment::kXbeeSleepRq,
+              tier == PowerTier::kXbeeAsleep ? HIGH : LOW);
+
+  // Coming back from OLED-off: the panel's GDRAM still has whatever was
+  // last drawn before it powered off, which is fine for the operating
+  // screen (redrawn every second regardless) but could be a stale menu
+  // screen if the user backed out while it was off. Force one fresh
+  // redraw on wake to be safe.
+  if (oledShouldBeOn) {
+    if (menuController.currentScreen() != MenuScreen::kInactive) {
+      ScreenBuffer menuScreen;
+      renderMenuScreen(menuController, &menuScreen);
+      oledDisplay.render(menuScreen);
+    } else {
+      showOperatingScreen();
+    }
+  }
 }
 
 void copyField(char *dest, size_t destCapacity, const char *src) {
@@ -140,6 +176,12 @@ void setup() {
   pinMode(PinAssignment::kPowerLatchHold, OUTPUT);
   digitalWrite(PinAssignment::kPowerLatchHold, HIGH);
 
+  // XBee SLEEP_RQ: must be driven low (stay awake) before anything else
+  // touches it — see pin_assignment.h. Harmless on boards where this pin
+  // isn't wired to the XBee at all (see PCB/GPIO_table.md).
+  pinMode(PinAssignment::kXbeeSleepRq, OUTPUT);
+  digitalWrite(PinAssignment::kXbeeSleepRq, LOW);
+
   Serial.begin(115200);
 
   // Polarity of the power-button sense pin isn't documented anywhere in the
@@ -174,6 +216,20 @@ void setup() {
   // defaults are left in place for anything never saved.
   ComplicationPersistence::load(&complications);
   menuController.setComplications(&complications);
+
+  // Restores any previously-saved power management settings; defaults to
+  // kAlwaysOn (no behavior change) if none has been saved yet.
+  powerConfig = PowerConfigStore::load();
+  powerManager.setConfig(powerConfig);
+  menuController.setPowerConfig(&powerConfig);
+
+  // Absent entirely on the first production boards (see
+  // PCB/GPIO_table.md's Accelerometer section) — motion just never
+  // counts as activity in that case, no special-casing needed elsewhere.
+  if (!accelerometer.begin()) {
+    Serial.println("Accelerometer not found at boot (expected on boards "
+                   "without it).");
+  }
 
   xbeeControl.begin();
   menuController.setXbeeTransport(&xbeeControl);
@@ -341,6 +397,12 @@ void loop() {
     Serial.println("Display config saved.");
   }
 
+  if (menuController.consumePowerConfigChanged()) {
+    PowerConfigStore::save(powerConfig);
+    powerManager.setConfig(powerConfig);
+    Serial.println("Power config saved.");
+  }
+
   const int rawVsys = analogRead(PinAssignment::kVsysSense);
   const bool stat1High = digitalRead(PinAssignment::kChargeStat1) == HIGH;
   const bool stat2High = digitalRead(PinAssignment::kChargeStat2) == HIGH;
@@ -353,6 +415,35 @@ void loop() {
   const int stickYPercent = AnalogCalibration::calibrateStickAxis(
       rawStickY, calibrationData.stickYMin, calibrationData.stickYCenter,
       calibrationData.stickYMax);
+
+  // Low-power mode's idea of "activity" — any button held, the stick or
+  // trigger moved off center/released, or (if present) accelerometer
+  // motion. Buttons use level (isPressed), not just the press edge, so
+  // holding one down doesn't let the screen dim out from under a long
+  // press.
+  bool anyButtonHeld = false;
+  for (size_t i = 0; i < Buttons::kCount; ++i) {
+    if (buttonPanel.isPressed(i)) {
+      anyButtonHeld = true;
+      break;
+    }
+  }
+  const bool activityThisTick =
+      anyButtonHeld || stickXPercent != 0 || stickYPercent != 0 ||
+      triggerPercent != 0 ||
+      (accelerometer.isPresent() && accelerometer.motionDetected());
+  powerManager.update(activityThisTick, now);
+
+  const PowerTier currentPowerTier = powerManager.currentTier();
+  if (currentPowerTier != previousPowerTier) {
+    applyPowerTier(currentPowerTier);
+    previousPowerTier = currentPowerTier;
+  }
+
+  if (powerManager.consumeShouldPowerOff()) {
+    performGracefulShutdown();  // never returns
+  }
+
   const int batteryPercent = batteryMonitor.percentFor(rawVsys);
   const ChargeState chargeState =
       batteryMonitor.chargeStateFor(stat1High, stat2High);
