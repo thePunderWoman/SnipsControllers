@@ -147,6 +147,14 @@ void test_render_battery_empty_screen() {
   TEST_ASSERT_EQUAL_STRING("Please charge", screen.line(1));
 }
 
+void test_render_charging_fault_screen() {
+  ScreenBuffer screen;
+  renderChargingFaultScreen(&screen);
+  TEST_ASSERT_EQUAL_STRING("Charging Fault!", screen.line(0));
+  TEST_ASSERT_EQUAL_STRING("Unplug & replug", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("charger", screen.line(2));
+}
+
 int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_no_warning_above_ten_percent);
@@ -164,5 +172,6 @@ int main(int argc, char **argv) {
   RUN_TEST(test_render_countdown_screen_shows_message_and_seconds);
   RUN_TEST(test_render_countdown_screen_updates_seconds);
   RUN_TEST(test_render_battery_empty_screen);
+  RUN_TEST(test_render_charging_fault_screen);
   return UNITY_END();
 }

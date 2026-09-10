@@ -2,11 +2,12 @@
 
 #include "screen.h"
 
-// Pure logic for the low-battery warning and safe-shutdown countdown.
-// Knows nothing about real hardware — SnipsController.ino feeds in the
-// already-computed battery percent/charge state each tick and applies
-// the real effects (forcing the OLED on, blinking it and the status LED,
-// sleeping the XBee, and calling performGracefulShutdown()).
+// Pure logic and screen content for battery/charging safety: the
+// low-battery warning and safe-shutdown countdown, plus the charging
+// fault message. Knows nothing about real hardware — SnipsController.ino
+// feeds in the already-computed battery percent/charge state each tick
+// and applies the real effects (forcing the OLED on, blinking it and the
+// status LED, sleeping the XBee, and calling performGracefulShutdown()).
 namespace BatteryThresholds {
 
 // Below this (and above critical), the battery indicator and status LED
@@ -84,3 +85,13 @@ void renderLowBatteryCountdownScreen(int secondsRemaining,
 // countdown — no session has started yet) if the battery is already at
 // or below kCriticalPercent the moment the device is turned on.
 void renderBatteryEmptyScreen(ScreenBuffer *screen);
+
+// Fills `screen` with the charging-fault message. SnipsController.ino
+// shows this whenever ChargeState::kLatchedFault is active (BATOCP,
+// ILIM/ISET pin short, or safety timer expired — see bq25185 datasheet
+// Table 7-2). Per that datasheet, the *only* way to clear this fault is
+// toggling the CE pin or input power — this board's CE is hardwired to
+// GND (always-enable, no firmware control — see
+// PCB/snips_controller.yaml's Power_Charger section), so unplugging and
+// replugging the charge cable is the only recovery a user actually has.
+void renderChargingFaultScreen(ScreenBuffer *screen);

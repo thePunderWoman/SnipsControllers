@@ -589,7 +589,18 @@ void loop() {
 
     if (menuController.currentScreen() == MenuScreen::kInactive &&
         !lowBatteryMonitor.isInShutdownCountdown()) {
-      showOperatingScreen();
+      // A charging fault takes over the operating screen (but not active
+      // menu navigation) for as long as it persists — this checks once a
+      // second like the rest of this block rather than every tick, since
+      // unlike the bounded 30-second countdown above, a fault can persist
+      // for an entire session and redrawing every tick would hog I2C.
+      if (chargeState == ChargeState::kLatchedFault) {
+        ScreenBuffer faultScreen;
+        renderChargingFaultScreen(&faultScreen);
+        oledDisplay.render(faultScreen);
+      } else {
+        showOperatingScreen();
+      }
     }
 
     Serial.print("Battery ");
