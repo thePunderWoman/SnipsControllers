@@ -944,7 +944,7 @@
 				(justify right bottom)
 			)
 		)
-		(property "Value" "SK6812MINI-E"
+		(property "Value" "SK6812MINI-E-012"
 			(at 176.53 89.535 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -955,7 +955,7 @@
 				(justify left top)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm"
+		(property "Footprint" "SnipsControllers_Custom:SK6812MINI-E-012"
 			(at 176.53 87.63 0)
 			(show_name no)
 			(do_not_autoplace no)
