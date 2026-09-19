@@ -493,6 +493,24 @@ void test_switch_droid_pads_short_saved_pan_id() {
   TEST_ASSERT_EQUAL_STRING("0000000000004133", transport.lastPanId.c_str());
 }
 
+void test_switch_droid_with_invalid_saved_pan_id_shows_invalid_pan_id() {
+  MenuController menu;
+  FakeTransport transport;
+  menu.setXbeeTransport(&transport);
+  DroidStore store;
+  store.add("Bad", "ZZ");
+  menu.setDroidStore(store);
+  selectMainMenuItem(&menu, MainMenuItem::kSwitchDroid);
+  menu.onEnter(0, 0, 0);  // -> kSwitchDroidList
+  menu.onEnter(0, 0, 0);  // select Bad, attempt switch
+
+  TEST_ASSERT_TRUE(DroidSwitchResult::kInvalidPanId == menu.lastSwitchResult());
+  TEST_ASSERT_FALSE(transport.leaveCalled);
+  ScreenBuffer screen;
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("Invalid PAN ID", screen.line(1));
+}
+
 // ---- manage droids: delete -----------------------------------------------------
 
 void test_manage_droids_delete_flow_removes_entry() {
@@ -1013,6 +1031,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_manage_droids_pan_id_backspace_and_cancel);
   RUN_TEST(test_manage_droids_empty_pan_id_is_not_saved);
   RUN_TEST(test_switch_droid_pads_short_saved_pan_id);
+  RUN_TEST(test_switch_droid_with_invalid_saved_pan_id_shows_invalid_pan_id);
   RUN_TEST(test_manage_droids_delete_flow_removes_entry);
   RUN_TEST(test_manage_droids_delete_confirm_back_cancels);
   RUN_TEST(test_display_config_cycles_selected_slot_source);
