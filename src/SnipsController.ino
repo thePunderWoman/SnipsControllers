@@ -260,6 +260,24 @@ void setup() {
   }
 
   xbeeControl.begin();
+
+  // A controller must join a droid's network, never form its own — CE=1
+  // (coordinator) would strand it on a PAN of its own.
+  switch (ensureRouterRole(&xbeeControl)) {
+    case XbeeRoleResult::kSwitchedToRouter:
+      Serial.println("XBee was set to coordinator; switched to router.");
+      break;
+    case XbeeRoleResult::kQueryFailed:
+      Serial.println("XBee role (CE) query failed at boot.");
+      break;
+    case XbeeRoleResult::kSetFailed:
+      Serial.println("XBee role (CE) could not be set to router at boot.");
+      break;
+    case XbeeRoleResult::kAlreadyRouter:
+    case XbeeRoleResult::kNoTransport:
+      break;
+  }
+
   menuController.setXbeeTransport(&xbeeControl);
 
   // The XBee module remembers its own PAN ID across power cycles once
@@ -271,11 +289,9 @@ void setup() {
   char currentPanId[17];
   if (xbeeControl.queryPanId(currentPanId, sizeof(currentPanId))) {
     const DroidStore &droidStore = menuController.droidStore();
-    for (size_t i = 0; i < droidStore.count(); ++i) {
-      if (std::strcmp(droidStore.at(i).panId, currentPanId) == 0) {
-        menuController.setCurrentDroidName(droidStore.at(i).name);
-        break;
-      }
+    size_t matchIndex;
+    if (droidStore.findByPanId(currentPanId, &matchIndex)) {
+      menuController.setCurrentDroidName(droidStore.at(matchIndex).name);
     }
   } else {
     Serial.println("XBee PAN ID query failed at boot.");

@@ -63,6 +63,27 @@ bool XbeeControl::rejoinNetwork() {
   return spi_.sendAtCommand("AC", nullptr, 0, nullptr, 0, nullptr);
 }
 
+bool XbeeControl::queryCoordinatorEnable(uint8_t *outValue) {
+  uint8_t value[1];
+  uint8_t valueLength = 0;
+  if (!spi_.sendAtCommand("CE", nullptr, 0, value, sizeof(value),
+                          &valueLength) ||
+      valueLength != sizeof(value)) {
+    return false;
+  }
+  *outValue = value[0];
+  return true;
+}
+
+bool XbeeControl::setCoordinatorEnable(uint8_t value) {
+  if (!spi_.sendAtCommand("CE", &value, sizeof(value), nullptr, 0, nullptr)) {
+    return false;
+  }
+  // "WR" so the role survives power cycles, "AC" so it takes effect now.
+  return spi_.sendAtCommand("WR", nullptr, 0, nullptr, 0, nullptr) &&
+         spi_.sendAtCommand("AC", nullptr, 0, nullptr, 0, nullptr);
+}
+
 bool XbeeControl::querySerialLow(char *outHex, size_t outHexCapacity) {
   if (outHexCapacity < 9) {
     return false;  // 8 hex chars + null

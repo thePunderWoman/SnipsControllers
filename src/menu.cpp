@@ -257,6 +257,13 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
     case MenuScreen::kManageDroidsEnterPanId:
       panIdEntry_.commitChar();
       if (panIdEntry_.done()) {
+        if (panIdEntry_.length() == 0) {
+          // An empty PAN ID would pad out to all zeros — the "unconfigured"
+          // value Factory Reset uses — so start the entry over instead.
+          panIdEntry_.reset(TextEntryWidget::CharSet::kHex,
+                            DroidEntry::kMaxPanIdLength);
+          break;
+        }
         droidStore_.add(nameEntry_.text(), panIdEntry_.text());
         droidStoreChanged_ = true;
         droidListIndex_ = 0;
@@ -459,6 +466,7 @@ void formatSeconds(int totalSeconds, char *out, size_t outCapacity) {
 const char *switchResultText(DroidSwitchResult result) {
   switch (result) {
     case DroidSwitchResult::kSuccess: return "Success!";
+    case DroidSwitchResult::kInvalidPanId: return "Invalid PAN ID";
     case DroidSwitchResult::kLeaveFailed: return "Leave failed";
     case DroidSwitchResult::kSetPanFailed: return "Set PAN failed";
     case DroidSwitchResult::kRejoinFailed: return "Rejoin failed";

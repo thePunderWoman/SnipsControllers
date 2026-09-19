@@ -1,5 +1,7 @@
 #include <unity.h>
 
+#include <string>
+
 #include "droid_switcher.h"
 
 void setUp(void) {}
@@ -18,7 +20,7 @@ class FakeTransport : public XbeeTransport {
   bool leaveCalled = false;
   bool setPanCalled = false;
   bool rejoinCalled = false;
-  const char *lastPanId = nullptr;
+  std::string lastPanId;
 
   bool leaveNetwork() override {
     leaveCalled = true;
@@ -44,7 +46,7 @@ void test_switch_succeeds_when_every_step_succeeds() {
   TEST_ASSERT_TRUE(transport.leaveCalled);
   TEST_ASSERT_TRUE(transport.setPanCalled);
   TEST_ASSERT_TRUE(transport.rejoinCalled);
-  TEST_ASSERT_EQUAL_STRING("1111111111111111", transport.lastPanId);
+  TEST_ASSERT_EQUAL_STRING("1111111111111111", transport.lastPanId.c_str());
 }
 
 void test_switch_with_null_transport_fails_without_crashing() {
@@ -78,6 +80,26 @@ void test_switch_reports_rejoin_failure() {
                     DroidSwitcher::switchTo("1111111111111111", &transport));
 }
 
+void test_switch_pads_short_pan_id_to_full_length() {
+  // Regression: "4133" reached XbeeControl::setPanId as-is, which needs
+  // exactly 16 hex digits, so switching failed with "Set PAN failed".
+  FakeTransport transport;
+  TEST_ASSERT_TRUE(DroidSwitchResult::kSuccess ==
+                    DroidSwitcher::switchTo("4133", &transport));
+  TEST_ASSERT_EQUAL_STRING("0000000000004133", transport.lastPanId.c_str());
+}
+
+void test_switch_rejects_invalid_pan_id_before_touching_the_network() {
+  FakeTransport transport;
+  TEST_ASSERT_TRUE(DroidSwitchResult::kInvalidPanId ==
+                    DroidSwitcher::switchTo("", &transport));
+  TEST_ASSERT_TRUE(DroidSwitchResult::kInvalidPanId ==
+                    DroidSwitcher::switchTo("41G3", &transport));
+  TEST_ASSERT_FALSE(transport.leaveCalled);
+  TEST_ASSERT_FALSE(transport.setPanCalled);
+  TEST_ASSERT_FALSE(transport.rejoinCalled);
+}
+
 // XbeeControl itself (the real XbeeTransport, using XbeeSpi) is
 // hardware-dependent now and excluded from native builds — see
 // platformio.ini. Nothing here instantiates it directly; DroidSwitcher is
@@ -90,5 +112,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_switch_stops_after_leave_failure);
   RUN_TEST(test_switch_stops_after_set_pan_failure);
   RUN_TEST(test_switch_reports_rejoin_failure);
+  RUN_TEST(test_switch_pads_short_pan_id_to_full_length);
+  RUN_TEST(test_switch_rejects_invalid_pan_id_before_touching_the_network);
   return UNITY_END();
 }

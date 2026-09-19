@@ -451,6 +451,48 @@ void test_manage_droids_pan_id_backspace_and_cancel() {
   TEST_ASSERT_EQUAL_INT(0, menu.droidStore().count());
 }
 
+void test_manage_droids_empty_pan_id_is_not_saved() {
+  // An empty PAN ID would pad to all zeros (Factory Reset's "unconfigured"
+  // value), so finishing entry with nothing typed restarts the entry.
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kManageDroids);
+  menu.onEnter(0, 0, 0);  // -> kManageDroidsList
+  menu.onEnter(0, 0, 0);  // -> enter name
+  menu.onUp();            // space -> DONE
+  menu.onEnter(0, 0, 0);  // finish name -> enter PAN ID
+
+  menu.onUp();            // '0' -> wraps to DONE
+  menu.onEnter(0, 0, 0);  // finish with nothing typed
+
+  TEST_ASSERT_TRUE(MenuScreen::kManageDroidsEnterPanId ==
+                    menu.currentScreen());
+  TEST_ASSERT_FALSE(menu.panIdEntry().done());
+  TEST_ASSERT_EQUAL_INT(0, menu.droidStore().count());
+  TEST_ASSERT_FALSE(menu.consumeDroidStoreChanged());
+
+  // Entry is usable again afterwards.
+  menu.onDown();          // '0' -> '1'
+  menu.onEnter(0, 0, 0);  // commit '1'
+  menu.onUp();            // -> DONE
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_TRUE(MenuScreen::kManageDroidsList == menu.currentScreen());
+  TEST_ASSERT_EQUAL_STRING("1", menu.droidStore().at(0).panId);
+}
+
+void test_switch_droid_pads_short_saved_pan_id() {
+  MenuController menu;
+  FakeTransport transport;
+  menu.setXbeeTransport(&transport);
+  DroidStore store;
+  store.add("R2-D2", "4133");
+  menu.setDroidStore(store);
+  selectMainMenuItem(&menu, MainMenuItem::kSwitchDroid);
+  menu.onEnter(0, 0, 0);  // -> kSwitchDroidList
+  menu.onEnter(0, 0, 0);  // select R2-D2, switch
+  TEST_ASSERT_TRUE(DroidSwitchResult::kSuccess == menu.lastSwitchResult());
+  TEST_ASSERT_EQUAL_STRING("0000000000004133", transport.lastPanId.c_str());
+}
+
 // ---- manage droids: delete -----------------------------------------------------
 
 void test_manage_droids_delete_flow_removes_entry() {
@@ -969,6 +1011,8 @@ int main(int argc, char **argv) {
   RUN_TEST(test_manage_droids_back_with_text_backspaces_instead_of_cancelling);
   RUN_TEST(test_manage_droids_list_navigation_wraps_over_entries_and_add_new);
   RUN_TEST(test_manage_droids_pan_id_backspace_and_cancel);
+  RUN_TEST(test_manage_droids_empty_pan_id_is_not_saved);
+  RUN_TEST(test_switch_droid_pads_short_saved_pan_id);
   RUN_TEST(test_manage_droids_delete_flow_removes_entry);
   RUN_TEST(test_manage_droids_delete_confirm_back_cancels);
   RUN_TEST(test_display_config_cycles_selected_slot_source);

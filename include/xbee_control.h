@@ -3,6 +3,7 @@
 #include <cstddef>
 
 #include "droid_switcher.h"
+#include "xbee_role.h"
 #include "xbee_spi.h"
 
 // Real XbeeTransport (see droid_switcher.h), over the SPI transport in
@@ -11,13 +12,19 @@
 // reading of Digi's XBee3 manual, not yet validated against real
 // hardware — confirm during this PR's bring-up and adjust here if the
 // sequence needs correcting.
-class XbeeControl : public XbeeTransport {
+class XbeeControl : public XbeeTransport, public XbeeRoleTransport {
  public:
   void begin() { spi_.begin(); }
 
   bool leaveNetwork() override;
   bool setPanId(const char *panId) override;
   bool rejoinNetwork() override;
+
+  // "CE": 0 = join a network (router), 1 = form one (coordinator). Setting
+  // it commits ("WR") and applies ("AC") — same best-effort, not yet
+  // hardware-validated sequencing as the rest of this class.
+  bool queryCoordinatorEnable(uint8_t *outValue) override;
+  bool setCoordinatorEnable(uint8_t value) override;
 
   // Queries the module's own 64-bit address (low 32 bits, "SL") for
   // display in the Device Info menu screen — this is what a user reads

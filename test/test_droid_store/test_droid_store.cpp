@@ -68,6 +68,25 @@ void test_remove_out_of_range_is_noop() {
   TEST_ASSERT_EQUAL_INT(1, store.count());
 }
 
+void test_find_by_pan_id_matches_short_saved_id_against_padded_query() {
+  // Regression: the XBee reports "0000000000004133" but the user saved
+  // "4133", so the boot-time droid-name lookup never found it.
+  DroidStore store;
+  store.add("R2-D2", "1111111111111111");
+  store.add("BB-8", "4133");
+  size_t index = 99;
+  TEST_ASSERT_TRUE(store.findByPanId("0000000000004133", &index));
+  TEST_ASSERT_EQUAL_INT(1, index);
+}
+
+void test_find_by_pan_id_returns_false_when_absent() {
+  DroidStore store;
+  store.add("R2-D2", "1111111111111111");
+  size_t index = 99;
+  TEST_ASSERT_FALSE(store.findByPanId("0000000000004133", &index));
+  TEST_ASSERT_EQUAL_INT(99, index);
+}
+
 int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_starts_empty);
@@ -78,5 +97,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_at_out_of_range_returns_empty_entry);
   RUN_TEST(test_remove_shifts_subsequent_entries_down);
   RUN_TEST(test_remove_out_of_range_is_noop);
+  RUN_TEST(test_find_by_pan_id_matches_short_saved_id_against_padded_query);
+  RUN_TEST(test_find_by_pan_id_returns_false_when_absent);
   return UNITY_END();
 }

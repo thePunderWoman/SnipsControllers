@@ -14,6 +14,7 @@ class XbeeTransport {
 
 enum class DroidSwitchResult {
   kSuccess,
+  kInvalidPanId,
   kLeaveFailed,
   kSetPanFailed,
   kRejoinFailed,
@@ -26,6 +27,9 @@ enum class DroidSwitchResult {
 // XbeeControl itself is hardware-dependent and excluded from that build.
 class DroidSwitcher {
  public:
+  // panId may be short ("4133") — it's normalized to the full 16-digit
+  // form (see pan_id.h) before reaching the transport, and rejected with
+  // kInvalidPanId (before touching the network) if it isn't valid hex.
   // transport may be null (returns kNoTransport without touching it).
   static DroidSwitchResult switchTo(const char *panId,
                                     XbeeTransport *transport);

@@ -2,12 +2,14 @@
 
 #include <cstddef>
 
+#include "pan_id.h"
+
 // Pure in-memory droid list (name + PAN ID pairs), the data a user builds
 // up via the Manage Droids menu screen. Knows nothing about persistence —
 // see droid_persistence.h for the thin NVS adapter that saves/restores it.
 struct DroidEntry {
   static constexpr size_t kMaxNameLength = 16;
-  static constexpr size_t kMaxPanIdLength = 16;  // 64-bit PAN ID, hex
+  static constexpr size_t kMaxPanIdLength = PanId::kHexLength;
 
   char name[kMaxNameLength + 1] = {};
   char panId[kMaxPanIdLength + 1] = {};
@@ -28,6 +30,11 @@ class DroidStore {
 
   // Returns false (no-op) if index is out of range.
   bool remove(size_t index);
+
+  // Finds the first droid whose PAN ID is equivalent to panId (see
+  // PanId::equivalent — "4133" matches "0000000000004133"), writing its
+  // index to outIndex. Returns false, leaving outIndex untouched, if none.
+  bool findByPanId(const char *panId, size_t *outIndex) const;
 
  private:
   DroidEntry entries_[kMaxDroids];
