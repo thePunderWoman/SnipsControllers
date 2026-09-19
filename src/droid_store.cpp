@@ -33,3 +33,13 @@ bool DroidStore::remove(size_t index) {
   --count_;
   return true;
 }
+
+bool DroidStore::findByPanId(const char *panId, size_t *outIndex) const {
+  for (size_t i = 0; i < count_; ++i) {
+    if (PanId::equivalent(entries_[i].panId, panId)) {
+      *outIndex = i;
+      return true;
+    }
+  }
+  return false;
+}
