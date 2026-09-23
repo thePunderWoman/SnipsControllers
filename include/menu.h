@@ -23,6 +23,7 @@ enum class MenuScreen {
   kManageDroidsEnterPanId,
   kManageDroidsDeleteConfirm,
   kCalibrateStick,
+  kStickDeadzone,
   kCalibrateTrigger,
   kDisplayConfig,
   kPowerConfig,
@@ -35,6 +36,7 @@ enum class MainMenuItem {
   kSwitchDroid = 0,
   kManageDroids,
   kCalibrateStick,
+  kStickDeadzone,
   kCalibrateTrigger,
   kDisplayConfig,
   kPowerConfig,
@@ -82,17 +84,30 @@ class MenuController {
   // by every other screen.
   void onEnter(int rawTrigger, int rawStickX, int rawStickY);
 
-  // Call every loop tick regardless of button edges, so the stick
-  // calibration's "roll to extremes" step can continuously track
-  // min/max. No-op unless currentScreen() == kCalibrateStick and its
-  // internal flow is in the rolling step.
-  void tick(int rawStickX, int rawStickY);
+  // Call every loop tick regardless of button edges. Two independent
+  // things happen here:
+  //  - Stick calibration's "roll to extremes" step continuously tracks
+  //    min/max from the raw readings — no-op unless currentScreen() ==
+  //    kCalibrateStick and its internal flow is in the rolling step.
+  //  - The stick doubles as menu Up/Down navigation (same effect as the
+  //    Left Up/Down buttons) via stickYPercent, the already-calibrated
+  //    reading — a threshold push counts as one discrete nav event, and
+  //    the stick must return near center before it can fire again, so
+  //    holding it doesn't spam repeated scrolls. Skipped entirely on
+  //    kCalibrateStick, where stick position is the data being
+  //    captured, not a nav input.
+  // Returns true if it fired a nav event this call — SnipsController.ino
+  // needs this to know when to redraw (see its menuStateChanged comment).
+  bool tick(int rawStickX, int rawStickY, int stickYPercent);
 
   TriggerCalibrationFlow::Step triggerCalibrationStep() const {
     return triggerFlow_.currentStep();
   }
   StickCalibrationFlow::Step stickCalibrationStep() const {
     return stickFlow_.currentStep();
+  }
+  bool stickCalibrationHasEnoughRange() const {
+    return stickFlow_.hasEnoughRange();
   }
 
   // Each returns true exactly once, the tick a new result becomes ready
@@ -171,6 +186,20 @@ class MenuController {
   }
   bool consumePowerConfigChanged();
 
+  // Stick deadzone: unlike Display/Power Config, this isn't an
+  // externally-owned pointer — it's a plain value MenuController tracks
+  // itself (SnipsController.ino seeds it once at boot from the loaded
+  // CalibrationData, same pattern as setDeviceSerialLow()), since
+  // there's only one value and no natural external owner the way
+  // ComplicationRegistry/PowerConfig are owned elsewhere. Up/Down apply
+  // a change immediately (see onUp()/onDown()) rather than needing a
+  // separate Enter-to-confirm step.
+  void setStickDeadzonePercent(int percent) {
+    stickDeadzonePercent_ = percent;
+  }
+  int stickDeadzonePercent() const { return stickDeadzonePercent_; }
+  bool consumeStickDeadzoneChanged();
+
  private:
   static constexpr unsigned long kOpenComboHoldMs = 1000;
 
@@ -203,6 +232,9 @@ class MenuController {
 
   int lastTestedButtonIndex_ = -1;
 
+  // Re-armed once stickYPercent returns near center — see tick().
+  bool stickNavArmed_ = true;
+
   DroidStore droidStore_;
   int droidListIndex_ = 0;
   bool droidStoreChanged_ = false;
@@ -220,6 +252,9 @@ class MenuController {
   PowerConfig *powerConfig_ = nullptr;
   int powerConfigRowIndex_ = 0;
   bool powerConfigChanged_ = false;
+
+  int stickDeadzonePercent_ = StickDeadzoneOptions::kPercents[1];
+  bool stickDeadzoneChanged_ = false;
 };
 
 // Decides what text should be on screen for the menu's current state.

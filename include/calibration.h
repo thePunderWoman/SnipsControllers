@@ -1,9 +1,23 @@
 #pragma once
 
+#include <cstddef>
+
 // Pure logic for analog trigger/thumbstick calibration. Knows nothing
 // about real ADC reads or persistence — SnipsController.ino (and, later,
 // the menu system) supply raw ADC samples and user confirm/advance
 // events; calibration_store.h persists the result to NVS.
+
+// User-adjustable stick deadzone presets, cycled via the on-device Stick
+// Deadzone menu screen (see menu.h) — a fixed set rather than freeform
+// numeric entry, same spirit as PowerConfigOptions. 3% was this
+// codebase's original hardcoded default before it became adjustable.
+namespace StickDeadzoneOptions {
+constexpr int kPercents[] = {0, 3, 5, 8, 12, 15, 20};
+constexpr size_t kCount = sizeof(kPercents) / sizeof(kPercents[0]);
+}  // namespace StickDeadzoneOptions
+
+int nextDeadzonePercent(int currentPercent);
+int prevDeadzonePercent(int currentPercent);
 
 // Persisted calibration values. Defaults assume an uncalibrated 12-bit ADC
 // (0-4095) so trigger/stick still produce a reasonable (if unrefined)
@@ -17,6 +31,7 @@ struct CalibrationData {
   int stickYMin = 0;
   int stickYMax = 4095;
   int stickYCenter = 2048;
+  int stickDeadzonePercent = StickDeadzoneOptions::kPercents[1];  // 3
 };
 
 class AnalogCalibration {
@@ -24,12 +39,12 @@ class AnalogCalibration {
   // Raw trigger ADC -> 0-100 (0 = released, 100 = fully pulled).
   static int calibrateTrigger(int raw, const CalibrationData &data);
 
-  // Raw stick-axis ADC -> -100..100 (0 = center), with a small deadzone
-  // around center so a physically-resting stick reads as exactly 0.
-  static int calibrateStickAxis(int raw, int min, int center, int max);
-
- private:
-  static constexpr int kDeadzonePercentOfRange = 3;
+  // Raw stick-axis ADC -> -100..100 (0 = center), with a deadzone around
+  // center (deadzonePercent, of the calibrated min-max range) so a
+  // physically-resting stick reads as exactly 0. User-adjustable — see
+  // StickDeadzoneOptions.
+  static int calibrateStickAxis(int raw, int min, int center, int max,
+                                int deadzonePercent);
 };
 
 // Guided two-step trigger calibration: release, then full pull.
@@ -58,6 +73,19 @@ class StickCalibrationFlow {
  public:
   enum class Step { kAwaitingCenter, kRolling, kDone };
 
+  // Minimum distance (raw ADC counts) required between center and each
+  // of the four extremes before confirmDone() will actually finish —
+  // min/max start collapsed to the center point itself (see
+  // confirmCenter()) and only widen from real rolling, so without this
+  // floor, confirming done too early (before the stick was actually
+  // pushed to its extremes) silently saves a near-zero range. Later,
+  // calibrateStickAxis() divides by that range, so ordinary ADC noise
+  // gets amplified into wild reported movement with the stick at rest —
+  // confirmed against real hardware, not a hypothetical. Comfortably
+  // above typical ADC noise (tens of counts at most) and well below a
+  // real thumbstick's mechanical travel (typically 1500+ counts).
+  static constexpr int kMinRangeCounts = 300;
+
   Step currentStep() const { return step_; }
 
   // Step 1: call once when the user confirms the stick is at rest.
@@ -66,7 +94,13 @@ class StickCalibrationFlow {
   // Step 2: call every tick while rolling; no-op outside kRolling.
   void sample(int rawX, int rawY);
 
-  // Finishes step 2; no-op outside kRolling.
+  // True once every one of the four extremes is at least
+  // kMinRangeCounts away from center — see confirmDone().
+  bool hasEnoughRange() const;
+
+  // Finishes step 2; no-op outside kRolling, and no-op (stays kRolling)
+  // if hasEnoughRange() isn't true yet, so an under-rolled calibration
+  // can't be confirmed away — keep rolling.
   void confirmDone();
 
   int centerX() const { return centerX_; }

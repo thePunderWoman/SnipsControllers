@@ -106,6 +106,9 @@ void test_down_cycles_through_every_main_menu_item_in_order() {
   TEST_ASSERT_TRUE(MainMenuItem::kCalibrateStick ==
                     menu.selectedMainMenuItem());
   menu.onDown();
+  TEST_ASSERT_TRUE(MainMenuItem::kStickDeadzone ==
+                    menu.selectedMainMenuItem());
+  menu.onDown();
   TEST_ASSERT_TRUE(MainMenuItem::kCalibrateTrigger ==
                     menu.selectedMainMenuItem());
   menu.onDown();
@@ -347,8 +350,8 @@ void test_stick_calibration_full_flow() {
   TEST_ASSERT_TRUE(StickCalibrationFlow::Step::kRolling ==
                     menu.stickCalibrationStep());
 
-  menu.tick(1500, 2600);
-  menu.tick(2500, 1800);
+  menu.tick(1500, 2600, 0);
+  menu.tick(2500, 1800, 0);
   menu.onEnter(0, 9999, 9999);  // confirm done (values here are ignored)
 
   TEST_ASSERT_TRUE(MenuScreen::kMainMenu == menu.currentScreen());
@@ -370,18 +373,87 @@ void test_stick_calibration_full_flow() {
 void test_tick_is_noop_outside_rolling_stick_calibration() {
   MenuController menu;
   selectMainMenuItem(&menu, MainMenuItem::kCalibrateStick);
-  // Menu is open but not even in the stick screen yet.
-  menu.tick(1234, 5678);
+  // Menu is open but not even in the stick screen yet -- must not crash
+  // or affect anything.
+  menu.tick(1234, 5678, 0);
   menu.onEnter(0, 0, 0);  // -> kCalibrateStick, awaiting center
-  menu.tick(1234, 5678);  // still awaiting center, not rolling
+  // Still awaiting center, not rolling yet -- an extreme value here
+  // must not get sampled; if it wrongly did, it would show up in
+  // min/max below instead of the real rolling samples that follow.
+  menu.tick(9999, 9999, 0);
   menu.onEnter(0, 2000, 2100);  // confirm center -> rolling
+
+  // Roll for real, enough to clear the minimum-range gate.
+  menu.tick(1500, 2600, 0);
+  menu.tick(2500, 1700, 0);
+
   int centerX, centerY, minX, maxX, minY, maxY;
-  menu.onEnter(0, 0, 0);  // confirm done immediately, no samples taken
+  menu.onEnter(0, 0, 0);  // confirm done
   TEST_ASSERT_TRUE(menu.consumeNewStickCalibration(&centerX, &centerY, &minX,
                                                    &maxX, &minY, &maxY));
-  // With no rolling samples, min/max should stay collapsed to the center.
-  TEST_ASSERT_EQUAL_INT(2000, minX);
-  TEST_ASSERT_EQUAL_INT(2000, maxX);
+  TEST_ASSERT_EQUAL_INT(1500, minX);
+  TEST_ASSERT_EQUAL_INT(2500, maxX);
+  TEST_ASSERT_EQUAL_INT(1700, minY);
+  TEST_ASSERT_EQUAL_INT(2600, maxY);
+}
+
+// ---- stick-as-nav -----------------------------------------------------------
+
+void test_stick_push_up_navigates_like_left_up_button() {
+  MenuController menu;
+  openMenu(&menu);
+  TEST_ASSERT_TRUE(MainMenuItem::kSwitchDroid == menu.selectedMainMenuItem());
+  menu.tick(0, 0, 75);  // past the fire threshold
+  TEST_ASSERT_TRUE(MainMenuItem::kFactoryReset ==
+                    menu.selectedMainMenuItem());  // onUp() wraps to the last item
+}
+
+void test_stick_push_down_navigates_like_left_down_button() {
+  MenuController menu;
+  openMenu(&menu);
+  menu.tick(0, 0, -75);  // past the fire threshold, opposite direction
+  TEST_ASSERT_TRUE(MainMenuItem::kManageDroids == menu.selectedMainMenuItem());
+}
+
+void test_tick_returns_true_only_when_it_fires_a_nav_event() {
+  // SnipsController.ino relies on this return value to know when to
+  // redraw the active screen -- see its menuInputHandled comment.
+  MenuController menu;
+  openMenu(&menu);
+  TEST_ASSERT_FALSE(menu.tick(0, 0, 15));  // short of threshold
+  TEST_ASSERT_TRUE(menu.tick(0, 0, 75));   // fires
+  TEST_ASSERT_FALSE(menu.tick(0, 0, 75));  // still held, already fired
+  TEST_ASSERT_FALSE(menu.tick(0, 0, 0));   // returning to center, no fire
+  TEST_ASSERT_TRUE(menu.tick(0, 0, -75));  // rearmed, fires again
+}
+
+void test_stick_below_threshold_does_not_navigate() {
+  MenuController menu;
+  openMenu(&menu);
+  menu.tick(0, 0, 15);  // short of the fire threshold (25)
+  TEST_ASSERT_TRUE(MainMenuItem::kSwitchDroid == menu.selectedMainMenuItem());
+}
+
+void test_stick_must_return_to_center_before_firing_again() {
+  MenuController menu;
+  openMenu(&menu);
+  menu.tick(0, 0, 75);   // fires once -> kManageDroids... (wraps via onUp -> last)
+  menu.tick(0, 0, 75);   // still held past threshold -- must not fire again
+  TEST_ASSERT_TRUE(MainMenuItem::kFactoryReset == menu.selectedMainMenuItem());
+
+  menu.tick(0, 0, 0);    // back near center -- rearms
+  menu.tick(0, 0, 75);   // fires once more, one step further up from last
+  TEST_ASSERT_TRUE(MainMenuItem::kButtonTest == menu.selectedMainMenuItem());
+}
+
+void test_stick_nav_is_disabled_during_stick_calibration() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kCalibrateStick);
+  menu.onEnter(0, 0, 0);  // -> kCalibrateStick
+  menu.tick(0, 0, 75);    // would fire onUp() anywhere else
+  TEST_ASSERT_TRUE(MenuScreen::kCalibrateStick == menu.currentScreen());
+  TEST_ASSERT_TRUE(StickCalibrationFlow::Step::kAwaitingCenter ==
+                    menu.stickCalibrationStep());
 }
 
 void test_back_during_stick_calibration_cancels_and_resets() {
@@ -493,17 +565,16 @@ void test_manage_droids_back_with_empty_name_cancels_add() {
   TEST_ASSERT_EQUAL_INT(0, menu.droidStore().count());
 }
 
-void test_manage_droids_back_with_text_backspaces_instead_of_cancelling() {
+void test_manage_droids_back_cancels_even_with_text_entered() {
   MenuController menu;
   selectMainMenuItem(&menu, MainMenuItem::kManageDroids);
   menu.onEnter(0, 0, 0);  // -> kManageDroidsList
   menu.onEnter(0, 0, 0);  // -> enter name
   menu.onDown();          // space -> 'A'
   menu.onEnter(0, 0, 0);  // commit 'A'
-  menu.onBack();          // backspace, not cancel — buffer wasn't empty
-  TEST_ASSERT_TRUE(MenuScreen::kManageDroidsEnterName ==
-                    menu.currentScreen());
-  TEST_ASSERT_EQUAL_STRING("", menu.nameEntry().text());
+  menu.onBack();  // Bumper always means "go back," regardless of what's
+                  // been typed — no separate backspace step required.
+  TEST_ASSERT_TRUE(MenuScreen::kManageDroidsList == menu.currentScreen());
 }
 
 void test_manage_droids_list_navigation_wraps_over_entries_and_add_new() {
@@ -520,7 +591,7 @@ void test_manage_droids_list_navigation_wraps_over_entries_and_add_new() {
   TEST_ASSERT_EQUAL_INT(0, menu.selectedDroidListIndex());
 }
 
-void test_manage_droids_pan_id_backspace_and_cancel() {
+void test_manage_droids_pan_id_back_cancels_even_with_text_entered() {
   MenuController menu;
   selectMainMenuItem(&menu, MainMenuItem::kManageDroids);
   menu.onEnter(0, 0, 0);  // -> kManageDroidsList
@@ -530,12 +601,8 @@ void test_manage_droids_pan_id_backspace_and_cancel() {
 
   menu.onDown();          // '0' -> '1'
   menu.onEnter(0, 0, 0);  // commit '1'
-  menu.onBack();          // backspace, not cancel — buffer wasn't empty
-  TEST_ASSERT_TRUE(MenuScreen::kManageDroidsEnterPanId ==
-                    menu.currentScreen());
-  TEST_ASSERT_EQUAL_STRING("", menu.panIdEntry().text());
-
-  menu.onBack();  // now empty — cancels the whole add flow
+  menu.onBack();  // Bumper always means "go back," regardless of what's
+                  // been typed — cancels the whole add flow immediately.
   TEST_ASSERT_TRUE(MenuScreen::kManageDroidsList == menu.currentScreen());
   TEST_ASSERT_EQUAL_INT(0, menu.droidStore().count());
 }
@@ -755,6 +822,78 @@ void test_power_config_back_returns_to_main_menu() {
   TEST_ASSERT_TRUE(MenuScreen::kMainMenu == menu.currentScreen());
 }
 
+// ---- stick deadzone ---------------------------------------------------------
+
+void test_enter_stick_deadzone_from_main_menu() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kStickDeadzone);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_TRUE(MenuScreen::kStickDeadzone == menu.currentScreen());
+}
+
+void test_stick_deadzone_defaults_to_three_percent() {
+  MenuController menu;
+  TEST_ASSERT_EQUAL_INT(3, menu.stickDeadzonePercent());
+}
+
+void test_stick_deadzone_up_increases_and_wraps() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kStickDeadzone);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL_INT(3, menu.stickDeadzonePercent());
+  menu.onUp();
+  TEST_ASSERT_EQUAL_INT(5, menu.stickDeadzonePercent());
+  // Presets are {0, 3, 5, 8, 12, 15, 20} -- 5 more ups from 5 reaches 20,
+  // the last one, and one more wraps back to 0.
+  menu.onUp();
+  menu.onUp();
+  menu.onUp();
+  menu.onUp();
+  menu.onUp();
+  TEST_ASSERT_EQUAL_INT(0, menu.stickDeadzonePercent());  // wraps
+}
+
+void test_stick_deadzone_down_decreases_and_wraps() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kStickDeadzone);
+  menu.onEnter(0, 0, 0);
+  menu.onDown();
+  TEST_ASSERT_EQUAL_INT(0, menu.stickDeadzonePercent());
+  menu.onDown();
+  TEST_ASSERT_EQUAL_INT(20, menu.stickDeadzonePercent());  // wraps
+}
+
+void test_stick_deadzone_changed_is_edge_triggered() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kStickDeadzone);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_FALSE(menu.consumeStickDeadzoneChanged());  // nothing yet
+
+  menu.onUp();
+  TEST_ASSERT_TRUE(menu.consumeStickDeadzoneChanged());
+  TEST_ASSERT_FALSE(menu.consumeStickDeadzoneChanged());  // consumed once
+}
+
+void test_stick_deadzone_back_returns_to_main_menu() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kStickDeadzone);
+  menu.onEnter(0, 0, 0);
+  menu.onUp();
+  menu.onBack();
+  TEST_ASSERT_TRUE(MenuScreen::kMainMenu == menu.currentScreen());
+}
+
+void test_render_stick_deadzone_shows_current_value() {
+  MenuController menu;
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kStickDeadzone);
+  menu.onEnter(0, 0, 0);
+  menu.onUp();  // 3 -> 5
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("Stick Deadzone", screen.line(0));
+  TEST_ASSERT_EQUAL_STRING("5%", screen.line(1));
+}
+
 // ---- current droid name --------------------------------------------------------
 
 void test_current_droid_name_defaults_to_none() {
@@ -801,6 +940,8 @@ void test_main_menu_item_labels() {
                            mainMenuItemLabel(MainMenuItem::kManageDroids));
   TEST_ASSERT_EQUAL_STRING("Calibrate Stick",
                            mainMenuItemLabel(MainMenuItem::kCalibrateStick));
+  TEST_ASSERT_EQUAL_STRING("Stick Deadzone",
+                           mainMenuItemLabel(MainMenuItem::kStickDeadzone));
   TEST_ASSERT_EQUAL_STRING("Calibrate Trigger",
                            mainMenuItemLabel(MainMenuItem::kCalibrateTrigger));
   TEST_ASSERT_EQUAL_STRING("Display Config",
@@ -894,7 +1035,23 @@ void test_render_stick_calibration_rolling_step_text() {
   menu.onEnter(0, 0, 0);
   menu.onEnter(0, 2000, 2100);
   renderMenuScreen(menu, &screen);
-  TEST_ASSERT_EQUAL_STRING("Roll to extremes,", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("Rotate stick all the", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("way around 3 times,", screen.line(2));
+  TEST_ASSERT_EQUAL_STRING("return to center,", screen.line(3));
+  // Nothing rolled yet -- range requirement not met.
+  TEST_ASSERT_EQUAL_STRING("not enough yet", screen.line(4));
+}
+
+void test_render_stick_calibration_rolling_step_shows_done_once_enough_range() {
+  MenuController menu;
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kCalibrateStick);
+  menu.onEnter(0, 0, 0);
+  menu.onEnter(0, 2000, 2100);
+  menu.tick(1500, 2600, 0);
+  menu.tick(2500, 1700, 0);
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("then press Macro1", screen.line(4));
 }
 
 void test_render_device_info() {
@@ -1122,6 +1279,12 @@ int main(int argc, char **argv) {
   RUN_TEST(test_back_during_trigger_calibration_cancels_and_resets);
   RUN_TEST(test_stick_calibration_full_flow);
   RUN_TEST(test_tick_is_noop_outside_rolling_stick_calibration);
+  RUN_TEST(test_stick_push_up_navigates_like_left_up_button);
+  RUN_TEST(test_stick_push_down_navigates_like_left_down_button);
+  RUN_TEST(test_tick_returns_true_only_when_it_fires_a_nav_event);
+  RUN_TEST(test_stick_below_threshold_does_not_navigate);
+  RUN_TEST(test_stick_must_return_to_center_before_firing_again);
+  RUN_TEST(test_stick_nav_is_disabled_during_stick_calibration);
   RUN_TEST(test_back_during_stick_calibration_cancels_and_resets);
   RUN_TEST(test_switch_droid_list_empty_stays_put_on_enter);
   RUN_TEST(test_switch_droid_navigates_and_reports_no_transport_by_default);
@@ -1129,9 +1292,9 @@ int main(int argc, char **argv) {
   RUN_TEST(test_switch_droid_succeeds_with_transport_set);
   RUN_TEST(test_manage_droids_add_flow_creates_entry);
   RUN_TEST(test_manage_droids_back_with_empty_name_cancels_add);
-  RUN_TEST(test_manage_droids_back_with_text_backspaces_instead_of_cancelling);
+  RUN_TEST(test_manage_droids_back_cancels_even_with_text_entered);
   RUN_TEST(test_manage_droids_list_navigation_wraps_over_entries_and_add_new);
-  RUN_TEST(test_manage_droids_pan_id_backspace_and_cancel);
+  RUN_TEST(test_manage_droids_pan_id_back_cancels_even_with_text_entered);
   RUN_TEST(test_manage_droids_empty_pan_id_is_not_saved);
   RUN_TEST(test_switch_droid_pads_short_saved_pan_id);
   RUN_TEST(test_switch_droid_with_invalid_saved_pan_id_shows_invalid_pan_id);
@@ -1147,6 +1310,13 @@ int main(int argc, char **argv) {
   RUN_TEST(test_power_config_enter_cycles_auto_poweroff_row_through_minute_options);
   RUN_TEST(test_power_config_enter_without_config_is_noop);
   RUN_TEST(test_power_config_back_returns_to_main_menu);
+  RUN_TEST(test_enter_stick_deadzone_from_main_menu);
+  RUN_TEST(test_stick_deadzone_defaults_to_three_percent);
+  RUN_TEST(test_stick_deadzone_up_increases_and_wraps);
+  RUN_TEST(test_stick_deadzone_down_decreases_and_wraps);
+  RUN_TEST(test_stick_deadzone_changed_is_edge_triggered);
+  RUN_TEST(test_stick_deadzone_back_returns_to_main_menu);
+  RUN_TEST(test_render_stick_deadzone_shows_current_value);
   RUN_TEST(test_current_droid_name_defaults_to_none);
   RUN_TEST(test_current_droid_name_set_on_successful_switch);
   RUN_TEST(test_current_droid_name_unchanged_on_failed_switch);
@@ -1159,6 +1329,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_render_trigger_calibration_step_text);
   RUN_TEST(test_render_stick_calibration_awaiting_center_step_text);
   RUN_TEST(test_render_stick_calibration_rolling_step_text);
+  RUN_TEST(test_render_stick_calibration_rolling_step_shows_done_once_enough_range);
   RUN_TEST(test_render_device_info);
   RUN_TEST(test_device_serial_low_defaults_then_reflects_what_was_set);
   RUN_TEST(test_render_factory_reset_confirm);

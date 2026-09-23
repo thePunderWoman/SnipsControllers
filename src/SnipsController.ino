@@ -56,7 +56,6 @@ unsigned long lastDownlinkMs = 0;  // 0 = never received one
 constexpr unsigned long kConnectionTimeoutMs = 5000;
 MenuScreen previousMenuScreen = MenuScreen::kInactive;
 MainMenuItem previousMainMenuItem = MainMenuItem::kSwitchDroid;
-int previousLastTestedButtonIndex = -1;
 
 void showBootScreen() {
   ScreenBuffer bootScreen;
@@ -177,13 +176,18 @@ void setup() {
   // re-enumerate with the host after every reset. That consistently
   // takes longer than this firmware needs to reach its early boot
   // prints, so they were getting lost even with a monitor already open
-  // and waiting. Give the host a couple seconds to finish opening the
-  // port before continuing — harmless in the field with no host
-  // attached (just a bounded worst-case boot delay), and makes early
-  // diagnostics reliably visible during bring-up. HWCDC's bool operator
-  // reflects the real host-connection state, not just whether begin()
-  // was called.
-  constexpr unsigned long kSerialWaitMs = 2000;
+  // and waiting -- 2000ms wasn't long enough to reliably cover a real
+  // dev machine's reconnect time (observed several seconds on one
+  // laptop). HWCDC's bool operator reflects the real host-connection
+  // state, not just whether begin() was called.
+  //
+  // TODO(bring-up): this wait fires on every boot with no host attached
+  // too -- i.e. every real-world power-on once this ships, not just
+  // during debugging. 5s of dead time before the splash even shows up
+  // is fine for now but not acceptable in the field; shorten this back
+  // down (or make it conditional on something cheap to detect, like a
+  // held button) before this goes to an actual user.
+  constexpr unsigned long kSerialWaitMs = 5000;
   const unsigned long serialWaitStartMs = millis();
   while (!Serial && millis() - serialWaitStartMs < kSerialWaitMs) {
     delay(10);
@@ -239,6 +243,7 @@ void setup() {
   // Restores any previously-run trigger/stick calibration; defaults to an
   // uncalibrated full ADC range if none has been saved yet.
   calibrationData = CalibrationStore::load();
+  menuController.setStickDeadzonePercent(calibrationData.stickDeadzonePercent);
 
   // Restores any previously-saved droid list; defaults to empty if none
   // has been saved yet.
@@ -373,6 +378,20 @@ void loop() {
   const int rawStickX = analogRead(PinAssignment::kThumbstickX);
   const int rawStickY = analogRead(PinAssignment::kThumbstickY);
 
+  // Calibrated early (rather than down with the rest of the telemetry
+  // below) because the menu's stick-based navigation needs the
+  // calibrated percentage, not the raw ADC reading, to pick a threshold
+  // that means the same thing on every controller regardless of that
+  // unit's own calibration.
+  const int triggerPercent =
+      AnalogCalibration::calibrateTrigger(rawTrigger, calibrationData);
+  const int stickXPercent = AnalogCalibration::calibrateStickAxis(
+      rawStickX, calibrationData.stickXMin, calibrationData.stickXCenter,
+      calibrationData.stickXMax, calibrationData.stickDeadzonePercent);
+  const int stickYPercent = AnalogCalibration::calibrateStickAxis(
+      rawStickY, calibrationData.stickYMin, calibrationData.stickYCenter,
+      calibrationData.stickYMax, calibrationData.stickDeadzonePercent);
+
   bool justPressed[Buttons::kCount] = {};
   for (size_t i = 0; i < Buttons::kCount; ++i) {
     const bool rawPressed = digitalRead(Buttons::kPins[i]) == LOW;
@@ -396,7 +415,19 @@ void loop() {
   menuController.updateOpenCombo(buttonPanel.isPressed(Buttons::kLeftUp),
                                  buttonPanel.isPressed(Buttons::kLeftDown),
                                  now);
-  menuController.tick(rawStickX, rawStickY);
+  // True if anything below actually calls a MenuController mutator this
+  // tick — the only reliable way to know the active screen's content may
+  // have changed. currentScreen()/selectedMainMenuItem() alone miss any
+  // in-place change that doesn't also switch screens (list scrolling,
+  // text-entry letter changes, calibration step progress, Display/Power
+  // Config value cycling, Stick Deadzone's value, ...); this and
+  // menuStateChanged below both feed the redraw decision that follows.
+  bool menuInputHandled = false;
+
+  const bool stickNavFired =
+      menuController.tick(rawStickX, rawStickY, stickYPercent);
+  if (stickNavFired) menuInputHandled = true;
+
   // Button Test (see menu.h's onButtonTestPress()) wants to see every raw
   // button press, including the four normally "stolen" for menu nav
   // below — so while it's active, route all of them there instead of
@@ -405,16 +436,40 @@ void loop() {
   // test for Bumper itself.
   if (menuController.currentScreen() == MenuScreen::kButtonTest) {
     for (size_t i = 0; i < Buttons::kCount; ++i) {
-      if (justPressed[i]) menuController.onButtonTestPress(i);
+      if (justPressed[i]) {
+        menuController.onButtonTestPress(i);
+        menuInputHandled = true;
+      }
     }
   } else {
-    if (justPressed[Buttons::kLeftUp]) menuController.onUp();
-    if (justPressed[Buttons::kLeftDown]) menuController.onDown();
-    if (justPressed[Buttons::kStickClick]) {
+    if (justPressed[Buttons::kLeftUp]) {
+      menuController.onUp();
+      menuInputHandled = true;
+    }
+    if (justPressed[Buttons::kLeftDown]) {
+      menuController.onDown();
+      menuInputHandled = true;
+    }
+    // Calibration confirms with Macro1 instead of Stick Click: clicking
+    // the stick itself risks nudging it right as its center/extreme
+    // position is being captured, and there's no button actually
+    // labeled "Enter" on this controller for Stick Click to stand in
+    // for. Every other screen still confirms with Stick Click.
+    const bool onCalibrationScreen =
+        menuController.currentScreen() == MenuScreen::kCalibrateStick ||
+        menuController.currentScreen() == MenuScreen::kCalibrateTrigger;
+    const bool confirmPressed = onCalibrationScreen
+                                    ? justPressed[Buttons::kMacro1]
+                                    : justPressed[Buttons::kStickClick];
+    if (confirmPressed) {
       menuController.onEnter(rawTrigger, rawStickX, rawStickY);
+      menuInputHandled = true;
     }
   }
-  if (justPressed[Buttons::kBumper]) menuController.onBack();
+  if (justPressed[Buttons::kBumper]) {
+    menuController.onBack();
+    menuInputHandled = true;
+  }
 
   int newTriggerMin, newTriggerMax;
   if (menuController.consumeNewTriggerCalibration(&newTriggerMin,
@@ -454,18 +509,21 @@ void loop() {
 
   // Only touch the display when something actually changed — a full
   // redraw every tick would be needless I2C traffic for static text.
-  // lastTestedButtonIndex() is included because it's the Button Test
-  // screen's entire displayed content, but changes independently of both
-  // currentScreen() and selectedMainMenuItem() (pressing a button while
-  // already on that screen changes neither) — without this, the screen
-  // would render once on entry and then never update again.
+  // currentScreen()/selectedMainMenuItem() catch entering a new screen
+  // (including the menu-open transition, which isn't tied to a button
+  // edge — see updateOpenCombo()); menuInputHandled catches everything
+  // else that can change a screen's content without changing screens
+  // (list scrolling, text-entry letters, calibration progress, Display/
+  // Power Config/Stick Deadzone values, Button Test's last-pressed
+  // button, ...). Relying on currentScreen()/selectedMainMenuItem()
+  // alone missed all of those — a screen rendered once on entry and
+  // then silently never updated again.
   const bool menuStateChanged =
       menuController.currentScreen() != previousMenuScreen ||
       menuController.selectedMainMenuItem() != previousMainMenuItem ||
-      menuController.lastTestedButtonIndex() != previousLastTestedButtonIndex;
+      menuInputHandled;
   previousMenuScreen = menuController.currentScreen();
   previousMainMenuItem = menuController.selectedMainMenuItem();
-  previousLastTestedButtonIndex = menuController.lastTestedButtonIndex();
 
   if (menuStateChanged) {
     if (menuController.currentScreen() != MenuScreen::kInactive) {
@@ -488,18 +546,15 @@ void loop() {
     Serial.println("Power config saved.");
   }
 
+  if (menuController.consumeStickDeadzoneChanged()) {
+    calibrationData.stickDeadzonePercent = menuController.stickDeadzonePercent();
+    CalibrationStore::save(calibrationData);
+    Serial.println("Stick deadzone saved.");
+  }
+
   const int rawVsys = analogRead(PinAssignment::kVsysSense);
   const bool stat1High = digitalRead(PinAssignment::kChargeStat1) == HIGH;
   const bool stat2High = digitalRead(PinAssignment::kChargeStat2) == HIGH;
-
-  const int triggerPercent =
-      AnalogCalibration::calibrateTrigger(rawTrigger, calibrationData);
-  const int stickXPercent = AnalogCalibration::calibrateStickAxis(
-      rawStickX, calibrationData.stickXMin, calibrationData.stickXCenter,
-      calibrationData.stickXMax);
-  const int stickYPercent = AnalogCalibration::calibrateStickAxis(
-      rawStickY, calibrationData.stickYMin, calibrationData.stickYCenter,
-      calibrationData.stickYMax);
 
   // Low-power mode's idea of "activity" — any button held, the stick or
   // trigger moved off center/released, or (if present) accelerometer
@@ -562,6 +617,15 @@ void loop() {
       }
     }
     uplink.triggerPercent = static_cast<uint8_t>(triggerPercent);
+    // X sign convention confirmed against this controller's own hardware
+    // (positive = physically left, negative = right) but NOT against
+    // what Amidala expects -- as of this writing, SnipsRemote just
+    // stores stickXPercent as telemetry (see its header comment) and
+    // nothing there actually reads it for steering yet, so there's no
+    // established convention to match. Whoever wires this up to real
+    // driving logic on that side needs to confirm which sign it wants,
+    // and either that code or this line adapts -- not both silently
+    // assuming different things.
     uplink.stickXPercent = static_cast<int8_t>(stickXPercent);
     uplink.stickYPercent = static_cast<int8_t>(stickYPercent);
     uplink.batteryPercent = static_cast<uint8_t>(batteryPercent);
