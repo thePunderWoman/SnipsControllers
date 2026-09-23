@@ -1,4 +1,5 @@
 #include <unity.h>
+#include <cstring>
 
 #include "buttons.h"
 
@@ -67,6 +68,22 @@ void test_button_pins_within_gpio_range() {
   }
 }
 
+// ---- Buttons::name ---------------------------------------------------------
+
+void test_name_covers_every_button_uniquely() {
+  for (size_t i = 0; i < Buttons::kCount; ++i) {
+    TEST_ASSERT_NOT_EQUAL(0, strcmp(Buttons::name(i), "Unknown"));
+    for (size_t j = i + 1; j < Buttons::kCount; ++j) {
+      TEST_ASSERT_NOT_EQUAL(0, strcmp(Buttons::name(i), Buttons::name(j)));
+    }
+  }
+}
+
+void test_name_out_of_range_is_unknown() {
+  TEST_ASSERT_EQUAL_STRING("Unknown", Buttons::name(Buttons::kCount));
+  TEST_ASSERT_EQUAL_STRING("Unknown", Buttons::name(Buttons::kCount + 100));
+}
+
 // ---- ButtonPanel ---------------------------------------------------------
 
 void test_panel_defaults_to_not_pressed() {
@@ -101,6 +118,8 @@ int main(int argc, char **argv) {
   RUN_TEST(test_debouncer_registers_press_held_past_threshold);
   RUN_TEST(test_debouncer_release_is_also_debounced);
   RUN_TEST(test_debouncer_ignores_bouncing_signal);
+  RUN_TEST(test_name_covers_every_button_uniquely);
+  RUN_TEST(test_name_out_of_range_is_unknown);
   RUN_TEST(test_button_pins_are_unique);
   RUN_TEST(test_button_pins_within_gpio_range);
   RUN_TEST(test_panel_defaults_to_not_pressed);

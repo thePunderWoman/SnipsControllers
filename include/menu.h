@@ -27,6 +27,7 @@ enum class MenuScreen {
   kDisplayConfig,
   kPowerConfig,
   kDeviceInfo,
+  kButtonTest,
   kFactoryResetConfirm,
 };
 
@@ -38,6 +39,7 @@ enum class MainMenuItem {
   kDisplayConfig,
   kPowerConfig,
   kDeviceInfo,
+  kButtonTest,
   kFactoryReset,
   kCount,
 };
@@ -100,6 +102,19 @@ class MenuController {
                                    int *outMinX, int *outMaxX, int *outMinY,
                                    int *outMaxY);
   bool consumeFactoryResetConfirmed();
+
+  // Button Test screen (bring-up/support tool — see PCB/README.md's
+  // Bringup Sequence, step 4): records the most recent raw button press
+  // for display, by index into Buttons::Index. While this screen is
+  // active, SnipsController.ino routes every button's press edge here
+  // instead of through the usual nav calls (onUp()/onDown()/onEnter()),
+  // including the ones normally "stolen" for nav everywhere else —
+  // except Bumper, which still exits the screen via onBack() same as any
+  // other screen; that exit is itself the test for Bumper. No-op unless
+  // this screen is active. -1 means "nothing pressed yet since the
+  // screen was opened".
+  void onButtonTestPress(size_t buttonIndex);
+  int lastTestedButtonIndex() const { return lastTestedButtonIndex_; }
 
   // Droid management — the store is owned here so rendering/navigation
   // can see it directly; SnipsController.ino restores it from
@@ -185,6 +200,8 @@ class MenuController {
   int pendingStickMaxY_ = 0;
 
   bool factoryResetConfirmed_ = false;
+
+  int lastTestedButtonIndex_ = -1;
 
   DroidStore droidStore_;
   int droidListIndex_ = 0;

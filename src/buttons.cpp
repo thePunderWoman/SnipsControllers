@@ -1,5 +1,23 @@
 #include "buttons.h"
 
+const char *Buttons::name(size_t index) {
+  switch (index) {
+    case Buttons::kMacro1: return "Macro1";
+    case Buttons::kMacro2: return "Macro2";
+    case Buttons::kMacro3: return "Macro3";
+    case Buttons::kMacro4: return "Macro4";
+    case Buttons::kMacro5: return "Macro5";
+    case Buttons::kMacro6: return "Macro6";
+    case Buttons::kBumper: return "Bumper";
+    case Buttons::kStickClick: return "StickClick";
+    case Buttons::kLeftUp: return "LeftUp";
+    case Buttons::kLeftDown: return "LeftDown";
+    case Buttons::kRightUp: return "RightUp";
+    case Buttons::kRightDown: return "RightDown";
+    default: return "Unknown";
+  }
+}
+
 ButtonDebouncer::ButtonDebouncer(unsigned long debounceMs)
     : debounceMs_(debounceMs) {}
 
