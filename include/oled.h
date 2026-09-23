@@ -14,11 +14,9 @@ namespace Oled {
 
 constexpr int kWidth = 128;
 constexpr int kHeight = 64;
-// The two addresses essentially every SSD1306 breakout module uses —
-// begin() tries kI2cAddress first and falls back to kI2cAddressAlt.
-// Printed on this project's display module's silkscreen as 0x3C, but
-// bring-up testing found nothing ACKing there, so this now actually
-// probes both rather than assuming.
+// Confirmed against the real hardware — printed on the display module's
+// own silkscreen (also documented in PCB/GPIO_table.md's Accelerometer
+// section, which shares the bus at a different address).
 constexpr uint8_t kI2cAddress = 0x3C;
 constexpr uint8_t kI2cAddressAlt = 0x3D;
 
