@@ -70,6 +70,20 @@ bool readRegister(uint8_t reg, uint8_t *outValue) {
 bool Accelerometer::begin() {
   Wire.begin(PinAssignment::kI2cSda, PinAssignment::kI2cScl);
 
+  // Plain presence probe (address-only write, real stop condition)
+  // before attempting the repeated-start register read below. On boards
+  // without this part (the first production run — see
+  // PCB/GPIO_table.md's Accelerometer section) endTransmission(false)'s
+  // repeated-start check doesn't reliably report the missing ACK by
+  // itself — a known ESP32 I2C driver quirk — so without this,
+  // Wire.requestFrom() gets called against a device that was never
+  // there, which the Wire library logs as an alarming-looking error.
+  Wire.beginTransmission(kI2cAddress);
+  if (Wire.endTransmission() != 0) {
+    present_ = false;
+    return false;
+  }
+
   uint8_t chipId = 0;
   if (!readRegister(kRegChipId, &chipId)) {
     present_ = false;

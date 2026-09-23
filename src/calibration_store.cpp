@@ -10,7 +10,15 @@ CalibrationData CalibrationStore::load() {
   CalibrationData data;  // defaults if nothing has been saved yet
 
   Preferences prefs;
-  if (!prefs.begin(kNamespace, /*readOnly=*/true)) {
+  // Not readOnly: on a device that's never saved this namespace yet
+  // (first boot, or after a flash-partition wipe), NVS_READONLY makes
+  // nvs_open() fail with ESP_ERR_NVS_NOT_FOUND, which the Preferences
+  // library logs as an alarming-looking error regardless of how
+  // gracefully the caller handles the resulting begin() == false (we
+  // just fall back to defaults either way). Opening read-write instead
+  // creates the empty namespace silently — no behavior change, no false
+  // "hardware is broken" errors on real hardware's first boot.
+  if (!prefs.begin(kNamespace, /*readOnly=*/false)) {
     return data;
   }
 
