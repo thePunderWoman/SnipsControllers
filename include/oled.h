@@ -14,10 +14,9 @@ namespace Oled {
 
 constexpr int kWidth = 128;
 constexpr int kHeight = 64;
-// Common default for SSD1306 breakout modules — PCB/README.md doesn't
-// pin down the exact module's I2C address, so this is an assumption.
-// Confirm against the real hardware during this PR's bring-up milestone
-// (0x3D is the other common alternative if 0x3C comes back empty).
+// Confirmed against the real hardware — printed on the display module's
+// own silkscreen (also documented in PCB/GPIO_table.md's Accelerometer
+// section, which shares the bus at a different address).
 constexpr uint8_t kI2cAddress = 0x3C;
 
 }  // namespace Oled
