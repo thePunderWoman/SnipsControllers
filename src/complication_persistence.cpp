@@ -10,7 +10,10 @@ constexpr const char *kNamespace = "snips_disp";
 
 void ComplicationPersistence::load(ComplicationRegistry *registry) {
   Preferences prefs;
-  if (!prefs.begin(kNamespace, /*readOnly=*/true)) {
+  // Not readOnly: avoids a misleading "nvs_open failed: NOT_FOUND" log
+  // on a device that's never saved this namespace yet — see
+  // calibration_store.cpp's load() for the full explanation.
+  if (!prefs.begin(kNamespace, /*readOnly=*/false)) {
     return;
   }
 
