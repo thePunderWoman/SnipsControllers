@@ -18,6 +18,15 @@ void OledDisplay::render(const ScreenBuffer &content) {
   display_.display();
 }
 
+void OledDisplay::renderBitmapCentered(const uint8_t *bitmap, int width,
+                                       int height) {
+  display_.clearDisplay();
+  const int16_t x = static_cast<int16_t>((Oled::kWidth - width) / 2);
+  const int16_t y = static_cast<int16_t>((Oled::kHeight - height) / 2);
+  display_.drawBitmap(x, y, bitmap, width, height, SSD1306_WHITE);
+  display_.display();
+}
+
 void OledDisplay::setDimmed(bool dimmed) { display_.dim(dimmed); }
 
 void OledDisplay::setPowerOn(bool on) {

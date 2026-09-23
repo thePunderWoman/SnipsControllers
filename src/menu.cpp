@@ -3,6 +3,9 @@
 #include <cstdio>
 #include <cstring>
 
+#include "buttons.h"
+#include "firmware_version.h"
+
 namespace {
 // A 64-bit all-zero PAN ID — Digi's convention for "unconfigured," used
 // by Factory Reset to make sure the radio doesn't quietly stay
@@ -20,6 +23,7 @@ const char *mainMenuItemLabel(MainMenuItem item) {
     case MainMenuItem::kDisplayConfig: return "Display Config";
     case MainMenuItem::kPowerConfig: return "Power Management";
     case MainMenuItem::kDeviceInfo: return "Device Info";
+    case MainMenuItem::kButtonTest: return "Button Test";
     case MainMenuItem::kFactoryReset: return "Factory Reset";
     default: return "Unknown";
   }
@@ -169,6 +173,7 @@ void MenuController::onBack() {
     case MenuScreen::kDisplayConfig:
     case MenuScreen::kPowerConfig:
     case MenuScreen::kDeviceInfo:
+    case MenuScreen::kButtonTest:
     case MenuScreen::kFactoryResetConfirm:
       screen_ = MenuScreen::kMainMenu;
       break;
@@ -205,6 +210,10 @@ void MenuController::enterMainMenuItem(MainMenuItem item) {
       break;
     case MainMenuItem::kDeviceInfo:
       screen_ = MenuScreen::kDeviceInfo;
+      break;
+    case MainMenuItem::kButtonTest:
+      lastTestedButtonIndex_ = -1;
+      screen_ = MenuScreen::kButtonTest;
       break;
     case MainMenuItem::kFactoryReset:
       screen_ = MenuScreen::kFactoryResetConfirm;
@@ -349,6 +358,13 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
       screen_ = MenuScreen::kMainMenu;
       break;
 
+    // Not reached in normal operation — SnipsController.ino routes button
+    // presses to onButtonTestPress() instead of onEnter() while this
+    // screen is active (see its declaration in menu.h). Kept as an
+    // explicit no-op case for switch exhaustiveness.
+    case MenuScreen::kButtonTest:
+      break;
+
     case MenuScreen::kFactoryResetConfirm:
       factoryResetConfirmed_ = true;
       droidStore_ = DroidStore();
@@ -372,6 +388,12 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
     case MenuScreen::kInactive:
       break;
   }
+}
+
+void MenuController::onButtonTestPress(size_t buttonIndex) {
+  if (screen_ != MenuScreen::kButtonTest) return;
+  if (buttonIndex >= Buttons::kCount) return;
+  lastTestedButtonIndex_ = static_cast<int>(buttonIndex);
 }
 
 void MenuController::tick(int rawStickX, int rawStickY) {
@@ -678,10 +700,28 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
       break;
     }
 
-    case MenuScreen::kDeviceInfo:
+    case MenuScreen::kDeviceInfo: {
       screen->setLine(0, "Device Info");
       screen->setLine(1, "XBee SL:");
       screen->setLine(2, menu.deviceSerialLow());
+      char line[ScreenBuffer::kMaxLineLength + 1];
+      std::snprintf(line, sizeof(line), "FW: %s", Firmware::kVersion);
+      screen->setLine(3, line);
+      break;
+    }
+
+    case MenuScreen::kButtonTest:
+      screen->setLine(0, "Button Test");
+      if (menu.lastTestedButtonIndex() < 0) {
+        screen->setLine(1, "Press any button");
+      } else {
+        char line[ScreenBuffer::kMaxLineLength + 1];
+        std::snprintf(
+            line, sizeof(line), "Pressed: %s",
+            Buttons::name(static_cast<size_t>(menu.lastTestedButtonIndex())));
+        screen->setLine(1, line);
+      }
+      screen->setLine(3, "Bumper = exit");
       break;
 
     case MenuScreen::kFactoryResetConfirm:

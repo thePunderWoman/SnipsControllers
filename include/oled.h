@@ -30,6 +30,12 @@ class OledDisplay {
 
   void render(const ScreenBuffer &content);
 
+  // Draws a 1-bit bitmap (row-major, MSB-first-per-byte, e.g.
+  // snips_logo_bitmap.h) centered on the display and pushes it immediately.
+  // Used for the boot splash; not part of the ScreenBuffer content model
+  // since nothing else on the device draws bitmaps.
+  void renderBitmapCentered(const uint8_t *bitmap, int width, int height);
+
   // Low-power mode support (see power_management.h). Dimming/undimming
   // and powering the panel back on take effect immediately; they don't
   // need a render() call to show existing content again since the

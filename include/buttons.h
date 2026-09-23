@@ -42,6 +42,11 @@ constexpr int kPins[kCount] = {
     PinAssignment::kTriggerUp,    PinAssignment::kTriggerDown,
 };
 
+// Human-readable name for a button index, e.g. for the on-device Button
+// Test screen (see menu.h) and Serial press/release logging. Out-of-range
+// indices return "Unknown" rather than being undefined.
+const char *name(size_t index);
+
 }  // namespace Buttons
 
 // Debounces a single button's raw (noisy) pin reading over time. A state

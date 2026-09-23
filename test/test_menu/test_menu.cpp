@@ -2,6 +2,7 @@
 #include <cstring>
 #include <string>
 
+#include "buttons.h"
 #include "menu.h"
 
 void setUp(void) {}
@@ -116,6 +117,8 @@ void test_down_cycles_through_every_main_menu_item_in_order() {
   menu.onDown();
   TEST_ASSERT_TRUE(MainMenuItem::kDeviceInfo == menu.selectedMainMenuItem());
   menu.onDown();
+  TEST_ASSERT_TRUE(MainMenuItem::kButtonTest == menu.selectedMainMenuItem());
+  menu.onDown();
   TEST_ASSERT_TRUE(MainMenuItem::kFactoryReset ==
                     menu.selectedMainMenuItem());
   menu.onDown();  // wraps back to the first item
@@ -205,6 +208,92 @@ void test_factory_reset_disconnects_the_radio() {
   // Deliberately does not rejoin — should sit disconnected until the
   // user explicitly picks a new droid via Switch Droid.
   TEST_ASSERT_FALSE(transport.rejoinCalled);
+}
+
+// ---- button test ------------------------------------------------------------
+
+void test_enter_button_test_from_main_menu() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kButtonTest);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_TRUE(MenuScreen::kButtonTest == menu.currentScreen());
+  // Nothing pressed yet since the screen was opened.
+  TEST_ASSERT_EQUAL_INT(-1, menu.lastTestedButtonIndex());
+}
+
+void test_button_test_press_is_recorded() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kButtonTest);
+  menu.onEnter(0, 0, 0);
+
+  menu.onButtonTestPress(Buttons::kMacro3);
+  TEST_ASSERT_EQUAL_INT(static_cast<int>(Buttons::kMacro3),
+                        menu.lastTestedButtonIndex());
+
+  // A later press overwrites the previous one rather than accumulating.
+  menu.onButtonTestPress(Buttons::kRightUp);
+  TEST_ASSERT_EQUAL_INT(static_cast<int>(Buttons::kRightUp),
+                        menu.lastTestedButtonIndex());
+}
+
+void test_button_test_press_is_noop_outside_the_screen() {
+  MenuController menu;  // still kInactive
+  menu.onButtonTestPress(Buttons::kMacro1);
+  TEST_ASSERT_EQUAL_INT(-1, menu.lastTestedButtonIndex());
+}
+
+void test_button_test_press_ignores_out_of_range_index() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kButtonTest);
+  menu.onEnter(0, 0, 0);
+  menu.onButtonTestPress(Buttons::kCount + 5);
+  TEST_ASSERT_EQUAL_INT(-1, menu.lastTestedButtonIndex());
+}
+
+void test_button_test_back_returns_to_main_menu() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kButtonTest);
+  menu.onEnter(0, 0, 0);
+  menu.onButtonTestPress(Buttons::kMacro1);
+
+  menu.onBack();
+  TEST_ASSERT_TRUE(MenuScreen::kMainMenu == menu.currentScreen());
+}
+
+void test_reentering_button_test_clears_previous_press() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kButtonTest);
+  menu.onEnter(0, 0, 0);
+  menu.onButtonTestPress(Buttons::kMacro1);
+  menu.onBack();  // -> kMainMenu
+  menu.onBack();  // -> kInactive, so selectMainMenuItem below can reopen
+
+  selectMainMenuItem(&menu, MainMenuItem::kButtonTest);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL_INT(-1, menu.lastTestedButtonIndex());
+}
+
+void test_render_button_test_before_any_press() {
+  MenuController menu;
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kButtonTest);
+  menu.onEnter(0, 0, 0);
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("Button Test", screen.line(0));
+  TEST_ASSERT_EQUAL_STRING("Press any button", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("Bumper = exit", screen.line(3));
+}
+
+void test_render_button_test_shows_pressed_button_name() {
+  MenuController menu;
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kButtonTest);
+  menu.onEnter(0, 0, 0);
+  menu.onButtonTestPress(Buttons::kRightDown);
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("Pressed: RightDown", screen.line(1));
+  // The exit instruction stays visible regardless of what was pressed.
+  TEST_ASSERT_EQUAL_STRING("Bumper = exit", screen.line(3));
 }
 
 // ---- trigger calibration ---------------------------------------------------
@@ -720,6 +809,8 @@ void test_main_menu_item_labels() {
                            mainMenuItemLabel(MainMenuItem::kPowerConfig));
   TEST_ASSERT_EQUAL_STRING("Device Info",
                            mainMenuItemLabel(MainMenuItem::kDeviceInfo));
+  TEST_ASSERT_EQUAL_STRING("Button Test",
+                           mainMenuItemLabel(MainMenuItem::kButtonTest));
   TEST_ASSERT_EQUAL_STRING("Factory Reset",
                            mainMenuItemLabel(MainMenuItem::kFactoryReset));
   TEST_ASSERT_EQUAL_STRING("Unknown",
@@ -815,6 +906,10 @@ void test_render_device_info() {
   TEST_ASSERT_EQUAL_STRING("Device Info", screen.line(0));
   // Default before SnipsController.ino ever calls setDeviceSerialLow().
   TEST_ASSERT_EQUAL_STRING("(unknown)", screen.line(2));
+  // The native test build has no FIRMWARE_VERSION define (that's injected
+  // by scripts/firmware_version.py for the real esp32s3 build only), so
+  // this is firmware_version.h's fallback.
+  TEST_ASSERT_EQUAL_STRING("FW: dev", screen.line(3));
 }
 
 void test_device_serial_low_defaults_then_reflects_what_was_set() {
@@ -1015,6 +1110,14 @@ int main(int argc, char **argv) {
   RUN_TEST(test_enter_factory_reset_confirm_then_back_cancels);
   RUN_TEST(test_factory_reset_confirmed_via_enter);
   RUN_TEST(test_factory_reset_disconnects_the_radio);
+  RUN_TEST(test_enter_button_test_from_main_menu);
+  RUN_TEST(test_button_test_press_is_recorded);
+  RUN_TEST(test_button_test_press_is_noop_outside_the_screen);
+  RUN_TEST(test_button_test_press_ignores_out_of_range_index);
+  RUN_TEST(test_button_test_back_returns_to_main_menu);
+  RUN_TEST(test_reentering_button_test_clears_previous_press);
+  RUN_TEST(test_render_button_test_before_any_press);
+  RUN_TEST(test_render_button_test_shows_pressed_button_name);
   RUN_TEST(test_trigger_calibration_full_flow);
   RUN_TEST(test_back_during_trigger_calibration_cancels_and_resets);
   RUN_TEST(test_stick_calibration_full_flow);

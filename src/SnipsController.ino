@@ -19,6 +19,7 @@
 #include "power_management.h"
 #include "rgb_led.h"
 #include "screen.h"
+#include "snips_logo_bitmap.h"
 #include "status_led.h"
 #include "xbee_control.h"
 
@@ -137,24 +138,6 @@ void performGracefulShutdown() {
   // falling back into loop() in an undefined half-shutdown state in case
   // it doesn't.
   while (true) {
-  }
-}
-
-const char *buttonName(size_t index) {
-  switch (index) {
-    case Buttons::kMacro1: return "Macro1";
-    case Buttons::kMacro2: return "Macro2";
-    case Buttons::kMacro3: return "Macro3";
-    case Buttons::kMacro4: return "Macro4";
-    case Buttons::kMacro5: return "Macro5";
-    case Buttons::kMacro6: return "Macro6";
-    case Buttons::kBumper: return "Bumper";
-    case Buttons::kStickClick: return "StickClick";
-    case Buttons::kLeftUp: return "LeftUp";
-    case Buttons::kLeftDown: return "LeftDown";
-    case Buttons::kRightUp: return "RightUp";
-    case Buttons::kRightDown: return "RightDown";
-    default: return "Unknown";
   }
 }
 
@@ -308,9 +291,15 @@ void setup() {
     Serial.println("XBee SL query failed at boot.");
   }
 
-  // Brief boot confirmation — loop() takes over with the real complications
+  // Power-on splash, so it's obvious the device is booting rather than
+  // just dark/unresponsive, followed by the existing brief boot
+  // confirmation text — loop() takes over with the real complications
   // screen once real sensor data starts flowing.
   if (oledDisplay.begin()) {
+    oledDisplay.renderBitmapCentered(SnipsLogo::kBitmap, SnipsLogo::kWidth,
+                                     SnipsLogo::kHeight);
+    constexpr unsigned long kBootSplashMs = 1200;
+    delay(kBootSplashMs);
     showBootScreen();
   } else {
     Serial.println("OLED not found at boot.");
@@ -360,7 +349,7 @@ void loop() {
     justPressed[i] = pressed && !lastReportedPressed[i];
     if (pressed != lastReportedPressed[i]) {
       lastReportedPressed[i] = pressed;
-      Serial.print(buttonName(i));
+      Serial.print(Buttons::name(i));
       Serial.println(pressed ? " pressed" : " released");
     }
   }
@@ -375,10 +364,22 @@ void loop() {
                                  buttonPanel.isPressed(Buttons::kLeftDown),
                                  now);
   menuController.tick(rawStickX, rawStickY);
-  if (justPressed[Buttons::kLeftUp]) menuController.onUp();
-  if (justPressed[Buttons::kLeftDown]) menuController.onDown();
-  if (justPressed[Buttons::kStickClick]) {
-    menuController.onEnter(rawTrigger, rawStickX, rawStickY);
+  // Button Test (see menu.h's onButtonTestPress()) wants to see every raw
+  // button press, including the four normally "stolen" for menu nav
+  // below — so while it's active, route all of them there instead of
+  // through the usual nav calls. Bumper is the one exception: it still
+  // exits via onBack() same as every other screen, which doubles as the
+  // test for Bumper itself.
+  if (menuController.currentScreen() == MenuScreen::kButtonTest) {
+    for (size_t i = 0; i < Buttons::kCount; ++i) {
+      if (justPressed[i]) menuController.onButtonTestPress(i);
+    }
+  } else {
+    if (justPressed[Buttons::kLeftUp]) menuController.onUp();
+    if (justPressed[Buttons::kLeftDown]) menuController.onDown();
+    if (justPressed[Buttons::kStickClick]) {
+      menuController.onEnter(rawTrigger, rawStickX, rawStickY);
+    }
   }
   if (justPressed[Buttons::kBumper]) menuController.onBack();
 
