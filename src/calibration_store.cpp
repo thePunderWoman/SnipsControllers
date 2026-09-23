@@ -22,6 +22,8 @@ CalibrationData CalibrationStore::load() {
   data.stickYMin = prefs.getInt("yMin", data.stickYMin);
   data.stickYMax = prefs.getInt("yMax", data.stickYMax);
   data.stickYCenter = prefs.getInt("yCenter", data.stickYCenter);
+  data.stickDeadzonePercent =
+      prefs.getInt("deadzone", data.stickDeadzonePercent);
   prefs.end();
 
   return data;
@@ -41,5 +43,6 @@ void CalibrationStore::save(const CalibrationData &data) {
   prefs.putInt("yMin", data.stickYMin);
   prefs.putInt("yMax", data.stickYMax);
   prefs.putInt("yCenter", data.stickYCenter);
+  prefs.putInt("deadzone", data.stickDeadzonePercent);
   prefs.end();
 }

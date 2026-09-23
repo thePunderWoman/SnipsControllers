@@ -12,6 +12,19 @@ namespace {
 // associated with whatever droid it was last on. See the
 // kFactoryResetConfirm case in MenuController::onEnter().
 constexpr const char *kClearedPanId = "0000000000000000";
+
+// Stick-as-nav thresholds (see MenuController::tick()) — percentages of
+// calibrated travel, not raw ADC. Sign convention (positive = up,
+// negative = down) confirmed against real hardware. The fire threshold
+// was originally 60 but real bring-up testing found that too demanding
+// — even a full physical push doesn't reliably reach that percentage in
+// every direction on real hardware (calibration accuracy varies by
+// direction), so it effectively made "up" not work at all. Lowered to
+// 25, with the rearm threshold dropped to match and keep a similar
+// proportional hysteresis gap (prevents rapid double-firing right at
+// the boundary).
+constexpr int kStickNavFireThreshold = 25;
+constexpr int kStickNavRearmThreshold = 10;
 }  // namespace
 
 const char *mainMenuItemLabel(MainMenuItem item) {
@@ -19,6 +32,7 @@ const char *mainMenuItemLabel(MainMenuItem item) {
     case MainMenuItem::kSwitchDroid: return "Switch Droid";
     case MainMenuItem::kManageDroids: return "Manage Droids";
     case MainMenuItem::kCalibrateStick: return "Calibrate Stick";
+    case MainMenuItem::kStickDeadzone: return "Stick Deadzone";
     case MainMenuItem::kCalibrateTrigger: return "Calibrate Trigger";
     case MainMenuItem::kDisplayConfig: return "Display Config";
     case MainMenuItem::kPowerConfig: return "Power Management";
@@ -95,6 +109,10 @@ void MenuController::onUp() {
       powerConfigRowIndex_ = wrapIndex(
           powerConfigRowIndex_ - 1, static_cast<int>(PowerConfigRow::kCount));
       break;
+    case MenuScreen::kStickDeadzone:
+      stickDeadzonePercent_ = nextDeadzonePercent(stickDeadzonePercent_);
+      stickDeadzoneChanged_ = true;
+      break;
     default:
       break;
   }
@@ -130,6 +148,10 @@ void MenuController::onDown() {
       powerConfigRowIndex_ = wrapIndex(
           powerConfigRowIndex_ + 1, static_cast<int>(PowerConfigRow::kCount));
       break;
+    case MenuScreen::kStickDeadzone:
+      stickDeadzonePercent_ = prevDeadzonePercent(stickDeadzonePercent_);
+      stickDeadzoneChanged_ = true;
+      break;
     default:
       break;
   }
@@ -148,19 +170,16 @@ void MenuController::onBack() {
     case MenuScreen::kManageDroidsDeleteConfirm:
       screen_ = MenuScreen::kManageDroidsList;
       break;
+    // Bumper always means "go back," same as every other screen — it
+    // used to backspace one character at a time first and only actually
+    // leave once the field was empty, which looked like it "didn't work"
+    // to anyone who hadn't already cleared what they'd typed. Character
+    // correction is still possible before committing (scroll with
+    // Up/Down), just not after — a deliberate simplification in favor of
+    // a predictable universal Back button.
     case MenuScreen::kManageDroidsEnterName:
-      if (nameEntry_.length() > 0) {
-        nameEntry_.backspace();
-      } else {
-        screen_ = MenuScreen::kManageDroidsList;
-      }
-      break;
     case MenuScreen::kManageDroidsEnterPanId:
-      if (panIdEntry_.length() > 0) {
-        panIdEntry_.backspace();
-      } else {
-        screen_ = MenuScreen::kManageDroidsList;
-      }
+      screen_ = MenuScreen::kManageDroidsList;
       break;
     case MenuScreen::kCalibrateStick:
       stickFlow_ = StickCalibrationFlow();
@@ -170,6 +189,7 @@ void MenuController::onBack() {
       triggerFlow_ = TriggerCalibrationFlow();
       screen_ = MenuScreen::kMainMenu;
       break;
+    case MenuScreen::kStickDeadzone:
     case MenuScreen::kDisplayConfig:
     case MenuScreen::kPowerConfig:
     case MenuScreen::kDeviceInfo:
@@ -195,6 +215,9 @@ void MenuController::enterMainMenuItem(MainMenuItem item) {
     case MainMenuItem::kCalibrateStick:
       stickFlow_ = StickCalibrationFlow();
       screen_ = MenuScreen::kCalibrateStick;
+      break;
+    case MainMenuItem::kStickDeadzone:
+      screen_ = MenuScreen::kStickDeadzone;
       break;
     case MainMenuItem::kCalibrateTrigger:
       triggerFlow_ = TriggerCalibrationFlow();
@@ -365,6 +388,11 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
     case MenuScreen::kButtonTest:
       break;
 
+    // No confirm step -- Up/Down apply and save the change immediately
+    // (see onUp()/onDown()).
+    case MenuScreen::kStickDeadzone:
+      break;
+
     case MenuScreen::kFactoryResetConfirm:
       factoryResetConfirmed_ = true;
       droidStore_ = DroidStore();
@@ -396,11 +424,29 @@ void MenuController::onButtonTestPress(size_t buttonIndex) {
   lastTestedButtonIndex_ = static_cast<int>(buttonIndex);
 }
 
-void MenuController::tick(int rawStickX, int rawStickY) {
+bool MenuController::tick(int rawStickX, int rawStickY, int stickYPercent) {
   if (screen_ == MenuScreen::kCalibrateStick &&
       stickFlow_.currentStep() == StickCalibrationFlow::Step::kRolling) {
     stickFlow_.sample(rawStickX, rawStickY);
   }
+
+  if (screen_ == MenuScreen::kCalibrateStick) return false;
+
+  if (stickNavArmed_) {
+    if (stickYPercent >= kStickNavFireThreshold) {
+      onUp();
+      stickNavArmed_ = false;
+      return true;
+    } else if (stickYPercent <= -kStickNavFireThreshold) {
+      onDown();
+      stickNavArmed_ = false;
+      return true;
+    }
+  } else if (stickYPercent > -kStickNavRearmThreshold &&
+             stickYPercent < kStickNavRearmThreshold) {
+    stickNavArmed_ = true;
+  }
+  return false;
 }
 
 bool MenuController::consumeNewTriggerCalibration(int *outMin, int *outMax) {
@@ -447,6 +493,12 @@ bool MenuController::consumeComplicationsChanged() {
 bool MenuController::consumePowerConfigChanged() {
   if (!powerConfigChanged_) return false;
   powerConfigChanged_ = false;
+  return true;
+}
+
+bool MenuController::consumeStickDeadzoneChanged() {
+  if (!stickDeadzoneChanged_) return false;
+  stickDeadzoneChanged_ = false;
   return true;
 }
 
@@ -586,11 +638,17 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
     case MenuScreen::kManageDroidsEnterName:
       screen->setLine(0, "Add Droid: Name");
       renderTextEntryLine(menu.nameEntry(), screen, 1);
+      screen->setLine(2, "Up/Down: letter");
+      screen->setLine(3, "Click: next");
+      screen->setLine(4, "Back: delete/exit");
       break;
 
     case MenuScreen::kManageDroidsEnterPanId:
       screen->setLine(0, "Add Droid: PAN ID");
       renderTextEntryLine(menu.panIdEntry(), screen, 1);
+      screen->setLine(2, "Up/Down: letter");
+      screen->setLine(3, "Click: next");
+      screen->setLine(4, "Back: delete/exit");
       break;
 
     case MenuScreen::kManageDroidsDeleteConfirm:
@@ -605,11 +663,11 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
       switch (menu.triggerCalibrationStep()) {
         case TriggerCalibrationFlow::Step::kAwaitingRelease:
           screen->setLine(1, "Release trigger,");
-          screen->setLine(2, "press Enter");
+          screen->setLine(2, "press Macro1");
           break;
         case TriggerCalibrationFlow::Step::kAwaitingFullPull:
           screen->setLine(1, "Pull fully,");
-          screen->setLine(2, "press Enter");
+          screen->setLine(2, "press Macro1");
           break;
         case TriggerCalibrationFlow::Step::kDone:
           screen->setLine(1, "Done!");
@@ -622,17 +680,30 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
       switch (menu.stickCalibrationStep()) {
         case StickCalibrationFlow::Step::kAwaitingCenter:
           screen->setLine(1, "Center stick,");
-          screen->setLine(2, "press Enter");
+          screen->setLine(2, "press Macro1");
           break;
         case StickCalibrationFlow::Step::kRolling:
-          screen->setLine(1, "Roll to extremes,");
-          screen->setLine(2, "Enter when done");
+          screen->setLine(1, "Rotate stick all the");
+          screen->setLine(2, "way around 3 times,");
+          screen->setLine(3, "return to center,");
+          screen->setLine(4, menu.stickCalibrationHasEnoughRange()
+                                 ? "then press Macro1"
+                                 : "not enough yet");
           break;
         case StickCalibrationFlow::Step::kDone:
           screen->setLine(1, "Done!");
           break;
       }
       break;
+
+    case MenuScreen::kStickDeadzone: {
+      screen->setLine(0, "Stick Deadzone");
+      char line[ScreenBuffer::kMaxLineLength + 1];
+      std::snprintf(line, sizeof(line), "%d%%", menu.stickDeadzonePercent());
+      screen->setLine(1, line);
+      screen->setLine(2, "Up/Down: change");
+      break;
+    }
 
     case MenuScreen::kDisplayConfig: {
       screen->setLine(0, "Display Config");

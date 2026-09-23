@@ -15,7 +15,40 @@ int clamp(int value, int lo, int hi) {
   return value;
 }
 
+// Returns the option after/before `current` in `options`, wrapping
+// around at either end. Falls back to the first entry if `current` isn't
+// itself one of the options (e.g. a value loaded from NVS that predates
+// an option-list change) — same convention as power_management.cpp's
+// nextInList().
+int nextInList(int current, const int *options, size_t count) {
+  for (size_t i = 0; i < count; ++i) {
+    if (options[i] == current) {
+      return options[(i + 1) % count];
+    }
+  }
+  return options[0];
+}
+
+int prevInList(int current, const int *options, size_t count) {
+  for (size_t i = 0; i < count; ++i) {
+    if (options[i] == current) {
+      return options[(i + count - 1) % count];
+    }
+  }
+  return options[0];
+}
+
 }  // namespace
+
+int nextDeadzonePercent(int currentPercent) {
+  return nextInList(currentPercent, StickDeadzoneOptions::kPercents,
+                     StickDeadzoneOptions::kCount);
+}
+
+int prevDeadzonePercent(int currentPercent) {
+  return prevInList(currentPercent, StickDeadzoneOptions::kPercents,
+                    StickDeadzoneOptions::kCount);
+}
 
 int AnalogCalibration::calibrateTrigger(int raw, const CalibrationData &data) {
   if (data.triggerMax <= data.triggerMin) {
@@ -27,13 +60,13 @@ int AnalogCalibration::calibrateTrigger(int raw, const CalibrationData &data) {
 }
 
 int AnalogCalibration::calibrateStickAxis(int raw, int min, int center,
-                                           int max) {
+                                           int max, int deadzonePercent) {
   if (max <= center || center <= min) {
     return 0;  // uncalibrated/degenerate range
   }
 
   const float deadzoneHalfWidth =
-      static_cast<float>(max - min) * kDeadzonePercentOfRange / 100.0f;
+      static_cast<float>(max - min) * deadzonePercent / 100.0f;
   if (std::abs(raw - center) <= deadzoneHalfWidth) {
     return 0;
   }
@@ -85,8 +118,15 @@ void StickCalibrationFlow::sample(int rawX, int rawY) {
   if (rawY > maxY_) maxY_ = rawY;
 }
 
+bool StickCalibrationFlow::hasEnoughRange() const {
+  return (maxX_ - centerX_) >= kMinRangeCounts &&
+         (centerX_ - minX_) >= kMinRangeCounts &&
+         (maxY_ - centerY_) >= kMinRangeCounts &&
+         (centerY_ - minY_) >= kMinRangeCounts;
+}
+
 void StickCalibrationFlow::confirmDone() {
-  if (step_ != Step::kRolling) {
+  if (step_ != Step::kRolling || !hasEnoughRange()) {
     return;
   }
   step_ = Step::kDone;
