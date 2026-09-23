@@ -14,11 +14,13 @@ namespace Oled {
 
 constexpr int kWidth = 128;
 constexpr int kHeight = 64;
-// Common default for SSD1306 breakout modules — PCB/README.md doesn't
-// pin down the exact module's I2C address, so this is an assumption.
-// Confirm against the real hardware during this PR's bring-up milestone
-// (0x3D is the other common alternative if 0x3C comes back empty).
+// The two addresses essentially every SSD1306 breakout module uses —
+// begin() tries kI2cAddress first and falls back to kI2cAddressAlt.
+// Printed on this project's display module's silkscreen as 0x3C, but
+// bring-up testing found nothing ACKing there, so this now actually
+// probes both rather than assuming.
 constexpr uint8_t kI2cAddress = 0x3C;
+constexpr uint8_t kI2cAddressAlt = 0x3D;
 
 }  // namespace Oled
 
@@ -45,4 +47,13 @@ class OledDisplay {
 
  private:
   Adafruit_SSD1306 display_{Oled::kWidth, Oled::kHeight, &Wire, -1};
+  // Adafruit_SSD1306 only allocates its internal frame buffer inside its
+  // own begin() — every other method (clearDisplay(), display(), etc.)
+  // writes into that buffer unconditionally, with no null check, and
+  // crashes (StoreProhibited) if begin() was never successfully called.
+  // Since begin() can legitimately fail (no display present) and callers
+  // throughout SnipsController.ino call render()/etc. unconditionally
+  // every tick regardless, this class has to remember its own readiness
+  // and no-op everything until begin() actually succeeds.
+  bool ready_ = false;
 };

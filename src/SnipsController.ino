@@ -56,6 +56,7 @@ unsigned long lastDownlinkMs = 0;  // 0 = never received one
 constexpr unsigned long kConnectionTimeoutMs = 5000;
 MenuScreen previousMenuScreen = MenuScreen::kInactive;
 MainMenuItem previousMainMenuItem = MainMenuItem::kSwitchDroid;
+int previousLastTestedButtonIndex = -1;
 
 void showBootScreen() {
   ScreenBuffer bootScreen;
@@ -170,6 +171,24 @@ void setup() {
 
   Serial.begin(115200);
 
+  // Bring-up aid: this board has no external USB-UART bridge chip (bare
+  // WROOM-1 module, see PCB/GPIO_table.md) — Serial goes over the
+  // ESP32-S3's native USB-CDC peripheral, which has to fully
+  // re-enumerate with the host after every reset. That consistently
+  // takes longer than this firmware needs to reach its early boot
+  // prints, so they were getting lost even with a monitor already open
+  // and waiting. Give the host a couple seconds to finish opening the
+  // port before continuing — harmless in the field with no host
+  // attached (just a bounded worst-case boot delay), and makes early
+  // diagnostics reliably visible during bring-up. HWCDC's bool operator
+  // reflects the real host-connection state, not just whether begin()
+  // was called.
+  constexpr unsigned long kSerialWaitMs = 2000;
+  const unsigned long serialWaitStartMs = millis();
+  while (!Serial && millis() - serialWaitStartMs < kSerialWaitMs) {
+    delay(10);
+  }
+
   // If the battery is already at/below the critical threshold the
   // instant the device is turned on (e.g. it sat unused long enough to
   // self-discharge), don't run a full boot — show a brief message and
@@ -195,11 +214,13 @@ void setup() {
     }
   }
 
-  // Polarity of the power-button sense pin isn't documented anywhere in the
-  // PCB docs (it's part of the soft-latch circuit, not a simple
-  // switch-to-GND button like the others) — assumed active-high (HIGH while
-  // held), no internal pull needed. Confirm against real hardware during
-  // this PR's bring-up milestone and flip here if wrong.
+  // Confirmed against real hardware during bring-up: this line idles HIGH
+  // (100kOhm R_PWR_SENSE pull-up to 3V3, per PCB/power_control.kicad_sch)
+  // and the switch pulls it to GND when held — active-low, same sense as
+  // every other button, just via an external pull-up instead of the
+  // internal one. The original active-high assumption had this backwards,
+  // which read the button as continuously held from boot and triggered an
+  // unwanted graceful-shutdown 3 seconds into every session.
   pinMode(PinAssignment::kPowerButtonSense, INPUT);
 
   // All buttons wire to GND with the internal pull-up enabled, so LOW =
@@ -243,6 +264,18 @@ void setup() {
   }
 
   xbeeControl.begin();
+
+  // Bring-up diagnostic: with R_XBEE_ATTN_PU1 (10kOhm to 3V3) in place,
+  // ATTN should read HIGH here (idle, no frame queued) whenever the
+  // module is actually connected and powered — regardless of whether any
+  // AT command below succeeds. A LOW or erratic reading instead points at
+  // a physical connection problem (e.g. the module's THT socket, used
+  // for prototyping per PCB/GPIO_table.md) rather than at command
+  // sequencing/timing.
+  Serial.print("XBee ATTN pin at boot: ");
+  Serial.println(digitalRead(PinAssignment::kXbeeSpiAttn) == HIGH
+                     ? "HIGH (expected idle)"
+                     : "LOW (unexpected -- check module seating/wiring)");
 
   // A controller must join a droid's network, never form its own — CE=1
   // (coordinator) would strand it on a PAN of its own.
@@ -326,7 +359,7 @@ void loop() {
   const unsigned long now = millis();
 
   const bool powerButtonHeld =
-      digitalRead(PinAssignment::kPowerButtonSense) == HIGH;
+      digitalRead(PinAssignment::kPowerButtonSense) == LOW;
 
   if (powerOffDetector.update(powerButtonHeld, now)) {
     performGracefulShutdown();  // never returns
@@ -421,11 +454,18 @@ void loop() {
 
   // Only touch the display when something actually changed — a full
   // redraw every tick would be needless I2C traffic for static text.
+  // lastTestedButtonIndex() is included because it's the Button Test
+  // screen's entire displayed content, but changes independently of both
+  // currentScreen() and selectedMainMenuItem() (pressing a button while
+  // already on that screen changes neither) — without this, the screen
+  // would render once on entry and then never update again.
   const bool menuStateChanged =
       menuController.currentScreen() != previousMenuScreen ||
-      menuController.selectedMainMenuItem() != previousMainMenuItem;
+      menuController.selectedMainMenuItem() != previousMainMenuItem ||
+      menuController.lastTestedButtonIndex() != previousLastTestedButtonIndex;
   previousMenuScreen = menuController.currentScreen();
   previousMainMenuItem = menuController.selectedMainMenuItem();
+  previousLastTestedButtonIndex = menuController.lastTestedButtonIndex();
 
   if (menuStateChanged) {
     if (menuController.currentScreen() != MenuScreen::kInactive) {

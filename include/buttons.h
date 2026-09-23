@@ -23,8 +23,10 @@ enum Index : size_t {
   // The two generic, symmetric up/down button pairs — see
   // PCB/GPIO_table.md. What each pair does is assigned by Amidala, not
   // fixed in firmware. "Left"/"Right" here is just a fixed, arbitrary
-  // application-level label: Left = the "Vol" pair, Right = the "Trigger"
-  // pair, matching PinAssignment's hardware-truth names.
+  // application-level label: Left = the "Trigger" pair, Right = the "Vol"
+  // pair, matching PinAssignment's hardware-truth names. (Originally
+  // assigned the other way around; confirmed backwards against the
+  // physical controller during bring-up and flipped here.)
   kLeftUp,
   kLeftDown,
   kRightUp,
@@ -38,8 +40,8 @@ constexpr int kPins[kCount] = {
     PinAssignment::kMacro5,       PinAssignment::kMacro6,
     PinAssignment::kDigitalTrigger,
     PinAssignment::kThumbstickClick,
-    PinAssignment::kVolUp,        PinAssignment::kVolDown,
     PinAssignment::kTriggerUp,    PinAssignment::kTriggerDown,
+    PinAssignment::kVolUp,        PinAssignment::kVolDown,
 };
 
 // Human-readable name for a button index, e.g. for the on-device Button
