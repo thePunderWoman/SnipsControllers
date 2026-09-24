@@ -1,7 +1,7 @@
 "Id";"Designator";"Footprint";"Quantity";"Designation";"Supplier and ref";
 1;"BT1";"JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal";1;"JST-PH_2Pin_Battery_RightAngle_Horizontal";;;
 2;"C_3V3_1, C_XBEE_VCC4";"C_0603_1608Metric";2;"10µF";;;
-3;"C_3V3_2, C_DBNC1, C_HALL1, C_OLED_2, C_RGB1, C_STICK1, C_SYS_2, C_VIN_2, C_XBEE_RC1, C_XBEE_VCC1";"C_0402_1005Metric";10;"100nF";;;
+3;"C_3V3_2, C_DBNC1, C_HALL1, C_LATCH_G1, C_OLED_2, C_RGB1, C_STICK1, C_SYS_2, C_VIN_2, C_XBEE_RC1, C_XBEE_VCC1";"C_0402_1005Metric";11;"100nF";;;
 4;"C_3V3_3";"C_0402_1005Metric";1;"39pF";;;
 5;"C_ACCEL_1";"C_0402_1005Metric";1;"10nF";;;
 6;"C_ACCEL_2";"C_0402_1005Metric";1;"100pF";;;

@@ -280,6 +280,7 @@ footer{
       <tr><td class="ref">D_OR1 / D_OR2</td><td class="val">1N4148W</td><td class="val">SOD-123</td><td class="role">Diode-OR: PWR_BTN_TRIGGER (actual button press, via the inverter) or MCU hold, either one latches power on</td></tr>
       <tr><td class="ref">R_GATE1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">Q_PWR1 gate pull-up — off by default</td></tr>
       <tr><td class="ref">R_LATCH_G1</td><td class="val">1MΩ</td><td class="val">0402</td><td class="role">Q_LATCH1 gate pull-down — off by default; sized to not starve the diode-OR's drive (callout D)</td></tr>
+      <tr><td class="ref">C_LATCH_G1</td><td class="val">100nF</td><td class="val">0402</td><td class="role">Latch-gate filter — keeps the ~2ms battery-insertion transient from lifting PWR_LATCH_G (callout I)</td></tr>
       <tr><td class="ref">R_BTN_PU1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">Button sense pull-up to 3V3 (not VSYS) — MCU reads pressed (0V) vs idle (3.3V); callout H</td></tr>
       <tr><td class="ref">R_INV_BASE1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">Dedicated VSYS pull-up for Q_INV1's base — decoupled from PWR_BTN_SENSE (callout F)</td></tr>
       <tr><td class="ref">D_INV_ISO1</td><td class="val">BAT54W</td><td class="val">SOD-123</td><td class="role">Schottky isolator: lets a press pull Q_INV1's base low without loading PWR_BTN_SENSE</td></tr>
@@ -406,6 +407,14 @@ footer{
         <rect x="333" y="343" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
         <text x="352" y="360" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_LATCH_G1 1M</text>
 
+        <!-- C_LATCH_G1: 100nF on PWR_LATCH_G so the brief Q_INV1-not-yet-on
+             window at battery insertion can't lift the latch gate (see callout I) -->
+        <path d="M340,332 L312,332 L312,343" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M312,369 L312,395 L340,395" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="340" cy="332" r="3.5" fill="#8fd3ff"/>
+        <rect x="305" y="343" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="300" y="360" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">C_LATCH_G1 100n</text>
+
         <!-- D_OR1 -->
         <rect x="368" y="376" width="14" height="28" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
         <text x="386" y="395" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">D_OR1 (from inverter)</text>
@@ -509,6 +518,10 @@ footer{
           <line x1="420" y1="200" x2="360" y2="188" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
           <circle cx="432" cy="203" r="12" fill="#ff8a3d"/>
           <text x="432" y="207.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">G</text>
+
+          <line x1="262" y1="338" x2="303" y2="352" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="252" cy="334" r="12" fill="#ff8a3d"/>
+          <text x="252" y="338.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">I</text>
         </g>
       </svg>
       </div>
@@ -534,6 +547,7 @@ footer{
     <li><span class="badge">F</span><p><b>D_OR1 can't read PWR_BTN_SENSE directly — found the hard way, on real hardware.</b> The original design had R_BTN_PU1 (to VSYS) and a since-removed R_PWR_SENSE1 (to GND) both on that node, dividing it to roughly half VSYS at idle — comfortably above a diode's ~0.6V forward threshold, so D_OR1 was forward-biased (and the board powered on) the instant a battery was plugged in, button or no button. The inverter fixes this properly instead of just retuning the divider: idle, Q_INV1 is on and holds PWR_BTN_TRIGGER at GND; pressed, it turns off and R_INV_PU1 pulls PWR_BTN_TRIGGER to VSYS. Only a real press can forward-bias D_OR1 now. Keep this block close to D_OR1 — it's parts serving one signal, not worth spreading out.<br><br><b>Second-order bug, found the same way:</b> the inverter's own base resistor originally tapped PWR_BTN_SENSE directly, in series with R_BTN_PU1 — stealing enough idle base current to sag the MCU's own button-read node to ~1V instead of near-VSYS. R_INV_BASE1 is now its own dedicated 100kΩ pull-up straight to VSYS (not sharing current with R_BTN_PU1), and D_INV_ISO1 (a Schottky, chosen specifically for its lower forward drop than Q_INV1's own base-emitter junction) lets a press still pull the base low without ever loading PWR_BTN_SENSE.</p></li>
     <li><span class="badge">G</span><p><b>PWR_EN had no defined rest state — TI's own datasheet says not to do this.</b> Q_PWR1's drain feeds the buck's EN pin directly, with nothing else on that node. TLV62569's EN pin is a bare comparator input with no internal pull ("Do not leave floating" per its datasheet) — with Q_PWR1 off, EN was held by MOSFET/input leakage alone, no guaranteed logic level. R_PWR_EN_PD1 (100kΩ to GND) fixes it: negligible loading when Q_PWR1's tens-of-mΩ RDS(on) is driving EN high, solid GND the instant it's off.</p></li>
     <li><span class="badge">H</span><p><b>PWR_BTN_SENSE must never sit above the MCU's rail.</b> It lands directly on GPIO2 (pin 38), whose ceiling is VDD + 0.3V (~3.6V), but R_BTN_PU1 used to pull it to VSYS — up to ~4.5V on USB, and it back-fed the unpowered 3V3 rail through the pin's clamp diode whenever the MCU was off. Since R_INV_BASE1 gave the inverter its own VSYS pull-up (callout F), R_BTN_PU1 no longer has to supply the inverter, so it now pulls to 3V3: idle reads 3.3V, and with the MCU off the node is simply unpowered instead of leaking into the rail.</p></li>
+    <li><span class="badge">I</span><p><b>Battery insertion used to blip PWR_EN for ~2ms — found in simulation, since no board existed to bench-test.</b> When VSYS first appears, Q_INV1 isn't conducting yet: its base current is diverted through D_INV_ISO1 into the discharged C_DBNC1 until that charges to ~0.4V. For that ~1–2ms PWR_BTN_TRIGGER follows VSYS, PWR_LATCH_G rises to ~VSYS−0.6V, and Q_PWR1 briefly enables the buck. C_LATCH_G1 (100nF against the 100kΩ pull-up) makes the gate rise slowly enough that the transient peaks at ~0.3V — well under the AO3400A's minimum threshold — at the cost of 4–8ms of press latency, and it gives release a little extra hold time. Keep it right at PWR_LATCH_G.</p></li>
   </ol>
 </section>
 
@@ -548,6 +562,7 @@ footer{
     <li>Keep R_INV_BASE1, D_INV_ISO1, Q_INV1, and R_INV_PU1 together as their own small block, close to D_OR1 — they're a single-purpose inverter, not independent parts.</li>
     <li>Bring PWR_BTN_SENSE and PWR_HOLD in from wherever the MCU sheet actually sits — these are off-sheet nets, not local components.</li>
     <li>Drop R_PWR_EN_PD1 right at Q_PWR1's drain, on the way to PWR_EN leaving the sheet — it's a bias resistor for that pin, not an independent part.</li>
+    <li>Put C_LATCH_G1 on the PWR_LATCH_G node next to R_LATCH_G1 and Q_LATCH1's gate, with a short GND return.</li>
   </ol>
 </section>
 
