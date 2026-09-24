@@ -99,7 +99,7 @@
         <!-- Q_LATCH1 -->
         <rect x="195" y="250" width="30" height="50" rx="4" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
         <text x="210" y="243" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" fill="#e0b563">Q_LATCH1</text>
-        <text x="210" y="315" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#7fa08d">2N7002 (NMOS)</text>
+        <text x="210" y="315" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#7fa08d">AO3400A (NMOS)</text>
         <text x="238" y="279" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9" fill="#c9d6cd">G</text>
 
         <!-- R_LATCH_G1 -->
@@ -129,7 +129,7 @@
 
         <!-- R_BTN_PU1 -->
         <rect x="273" y="408" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
-        <text x="262" y="382" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#e0b563">VSYS</text>
+        <text x="262" y="382" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#e0b563">3V3</text>
         <text x="292" y="425" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_BTN_PU1 100k</text>
 
         <!-- D_INV_ISO1: isolates Q_INV1's base pull-up from PWR_BTN_SENSE so

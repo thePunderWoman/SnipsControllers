@@ -1741,7 +1741,7 @@
 			)
 		)
 	)
-	(global_label "VSYS"
+	(global_label "3V3"
 		(shape input)
 		(at 156.21 134.62 90)
 		(fields_autoplaced yes)
@@ -3499,7 +3499,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "2N7002"
+		(property "Value" "AO3400A"
 			(at 194.31 127 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3540,7 +3540,7 @@
 				)
 			)
 		)
-		(property "MF" "Jiangsu Changjing Electronics Technology Co., Ltd."
+		(property "MF" "Alpha & Omega Semicon"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3551,7 +3551,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "2N7002"
+		(property "Manufacturer_Part_Number" "AO3400A"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3562,7 +3562,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C8545"
+		(property "LCSC" "C20917"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
