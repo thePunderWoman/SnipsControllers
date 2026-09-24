@@ -1556,6 +1556,27 @@
 		)
 		(uuid "9b6d5a2f-fca1-447a-91ea-c93731fa7513")
 	)
+	(label "PWR_BTN_INV_BASE"
+		(at 66.04 76.2 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5a3d1e2f-9c4b-4a6e-8f1d-2b7c6e9a0d4f")
+	)
+	(hierarchical_label "PWR_BTN_SENSE"
+		(shape bidirectional)
+		(at 60.96 76.2 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3f8b2d1a-6e5c-4a9f-b1d3-7c8e0a2f4b6d")
+	)
 	(label "PWR_LATCH_G"
 		(at 129.54 106.68 180)
 		(effects
@@ -1833,8 +1854,8 @@
 		)
 		(uuid "6cc52504-4017-4679-bfa0-55db4f8e80bc")
 	)
-	(hierarchical_label "PWR_BTN_SENSE"
-		(shape bidirectional)
+	(global_label "VSYS"
+		(shape input)
 		(at 50.8 85.09 0)
 		(effects
 			(font
@@ -1843,6 +1864,17 @@
 			(justify left)
 		)
 		(uuid "74bee9e0-6449-4ef1-badc-706276da2eec")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 50.8 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 	)
 	(hierarchical_label "PWR_BTN_SENSE"
 		(shape bidirectional)
@@ -1865,6 +1897,39 @@
 			(justify left)
 		)
 		(uuid "d845f69a-73a2-452e-947e-503e04123c09")
+	)
+	(hierarchical_label "PWR_EN"
+		(shape output)
+		(at 111.76 134.62 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a13bde0b-ed65-4747-9e5e-7ec4f31a0f0a")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 111.76 142.24 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "0d611ca8-4239-4cc2-8c54-31e144b0a6c4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 111.76 142.24 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 	)
 	(hierarchical_label "PWR_EN"
 		(shape output)
@@ -2009,7 +2074,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "100kΩ"
 			(at 50.8 88.9 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2060,7 +2125,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
+		(property "Manufacturer_Part_Number" "0402WGF1003TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2071,7 +2136,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25744"
+		(property "LCSC" "C25741"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2343,7 +2408,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "DMG2305UX"
+		(property "Value" "AO3401A"
 			(at 97.79 138.43 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2384,7 +2449,7 @@
 				)
 			)
 		)
-		(property "MF" "Diodes Incorporated"
+		(property "MF" "Alpha & Omega Semicon"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2395,7 +2460,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "DMG2305UX-13"
+		(property "Manufacturer_Part_Number" "AO3401A"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2406,7 +2471,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C144153"
+		(property "LCSC" "C15127"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2699,7 +2764,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "1MΩ"
 			(at 107.95 76.2 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2750,7 +2815,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "0402WGF1002TCE"
+		(property "Manufacturer_Part_Number" "0402WGF1004TCE"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -2761,7 +2826,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25744"
+		(property "LCSC" "C26083"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3024,6 +3089,248 @@
 			(project "snips_controller"
 				(path "/21935953-32a0-46ad-8079-8177920c6978/081a4841-1e21-4908-a8a8-37f54f8809f6"
 					(reference "D_OR1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 111.76 138.43 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ee701422-fa7c-4e0e-8d19-eb199b54ea3f")
+		(property "Reference" "R_PWR_EN_PD1"
+			(at 113.792 138.43 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100kΩ"
+			(at 111.76 138.43 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 109.982 138.43 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 111.76 138.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 111.76 138.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer_Part_Number" "0402WGF1003TCE"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25741"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6eccb31f-d510-4ee8-8bd2-677b58589094")
+		)
+		(pin "2"
+			(uuid "0522ace2-aae4-407e-b649-c204fdba4136")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/21935953-32a0-46ad-8079-8177920c6978/081a4841-1e21-4908-a8a8-37f54f8809f6"
+					(reference "R_PWR_EN_PD1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Small")
+		(at 63.5 76.2 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "41e6dcf5-7dc0-4dee-b65b-91ef6cdb0eec")
+		(property "Reference" "D_INV_ISO1"
+			(at 62.23 78.232 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "BAT54W"
+			(at 59.69 74.168 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-123"
+			(at 63.5 76.2 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.5 76.2 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Diode, small symbol"
+			(at 63.5 76.2 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 63.5 76.2 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 63.5 76.2 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "Yangzhou Yangjie Elec Tech"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer_Part_Number" "BAT54W"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C699107"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "becf2904-fb5c-4c3e-a58d-c831e89bdf01")
+		)
+		(pin "2"
+			(uuid "93954c4a-f7a3-4853-8ba1-70c7c9d2ec81")
+		)
+		(instances
+			(project "snips_controller"
+				(path "/21935953-32a0-46ad-8079-8177920c6978/081a4841-1e21-4908-a8a8-37f54f8809f6"
+					(reference "D_INV_ISO1")
 					(unit 1)
 				)
 			)

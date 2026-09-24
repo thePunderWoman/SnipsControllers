@@ -68,7 +68,16 @@
           <circle cx="210" cy="505" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="210" cy="505" r="2.5" fill="#0e2d1c"/>
           <circle cx="340" cy="505" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="340" cy="505" r="2.5" fill="#0e2d1c"/>
           <circle cx="340" cy="562" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="340" cy="562" r="2.5" fill="#0e2d1c"/>
+          <circle cx="307" cy="218" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="307" cy="218" r="2.5" fill="#0e2d1c"/>
         </g>
+
+        <!-- R_PWR_EN_PD1: PWR_EN has no internal bias in the buck's EN pin
+             (datasheet says don't leave floating) - this holds it at GND
+             the instant Q_PWR1 turns off (see callout G) -->
+        <path d="M307,155 L307,175" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M307,201 L307,218" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <rect x="300" y="175" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="319" y="191" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_PWR_EN_PD1 100k</text>
 
         <!-- ================= COMPONENTS ================= -->
         <!-- Q_PWR1 -->
@@ -95,7 +104,7 @@
 
         <!-- R_LATCH_G1 -->
         <rect x="333" y="343" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
-        <text x="352" y="360" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_LATCH_G1 10k</text>
+        <text x="352" y="360" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_LATCH_G1 1M</text>
 
         <!-- D_OR1 -->
         <rect x="368" y="376" width="14" height="28" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
@@ -123,11 +132,11 @@
         <text x="262" y="382" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#e0b563">VSYS</text>
         <text x="292" y="425" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_BTN_PU1 100k</text>
 
-        <!-- R_INV_BASE1 -> Q_INV1 -> R_INV_PU1: inverter that gates D_OR1
-             from an actual button press instead of PWR_BTN_SENSE's idle
-             level (see callout F) -->
+        <!-- D_INV_ISO1: isolates Q_INV1's base pull-up from PWR_BTN_SENSE so
+             the inverter no longer loads the MCU's own button-sense node
+             (see callout F) -->
         <rect x="333" y="472" width="14" height="16" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
-        <text x="352" y="483" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_INV_BASE1 10k</text>
+        <text x="352" y="483" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">D_INV_ISO1 (BAT54W)</text>
 
         <path d="M340,488 L340,505" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
 
@@ -137,6 +146,15 @@
         <text x="330" y="516" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">B</text>
         <text x="340" y="540" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">E</text>
         <text x="353" y="519" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">C</text>
+
+        <!-- R_INV_BASE1: now its own dedicated VSYS pull-up for Q_INV1's
+             base, decoupled from PWR_BTN_SENSE (mirrors R_INV_PU1 on the
+             collector side) -->
+        <circle cx="273" cy="522" r="3.5" fill="#8fd3ff"/>
+        <path d="M325,522 L273,522 L273,531" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <rect x="266" y="505" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="273" y="497" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#e0b563">VSYS</text>
+        <text x="261" y="512" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_INV_BASE1 100k</text>
 
         <path d="M340,545 L340,562" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
         <path d="M355,522 L407,522 L407,531" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
@@ -187,5 +205,9 @@
           <line x1="270" y1="530" x2="328" y2="518" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
           <circle cx="258" cy="536" r="12" fill="#ff8a3d"/>
           <text x="258" y="540.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">F</text>
+
+          <line x1="420" y1="200" x2="360" y2="188" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="432" cy="203" r="12" fill="#ff8a3d"/>
+          <text x="432" y="207.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">G</text>
         </g>
       </svg>

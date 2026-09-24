@@ -261,13 +261,13 @@ footer{
   <div class="meta">
     <span>Source: <b>PCB/power_control.kicad_sch</b></span>
     <span>Nets: <b>VSYS → PWR_EN</b></span>
-    <span>Package: <b>SOT-23 ×3, SOD-123 ×2</b></span>
+    <span>Package: <b>SOT-23 ×3, SOD-123 ×3</b></span>
   </div>
 </header>
 
 <section>
   <h2>What's on this sheet</h2>
-  <p class="lede">A press-to-start, software-held latch: the button turns the board on, the MCU has to grab the hold line before the button is released, and either side of a diode-OR can keep power on. A small transistor inverter (R_INV_BASE1 / Q_INV1 / R_INV_PU1) sits between the button and that diode-OR &mdash; see callout F for why it can't just tap the button's sense line directly.</p>
+  <p class="lede">A press-to-start, software-held latch: the button turns the board on, the MCU has to grab the hold line before the button is released, and either side of a diode-OR can keep power on. A small transistor inverter (R_INV_BASE1 / Q_INV1 / R_INV_PU1) sits between the button and that diode-OR &mdash; see callout F for why it can't just tap the button's sense line directly, and callout D for why R_LATCH_G1 is 1MΩ rather than 10kΩ.</p>
   <div class="table-scroll">
   <table>
     <thead>
@@ -275,12 +275,14 @@ footer{
     </thead>
     <tbody>
       <tr><td class="ref">Q_PWR1</td><td class="val">DMG2305UX</td><td class="val">SOT-23</td><td class="role">Main power switch — VSYS to PWR_EN, carries full system current</td></tr>
+      <tr><td class="ref">R_PWR_EN_PD1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">PWR_EN pull-down to GND — the buck's EN pin has no internal bias and must not be left floating (callout G)</td></tr>
       <tr><td class="ref">Q_LATCH1</td><td class="val">2N7002</td><td class="val">SOT-23</td><td class="role">Pulls Q_PWR1's gate low to turn it on</td></tr>
       <tr><td class="ref">D_OR1 / D_OR2</td><td class="val">1N4148W</td><td class="val">SOD-123</td><td class="role">Diode-OR: PWR_BTN_TRIGGER (actual button press, via the inverter) or MCU hold, either one latches power on</td></tr>
       <tr><td class="ref">R_GATE1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">Q_PWR1 gate pull-up — off by default</td></tr>
-      <tr><td class="ref">R_LATCH_G1</td><td class="val">10kΩ</td><td class="val">0402</td><td class="role">Q_LATCH1 gate pull-down — off by default</td></tr>
+      <tr><td class="ref">R_LATCH_G1</td><td class="val">1MΩ</td><td class="val">0402</td><td class="role">Q_LATCH1 gate pull-down — off by default; sized to not starve the diode-OR's drive (callout D)</td></tr>
       <tr><td class="ref">R_BTN_PU1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">Button sense pull-up — MCU reads pressed (0V) vs idle (VSYS)</td></tr>
-      <tr><td class="ref">R_INV_BASE1</td><td class="val">10kΩ</td><td class="val">0402</td><td class="role">Inverter base resistor, from PWR_BTN_SENSE</td></tr>
+      <tr><td class="ref">R_INV_BASE1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">Dedicated VSYS pull-up for Q_INV1's base — decoupled from PWR_BTN_SENSE (callout F)</td></tr>
+      <tr><td class="ref">D_INV_ISO1</td><td class="val">BAT54W</td><td class="val">SOD-123</td><td class="role">Schottky isolator: lets a press pull Q_INV1's base low without loading PWR_BTN_SENSE</td></tr>
       <tr><td class="ref">Q_INV1</td><td class="val">MMBT3904</td><td class="val">SOT-23</td><td class="role">Inverter: idle (button up) holds PWR_BTN_TRIGGER low; pressed lets R_INV_PU1 pull it high</td></tr>
       <tr><td class="ref">R_INV_PU1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">PWR_BTN_TRIGGER pull-up to VSYS — the inverter's collector load</td></tr>
       <tr><td class="ref">C_DBNC1</td><td class="val">100nF</td><td class="val">0402</td><td class="role">Button debounce, right at the switch</td></tr>
@@ -366,7 +368,16 @@ footer{
           <circle cx="210" cy="505" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="210" cy="505" r="2.5" fill="#0e2d1c"/>
           <circle cx="340" cy="505" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="340" cy="505" r="2.5" fill="#0e2d1c"/>
           <circle cx="340" cy="562" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="340" cy="562" r="2.5" fill="#0e2d1c"/>
+          <circle cx="307" cy="218" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="307" cy="218" r="2.5" fill="#0e2d1c"/>
         </g>
+
+        <!-- R_PWR_EN_PD1: PWR_EN has no internal bias in the buck's EN pin
+             (datasheet says don't leave floating) - this holds it at GND
+             the instant Q_PWR1 turns off (see callout G) -->
+        <path d="M307,155 L307,175" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M307,201 L307,218" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <rect x="300" y="175" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="319" y="191" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_PWR_EN_PD1 100k</text>
 
         <!-- ================= COMPONENTS ================= -->
         <!-- Q_PWR1 -->
@@ -393,7 +404,7 @@ footer{
 
         <!-- R_LATCH_G1 -->
         <rect x="333" y="343" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
-        <text x="352" y="360" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_LATCH_G1 10k</text>
+        <text x="352" y="360" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_LATCH_G1 1M</text>
 
         <!-- D_OR1 -->
         <rect x="368" y="376" width="14" height="28" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
@@ -421,11 +432,11 @@ footer{
         <text x="262" y="382" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#e0b563">VSYS</text>
         <text x="292" y="425" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_BTN_PU1 100k</text>
 
-        <!-- R_INV_BASE1 -> Q_INV1 -> R_INV_PU1: inverter that gates D_OR1
-             from an actual button press instead of PWR_BTN_SENSE's idle
-             level (see callout F) -->
+        <!-- D_INV_ISO1: isolates Q_INV1's base pull-up from PWR_BTN_SENSE so
+             the inverter no longer loads the MCU's own button-sense node
+             (see callout F) -->
         <rect x="333" y="472" width="14" height="16" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
-        <text x="352" y="483" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_INV_BASE1 10k</text>
+        <text x="352" y="483" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">D_INV_ISO1 (BAT54W)</text>
 
         <path d="M340,488 L340,505" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
 
@@ -435,6 +446,15 @@ footer{
         <text x="330" y="516" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">B</text>
         <text x="340" y="540" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">E</text>
         <text x="353" y="519" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">C</text>
+
+        <!-- R_INV_BASE1: now its own dedicated VSYS pull-up for Q_INV1's
+             base, decoupled from PWR_BTN_SENSE (mirrors R_INV_PU1 on the
+             collector side) -->
+        <circle cx="273" cy="522" r="3.5" fill="#8fd3ff"/>
+        <path d="M325,522 L273,522 L273,531" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <rect x="266" y="505" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="273" y="497" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#e0b563">VSYS</text>
+        <text x="261" y="512" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_INV_BASE1 100k</text>
 
         <path d="M340,545 L340,562" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
         <path d="M355,522 L407,522 L407,531" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
@@ -485,6 +505,10 @@ footer{
           <line x1="270" y1="530" x2="328" y2="518" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
           <circle cx="258" cy="536" r="12" fill="#ff8a3d"/>
           <text x="258" y="540.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">F</text>
+
+          <line x1="420" y1="200" x2="360" y2="188" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="432" cy="203" r="12" fill="#ff8a3d"/>
+          <text x="432" y="207.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">G</text>
         </g>
       </svg>
       </div>
@@ -505,9 +529,10 @@ footer{
     <li><span class="badge">A</span><p><b>Q_PWR1 is the one part on this sheet that isn't low-current.</b> Every downstream milliamp — MCU, XBee, OLED, everything — flows through its source-drain path. DMG2305UX's RDS(on) (~35–50mΩ) keeps drop and heat trivial at this board's current budget, but a SOT-23 has no separate thermal pad — the source/drain copper itself is the heatsink, so give those pads real copper, not just a skinny trace.</p></li>
     <li><span class="badge">B</span><p><b>SW_PWR1's position isn't yours to optimize electrically.</b> It has to land under a hole in whatever enclosure this board sits in — mechanical placement drives this part, and the rest of the latch logic has to route to wherever that ends up, not the other way around.</p></li>
     <li><span class="badge">C</span><p><b>C_DBNC1 sits right on the switch's own pins.</b> Same principle as the charger's pushbutton guidance in its own datasheet: the debounce cap does its job by being close to the contact bounce it's filtering, not by being close to anything else.</p></li>
-    <li><span class="badge">D</span><p><b>The diode-OR and its pull-down are one compact decision node.</b> D_OR1, D_OR2, R_LATCH_G1, and Q_LATCH1's gate all meet at PWR_LATCH_G — keeping that cluster tight matters less for noise than for just keeping the logic legible on the board.</p></li>
+    <li><span class="badge">D</span><p><b>The diode-OR and its pull-down are one compact decision node — and R_LATCH_G1's value is load-bearing, not incidental.</b> D_OR1, D_OR2, R_LATCH_G1, and Q_LATCH1's gate all meet at PWR_LATCH_G. A press only drives this node through R_INV_PU1 (100kΩ) and a diode drop — with the original 10kΩ pull-down, that divider left barely 0.3V at Q_LATCH1's gate, nowhere near enough to turn it on. Raised to 1MΩ, the same divider delivers ~2.4–3.1V across the battery's usable range, without adding any idle current (that's set by R_INV_PU1, untouched). Keeping this cluster tight matters less for noise than for just keeping the logic legible on the board.</p></li>
     <li><span class="badge">E</span><p><b>PWR_HOLD arriving late is a hard failure, not a glitch.</b> Per this project's own GPIO notes, pin 36 (PWR_HOLD) must go high as the MCU's very first instruction — release the button before that happens and R_LATCH_G1's pull-down turns everything back off. Not a layout fix, but it's the reason D_OR2's path exists at all.</p></li>
-    <li><span class="badge">F</span><p><b>D_OR1 can't read PWR_BTN_SENSE directly — found the hard way, on real hardware.</b> The original design had R_BTN_PU1 (to VSYS) and a since-removed R_PWR_SENSE1 (to GND) both on that node, dividing it to roughly half VSYS at idle — comfortably above a diode's ~0.6V forward threshold, so D_OR1 was forward-biased (and the board powered on) the instant a battery was plugged in, button or no button. The inverter fixes this properly instead of just retuning the divider: idle, Q_INV1 is on and holds PWR_BTN_TRIGGER at GND; pressed, it turns off and R_INV_PU1 pulls PWR_BTN_TRIGGER to VSYS. Only a real press can forward-bias D_OR1 now. Keep this block close to D_OR1 — it's three parts serving one signal, not worth spreading out.</p></li>
+    <li><span class="badge">F</span><p><b>D_OR1 can't read PWR_BTN_SENSE directly — found the hard way, on real hardware.</b> The original design had R_BTN_PU1 (to VSYS) and a since-removed R_PWR_SENSE1 (to GND) both on that node, dividing it to roughly half VSYS at idle — comfortably above a diode's ~0.6V forward threshold, so D_OR1 was forward-biased (and the board powered on) the instant a battery was plugged in, button or no button. The inverter fixes this properly instead of just retuning the divider: idle, Q_INV1 is on and holds PWR_BTN_TRIGGER at GND; pressed, it turns off and R_INV_PU1 pulls PWR_BTN_TRIGGER to VSYS. Only a real press can forward-bias D_OR1 now. Keep this block close to D_OR1 — it's parts serving one signal, not worth spreading out.<br><br><b>Second-order bug, found the same way:</b> the inverter's own base resistor originally tapped PWR_BTN_SENSE directly, in series with R_BTN_PU1 — stealing enough idle base current to sag the MCU's own button-read node to ~1V instead of near-VSYS. R_INV_BASE1 is now its own dedicated 100kΩ pull-up straight to VSYS (not sharing current with R_BTN_PU1), and D_INV_ISO1 (a Schottky, chosen specifically for its lower forward drop than Q_INV1's own base-emitter junction) lets a press still pull the base low without ever loading PWR_BTN_SENSE.</p></li>
+    <li><span class="badge">G</span><p><b>PWR_EN had no defined rest state — TI's own datasheet says not to do this.</b> Q_PWR1's drain feeds the buck's EN pin directly, with nothing else on that node. TLV62569's EN pin is a bare comparator input with no internal pull ("Do not leave floating" per its datasheet) — with Q_PWR1 off, EN was held by MOSFET/input leakage alone, no guaranteed logic level. R_PWR_EN_PD1 (100kΩ to GND) fixes it: negligible loading when Q_PWR1's tens-of-mΩ RDS(on) is driving EN high, solid GND the instant it's off.</p></li>
   </ol>
 </section>
 
@@ -519,13 +544,14 @@ footer{
     <li>Put C_DBNC1 directly on SW_PWR1's sense pin before routing anything else nearby.</li>
     <li>Route the VSYS→Q_PWR1→PWR_EN lane as one straight, generously-wide path across the board.</li>
     <li>Cluster Q_LATCH1, R_GATE1, R_LATCH_G1, D_OR1, and D_OR2 into one compact low-current block under the main lane.</li>
-    <li>Keep R_INV_BASE1, Q_INV1, and R_INV_PU1 together as their own small block, close to D_OR1 — they're a single-purpose inverter, not independent parts.</li>
+    <li>Keep R_INV_BASE1, D_INV_ISO1, Q_INV1, and R_INV_PU1 together as their own small block, close to D_OR1 — they're a single-purpose inverter, not independent parts.</li>
     <li>Bring PWR_BTN_SENSE and PWR_HOLD in from wherever the MCU sheet actually sits — these are off-sheet nets, not local components.</li>
+    <li>Drop R_PWR_EN_PD1 right at Q_PWR1's drain, on the way to PWR_EN leaving the sheet — it's a bias resistor for that pin, not an independent part.</li>
   </ol>
 </section>
 
 <div class="note">
-  <b>Checked, not just assumed:</b> DMG2305UX is rated for ~4A continuous with 35–50mΩ RDS(on) in this SOT-23 package — comfortably oversized for a handheld controller's sub-2A system budget, so this isn't a thermal risk the way the charger's WSON is. MMBT3904 is a general-purpose small-signal part switching microamps here (just enough to bias a diode) — nowhere near its ratings, no thermal consideration needed. Nothing on this sheet needed correcting beyond the divider/inverter fix in callout F.
+  <b>Checked, not just assumed:</b> DMG2305UX is rated for ~4A continuous with 35–50mΩ RDS(on) in this SOT-23 package — comfortably oversized for a handheld controller's sub-2A system budget, so this isn't a thermal risk the way the charger's WSON is. MMBT3904 is a general-purpose small-signal part switching microamps here (just enough to bias a diode) — nowhere near its ratings, no thermal consideration needed. BAT54W's job is purely to isolate two nodes at sub-1V forward drop, also nowhere near its ratings. Connectivity alone (ERC, netlist, DRC) doesn't catch bad DC bias points — the R_LATCH_G1/PWR_BTN_SENSE loading bugs in callouts D and F, and the floating PWR_EN in callout G, all passed every connectivity check and were only found by actually working through the bias/divider math or reading the driven IC's own datasheet, so don't treat a clean ERC/DRC as proof a gate-drive, sense, or enable network will behave.
 </div>
 
 <footer>
