@@ -232,7 +232,7 @@
 				)
 			)
 		)
-		(property "Value" "JST-PH_2Pin_Battery"
+		(property "Value" "JST-PH_2Pin_Battery_RightAngle_Horizontal"
 			(at 148.59 100.33 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -262,7 +262,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "JST PH-series 2-pin THT connector -- RIGHT-ANGLE / HORIZONTAL mount only, cable exits parallel to the PCB. Do NOT substitute a vertical/straight variant. MPN: S2B-PH-K(LF)(SN)"
 			(at 148.59 105.41 0)
 			(show_name no)
 			(do_not_autoplace no)

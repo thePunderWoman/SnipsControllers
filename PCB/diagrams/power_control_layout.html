@@ -261,13 +261,13 @@ footer{
   <div class="meta">
     <span>Source: <b>PCB/power_control.kicad_sch</b></span>
     <span>Nets: <b>VSYS → PWR_EN</b></span>
-    <span>Package: <b>SOT-23 ×2, SOD-123 ×2</b></span>
+    <span>Package: <b>SOT-23 ×3, SOD-123 ×2</b></span>
   </div>
 </header>
 
 <section>
   <h2>What's on this sheet</h2>
-  <p class="lede">A press-to-start, software-held latch: the button turns the board on, the MCU has to grab the hold line before the button is released, and either side of a diode-OR can keep power on.</p>
+  <p class="lede">A press-to-start, software-held latch: the button turns the board on, the MCU has to grab the hold line before the button is released, and either side of a diode-OR can keep power on. A small transistor inverter (R_INV_BASE1 / Q_INV1 / R_INV_PU1) sits between the button and that diode-OR &mdash; see callout F for why it can't just tap the button's sense line directly.</p>
   <div class="table-scroll">
   <table>
     <thead>
@@ -276,10 +276,13 @@ footer{
     <tbody>
       <tr><td class="ref">Q_PWR1</td><td class="val">DMG2305UX</td><td class="val">SOT-23</td><td class="role">Main power switch — VSYS to PWR_EN, carries full system current</td></tr>
       <tr><td class="ref">Q_LATCH1</td><td class="val">2N7002</td><td class="val">SOT-23</td><td class="role">Pulls Q_PWR1's gate low to turn it on</td></tr>
-      <tr><td class="ref">D_OR1 / D_OR2</td><td class="val">1N4148W</td><td class="val">SOD-123</td><td class="role">Diode-OR: button press or MCU hold, either one latches power on</td></tr>
+      <tr><td class="ref">D_OR1 / D_OR2</td><td class="val">1N4148W</td><td class="val">SOD-123</td><td class="role">Diode-OR: PWR_BTN_TRIGGER (actual button press, via the inverter) or MCU hold, either one latches power on</td></tr>
       <tr><td class="ref">R_GATE1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">Q_PWR1 gate pull-up — off by default</td></tr>
       <tr><td class="ref">R_LATCH_G1</td><td class="val">10kΩ</td><td class="val">0402</td><td class="role">Q_LATCH1 gate pull-down — off by default</td></tr>
-      <tr><td class="ref">R_BTN_PU1 / R_PWR_SENSE1</td><td class="val">100kΩ / 100kΩ</td><td class="val">0402</td><td class="role">Button sense divider — MCU reads pressed (0V) vs idle (½VSYS)</td></tr>
+      <tr><td class="ref">R_BTN_PU1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">Button sense pull-up — MCU reads pressed (0V) vs idle (VSYS)</td></tr>
+      <tr><td class="ref">R_INV_BASE1</td><td class="val">10kΩ</td><td class="val">0402</td><td class="role">Inverter base resistor, from PWR_BTN_SENSE</td></tr>
+      <tr><td class="ref">Q_INV1</td><td class="val">MMBT3904</td><td class="val">SOT-23</td><td class="role">Inverter: idle (button up) holds PWR_BTN_TRIGGER low; pressed lets R_INV_PU1 pull it high</td></tr>
+      <tr><td class="ref">R_INV_PU1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">PWR_BTN_TRIGGER pull-up to VSYS — the inverter's collector load</td></tr>
       <tr><td class="ref">C_DBNC1</td><td class="val">100nF</td><td class="val">0402</td><td class="role">Button debounce, right at the switch</td></tr>
       <tr><td class="ref">SW_PWR1</td><td class="val">Alps SKRTLAE010</td><td class="val">SMD tactile</td><td class="role">Physical power button — must reach the enclosure surface</td></tr>
     </tbody>
@@ -289,12 +292,12 @@ footer{
 
 <section>
   <h2>Suggested floorplan</h2>
-  <p class="lede">Top copper layer. The VSYS→PWR_EN path runs straight across the top as one thick lane; the latch logic hangs underneath it as a compact, low-current block; the button sits wherever your enclosure needs it to.</p>
+  <p class="lede">Top copper layer. The VSYS→PWR_EN path runs straight across the top as one thick lane; the latch logic hangs underneath it as a compact, low-current block; the inverter sits just below the button's sense line, on the way to the diode-OR; the button sits wherever your enclosure needs it to.</p>
 
   <figure>
     <div class="board-card">
       <div class="scroller">
-      <svg viewBox="0 0 900 560" role="img" aria-label="Top-down PCB floorplan for the soft-latch power switch, showing VSYS entering the PMOS source and exiting the drain as PWR_EN in one straight lane across the top, the NMOS latch and diode-OR logic clustered in a compact low-current block beneath it, and the physical power button placed near the board edge with its debounce capacitor right at its pins.">
+      <svg viewBox="0 0 900 610" role="img" aria-label="Top-down PCB floorplan for the soft-latch power switch, showing VSYS entering the PMOS source and exiting the drain as PWR_EN in one straight lane across the top, the NMOS latch and diode-OR logic clustered in a compact low-current block beneath it, a small transistor inverter between the button's sense line and the diode-OR so only an actual press (not the button's idle level) can trigger the latch, and the physical power button placed near the board edge with its debounce capacitor right at its pins.">
         <defs>
           <linearGradient id="boardGrad" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stop-color="#134127"/>
@@ -306,7 +309,7 @@ footer{
           </pattern>
         </defs>
 
-        <rect x="30" y="50" width="840" height="470" rx="12" fill="url(#boardGrad)" stroke="#061309" stroke-width="3"/>
+        <rect x="30" y="50" width="840" height="520" rx="12" fill="url(#boardGrad)" stroke="#061309" stroke-width="3"/>
 
         <text x="52" y="82" font-family="JetBrains Mono, monospace" font-size="13" fill="#eef2ea" font-weight="600">Power_Control — soft-latch switch</text>
         <text x="52" y="100" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#7fa08d">top copper (F.Cu) · rings = via to GND plane (B.Cu)</text>
@@ -338,7 +341,7 @@ footer{
 
         <!-- D_OR1 cathode -> junction, anode -> bus -->
         <path d="M375,376 L365,350 L340,320" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
-        <path d="M375,404 L375,455" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M375,404 L375,422" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
 
         <!-- D_OR2 cathode -> junction, anode -> PWR_HOLD edge -->
         <path d="M400,284 L380,300 L340,320" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
@@ -362,6 +365,7 @@ footer{
           <circle cx="175" cy="518" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="175" cy="518" r="2.5" fill="#0e2d1c"/>
           <circle cx="210" cy="505" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="210" cy="505" r="2.5" fill="#0e2d1c"/>
           <circle cx="340" cy="505" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="340" cy="505" r="2.5" fill="#0e2d1c"/>
+          <circle cx="340" cy="562" r="6" fill="#cf9a4c" stroke="#061309" stroke-width="2"/><circle cx="340" cy="562" r="2.5" fill="#0e2d1c"/>
         </g>
 
         <!-- ================= COMPONENTS ================= -->
@@ -393,7 +397,8 @@ footer{
 
         <!-- D_OR1 -->
         <rect x="368" y="376" width="14" height="28" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
-        <text x="386" y="395" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">D_OR1 (from button)</text>
+        <text x="386" y="395" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">D_OR1 (from inverter)</text>
+        <text x="386" y="422" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">PWR_BTN_TRIGGER</text>
 
         <!-- D_OR2 -->
         <rect x="393" y="256" width="14" height="28" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
@@ -416,9 +421,29 @@ footer{
         <text x="262" y="382" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#e0b563">VSYS</text>
         <text x="292" y="425" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_BTN_PU1 100k</text>
 
-        <!-- R_PWR_SENSE1 -->
+        <!-- R_INV_BASE1 -> Q_INV1 -> R_INV_PU1: inverter that gates D_OR1
+             from an actual button press instead of PWR_BTN_SENSE's idle
+             level (see callout F) -->
         <rect x="333" y="472" width="14" height="16" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
-        <text x="352" y="483" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_PWR_SENSE1 100k</text>
+        <text x="352" y="483" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_INV_BASE1 10k</text>
+
+        <path d="M340,488 L340,505" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+
+        <rect x="325" y="505" width="30" height="40" rx="4" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="340" y="498" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" fill="#e0b563">Q_INV1</text>
+        <text x="340" y="558" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#7fa08d">MMBT3904 (NPN)</text>
+        <text x="330" y="516" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">B</text>
+        <text x="340" y="540" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">E</text>
+        <text x="353" y="519" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">C</text>
+
+        <path d="M340,545 L340,562" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M355,522 L407,522 L407,531" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="407" cy="522" r="3.5" fill="#8fd3ff"/>
+
+        <rect x="400" y="505" width="14" height="26" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
+        <text x="407" y="497" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#e0b563">VSYS</text>
+        <text x="419" y="512" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">R_INV_PU1 100k</text>
+        <text x="415" y="533" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#c9d6cd">PWR_BTN_TRIGGER</text>
 
         <text x="450" y="447" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#c9d6cd">PWR_BTN_SENSE</text>
 
@@ -456,16 +481,20 @@ footer{
           <line x1="700" y1="200" x2="700" y2="220" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
           <circle cx="700" cy="190" r="12" fill="#ff8a3d"/>
           <text x="700" y="194.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">E</text>
+
+          <line x1="270" y1="530" x2="328" y2="518" stroke="#c9d6cd" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>
+          <circle cx="258" cy="536" r="12" fill="#ff8a3d"/>
+          <text x="258" y="540.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#231205">F</text>
         </g>
       </svg>
       </div>
     </div>
-    <figcaption>Top-layer placement for the soft-latch switch. <b>Gold copper</b> is the VSYS→PWR_EN power path; <b>pale blue</b> is the low-current gate-drive, sense, and control logic; rings mark vias to the ground plane.</figcaption>
+    <figcaption>Top-layer placement for the soft-latch switch. <b>Gold copper</b> is the VSYS→PWR_EN power path; <b>pale blue</b> is the low-current gate-drive, sense, inverter, and control logic; rings mark vias to the ground plane.</figcaption>
   </figure>
 
   <ul class="legend">
     <li><svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#c17f3a" stroke-width="5" stroke-linecap="round"/></svg> Power copper (VSYS, PWR_EN)</li>
-    <li><svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#6fb3d9" stroke-width="3" stroke-linecap="round"/></svg> Gate-drive / sense / control</li>
+    <li><svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#6fb3d9" stroke-width="3" stroke-linecap="round"/></svg> Gate-drive / sense / inverter / control</li>
     <li><svg width="16" height="16"><circle cx="8" cy="8" r="6" fill="#cf9a4c"/><circle cx="8" cy="8" r="2.5" fill="var(--bg)"/></svg> Via to GND plane</li>
   </ul>
 </section>
@@ -478,6 +507,7 @@ footer{
     <li><span class="badge">C</span><p><b>C_DBNC1 sits right on the switch's own pins.</b> Same principle as the charger's pushbutton guidance in its own datasheet: the debounce cap does its job by being close to the contact bounce it's filtering, not by being close to anything else.</p></li>
     <li><span class="badge">D</span><p><b>The diode-OR and its pull-down are one compact decision node.</b> D_OR1, D_OR2, R_LATCH_G1, and Q_LATCH1's gate all meet at PWR_LATCH_G — keeping that cluster tight matters less for noise than for just keeping the logic legible on the board.</p></li>
     <li><span class="badge">E</span><p><b>PWR_HOLD arriving late is a hard failure, not a glitch.</b> Per this project's own GPIO notes, pin 36 (PWR_HOLD) must go high as the MCU's very first instruction — release the button before that happens and R_LATCH_G1's pull-down turns everything back off. Not a layout fix, but it's the reason D_OR2's path exists at all.</p></li>
+    <li><span class="badge">F</span><p><b>D_OR1 can't read PWR_BTN_SENSE directly — found the hard way, on real hardware.</b> The original design had R_BTN_PU1 (to VSYS) and a since-removed R_PWR_SENSE1 (to GND) both on that node, dividing it to roughly half VSYS at idle — comfortably above a diode's ~0.6V forward threshold, so D_OR1 was forward-biased (and the board powered on) the instant a battery was plugged in, button or no button. The inverter fixes this properly instead of just retuning the divider: idle, Q_INV1 is on and holds PWR_BTN_TRIGGER at GND; pressed, it turns off and R_INV_PU1 pulls PWR_BTN_TRIGGER to VSYS. Only a real press can forward-bias D_OR1 now. Keep this block close to D_OR1 — it's three parts serving one signal, not worth spreading out.</p></li>
   </ol>
 </section>
 
@@ -489,12 +519,13 @@ footer{
     <li>Put C_DBNC1 directly on SW_PWR1's sense pin before routing anything else nearby.</li>
     <li>Route the VSYS→Q_PWR1→PWR_EN lane as one straight, generously-wide path across the board.</li>
     <li>Cluster Q_LATCH1, R_GATE1, R_LATCH_G1, D_OR1, and D_OR2 into one compact low-current block under the main lane.</li>
+    <li>Keep R_INV_BASE1, Q_INV1, and R_INV_PU1 together as their own small block, close to D_OR1 — they're a single-purpose inverter, not independent parts.</li>
     <li>Bring PWR_BTN_SENSE and PWR_HOLD in from wherever the MCU sheet actually sits — these are off-sheet nets, not local components.</li>
   </ol>
 </section>
 
 <div class="note">
-  <b>Checked, not just assumed:</b> DMG2305UX is rated for ~4A continuous with 35–50mΩ RDS(on) in this SOT-23 package — comfortably oversized for a handheld controller's sub-2A system budget, so this isn't a thermal risk the way the charger's WSON is. Nothing on this sheet needed correcting.
+  <b>Checked, not just assumed:</b> DMG2305UX is rated for ~4A continuous with 35–50mΩ RDS(on) in this SOT-23 package — comfortably oversized for a handheld controller's sub-2A system budget, so this isn't a thermal risk the way the charger's WSON is. MMBT3904 is a general-purpose small-signal part switching microamps here (just enough to bias a diode) — nowhere near its ratings, no thermal consideration needed. Nothing on this sheet needed correcting beyond the divider/inverter fix in callout F.
 </div>
 
 <footer>
