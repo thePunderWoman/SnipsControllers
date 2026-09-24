@@ -567,7 +567,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 162.56 87.376 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -678,7 +678,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 162.56 -21.844 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -789,7 +789,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 162.56 101.346 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -900,7 +900,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 162.56 145.796 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1011,7 +1011,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 162.56 117.856 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1122,7 +1122,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 162.56 199.136 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1233,7 +1233,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 162.56 64.516 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1344,7 +1344,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 162.56 35.306 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1455,7 +1455,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 162.56 6.096 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1566,7 +1566,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 133.35 229.616 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1677,7 +1677,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 163.83 172.466 0)
 			(show_name no)
 			(do_not_autoplace no)

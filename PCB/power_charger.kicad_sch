@@ -1361,7 +1361,7 @@
 				)
 			)
 		)
-		(property "Value" "18kΩ"
+		(property "Value" "RC0402FR-0718KL | Yageo | 0402"
 			(at 207.01 83.82 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1472,7 +1472,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 178.435 81.28 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1583,7 +1583,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 64.77 106.68 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1694,7 +1694,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL21A106KAYNNNE | Samsung Electro-Mechanics | 0805"
 			(at 154.305 123.19 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1806,7 +1806,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Value" "bq25185"
+		(property "Value" "BQ25185DLHR | Texas Instruments | WSON-10 2.2x2.0mm"
 			(at 219.71 111.76 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2106,7 +2106,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL21A106KAYNNNE | Samsung Electro-Mechanics | 0805"
 			(at 95.885 123.19 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2218,7 +2218,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 125.095 123.19 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2329,7 +2329,7 @@
 				)
 			)
 		)
-		(property "Value" "604Ω"
+		(property "Value" "AC0402FR-07604RL | Yageo | 0402"
 			(at 148.59 92.71 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2440,7 +2440,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL21A106KAYNNNE | Samsung Electro-Mechanics | 0805"
 			(at 118.745 90.17 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2551,7 +2551,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 80.01 106.68 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2661,7 +2661,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 182.88 125.73 90)
 			(show_name no)
 			(do_not_autoplace no)

@@ -961,7 +961,7 @@
 				)
 			)
 		)
-		(property "Value" "255kΩ"
+		(property "Value" "RC0402FR-07255KL | Yageo | 0402"
 			(at 144.78 101.6 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1071,7 +1071,7 @@
 				)
 			)
 		)
-		(property "Value" "2.2µH"
+		(property "Value" "2.2µH | SRN4018-2R2M | Bourns | 4.0x4.0mm SMD"
 			(at 146.685 68.58 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1182,7 +1182,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TLV62569"
+		(property "Value" "TLV62569DBVR | Texas Instruments | SOT-23-5"
 			(at 182.88 104.14 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1304,7 +1304,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL21A106KAYNNNE | Samsung Electro-Mechanics | 0805"
 			(at 140.335 138.43 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1416,7 +1416,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "22µF"
+		(property "Value" "22µF | CL21A226MAQNNNE | Samsung Electro-Mechanics | 0805"
 			(at 114.935 106.68 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1527,7 +1527,7 @@
 				)
 			)
 		)
-		(property "Value" "56.2kΩ"
+		(property "Value" "56.2kΩ | RC0402FR-0756K2L | Yageo | 0402"
 			(at 168.91 133.35 90)
 			(show_name no)
 			(do_not_autoplace no)

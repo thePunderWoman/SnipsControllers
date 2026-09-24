@@ -83,7 +83,7 @@
         <!-- Q_PWR1 -->
         <rect x="210" y="135" width="60" height="40" rx="4" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
         <text x="240" y="127" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="12" fill="#e0b563">Q_PWR1</text>
-        <text x="240" y="196" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#7fa08d">DMG2305UX (PMOS)</text>
+        <text x="240" y="196" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#7fa08d">AO3401A (PMOS)</text>
         <rect x="209" y="151" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
         <rect x="257" y="151" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
         <rect x="233" y="171" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
@@ -144,7 +144,7 @@
              the inverter no longer loads the MCU's own button-sense node
              (see callout F) -->
         <rect x="333" y="472" width="14" height="16" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
-        <text x="352" y="483" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">D_INV_ISO1 (BAT54W)</text>
+        <text x="352" y="483" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">D_INV_ISO1 (BAT54W-7-F)</text>
 
         <path d="M340,488 L340,505" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
 

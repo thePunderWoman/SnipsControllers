@@ -160,6 +160,188 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Diode:BAT54W"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "BAT54W"
+				(at 0 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-323_SC-70"
+				(at 0 -4.445 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/BAT54W_SER.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Schottky barrier diode, SOT-323"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "schottky diode"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT?323*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "BAT54W_0_1"
+				(polyline
+					(pts
+						(xy -1.905 0.635) (xy -1.905 1.27) (xy -1.27 1.27) (xy -1.27 -1.27) (xy -0.635 -1.27) (xy -0.635 -0.635)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 1.27) (xy 1.27 -1.27) (xy -1.27 0) (xy 1.27 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy -1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "BAT54W_1_1"
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin no_connect line
+					(at 0 0 90)
+					(length 2.54)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:D_Small"
 			(pin_numbers
 				(hide yes)
@@ -1557,7 +1739,7 @@
 		(uuid "9b6d5a2f-fca1-447a-91ea-c93731fa7513")
 	)
 	(label "PWR_BTN_INV_BASE"
-		(at 66.04 76.2 0)
+		(at 67.31 76.2 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1568,7 +1750,7 @@
 	)
 	(hierarchical_label "PWR_BTN_SENSE"
 		(shape bidirectional)
-		(at 60.96 76.2 180)
+		(at 59.69 76.2 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1964,7 +2146,7 @@
 				)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 76.2 88.9 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2074,7 +2256,7 @@
 				)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 50.8 88.9 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2185,7 +2367,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 137.795 68.58 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2297,7 +2479,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 203.2 61.976 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2408,7 +2590,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3401A"
+		(property "Value" "AO3401A | Alpha & Omega Semicon | SOT-23"
 			(at 97.79 138.43 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2523,7 +2705,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1N4148W"
+		(property "Value" "1N4148W | ST(Semtech) | SOD-123"
 			(at 128.27 104.648 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2654,7 +2836,7 @@
 				)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 156.21 138.43 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2764,7 +2946,7 @@
 				)
 			)
 		)
-		(property "Value" "1MΩ"
+		(property "Value" "1MΩ | 0402WGF1004TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 107.95 76.2 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2874,7 +3056,7 @@
 				)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 125.73 147.32 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2985,7 +3167,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1N4148W"
+		(property "Value" "1N4148W | ST(Semtech) | SOD-123"
 			(at 166.37 91.948 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3116,7 +3298,7 @@
 				)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 111.76 138.43 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3260,7 +3442,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 116.205 73.66 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3350,7 +3532,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:D_Small")
+		(lib_id "Diode:BAT54W")
 		(at 63.5 76.2 0)
 		(unit 1)
 		(body_style 1)
@@ -3362,29 +3544,7 @@
 		(fields_autoplaced yes)
 		(uuid "41e6dcf5-7dc0-4dee-b65b-91ef6cdb0eec")
 		(property "Reference" "D_INV_ISO1"
-			(at 62.23 78.232 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BAT54W"
-			(at 59.69 74.168 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Diode_SMD:D_SOD-123"
-			(at 63.5 76.2 90)
+			(at 63.5 71.12 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3393,8 +3553,8 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
-			(at 63.5 76.2 90)
+		(property "Value" "BAT54W-7-F | Diodes Incorporated | SOT-323 (SC-70)"
+			(at 63.5 81.28 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3403,8 +3563,9 @@
 				)
 			)
 		)
-		(property "Description" "Diode, small symbol"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-323_SC-70"
 			(at 63.5 76.2 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3413,8 +3574,9 @@
 				)
 			)
 		)
-		(property "Sim.Device" "D"
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/ds30065.pdf"
 			(at 63.5 76.2 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3423,8 +3585,9 @@
 				)
 			)
 		)
-		(property "Sim.Pins" "1=K 2=A"
+		(property "Description" "Schottky barrier diode, SOT-323. Pin 1 anode, pin 2 no-connect, pin 3 cathode."
 			(at 63.5 76.2 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3433,7 +3596,7 @@
 				)
 			)
 		)
-		(property "MF" "Yangzhou Yangjie Elec Tech"
+		(property "MF" "Diodes Incorporated"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3444,7 +3607,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "BAT54W"
+		(property "Manufacturer_Part_Number" "BAT54W-7-F"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3455,7 +3618,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C699107"
+		(property "LCSC" "C134417"
 			(at 0 0 0)
 			(hide yes)
 			(show_name no)
@@ -3467,10 +3630,13 @@
 			)
 		)
 		(pin "1"
-			(uuid "becf2904-fb5c-4c3e-a58d-c831e89bdf01")
+			(uuid "ed5c7ae0-e2a6-4d6d-a6ed-70ecf34a0eac")
 		)
 		(pin "2"
-			(uuid "93954c4a-f7a3-4853-8ba1-70c7c9d2ec81")
+			(uuid "48915e93-a69d-43e8-8787-6d4bcf65c432")
+		)
+		(pin "3"
+			(uuid "2d38e1fd-dc86-4e13-9b31-dc68b394a8c6")
 		)
 		(instances
 			(project "snips_controller"
@@ -3481,6 +3647,7 @@
 			)
 		)
 	)
+
 	(symbol
 		(lib_id "Transistor_BJT:Q_NPN_BEC")
 		(at 63.5 101.6 0)
@@ -3504,7 +3671,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MMBT3904"
+		(property "Value" "MMBT3904(RANGE:100-300) | Jiangsu Changjing Electronics Technology Co Ltd | SOT-23"
 			(at 68.58 100.33 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3644,7 +3811,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3400A"
+		(property "Value" "AO3400A | Alpha & Omega Semicon | SOT-23"
 			(at 194.31 127 0)
 			(show_name no)
 			(do_not_autoplace no)
