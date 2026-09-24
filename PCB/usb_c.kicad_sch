@@ -1438,7 +1438,7 @@
 				)
 			)
 		)
-		(property "Value" "USB-C"
+		(property "Value" "USB-C | TYPE-C-31-M-12 | Hroparts Elec | USB-C receptacle"
 			(at 148.59 127.635 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1593,7 +1593,7 @@
 				)
 			)
 		)
-		(property "Value" "5.1kΩ"
+		(property "Value" "5.1kΩ | 0402WGF5101TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 105.41 101.6 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1703,7 +1703,7 @@
 				)
 			)
 		)
-		(property "Value" "5.1kΩ"
+		(property "Value" "5.1kΩ | 0402WGF5101TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 191.77 101.6 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1813,7 +1813,7 @@
 				)
 			)
 		)
-		(property "Value" "PESD5V0S1BA"
+		(property "Value" "TPPESD5V0S1BA | TECH PUBLIC | SOD-323"
 			(at 175 112.46 0)
 			(show_name no)
 			(do_not_autoplace no)

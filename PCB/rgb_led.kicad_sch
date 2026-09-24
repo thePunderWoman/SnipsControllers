@@ -722,7 +722,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 137.795 76.2 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -833,7 +833,7 @@
 				)
 			)
 		)
-		(property "Value" "470Ω"
+		(property "Value" "0402WGF4700TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 121.92 130.81 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -944,7 +944,7 @@
 				(justify right bottom)
 			)
 		)
-		(property "Value" "SK6812MINI-E-012"
+		(property "Value" "SK6812MINI-E-012 | SK6812MINI-E | OPSCO Optoelectronics | SMD 3.2x2.8mm"
 			(at 176.53 89.535 0)
 			(show_name no)
 			(do_not_autoplace no)

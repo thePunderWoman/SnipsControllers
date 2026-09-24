@@ -172,7 +172,7 @@
 				)
 			)
 		)
-		(property "Value" "XBee3"
+		(property "Value" "XBee3 | XB3-24Z8UT-J | Digi International | XBee through-hole"
 			(at 10.795 6.097 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -761,7 +761,7 @@
 				)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 1.3025 5.36 0)
 			(layer "F.Fab")
 			(uuid "ea0a7bfd-097f-4a8a-b22e-204aff5be004")
@@ -1263,7 +1263,7 @@
 				)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 0 3.81 0)
 			(layer "F.Fab")
 			(uuid "5a535ea9-e8dd-4c29-bbda-86f0df694c76")
@@ -1981,7 +1981,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 1.17 0)
 			(layer "F.Fab")
 			(uuid "e3caad16-379b-4cd8-846c-8bbc1c698ed6")
@@ -2167,7 +2167,7 @@
 				)
 			)
 		)
-		(property "Value" "SK6812MINI-E-012"
+		(property "Value" "SK6812MINI-E-012 | SK6812MINI-E | OPSCO Optoelectronics | SMD 3.2x2.8mm"
 			(at 0 2.54 0)
 			(layer "F.Fab")
 			(uuid "8cbb4024-e3fe-4e73-bd0a-030cf07689f0")
@@ -2425,7 +2425,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 1.16 0)
 			(layer "F.Fab")
 			(uuid "d37389e4-324a-4424-94fd-80d4e7338287")
@@ -2611,7 +2611,7 @@
 				)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 0 3.81 0)
 			(layer "F.Fab")
 			(uuid "44ec8bed-c7b5-45f2-b41c-2d2176dacc86")
@@ -3113,7 +3113,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 0.99 90)
 			(layer "F.Fab")
 			(uuid "c0e36c99-eec4-4d69-8623-eaca3a7ab10d")
@@ -3299,7 +3299,7 @@
 				)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 0 3.81 0)
 			(layer "F.Fab")
 			(uuid "c3f062d5-2b2e-47f0-a0fb-e0b804a99438")
@@ -3801,7 +3801,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 1.16 90)
 			(layer "F.Fab")
 			(uuid "ab47295e-eed6-46e2-a914-38cbe237c70b")
@@ -3987,7 +3987,7 @@
 				)
 			)
 		)
-		(property "Value" "100Ω"
+		(property "Value" "0402WGF1000TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 1.17 0)
 			(layer "F.Fab")
 			(uuid "f480f0a2-877c-4abd-a1e2-7ff8e0267697")
@@ -4173,7 +4173,7 @@
 				)
 			)
 		)
-		(property "Value" "27Ω"
+		(property "Value" "RC0402FR-0727RL | Yageo | 0402"
 			(at 0 1.17 90)
 			(layer "F.Fab")
 			(uuid "bc907fea-ac95-40e4-adcf-f0d7a4eec003")
@@ -4359,7 +4359,7 @@
 				)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 0 2.9 0)
 			(layer "F.Fab")
 			(uuid "ac6207ec-6214-4df0-9a87-c2926e7703c8")
@@ -4786,7 +4786,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 1.17 90)
 			(layer "F.Fab")
 			(uuid "af0ab304-1d9a-4028-a879-5ada59a3565d")
@@ -4972,7 +4972,7 @@
 				)
 			)
 		)
-		(property "Value" "ESP32-S3-WROOM-1-N8"
+		(property "Value" "ESP32-S3-WROOM-1-N8 | Espressif Systems | SMD module 18x25.5mm"
 			(at 0 12 0)
 			(layer "F.Fab")
 			(uuid "71ea24e4-b2e4-4f6d-b1c7-34524d2b0db3")
@@ -5783,7 +5783,7 @@
 				)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 0 2.9 90)
 			(layer "F.Fab")
 			(uuid "89971725-b9be-447b-9d01-fa10211798e4")
@@ -6210,7 +6210,7 @@
 				)
 			)
 		)
-		(property "Value" "JST-SH_4Pin_OLED"
+		(property "Value" "JST-SH_4Pin_OLED | SM04B-SRSS-TB(LF)(SN) | JST | SMD horizontal 1.00mm 4-pin"
 			(at 0 3.98 0)
 			(layer "F.Fab")
 			(uuid "8d30e11e-5d53-4f51-93e6-d1ae7878ba6f")
@@ -6669,7 +6669,7 @@
 				)
 			)
 		)
-		(property "Value" "5.1kΩ"
+		(property "Value" "5.1kΩ | 0402WGF5101TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 1.17 0)
 			(layer "F.Fab")
 			(uuid "8b0626de-cc65-496e-9d52-18a867c5e8db")
@@ -6855,7 +6855,7 @@
 				)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL10A106KP8NNNC | Samsung Electro-Mechanics | 0603"
 			(at 0 1.43 90)
 			(layer "F.Fab")
 			(uuid "755771db-97a2-4f83-81b4-ded99cc7d2a9")
@@ -7149,7 +7149,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 1.16 0)
 			(layer "F.Fab")
 			(uuid "c3381d27-934b-4484-a096-c132580c9312")
@@ -7335,7 +7335,7 @@
 				)
 			)
 		)
-		(property "Value" "Panasonic_EVQP2"
+		(property "Value" "Panasonic_EVQP2 | EVQP2T02M | Panasonic | SMD tactile 2.1mm"
 			(at 0 3 90)
 			(layer "F.Fab")
 			(uuid "4a77b6cc-bcb9-4dfd-bdfe-6def339f7925")
@@ -7834,7 +7834,7 @@
 				)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 0 2.9 90)
 			(layer "F.Fab")
 			(uuid "775d788b-06dd-4e85-9d91-0cda371edaca")
@@ -8261,7 +8261,7 @@
 				)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 0 3.81 0)
 			(layer "F.Fab")
 			(uuid "98a911b5-e738-4941-bcbd-56cecc477d90")
@@ -8763,7 +8763,7 @@
 				)
 			)
 		)
-		(property "Value" "USB-C"
+		(property "Value" "USB-C | TYPE-C-31-M-12 | Hroparts Elec | USB-C receptacle"
 			(at 0 5.1 0)
 			(layer "F.Fab")
 			(uuid "3b144a03-9acd-44c7-a6b0-4af1ab0405cf")
@@ -9247,7 +9247,7 @@
 				)
 			)
 		)
-		(property "Value" "1µF"
+		(property "Value" "1µF | CL10A105KB8NNNC | Samsung Electro-Mechanics | 0603"
 			(at 0 1.43 90)
 			(layer "F.Fab")
 			(uuid "491e3985-3973-48c7-bf0d-62b02f447d3b")
@@ -9689,7 +9689,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 1.16 90)
 			(layer "F.Fab")
 			(uuid "f62e800f-3123-4d22-924e-6d228b2b1f11")
@@ -9875,7 +9875,7 @@
 				)
 			)
 		)
-		(property "Value" "470Ω"
+		(property "Value" "0402WGF4700TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 1 90)
 			(layer "F.Fab")
 			(uuid "ae970078-388a-4ae9-a4f0-de4b2bf6cdbe")
@@ -10061,7 +10061,7 @@
 				)
 			)
 		)
-		(property "Value" "5.1kΩ"
+		(property "Value" "5.1kΩ | 0402WGF5101TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 1.17 90)
 			(layer "F.Fab")
 			(uuid "073dee7c-4415-4a5d-90a5-95dd74494753")
@@ -10247,7 +10247,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 1.16 90)
 			(layer "F.Fab")
 			(uuid "47e8f512-7114-4085-b25d-44a4a9835374")
@@ -10541,7 +10541,7 @@
 				)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL10A106KP8NNNC | Samsung Electro-Mechanics | 0603"
 			(at 0 1.43 90)
 			(layer "F.Fab")
 			(uuid "0c37499e-eeea-411d-837b-b1b106396141")
@@ -10728,7 +10728,7 @@
 				)
 			)
 		)
-		(property "Value" "200kΩ"
+		(property "Value" "200kΩ | 0402WGF2003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 1.17 0)
 			(layer "F.Fab")
 			(uuid "da3007ab-1c39-4b82-9e4d-63c8490b728b")
@@ -10914,7 +10914,7 @@
 				)
 			)
 		)
-		(property "Value" "27Ω"
+		(property "Value" "RC0402FR-0727RL | Yageo | 0402"
 			(at 0 1.17 90)
 			(layer "F.Fab")
 			(uuid "3bda70ce-1987-4cbd-89cc-582b2a33dc1e")
@@ -11100,7 +11100,7 @@
 				)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 0 2.9 90)
 			(layer "F.Fab")
 			(uuid "d385d2c5-fb88-4264-8a25-cbba110dc50f")
@@ -11527,7 +11527,7 @@
 				)
 			)
 		)
-		(property "Value" "47pF"
+		(property "Value" "47pF | 0402CG470J500NT | FH (Guangdong Fenghua Advanced Tech) | 0402"
 			(at 0 1.16 90)
 			(layer "F.Fab")
 			(uuid "93b1ab98-97f3-47a0-8a51-cff446f4bf23")
@@ -11713,7 +11713,7 @@
 				)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 0 2.9 90)
 			(layer "F.Fab")
 			(uuid "9999d58e-01f0-43e2-b018-b7e50a4c1924")
@@ -12140,7 +12140,7 @@
 				)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL21A106KAYNNNE | Samsung Electro-Mechanics | 0805"
 			(at 0 1.68 0)
 			(layer "F.Fab")
 			(uuid "dc4e8252-c2ea-4f27-b07f-6c2c82c5d5db")
@@ -12434,7 +12434,7 @@
 				)
 			)
 		)
-		(property "Value" "6x6x5mm SMD Tactile"
+		(property "Value" "6x6x5mm SMD Tactile | 1TS009A-1800-5000-CT | Hongyuan Precision | SMD tactile 6x6x5mm"
 			(at 1.3025 5.36 0)
 			(layer "F.Fab")
 			(uuid "8e28309c-058a-42a8-83f7-f178ac7c76b8")
@@ -12937,7 +12937,7 @@
 				)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 1.17 0)
 			(layer "F.Fab")
 			(uuid "8f6a3e53-fe3b-43a8-b3d4-a2d7621f2e4c")
@@ -13231,7 +13231,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 1.16 90)
 			(layer "F.Fab")
 			(uuid "17f1917a-08bf-4635-a55a-4234e60dbb88")
@@ -13417,7 +13417,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 1.17 90)
 			(layer "F.Fab")
 			(uuid "56c8f291-613a-4898-9312-954fe7700ecb")
@@ -13615,7 +13615,7 @@
 				)
 			)
 		)
-		(property "Value" "Alps_SKRTLAE010"
+		(property "Value" "SKRTLAE010 | Alps Alpine | SMD tactile horizontal"
 			(at 0 2.9 0)
 			(layer "F.Fab")
 			(uuid "d3a62366-8d49-4eb2-889a-27d3572c1ca1")
@@ -14042,7 +14042,7 @@
 				)
 			)
 		)
-		(property "Value" "39pF"
+		(property "Value" "39pF | CC0402JRNPO9BN390 | Yageo | 0402"
 			(at 0 1.16 90)
 			(layer "F.Fab")
 			(uuid "2afdb062-6895-4b36-a68f-814c2c9e003a")
@@ -14240,7 +14240,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 1.17 90)
 			(layer "F.Fab")
 			(uuid "cc583e60-2a44-4941-ac9a-442fc869332b")
@@ -14427,7 +14427,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 -1.17 0)
 			(layer "B.Fab")
 			(uuid "d998a7f1-e267-4bf5-8104-2bcd8cf3de43")
@@ -14621,7 +14621,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL21A106KAYNNNE | Samsung Electro-Mechanics | 0805"
 			(at 0 -1.68 0)
 			(layer "B.Fab")
 			(uuid "f6dd34e2-1a7e-4242-a613-075d419820ea")
@@ -14815,7 +14815,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3401A"
+		(property "Value" "AO3401A | Alpha & Omega Semicon | SOT-23"
 			(at 0 -2.4 0)
 			(layer "B.Fab")
 			(uuid "9e0e1540-09ab-4133-9ff4-68ef5e0c24eb")
@@ -15232,7 +15232,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "PESD5V0S1BA"
+		(property "Value" "TPPESD5V0S1BA | TECH PUBLIC | SOD-323"
 			(at 0.1 -1.9 90)
 			(layer "B.Fab")
 			(uuid "16dd9499-b725-41c2-a90f-331f759d4c8f")
@@ -15560,7 +15560,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "JST-PH_2Pin_Battery_RightAngle_Horizontal"
+		(property "Value" "PH 2-pin battery RIGHT-ANGLE HORIZONTAL | S2B-PH-K(LF)(SN) | JST | THT right-angle horizontal 2.00mm"
 			(at 1 -7.45 0)
 			(layer "B.Fab")
 			(uuid "be935d3d-a7c3-4924-b952-a22a8b8ff007")
@@ -16030,7 +16030,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 -1.16 90)
 			(layer "B.Fab")
 			(uuid "5fddc59e-0e12-4b3d-8324-a8fe05ad54b4")
@@ -16224,7 +16224,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL21A106KAYNNNE | Samsung Electro-Mechanics | 0805"
 			(at 0 -1.68 0)
 			(layer "B.Fab")
 			(uuid "3c976c53-c8a0-400e-8867-17538010d55e")
@@ -16418,7 +16418,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "22µF"
+		(property "Value" "22µF | CL21A226MAQNNNE | Samsung Electro-Mechanics | 0805"
 			(at 0 -1.68 90)
 			(layer "B.Fab")
 			(uuid "d646dea2-8318-4a93-a757-bd305f7a8eda")
@@ -16612,7 +16612,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "QMA6100P"
+		(property "Value" "QMA6100P | QST | LGA-12 2x2mm"
 			(at 0 -1.6 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16849,14 +16849,14 @@
 		)
 		(embedded_fonts no)
 	)
-	(footprint "Diode_SMD:D_SOD-123"
+	(footprint "Package_TO_SOT_SMD:SOT-323_SC-70"
 		(layer "B.Cu")
 		(uuid "2f51bf7b-f174-4729-a76b-548ad5a8b8cd")
-		(at 146.1 131.05 90)
-		(descr "SOD-123")
-		(tags "SOD-123")
+		(at 147.1 131.5625 -90)
+		(descr "SOT, 3 Pin (https://home.jeita.or.jp/tsc/std-pdf/ED-7500A.pdf#page=148)")
+		(tags "SOT TO_SOT_SMD SC-70 SOT-323")
 		(property "Reference" "D_INV_ISO1"
-			(at 0 2 90)
+			(at 0 1.8 90)
 			(layer "B.SilkS")
 			(hide yes)
 			(uuid "f75a766e-786b-4322-98b6-a614dea7d9e6")
@@ -16868,8 +16868,8 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "BAT54W"
-			(at 0 -2.1 90)
+		(property "Value" "BAT54W-7-F | Diodes Incorporated | SOT-323 (SC-70)"
+			(at 0 -1.8 90)
 			(layer "B.Fab")
 			(uuid "6eb00ac7-e6ed-4b2b-ad99-bb11b1b86550")
 			(effects
@@ -16880,66 +16880,33 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
-			(at 0 0 270)
-			(unlocked yes)
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/ds30065.pdf"
+			(at 0 0 90)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "c252513c-a0c7-4174-885b-2a1d18620eaf")
 			(effects
 				(font
 					(size 1.27 1.27)
-					(thickness 0.15)
 				)
 				(justify mirror)
 			)
 		)
-		(property "Description" "Diode, small symbol"
-			(at 0 0 270)
-			(unlocked yes)
+		(property "Description" "Schottky barrier diode, SOT-323. Pin 1 anode, pin 2 no-connect, pin 3 cathode."
+			(at 0 0 90)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "24460612-8a75-40cf-93e8-f8fa2de3a99a")
 			(effects
 				(font
 					(size 1.27 1.27)
-					(thickness 0.15)
 				)
 				(justify mirror)
 			)
 		)
-		(property "Sim.Device" "D"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "a5fe6f6d-c0cc-4ab4-a38a-41093cb5af4a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "Sim.Pins" "1=K 2=A"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
-			(hide yes)
-			(uuid "71f02ac3-53b3-4c3a-a6d6-8a9c66529cfd")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "MF" "Yangzhou Yangjie Elec Tech"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "B.Fab")
+		(property "KiLib_Generator" "package/gullwing"
+			(at 0 0 90)
+			(layer "B.SilkS")
 			(hide yes)
 			(uuid "ead7da4f-8123-49e1-a32f-703c68e6a720")
 			(effects
@@ -16950,12 +16917,12 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "BAT54W"
+		(property "MF" "Diodes Incorporated"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
-			(uuid "67cdc5f8-9ddf-41ec-b5be-a7a913ae865e")
+			(uuid "310197b3-3264-482d-ba2a-208c3325813a")
 			(effects
 				(font
 					(size 1 1)
@@ -16964,12 +16931,12 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C699107"
+		(property "Manufacturer_Part_Number" "BAT54W-7-F"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
-			(uuid "5f0db2a5-1d63-46f0-8e3d-a285450ff4aa")
+			(uuid "32500094-20c2-40e9-9da4-34911397aade")
 			(effects
 				(font
 					(size 1 1)
@@ -16978,21 +16945,35 @@
 				(justify mirror)
 			)
 		)
-		(property ki_fp_filters "TO-???* *_Diode_* *SingleDiode* D_*")
+		(property "LCSC" "C134417"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "84c0b37d-cb7a-45e9-821f-f3e9c8ae0bec")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property ki_fp_filters "SOT?323*")
 		(path "/081a4841-1e21-4908-a8a8-37f54f8809f6/41e6dcf5-7dc0-4dee-b65b-91ef6cdb0eec")
 		(sheetname "/Power_Control/")
 		(sheetfile "power_control.kicad_sch")
 		(units
 			(unit
 				(name "A")
-				(pins "1" "2")
+				(pins "3" "2" "1")
 			)
 		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
-			(start -2.36 -1)
-			(end 1.65 -1)
+			(start -0.735 1.135)
+			(end 0.735 1.135)
 			(stroke
 				(width 0.12)
 				(type solid)
@@ -17001,18 +16982,8 @@
 			(uuid "41e30774-a37b-46c7-9a53-37bc39ab3c9a")
 		)
 		(fp_line
-			(start -2.36 1)
-			(end -2.36 -1)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "d4f994aa-8965-4fa4-bc94-07758b8872cb")
-		)
-		(fp_line
-			(start -2.36 1)
-			(end 1.65 1)
+			(start 0.735 1.135)
+			(end 0.735 0.485)
 			(stroke
 				(width 0.12)
 				(type solid)
@@ -17021,8 +16992,70 @@
 			(uuid "ff1c4ea3-869b-4166-a6d2-1ad344c1ed79")
 		)
 		(fp_line
-			(start 2.35 -1.15)
-			(end -2.35 -1.15)
+			(start -0.735 -0.165)
+			(end -0.735 0.165)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "d4f994aa-8965-4fa4-bc94-07758b8872cb")
+		)
+		(fp_line
+			(start 0.735 -0.485)
+			(end 0.735 -1.135)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "754cf141-0062-4b76-a295-dc7a4b58388c")
+		)
+		(fp_line
+			(start 0.735 -1.135)
+			(end -0.735 -1.135)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "3a878d5d-f1f4-49fc-b68a-1927b2d54994")
+		)
+		(fp_poly
+			(pts
+				(xy -1.18 0.16) (xy -1.04 -0.03) (xy -1.32 -0.03)
+			)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(fill yes)
+			(layer "B.SilkS")
+			(uuid "d1c55937-a72c-4b0a-8c44-1baac83e158d")
+		)
+		(fp_line
+			(start -0.73 1.1)
+			(end 0.73 1.1)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "B.CrtYd")
+			(uuid "66947b09-5b92-403c-9750-ff79700c2e13")
+		)
+		(fp_line
+			(start 0.73 1.1)
+			(end 0.73 0.33)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "B.CrtYd")
+			(uuid "90090779-1f0e-45e2-a65f-5bb61462a445")
+		)
+		(fp_line
+			(start -1.45 0.98)
+			(end -0.73 0.98)
 			(stroke
 				(width 0.05)
 				(type solid)
@@ -17031,8 +17064,38 @@
 			(uuid "f700683c-d9a1-4f6c-9d3b-80130542ae82")
 		)
 		(fp_line
-			(start 2.35 1.15)
-			(end 2.35 -1.15)
+			(start -0.73 0.98)
+			(end -0.73 1.1)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "B.CrtYd")
+			(uuid "8fa40065-b7a5-4c45-a1b0-02f35d0a0d55")
+		)
+		(fp_line
+			(start 0.73 0.33)
+			(end 1.45 0.33)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "B.CrtYd")
+			(uuid "d0f1560b-0249-47e8-96ae-168b5bdfbcb1")
+		)
+		(fp_line
+			(start 1.45 0.33)
+			(end 1.45 -0.33)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "B.CrtYd")
+			(uuid "b544cb26-95d2-43d5-a7bd-a8ca4caedb43")
+		)
+		(fp_line
+			(start -1.45 0.32)
+			(end -1.45 0.98)
 			(stroke
 				(width 0.05)
 				(type solid)
@@ -17041,8 +17104,18 @@
 			(uuid "6857cc36-80bb-4dd6-b7a9-8d3d32ebda1a")
 		)
 		(fp_line
-			(start -2.35 1.15)
-			(end -2.35 -1.15)
+			(start -0.73 0.32)
+			(end -1.45 0.32)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "B.CrtYd")
+			(uuid "2864fbab-90ae-4f01-a469-efc3e9541a2c")
+		)
+		(fp_line
+			(start -1.45 -0.32)
+			(end -0.73 -0.32)
 			(stroke
 				(width 0.05)
 				(type solid)
@@ -17051,8 +17124,38 @@
 			(uuid "e9befce1-eabc-415e-8929-0d97d17c5a57")
 		)
 		(fp_line
-			(start -2.35 1.15)
-			(end 2.35 1.15)
+			(start -0.73 -0.32)
+			(end -0.73 0.32)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "B.CrtYd")
+			(uuid "0736e30d-d71c-431a-8c66-2a2396dd9760")
+		)
+		(fp_line
+			(start 0.73 -0.33)
+			(end 0.73 -1.1)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "B.CrtYd")
+			(uuid "dbfb4596-a8ab-4ff1-9021-f60546ab2204")
+		)
+		(fp_line
+			(start 1.45 -0.33)
+			(end 0.73 -0.33)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "B.CrtYd")
+			(uuid "7b82bdb0-800e-4500-b4be-c269d0f6667a")
+		)
+		(fp_line
+			(start -1.45 -0.98)
+			(end -1.45 -0.32)
 			(stroke
 				(width 0.05)
 				(type solid)
@@ -17061,149 +17164,91 @@
 			(uuid "7b344e6e-1b5a-4ea4-af93-57b109ae1e2a")
 		)
 		(fp_line
-			(start 1.4 -0.9)
-			(end -1.4 -0.9)
+			(start -0.73 -0.98)
+			(end -1.45 -0.98)
 			(stroke
-				(width 0.1)
+				(width 0.05)
 				(type solid)
 			)
-			(layer "B.Fab")
-			(uuid "754cf141-0062-4b76-a295-dc7a4b58388c")
-		)
-		(fp_line
-			(start -1.4 -0.9)
-			(end -1.4 0.9)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "B.Fab")
-			(uuid "3a878d5d-f1f4-49fc-b68a-1927b2d54994")
-		)
-		(fp_line
-			(start 0.25 -0.4)
-			(end -0.35 0)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "B.Fab")
-			(uuid "66947b09-5b92-403c-9750-ff79700c2e13")
-		)
-		(fp_line
-			(start 0.25 0)
-			(end 0.75 0)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "B.Fab")
-			(uuid "8fa40065-b7a5-4c45-a1b0-02f35d0a0d55")
-		)
-		(fp_line
-			(start -0.35 0)
-			(end -0.35 -0.55)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "B.Fab")
-			(uuid "2864fbab-90ae-4f01-a469-efc3e9541a2c")
-		)
-		(fp_line
-			(start -0.35 0)
-			(end 0.25 0.4)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "B.Fab")
-			(uuid "0736e30d-d71c-431a-8c66-2a2396dd9760")
-		)
-		(fp_line
-			(start -0.35 0)
-			(end -0.35 0.55)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "B.Fab")
+			(layer "B.CrtYd")
 			(uuid "60e6fb7c-ad52-4c83-84a3-132397317aff")
 		)
 		(fp_line
-			(start -0.75 0)
-			(end -0.35 0)
+			(start -0.73 -1.1)
+			(end -0.73 -0.98)
 			(stroke
-				(width 0.1)
+				(width 0.05)
 				(type solid)
 			)
-			(layer "B.Fab")
+			(layer "B.CrtYd")
 			(uuid "0a1a35a9-1d50-4339-8f13-d8e3ce6c1330")
 		)
 		(fp_line
-			(start 0.25 0.4)
-			(end 0.25 -0.4)
+			(start 0.73 -1.1)
+			(end -0.73 -1.1)
 			(stroke
-				(width 0.1)
+				(width 0.05)
 				(type solid)
 			)
-			(layer "B.Fab")
-			(uuid "90090779-1f0e-45e2-a65f-5bb61462a445")
+			(layer "B.CrtYd")
+			(uuid "7160f43c-df45-40f0-82e4-089591a4897d")
 		)
-		(fp_line
-			(start 1.4 0.9)
-			(end 1.4 -0.9)
+		(fp_poly
+			(pts
+				(xy -0.3125 1) (xy 0.625 1) (xy 0.625 -1) (xy -0.625 -1) (xy -0.625 0.6875)
+			)
 			(stroke
 				(width 0.1)
 				(type solid)
 			)
+			(fill no)
 			(layer "B.Fab")
-			(uuid "d0f1560b-0249-47e8-96ae-168b5bdfbcb1")
-		)
-		(fp_line
-			(start -1.4 0.9)
-			(end 1.4 0.9)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "B.Fab")
-			(uuid "dbfb4596-a8ab-4ff1-9021-f60546ab2204")
+			(uuid "441e4f18-3754-438a-904a-caf3ee80caef")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 2 90)
+			(at 0 0 0)
 			(layer "B.Fab")
 			(uuid "ba7a8f50-8f0b-46d4-b3cb-10efe111bba9")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.5 0.5)
+					(thickness 0.08)
 				)
 				(justify mirror)
 			)
 		)
 		(pad "1" smd roundrect
-			(at -1.65 0 90)
-			(size 0.9 1.2)
+			(at -0.8875 0.65 270)
+			(size 0.925 0.45)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "/MCU_Core/PWR_BTN_SENSE")
-			(pinfunction "K_1")
+			(net "/Power_Control/PWR_BTN_INV_BASE")
+			(pinfunction "A_1")
 			(pintype "passive")
 			(uuid "98aa24ba-ee3e-4265-bbab-b048e36a5ba3")
 		)
 		(pad "2" smd roundrect
-			(at 1.65 0 90)
-			(size 0.9 1.2)
+			(at -0.8875 -0.65 270)
+			(size 0.925 0.45)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "/Power_Control/PWR_BTN_INV_BASE")
-			(pinfunction "A_2")
-			(pintype "passive")
+			(net "unconnected-(D_INV_ISO1-NC-Pad2)")
+			(pinfunction "NC_2")
+			(pintype "no_connect")
 			(uuid "a58c93cc-9a3c-45f6-b4e1-2c483202254f")
 		)
+		(pad "3" smd roundrect
+			(at 0.8875 0 270)
+			(size 0.925 0.45)
+			(layers "B.Cu" "B.Mask" "B.Paste")
+			(roundrect_rratio 0.25)
+			(net "/MCU_Core/PWR_BTN_SENSE")
+			(pinfunction "K_3")
+			(pintype "passive")
+			(uuid "c1d27084-5e91-4861-8d41-4c9b79cd5220")
+		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SOD-123.step"
+		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-323_SC-70.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -17234,7 +17279,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "1N4148W"
+		(property "Value" "1N4148W | ST(Semtech) | SOD-123"
 			(at 0 -2.1 90)
 			(layer "B.Fab")
 			(uuid "8c6fe586-2d56-44ee-9cda-4c10b9ccc70a")
@@ -17600,7 +17645,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 -1.17 90)
 			(layer "B.Fab")
 			(uuid "190badc0-99f5-49cd-a801-6ac92a88ce63")
@@ -18799,7 +18844,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL21A106KAYNNNE | Samsung Electro-Mechanics | 0805"
 			(at 0 -1.68 0)
 			(layer "B.Fab")
 			(uuid "5c42abff-8230-4586-a353-c3d370f9b12a")
@@ -18993,7 +19038,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 -1.16 90)
 			(layer "B.Fab")
 			(uuid "c6ee5121-2a7c-4dd9-9b93-9f86adb06fd3")
@@ -19200,7 +19245,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 -1.16 0)
 			(layer "B.Fab")
 			(uuid "3681de8c-af85-421b-a828-5ca8c7b8781d")
@@ -19378,11 +19423,11 @@
 	(footprint "Resistor_SMD:R_0402_1005Metric"
 		(layer "B.Cu")
 		(uuid "5c5860a7-81e7-4698-a708-a667bc1361f3")
-		(at 147.95 129.96 90)
+		(at 147.16 128.9 180)
 		(descr "Resistor SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R_INV_BASE1"
-			(at 0 1.17 90)
+			(at 0 1.17 0)
 			(layer "B.SilkS")
 			(hide yes)
 			(uuid "c165d788-5027-4a4b-9914-327035748cfe")
@@ -19394,8 +19439,8 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100kΩ"
-			(at 0 -1.17 90)
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
+			(at 0 -1.17 0)
 			(layer "B.Fab")
 			(uuid "56f32c32-2f2e-4fa4-bf82-988c0559c245")
 			(effects
@@ -19407,7 +19452,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 0 0 90)
+			(at 0 0 0)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "8da66c85-7ae4-4a3b-8dd4-41a317fd2ece")
@@ -19419,7 +19464,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 0 0 90)
+			(at 0 0 0)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "ce348c07-f03c-4db1-abb1-69502b18d1d7")
@@ -19431,7 +19476,7 @@
 			)
 		)
 		(property "MF" "UNI-ROYAL(Uniroyal Elec)"
-			(at 0 0 90)
+			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
@@ -19445,7 +19490,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "0402WGF1003TCE"
-			(at 0 0 90)
+			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
@@ -19459,7 +19504,7 @@
 			)
 		)
 		(property "LCSC" "C25741"
-			(at 0 0 90)
+			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
@@ -19473,7 +19518,7 @@
 			)
 		)
 		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 90)
+			(at 0 0 0)
 			(layer "B.SilkS")
 			(hide yes)
 			(uuid "b21a4406-c7cf-4376-9b55-40b051b56f22")
@@ -19498,16 +19543,6 @@
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
-			(start -0.153641 -0.38)
-			(end 0.153641 -0.38)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "cdad0d76-b197-4e1c-b8d0-0fbd96583788")
-		)
-		(fp_line
 			(start -0.153641 0.38)
 			(end 0.153641 0.38)
 			(stroke
@@ -19516,6 +19551,16 @@
 			)
 			(layer "B.SilkS")
 			(uuid "13570023-4666-4b70-9e5e-7f34896b9d5b")
+		)
+		(fp_line
+			(start -0.153641 -0.38)
+			(end 0.153641 -0.38)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "cdad0d76-b197-4e1c-b8d0-0fbd96583788")
 		)
 		(fp_rect
 			(start -0.93 0.47)
@@ -19540,7 +19585,7 @@
 			(uuid "c6936261-cbc8-4fca-b1ab-8d9d45a2bff8")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 90)
+			(at 0 0 0)
 			(layer "B.Fab")
 			(uuid "87a9a914-ed1b-43b4-a319-23a521ca63c0")
 			(effects
@@ -19552,7 +19597,7 @@
 			)
 		)
 		(pad "1" smd roundrect
-			(at -0.51 0 90)
+			(at -0.51 0 180)
 			(size 0.54 0.64)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
@@ -19561,7 +19606,7 @@
 			(uuid "8dbbdf9b-e2c5-4138-a7d0-c4bfc39f60f6")
 		)
 		(pad "2" smd roundrect
-			(at 0.51 0 90)
+			(at 0.51 0 180)
 			(size 0.54 0.64)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
@@ -19601,7 +19646,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 -1.17 90)
 			(layer "B.Fab")
 			(uuid "04e53094-b71f-4547-8231-cd68fab91622")
@@ -19808,7 +19853,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 -1.17 0)
 			(layer "B.Fab")
 			(uuid "e65570ba-f7fe-4f0b-bda1-c7841679f1ac")
@@ -20002,7 +20047,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3400A"
+		(property "Value" "AO3400A | Alpha & Omega Semicon | SOT-23"
 			(at 0 -2.4 0)
 			(layer "B.Fab")
 			(uuid "4b9234fe-8e61-4982-93b5-7898f69b1ba1")
@@ -20419,7 +20464,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 -1.16 90)
 			(layer "B.Fab")
 			(uuid "51e5f2c8-7140-4978-af3a-5690f99018b2")
@@ -20892,7 +20937,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL21A106KAYNNNE | Samsung Electro-Mechanics | 0805"
 			(at 0 -1.68 0)
 			(layer "B.Fab")
 			(uuid "749c8d9a-e32d-421f-bf57-c3ee34a4d812")
@@ -21084,7 +21129,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "bq25185"
+		(property "Value" "BQ25185DLHR | Texas Instruments | WSON-10 2.2x2.0mm"
 			(at 56.2 -43.635 0)
 			(layer "B.Fab")
 			(uuid "937d09f5-09df-4d6b-8572-16fb39cbd9a6")
@@ -22021,7 +22066,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 -1.17 0)
 			(layer "B.Fab")
 			(uuid "eae49a37-aea4-4eed-a407-7a7d70c52a2b")
@@ -22342,7 +22387,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "DRV5055A2"
+		(property "Value" "DRV5055A2QLPGM | Texas Instruments | TO-92 THT"
 			(at 1.27 -2.79 0)
 			(layer "B.Fab")
 			(uuid "4c670d9a-6814-4904-96d3-95f1a2fda210")
@@ -22603,7 +22648,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "1N4148W"
+		(property "Value" "1N4148W | ST(Semtech) | SOD-123"
 			(at 0 -2.1 90)
 			(layer "B.Fab")
 			(uuid "f8ddd6ba-73cb-425f-908a-ca279616d708")
@@ -23193,7 +23238,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "1MΩ"
+		(property "Value" "1MΩ | 0402WGF1004TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 -1.17 90)
 			(layer "B.Fab")
 			(uuid "144004f1-efc5-48c5-b085-980750e018e8")
@@ -23387,7 +23432,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "56.2kΩ"
+		(property "Value" "56.2kΩ | RC0402FR-0756K2L | Yageo | 0402"
 			(at 0 -1.17 90)
 			(layer "B.Fab")
 			(uuid "b55b50dc-dc46-4e31-93fe-2035e67495f2")
@@ -23581,7 +23626,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "18kΩ"
+		(property "Value" "RC0402FR-0718KL | Yageo | 0402"
 			(at 0 -1.17 0)
 			(layer "B.Fab")
 			(uuid "7e793424-fb67-4346-b4a3-298fb9739d26")
@@ -23775,7 +23820,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 -1.17 0)
 			(layer "B.Fab")
 			(uuid "1b38bcb2-b9f0-4354-bfc1-2e14c19c2f09")
@@ -23969,7 +24014,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "604Ω"
+		(property "Value" "AC0402FR-07604RL | Yageo | 0402"
 			(at 0 -1.17 0)
 			(layer "B.Fab")
 			(uuid "f027cebe-49d5-49e6-a92f-4d7877f2f125")
@@ -24277,7 +24322,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "255kΩ"
+		(property "Value" "RC0402FR-07255KL | Yageo | 0402"
 			(at 0 -1.17 90)
 			(layer "B.Fab")
 			(uuid "76f124bf-ddb5-4cf2-b403-33478361bf0f")
@@ -24471,7 +24516,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100pF"
+		(property "Value" "100pF | 0402CG101J500NT | FH (Guangdong Fenghua Advanced Tech) | 0402"
 			(at 0 -1.16 90)
 			(layer "B.Fab")
 			(uuid "5e4bfd15-0e5e-446a-9500-b12d7882a36c")
@@ -24678,7 +24723,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "2.2nF"
+		(property "Value" "2.2nF | CL05B222KB5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 -1.16 90)
 			(layer "B.Fab")
 			(uuid "1976a3d7-bb88-4ba4-ac64-eee796f41df1")
@@ -24885,7 +24930,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "TLV62569"
+		(property "Value" "TLV62569DBVR | Texas Instruments | SOT-23-5"
 			(at 0 -2.4 90)
 			(layer "B.Fab")
 			(uuid "dbf29a2f-dc38-4905-a157-c294851a716a")
@@ -25323,7 +25368,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "2.2µH"
+		(property "Value" "2.2µH | SRN4018-2R2M | Bourns | 4.0x4.0mm SMD"
 			(at 0 3.1 0)
 			(layer "B.Fab")
 			(uuid "c280e13b-9ede-4a39-8680-9ad1df30b799")
@@ -25639,7 +25684,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "10nF"
+		(property "Value" "10nF | CL05B103KB5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 0 -1.16 90)
 			(layer "B.Fab")
 			(uuid "6528280e-5499-4a25-9160-f7faf4438923")
@@ -25846,7 +25891,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "MMBT3904"
+		(property "Value" "MMBT3904(RANGE:100-300) | Jiangsu Changjing Electronics Technology Co Ltd | SOT-23"
 			(at 0 -2.4 0)
 			(layer "B.Fab")
 			(uuid "bac86b8b-7b04-4239-9403-9647a76fd051")
@@ -26304,7 +26349,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 0 -1.17 0)
 			(layer "B.Fab")
 			(uuid "38311a83-d968-43a5-b963-3f4b048ffe57")
@@ -33844,20 +33889,20 @@
 		(uuid "3e00537c-b089-4f84-810c-25413f57b4c3")
 	)
 	(segment
-		(start 147.1 133.7)
-		(end 146.1 132.7)
-		(width 0.2)
-		(layer "B.Cu")
-		(net "/MCU_Core/PWR_BTN_SENSE")
-		(uuid "461920f2-ec3d-429c-a664-037e3d098cae")
-	)
-	(segment
 		(start 122.9845 152.4845)
 		(end 125 154.5)
 		(width 0.2)
 		(layer "B.Cu")
 		(net "/MCU_Core/PWR_BTN_SENSE")
 		(uuid "4688f583-b875-4685-9b2c-da1b8b84f151")
+	)
+	(segment
+		(start 147.1 132.45)
+		(end 147.1 132.65)
+		(width 0.2)
+		(layer "B.Cu")
+		(net "/MCU_Core/PWR_BTN_SENSE")
+		(uuid "4f6fb210-a2e0-4eaa-8100-5902b85fe02a")
 	)
 	(segment
 		(start 150.6 133.8)
@@ -33900,14 +33945,6 @@
 		(uuid "8d396879-0032-49c6-a7f4-16ab785a87ab")
 	)
 	(segment
-		(start 148.15 133.7)
-		(end 147.1 133.7)
-		(width 0.2)
-		(layer "B.Cu")
-		(net "/MCU_Core/PWR_BTN_SENSE")
-		(uuid "968994fa-9448-43ba-9aa4-f60b4f1c9273")
-	)
-	(segment
 		(start 125.063866 147)
 		(end 122.9845 149.079366)
 		(width 0.2)
@@ -33930,6 +33967,14 @@
 		(layer "B.Cu")
 		(net "/MCU_Core/PWR_BTN_SENSE")
 		(uuid "a4470c85-4ae5-4562-ae57-b0b9a42d3cf0")
+	)
+	(segment
+		(start 147.1 132.65)
+		(end 148.15 133.7)
+		(width 0.2)
+		(layer "B.Cu")
+		(net "/MCU_Core/PWR_BTN_SENSE")
+		(uuid "b6ce2d5b-edc1-44bc-84f1-c604838aa739")
 	)
 	(segment
 		(start 122.9845 149.079366)
@@ -34732,6 +34777,14 @@
 		(uuid "11b426da-0e39-42a6-9a73-9a0fbcbb9b6f")
 	)
 	(segment
+		(start 147.67 128.9)
+		(end 147.67 129.08)
+		(width 0.2)
+		(layer "B.Cu")
+		(net "VSYS")
+		(uuid "192bb0eb-2af4-4913-ae2a-cbeb65627655")
+	)
+	(segment
 		(start 143.4 123.95)
 		(end 143.6 124.15)
 		(width 0.2)
@@ -34780,14 +34833,6 @@
 		(uuid "3cd39d96-227b-4673-abd0-8e6137cc43a2")
 	)
 	(segment
-		(start 149.06 130.47)
-		(end 149.35 130.76)
-		(width 0.2)
-		(layer "B.Cu")
-		(net "VSYS")
-		(uuid "40dd4f95-e8ac-4b71-96c0-5ea3ffa2ee3d")
-	)
-	(segment
 		(start 131.7 105.5)
 		(end 131.45 105.5)
 		(width 0.2)
@@ -34818,14 +34863,6 @@
 		(layer "B.Cu")
 		(net "VSYS")
 		(uuid "6ef624d0-fd4f-433e-b8a8-b5df8572f4e8")
-	)
-	(segment
-		(start 147.95 130.47)
-		(end 149.06 130.47)
-		(width 0.2)
-		(layer "B.Cu")
-		(net "VSYS")
-		(uuid "6fc56c89-1f28-41fc-aeff-b05d60197027")
 	)
 	(segment
 		(start 148.625 114.605)
@@ -34930,6 +34967,14 @@
 		(layer "B.Cu")
 		(net "VSYS")
 		(uuid "c4046664-66b7-471a-a3ea-0a499666bb41")
+	)
+	(segment
+		(start 147.67 129.08)
+		(end 149.35 130.76)
+		(width 0.2)
+		(layer "B.Cu")
+		(net "VSYS")
+		(uuid "ca9a4b1e-0ed3-4d20-988e-ca8a30895d69")
 	)
 	(segment
 		(start 130.525 106.425)
@@ -35436,36 +35481,36 @@
 		(uuid "f9ac96f7-600c-4583-80e7-45fd9e97b1b5")
 	)
 	(segment
-		(start 146.1 129.4)
-		(end 147.9 129.4)
+		(start 146.65 128.9)
+		(end 146.65 130.475)
 		(width 0.2)
 		(layer "B.Cu")
 		(net "/Power_Control/PWR_BTN_INV_BASE")
-		(uuid "34d51e35-49c4-4c93-a070-9053fabbe6b4")
-	)
-	(segment
-		(start 145.85 129.15)
-		(end 146.1 129.4)
-		(width 0.2)
-		(layer "B.Cu")
-		(net "/Power_Control/PWR_BTN_INV_BASE")
-		(uuid "5cca08ab-6f91-420c-9df2-d3168562683a")
-	)
-	(segment
-		(start 147.9 129.4)
-		(end 147.95 129.45)
-		(width 0.2)
-		(layer "B.Cu")
-		(net "/Power_Control/PWR_BTN_INV_BASE")
-		(uuid "8133c758-9095-4fc1-805d-eab9567923fa")
+		(uuid "42def42b-3258-4237-91ae-200ff8189e4c")
 	)
 	(segment
 		(start 145.85 126.85)
-		(end 145.85 129.15)
+		(end 146.65 127.65)
 		(width 0.2)
 		(layer "B.Cu")
 		(net "/Power_Control/PWR_BTN_INV_BASE")
-		(uuid "bc3ec188-9bba-401d-994b-163b99da18b6")
+		(uuid "73a3c816-45be-423c-8b07-78f25c0afd55")
+	)
+	(segment
+		(start 146.65 130.475)
+		(end 146.45 130.675)
+		(width 0.2)
+		(layer "B.Cu")
+		(net "/Power_Control/PWR_BTN_INV_BASE")
+		(uuid "8c026632-be02-4533-ac51-ddad2bcea7cb")
+	)
+	(segment
+		(start 146.65 127.65)
+		(end 146.65 128.9)
+		(width 0.2)
+		(layer "B.Cu")
+		(net "/Power_Control/PWR_BTN_INV_BASE")
+		(uuid "df0fd726-e4da-4a84-9715-884179f8e98c")
 	)
 	(segment
 		(start 147 122.95)

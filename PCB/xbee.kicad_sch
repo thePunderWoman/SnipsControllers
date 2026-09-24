@@ -1312,7 +1312,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "47pF"
+		(property "Value" "47pF | 0402CG470J500NT | FH (Guangdong Fenghua Advanced Tech) | 0402"
 			(at 160.655 137.16 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1424,7 +1424,7 @@
 				(justify left top)
 			)
 		)
-		(property "Value" "XBee3"
+		(property "Value" "XBee3 | XB3-24Z8UT-J | Digi International | XBee through-hole"
 			(at 161.29 101.6 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1632,7 +1632,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1µF"
+		(property "Value" "1µF | CL10A105KB8NNNC | Samsung Electro-Mechanics | 0603"
 			(at 147.955 137.16 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1744,7 +1744,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL10A106KP8NNNC | Samsung Electro-Mechanics | 0603"
 			(at 173.355 137.16 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1856,7 +1856,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 167.005 105.41 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1967,7 +1967,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 195.58 110.49 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2077,7 +2077,7 @@
 				)
 			)
 		)
-		(property "Value" "100Ω"
+		(property "Value" "0402WGF1000TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 166.37 69.85 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2187,7 +2187,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 210.82 110.49 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2298,7 +2298,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 135.255 137.16 0)
 			(show_name no)
 			(do_not_autoplace no)

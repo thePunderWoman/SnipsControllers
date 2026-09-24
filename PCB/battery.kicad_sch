@@ -232,7 +232,7 @@
 				)
 			)
 		)
-		(property "Value" "JST-PH_2Pin_Battery_RightAngle_Horizontal"
+		(property "Value" "PH 2-pin battery RIGHT-ANGLE HORIZONTAL | S2B-PH-K(LF)(SN) | JST | THT right-angle horizontal 2.00mm"
 			(at 148.59 100.33 0)
 			(show_name no)
 			(do_not_autoplace no)

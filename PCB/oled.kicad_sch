@@ -631,7 +631,7 @@
 				)
 			)
 		)
-		(property "Value" "JST-SH_4Pin_OLED"
+		(property "Value" "JST-SH_4Pin_OLED | SM04B-SRSS-TB(LF)(SN) | JST | SMD horizontal 1.00mm 4-pin"
 			(at 214.63 96.41 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -750,7 +750,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL21A106KAYNNNE | Samsung Electro-Mechanics | 0805"
 			(at 83.185 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -862,7 +862,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 113.665 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)

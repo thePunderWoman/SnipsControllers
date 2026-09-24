@@ -2473,7 +2473,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10µF"
+		(property "Value" "10µF | CL10A106KP8NNNC | Samsung Electro-Mechanics | 0603"
 			(at 85.725 104.14 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2585,7 +2585,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Value" "ESP32-S3-WROOM-1-N8"
+		(property "Value" "ESP32-S3-WROOM-1-N8 | Espressif Systems | SMD module 18x25.5mm"
 			(at 181.61 60.96 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2890,7 +2890,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 135.89 148.59 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3001,7 +3001,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "39pF"
+		(property "Value" "39pF | CC0402JRNPO9BN390 | Yageo | 0402"
 			(at 128.905 104.14 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3112,7 +3112,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ"
+		(property "Value" "10kΩ | 0402WGF1002TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 166.37 148.59 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3222,7 +3222,7 @@
 				)
 			)
 		)
-		(property "Value" "200kΩ"
+		(property "Value" "200kΩ | 0402WGF2003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 55.88 130.81 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3407,7 +3407,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Panasonic_EVQP2"
+		(property "Value" "Panasonic_EVQP2 | EVQP2T02M | Panasonic | SMD tactile 2.1mm"
 			(at 201.93 145.796 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3517,7 +3517,7 @@
 				)
 			)
 		)
-		(property "Value" "27Ω"
+		(property "Value" "RC0402FR-0727RL | Yageo | 0402"
 			(at 144.78 93.98 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3627,7 +3627,7 @@
 				)
 			)
 		)
-		(property "Value" "100kΩ"
+		(property "Value" "100kΩ | 0402WGF1003TCE | UNI-ROYAL(Uniroyal Elec) | 0402"
 			(at 106.68 143.51 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3738,7 +3738,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100nF | CL05B104KO5NNNC | Samsung Electro-Mechanics | 0402"
 			(at 116.205 104.14 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3997,7 +3997,7 @@
 				)
 			)
 		)
-		(property "Value" "27Ω"
+		(property "Value" "RC0402FR-0727RL | Yageo | 0402"
 			(at 269.24 86.36 90)
 			(show_name no)
 			(do_not_autoplace no)

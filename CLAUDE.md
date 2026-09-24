@@ -22,3 +22,19 @@
    gh pr create ...
    ```
 3. Once a PR lands, delete the local feature branch. This repo always squash or rebase merges — `main` never gets a merge commit for the PR, so `git branch -d` (and `--merged` checks) won't recognize the branch as merged even though its content has landed. Confirm via `git log --oneline` (look for the PR's commit/title on `main`) or `gh pr view <branch> --json state`, then use `git branch -D <branch>` to remove it.
+
+## BOM Value fields
+
+The fab's BOM shows only Designator, Footprint, Quantity and **Value** (never MF, MPN or LCSC), so every
+component's Value is `<label> | <MPN> | <manufacturer> | <package>` (see `scripts/bom_values.py` for the
+exact rules). Every board component needs `MF` and `Manufacturer_Part_Number`.
+
+- After adding or changing a part, run `python3 scripts/bom_values.py --apply`, then `--check`. Close
+  the files in KiCad first (or reload after). `--check` also fails if the PCB copy of a part's Value,
+  MF, MPN or footprint differs from the schematic, so run Update PCB from Schematic before regenerating
+  production files.
+- A new footprint must be added to `PACKAGES` in the script on purpose. Parts that are hand-sourced with
+  no known MPN go in `NO_MPN_OK`, so a gap is never silent.
+- Prefer common parts (several makers, broadly stocked, one package per name). The retired JLCPCB
+  Basic-library preference no longer applies.
+

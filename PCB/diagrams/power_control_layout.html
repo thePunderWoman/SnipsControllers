@@ -261,7 +261,7 @@ footer{
   <div class="meta">
     <span>Source: <b>PCB/power_control.kicad_sch</b></span>
     <span>Nets: <b>VSYS → PWR_EN</b></span>
-    <span>Package: <b>SOT-23 ×3, SOD-123 ×3</b></span>
+    <span>Package: <b>SOT-23 ×3, SOD-123 ×2, SOT-323 ×1</b></span>
   </div>
 </header>
 
@@ -274,7 +274,7 @@ footer{
       <tr><th>Ref</th><th>Value</th><th>Footprint</th><th>Role</th></tr>
     </thead>
     <tbody>
-      <tr><td class="ref">Q_PWR1</td><td class="val">DMG2305UX</td><td class="val">SOT-23</td><td class="role">Main power switch — VSYS to PWR_EN, carries full system current</td></tr>
+      <tr><td class="ref">Q_PWR1</td><td class="val">AO3401A</td><td class="val">SOT-23</td><td class="role">Main power switch — VSYS to PWR_EN, carries full system current</td></tr>
       <tr><td class="ref">R_PWR_EN_PD1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">PWR_EN pull-down to GND — the buck's EN pin has no internal bias and must not be left floating (callout G)</td></tr>
       <tr><td class="ref">Q_LATCH1</td><td class="val">AO3400A</td><td class="val">SOT-23</td><td class="role">Pulls Q_PWR1's gate low to turn it on; low-Vth (≤1.45V) so a press still turns it on at the bottom of the battery range (callout D)</td></tr>
       <tr><td class="ref">D_OR1 / D_OR2</td><td class="val">1N4148W</td><td class="val">SOD-123</td><td class="role">Diode-OR: PWR_BTN_TRIGGER (actual button press, via the inverter) or MCU hold, either one latches power on</td></tr>
@@ -283,7 +283,7 @@ footer{
       <tr><td class="ref">C_LATCH_G1</td><td class="val">100nF</td><td class="val">0402</td><td class="role">Latch-gate filter — keeps the ~2ms battery-insertion transient from lifting PWR_LATCH_G (callout I)</td></tr>
       <tr><td class="ref">R_BTN_PU1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">Button sense pull-up to 3V3 (not VSYS) — MCU reads pressed (0V) vs idle (3.3V); callout H</td></tr>
       <tr><td class="ref">R_INV_BASE1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">Dedicated VSYS pull-up for Q_INV1's base — decoupled from PWR_BTN_SENSE (callout F)</td></tr>
-      <tr><td class="ref">D_INV_ISO1</td><td class="val">BAT54W</td><td class="val">SOD-123</td><td class="role">Schottky isolator: lets a press pull Q_INV1's base low without loading PWR_BTN_SENSE</td></tr>
+      <tr><td class="ref">D_INV_ISO1</td><td class="val">BAT54W-7-F</td><td class="val">SOT-323</td><td class="role">Schottky isolator: lets a press pull Q_INV1's base low without loading PWR_BTN_SENSE</td></tr>
       <tr><td class="ref">Q_INV1</td><td class="val">MMBT3904</td><td class="val">SOT-23</td><td class="role">Inverter: idle (button up) holds PWR_BTN_TRIGGER low; pressed lets R_INV_PU1 pull it high</td></tr>
       <tr><td class="ref">R_INV_PU1</td><td class="val">100kΩ</td><td class="val">0402</td><td class="role">PWR_BTN_TRIGGER pull-up to VSYS — the inverter's collector load</td></tr>
       <tr><td class="ref">C_DBNC1</td><td class="val">100nF</td><td class="val">0402</td><td class="role">Button debounce, right at the switch</td></tr>
@@ -384,7 +384,7 @@ footer{
         <!-- Q_PWR1 -->
         <rect x="210" y="135" width="60" height="40" rx="4" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
         <text x="240" y="127" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="12" fill="#e0b563">Q_PWR1</text>
-        <text x="240" y="196" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#7fa08d">DMG2305UX (PMOS)</text>
+        <text x="240" y="196" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#7fa08d">AO3401A (PMOS)</text>
         <rect x="209" y="151" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
         <rect x="257" y="151" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
         <rect x="233" y="171" width="14" height="8" fill="#e0b563" stroke="#8a672f"/>
@@ -445,7 +445,7 @@ footer{
              the inverter no longer loads the MCU's own button-sense node
              (see callout F) -->
         <rect x="333" y="472" width="14" height="16" rx="2" fill="#20241f" stroke="#4a5044" stroke-width="1.5"/>
-        <text x="352" y="483" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">D_INV_ISO1 (BAT54W)</text>
+        <text x="352" y="483" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8fd3ff">D_INV_ISO1 (BAT54W-7-F)</text>
 
         <path d="M340,488 L340,505" fill="none" stroke="#8fd3ff" stroke-width="3" stroke-linecap="round"/>
 
@@ -539,7 +539,7 @@ footer{
 <section>
   <h2>Why it's arranged this way</h2>
   <ol class="callouts">
-    <li><span class="badge">A</span><p><b>Q_PWR1 is the one part on this sheet that isn't low-current.</b> Every downstream milliamp — MCU, XBee, OLED, everything — flows through its source-drain path. DMG2305UX's RDS(on) (~35–50mΩ) keeps drop and heat trivial at this board's current budget, but a SOT-23 has no separate thermal pad — the source/drain copper itself is the heatsink, so give those pads real copper, not just a skinny trace.</p></li>
+    <li><span class="badge">A</span><p><b>Q_PWR1 is the one part on this sheet that isn't low-current.</b> Every downstream milliamp — MCU, XBee, OLED, everything — flows through its source-drain path. AO3401A's RDS(on) (<60mΩ at 4.5V gate drive, <85mΩ at 2.5V) keeps drop and heat trivial at this board's current budget, but a SOT-23 has no separate thermal pad — the source/drain copper itself is the heatsink, so give those pads real copper, not just a skinny trace.</p></li>
     <li><span class="badge">B</span><p><b>SW_PWR1's position isn't yours to optimize electrically.</b> It has to land under a hole in whatever enclosure this board sits in — mechanical placement drives this part, and the rest of the latch logic has to route to wherever that ends up, not the other way around.</p></li>
     <li><span class="badge">C</span><p><b>C_DBNC1 sits right on the switch's own pins.</b> Same principle as the charger's pushbutton guidance in its own datasheet: the debounce cap does its job by being close to the contact bounce it's filtering, not by being close to anything else.</p></li>
     <li><span class="badge">D</span><p><b>The diode-OR and its pull-down are one compact decision node — and R_LATCH_G1's value is load-bearing, not incidental.</b> D_OR1, D_OR2, R_LATCH_G1, and Q_LATCH1's gate all meet at PWR_LATCH_G. A press only drives this node through R_INV_PU1 (100kΩ) and a diode drop — with the original 10kΩ pull-down, that divider left barely 0.3V at Q_LATCH1's gate, nowhere near enough to turn it on. Raised to 1MΩ, the same divider delivers ~2.4V at the bottom of the battery range (VSYS≈3.0V, modelling a real ~0.35V diode drop at µA currents) up to ~3.5V at full charge, without adding any idle current (that's set by R_INV_PU1, untouched). A 2N7002's worst-case threshold is 2.5V, which left no margin at the bottom, so Q_LATCH1 is an AO3400A (Vgs(th) ≤1.45V): at least ~1V of overdrive everywhere. Keeping this cluster tight matters less for noise than for just keeping the logic legible on the board.</p></li>
@@ -567,7 +567,7 @@ footer{
 </section>
 
 <div class="note">
-  <b>Checked, not just assumed:</b> DMG2305UX is rated for ~4A continuous with 35–50mΩ RDS(on) in this SOT-23 package — comfortably oversized for a handheld controller's sub-2A system budget, so this isn't a thermal risk the way the charger's WSON is. MMBT3904 is a general-purpose small-signal part switching microamps here (just enough to bias a diode) — nowhere near its ratings, no thermal consideration needed. BAT54W's job is purely to isolate two nodes at sub-1V forward drop, also nowhere near its ratings. Connectivity alone (ERC, netlist, DRC) doesn't catch bad DC bias points — the R_LATCH_G1/PWR_BTN_SENSE loading bugs in callouts D and F, and the floating PWR_EN in callout G, all passed every connectivity check and were only found by actually working through the bias/divider math or reading the driven IC's own datasheet, so don't treat a clean ERC/DRC as proof a gate-drive, sense, or enable network will behave.
+  <b>Checked, not just assumed:</b> AO3401A is rated for 4A continuous with <60mΩ RDS(on) at 4.5V gate drive in this SOT-23 package — comfortably oversized for a handheld controller's sub-2A system budget, so this isn't a thermal risk the way the charger's WSON is. MMBT3904 is a general-purpose small-signal part switching microamps here (just enough to bias a diode) — nowhere near its ratings, no thermal consideration needed. BAT54W-7-F's job is purely to isolate two nodes at sub-1V forward drop, also nowhere near its ratings. Connectivity alone (ERC, netlist, DRC) doesn't catch bad DC bias points — the R_LATCH_G1/PWR_BTN_SENSE loading bugs in callouts D and F, and the floating PWR_EN in callout G, all passed every connectivity check and were only found by actually working through the bias/divider math or reading the driven IC's own datasheet, so don't treat a clean ERC/DRC as proof a gate-drive, sense, or enable network will behave.
 </div>
 
 <footer>
