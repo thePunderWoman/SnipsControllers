@@ -374,24 +374,6 @@
 			)
 			(symbol "SSD1306_OLED_4pin_1_1"
 				(pin power_in line
-					(at -16.51 3.81 0)
-					(length 3.81)
-					(name "VCC"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
 					(at -16.51 1.27 0)
 					(length 3.81)
 					(name "GND"
@@ -409,17 +391,17 @@
 						)
 					)
 				)
-				(pin input line
-					(at -16.51 -1.27 0)
+				(pin power_in line
+					(at -16.51 3.81 0)
 					(length 3.81)
-					(name "SCL"
+					(name "VCC"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "4"
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -438,6 +420,24 @@
 						)
 					)
 					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -16.51 -1.27 0)
+					(length 3.81)
+					(name "SCL"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
