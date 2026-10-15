@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Generate the D_RGB1 LED adapter board and its 4x4 panel.
+"""Generate the D_RGB1 LED adapter board and its 4x5 panel.
 
-The 15 rev-1 Snips boards (10 + Alex's 5) were fabbed with the old
+The 20 rev-1 Snips boards (10 + Alex's 10) were fabbed with the old
 SK6812MINI-E-012 land pattern at D_RGB1. That land was drawn from the
 datasheet's BOTTOM view, so a lens-up LED is mirrored on it and no rotation
 fixes it. This adapter solders onto that old land with its bottom pads and
@@ -27,7 +27,7 @@ Run with KiCad's bundled Python (it needs the pcbnew module):
         PCB/led_adapter/generate_led_adapter.py
 
 It writes led_adapter.kicad_pcb (one adapter) and led_adapter_panel.kicad_pcb
-(the 4x4 panel to order) next to this script. Do not edit those by hand.
+(the 4x5 panel to order) next to this script. Do not edit those by hand.
 """
 
 import os
@@ -87,9 +87,9 @@ SILK_TEXT = [
     ("NC", "B", 0.85, 1.06, 0.5),
 ]
 
-# Panel: 4x4 = 16 adapters (15 needed + 1 spare), held by one mouse-bite tab
+# Panel: 4 columns x 5 rows = 20 adapters, one per rev-1 board, held by one mouse-bite tab
 # on each x side.
-NX, NY = 4, 4
+NX, NY = 4, 5
 GAP = 2.0
 RAIL = 5.0
 TAB_W = 2.2
@@ -298,7 +298,7 @@ def build_panel(path):
         pad.SetPosition(pt(x, y))
         holes.Add(pad)
 
-    add_text(board, "SNIPS D_RGB1 LED ADAPTER v1  -  16 UP", pcbnew.F_SilkS,
+    add_text(board, f"SNIPS D_RGB1 LED ADAPTER v1  -  {NX * NY} UP", pcbnew.F_SilkS,
              x0 + width / 2, y0 + RAIL / 2, 1.2, False)
     board.Save(path)
 

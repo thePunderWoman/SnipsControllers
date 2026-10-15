@@ -1,6 +1,6 @@
 # D_RGB1 LED adapter (rev-1 boards only)
 
-The 15 rev-1 Snips boards (10 + Alex's 5) were fabbed with the old SK6812MINI-E-012 land at
+The 20 rev-1 Snips boards (10 + Alex's 10) were fabbed with the old SK6812MINI-E-012 land at
 D_RGB1. That land is the datasheet's bottom view, so a lens-up LED is mirrored on it and no
 rotation fixes it (see PR #65). This small adapter fixes those boards without rework. Its bottom
 pads solder onto the old land, and its top carries the SK6812MINI-HS-012 land, the same footprint
@@ -19,7 +19,7 @@ R_RGB1/C_RGB1/R_CC2 and the board edge around D_RGB1.
 ## Files
 
 - `generate_led_adapter.py` is the source. It writes `led_adapter.kicad_pcb` (one adapter) and
-  `led_adapter_panel.kicad_pcb` (4 x 4 panel). Don't edit the boards by hand; change the script
+  `led_adapter_panel.kicad_pcb` (4 x 5 panel). Don't edit the boards by hand; change the script
   and rerun it with KiCad's Python:
   `/Applications/KiCad/KiCad.app/Contents/Frameworks/Python.framework/Versions/Current/bin/python3 PCB/led_adapter/generate_led_adapter.py`
 - `production/led_adapter_panel_gerbers.zip` is the upload for the fab (Gerbers, PTH and NPTH
@@ -30,12 +30,12 @@ R_RGB1/C_RGB1/R_CC2 and the board edge around D_RGB1.
 | Setting | Value |
 |---|---|
 | Layers | 2 |
-| Size | 47.2 x 42.4 mm (one panel of 16 adapters) |
-| Delivery format | Panel by customer, 1 design, 4 x 4, mouse-bite tabs already in the files |
+| Size | 47.2 x 50.0 mm (one panel of 20 adapters) |
+| Delivery format | Panel by customer, 1 design, 4 x 5, mouse-bite tabs already in the files |
 | Thickness | 0.6 mm (keeps the LED low; 0.8 mm also works) |
 | Surface finish | ENIG preferred (flat pads for stacking); lead-free HASL works |
 | Min track / hole | 0.25 mm / 0.3 mm via, 0.5 mm NPTH (standard) |
-| Quantity | The minimum (usually 5 panels = 80 adapters) |
+| Quantity | The minimum (usually 5 panels = 100 adapters) |
 
 ## Assembly
 
