@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the D_RGB1 LED adapter board and its 4x5 panel.
+"""Generate the D_RGB1 LED adapter board and its 4x4 panel.
 
 The 20 rev-1 Snips boards (10 + Alex's 10) were fabbed with the old
 SK6812MINI-E-012 land pattern at D_RGB1. That land was drawn from the
@@ -27,7 +27,7 @@ Run with KiCad's bundled Python (it needs the pcbnew module):
         PCB/led_adapter/generate_led_adapter.py
 
 It writes led_adapter.kicad_pcb (one adapter) and led_adapter_panel.kicad_pcb
-(the 4x5 panel to order) next to this script. Do not edit those by hand.
+(the 4x4 panel to order) next to this script. Do not edit those by hand.
 """
 
 import os
@@ -87,9 +87,9 @@ SILK_TEXT = [
     ("NC", "B", 0.85, 1.06, 0.5),
 ]
 
-# Panel: 4 columns x 5 rows = 20 adapters, one per rev-1 board, held by one mouse-bite tab
-# on each x side.
-NX, NY = 4, 5
+# Panel: 4x4 = 16 adapters, each held by one mouse-bite tab on each x side.
+# The fab minimum of 5 panels (80 adapters) covers all 20 rev-1 boards.
+NX, NY = 4, 4
 GAP = 2.0
 RAIL = 5.0
 TAB_W = 2.2
