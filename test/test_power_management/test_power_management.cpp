@@ -183,6 +183,32 @@ void test_default_config_uses_low_led_brightness() {
   TEST_ASSERT_TRUE(LedBrightness::kLow == config.ledBrightness);
 }
 
+void test_xbee_sleeps_only_in_deepest_tier_or_countdown() {
+  TEST_ASSERT_FALSE(shouldXbeeSleep(PowerTier::kFull, false));
+  TEST_ASSERT_FALSE(shouldXbeeSleep(PowerTier::kDim, false));
+  TEST_ASSERT_FALSE(shouldXbeeSleep(PowerTier::kOff, false));
+  TEST_ASSERT_TRUE(shouldXbeeSleep(PowerTier::kXbeeAsleep, false));
+  TEST_ASSERT_TRUE(shouldXbeeSleep(PowerTier::kFull, true));
+}
+
+void test_light_sleep_only_in_deepest_tier() {
+  TEST_ASSERT_FALSE(shouldLightSleep(PowerTier::kFull, false, false, false));
+  TEST_ASSERT_FALSE(shouldLightSleep(PowerTier::kDim, false, false, false));
+  TEST_ASSERT_FALSE(shouldLightSleep(PowerTier::kOff, false, false, false));
+  TEST_ASSERT_TRUE(
+      shouldLightSleep(PowerTier::kXbeeAsleep, false, false, false));
+}
+
+void test_no_light_sleep_with_usb_host_charging_or_countdown() {
+  TEST_ASSERT_FALSE(shouldLightSleep(PowerTier::kXbeeAsleep, true, false, false));
+  TEST_ASSERT_FALSE(shouldLightSleep(PowerTier::kXbeeAsleep, false, true, false));
+  TEST_ASSERT_FALSE(shouldLightSleep(PowerTier::kXbeeAsleep, false, false, true));
+}
+
+void test_light_sleep_period_is_short_enough_for_stick_sampling() {
+  TEST_ASSERT_EQUAL_UINT32(100, kLightSleepPeriodMs);
+}
+
 int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_stays_full_with_no_activity_gap);
@@ -201,5 +227,9 @@ int main(int argc, char **argv) {
   RUN_TEST(test_next_cascade_timeout_recovers_from_unknown_value);
   RUN_TEST(test_next_poweroff_timeout_cycles_through_options_and_wraps);
   RUN_TEST(test_default_config_uses_low_led_brightness);
+  RUN_TEST(test_xbee_sleeps_only_in_deepest_tier_or_countdown);
+  RUN_TEST(test_light_sleep_only_in_deepest_tier);
+  RUN_TEST(test_no_light_sleep_with_usb_host_charging_or_countdown);
+  RUN_TEST(test_light_sleep_period_is_short_enough_for_stick_sampling);
   return UNITY_END();
 }

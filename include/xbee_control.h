@@ -20,11 +20,12 @@ class XbeeControl : public XbeeTransport, public XbeeRoleTransport {
   bool setPanId(const char *panId) override;
   bool rejoinNetwork() override;
 
-  // "CE": 0 = join a network (router), 1 = form one (coordinator). Setting
-  // it commits ("WR") and applies ("AC") — same best-effort, not yet
-  // hardware-validated sequencing as the rest of this class.
-  bool queryCoordinatorEnable(uint8_t *outValue) override;
-  bool setCoordinatorEnable(uint8_t value) override;
+  // One-byte AT parameters for ensureSleepyEndDeviceRole() (xbee_role.h).
+  // Same best-effort, not yet hardware-validated sequencing as the rest of
+  // this class.
+  bool queryByteParameter(const char *command, uint8_t *outValue) override;
+  bool writeByteParameter(const char *command, uint8_t value) override;
+  bool commitAndApply() override;
 
   // Queries the module's own 64-bit address (low 32 bits, "SL") for
   // display in the Device Info menu screen — this is what a user reads

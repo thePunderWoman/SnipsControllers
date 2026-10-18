@@ -79,6 +79,27 @@ PowerManagementMode nextPowerManagementMode(PowerManagementMode current);
 int nextCascadeTimeoutSec(int currentSec);
 int nextPoweroffTimeoutSec(int currentSec);
 
+// Whether the XBee should be in pin sleep: in the deepest idle tier, or
+// during the low-battery shutdown countdown (every bit of saved current
+// extends the safety margin). While it sleeps, loop() sends no uplinks
+// and skips the RSSI query.
+bool shouldXbeeSleep(PowerTier tier, bool inLowBatteryCountdown);
+
+// How long each light sleep lasts before a timer wake. Buttons, the power
+// button and accelerometer motion wake the ESP32 immediately; the stick
+// and trigger can't raise a GPIO wake, so they are sampled once per
+// period instead.
+constexpr unsigned long kLightSleepPeriodMs = 100;
+
+// Whether loop() should light-sleep the ESP32 between passes instead of
+// just idling. Only in the deepest idle tier, where the OLED is off and
+// the XBee is asleep, so nothing needs the CPU between passes. Never
+// while a USB host is connected (light sleep drops the USB serial link),
+// while charging (USB is powering the controller anyway), or during the
+// low-battery countdown (its screen updates every pass).
+bool shouldLightSleep(PowerTier tier, bool usbHostConnected, bool charging,
+                      bool inLowBatteryCountdown);
+
 class PowerManager {
  public:
   void setConfig(const PowerConfig &config) { config_ = config; }
