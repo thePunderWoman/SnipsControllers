@@ -9,6 +9,7 @@
 #include "complication_persistence.h"
 #include "complications.h"
 #include "droid_persistence.h"
+#include "loop_pacer.h"
 #include "low_battery.h"
 #include "menu.h"
 #include "oled.h"
@@ -102,6 +103,13 @@ void applyPowerTier(PowerTier tier) {
   }
 }
 
+// The status color for `state` at the user's chosen LED brightness (see
+// status_led.h).
+RgbColor statusColor(SystemState state) {
+  return scaleColor(statusLedController.colorFor(state),
+                    ledBrightnessScale(powerConfig.ledBrightness));
+}
+
 void copyField(char *dest, size_t destCapacity, const char *src) {
   std::strncpy(dest, src, destCapacity - 1);
   dest[destCapacity - 1] = '\0';
@@ -167,6 +175,13 @@ void setup() {
   // isn't wired to the XBee at all (see PCB/GPIO_table.md).
   pinMode(PinAssignment::kXbeeSleepRq, OUTPUT);
   digitalWrite(PinAssignment::kXbeeSleepRq, LOW);
+
+  // 80 MHz instead of the default 240 MHz. Wi-Fi and Bluetooth are never
+  // started, and nothing here is compute-bound: the SPI, I2C, RMT and USB
+  // peripherals run from the 80 MHz APB clock either way, so only the CPU
+  // core slows down. 80 MHz is the lowest speed that keeps the APB at
+  // 80 MHz (below it, peripheral clocks drop too).
+  setCpuFrequencyMhz(80);
 
   Serial.begin(115200);
 
@@ -354,10 +369,10 @@ void setup() {
       SystemState::kError,
   };
   for (SystemState state : bringUpSequence) {
-    rgbLed.show(statusLedController.colorFor(state));
+    rgbLed.show(statusColor(state));
     delay(300);
   }
-  rgbLed.show(statusLedController.colorFor(SystemState::kDisconnected));
+  rgbLed.show(statusColor(SystemState::kDisconnected));
 }
 
 void loop() {
@@ -705,8 +720,7 @@ void loop() {
         (lowBatteryMonitor.isWarning() ||
          lowBatteryMonitor.isInShutdownCountdown()) &&
         !lowBatteryMonitor.blinkOn();
-    rgbLed.show(blinkLedOff ? RgbColor{0, 0, 0}
-                            : statusLedController.colorFor(ledState));
+    rgbLed.show(blinkLedOff ? RgbColor{0, 0, 0} : statusColor(ledState));
 
     if (menuController.currentScreen() == MenuScreen::kInactive &&
         !lowBatteryMonitor.isInShutdownCountdown()) {
@@ -764,4 +778,9 @@ void loop() {
     applyPowerTier(previousPowerTier);
   }
   wasInLowBatteryCountdown = inLowBatteryCountdown;
+
+  // Idle out the rest of this pass's 5 ms slot (see loop_pacer.h).
+  // delay() blocks this task, so the FreeRTOS idle task halts the CPU
+  // until the next tick interrupt instead of spinning through loop().
+  delay(LoopPacer::idleMsAfterPass(now, millis()));
 }

@@ -15,3 +15,41 @@ RgbColor StatusLedController::colorFor(SystemState state) const {
   }
   return {0, 0, 0};
 }
+
+namespace {
+
+// Roughly 20% / 50% / 100% duty cycle. LED current scales with duty
+// cycle, while perceived brightness falls off much more slowly, so kLow
+// still reads clearly indoors.
+constexpr uint8_t kLowScale = 51;
+constexpr uint8_t kMediumScale = 128;
+constexpr uint8_t kHighScale = 255;
+
+uint8_t scaleChannel(uint8_t value, uint8_t scale) {
+  return static_cast<uint8_t>((value * scale + 127) / 255);
+}
+
+}  // namespace
+
+LedBrightness nextLedBrightness(LedBrightness current) {
+  const int count = static_cast<int>(LedBrightness::kCount);
+  const int index = static_cast<int>(current);
+  if (index < 0 || index >= count) {
+    return LedBrightness::kLow;
+  }
+  return static_cast<LedBrightness>((index + 1) % count);
+}
+
+uint8_t ledBrightnessScale(LedBrightness brightness) {
+  switch (brightness) {
+    case LedBrightness::kMedium: return kMediumScale;
+    case LedBrightness::kHigh: return kHighScale;
+    case LedBrightness::kLow:
+    default: return kLowScale;
+  }
+}
+
+RgbColor scaleColor(const RgbColor &color, uint8_t scale) {
+  return {scaleChannel(color.r, scale), scaleChannel(color.g, scale),
+          scaleChannel(color.b, scale)};
+}

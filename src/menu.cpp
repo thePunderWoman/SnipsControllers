@@ -370,6 +370,10 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
             powerConfig_->autoPoweroffTimeoutSec =
                 nextPoweroffTimeoutSec(powerConfig_->autoPoweroffTimeoutSec);
             break;
+          case PowerConfigRow::kLedBrightness:
+            powerConfig_->ledBrightness =
+                nextLedBrightness(powerConfig_->ledBrightness);
+            break;
           case PowerConfigRow::kCount:
             break;
         }
@@ -522,6 +526,15 @@ const char *powerModeLabel(PowerManagementMode mode) {
     case PowerManagementMode::kDimOnly: return "Dim OLED";
     case PowerManagementMode::kDimAndOff: return "Dim+Off OLED";
     case PowerManagementMode::kDimOffAndXbeeSleep: return "+XBee sleep";
+    default: return "Unknown";
+  }
+}
+
+const char *ledBrightnessLabel(LedBrightness brightness) {
+  switch (brightness) {
+    case LedBrightness::kLow: return "Low";
+    case LedBrightness::kMedium: return "Medium";
+    case LedBrightness::kHigh: return "High";
     default: return "Unknown";
   }
 }
@@ -757,6 +770,10 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
             formatSeconds(config.autoPoweroffTimeoutSec, valueBuf,
                           sizeof(valueBuf));
             rowValue = valueBuf;
+            break;
+          case PowerConfigRow::kLedBrightness:
+            rowPrefix = "LED: ";
+            rowValue = ledBrightnessLabel(config.ledBrightness);
             break;
           case PowerConfigRow::kCount:
             break;

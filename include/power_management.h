@@ -2,6 +2,8 @@
 
 #include <cstddef>
 
+#include "status_led.h"
+
 // Pure logic for the low-power mode feature. Knows nothing about real
 // buttons, the display, the XBee, or the accelerometer — callers feed in
 // "did anything happen this tick" and get back which tier the device
@@ -65,6 +67,8 @@ struct PowerConfig {
   int offTimeoutSec = PowerConfigOptions::kCascadeTimeoutsSec[0];
   int xbeeSleepTimeoutSec = PowerConfigOptions::kCascadeTimeoutsSec[0];
   int autoPoweroffTimeoutSec = PowerConfigOptions::kPoweroffTimeoutsSec[1];
+  // Not a tier step: applies at every tier, whatever `mode` is.
+  LedBrightness ledBrightness = LedBrightness::kLow;
 };
 
 // Cycles to the next value in a fixed option list, wrapping around —
