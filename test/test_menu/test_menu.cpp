@@ -757,7 +757,7 @@ void test_power_config_up_down_wraps_over_rows() {
   TEST_ASSERT_TRUE(PowerConfigRow::kMode == menu.selectedPowerConfigRow());
 
   menu.onUp();  // wraps to the last row
-  TEST_ASSERT_TRUE(PowerConfigRow::kAutoPoweroffTimeout ==
+  TEST_ASSERT_TRUE(PowerConfigRow::kLedBrightness ==
                    menu.selectedPowerConfigRow());
   menu.onDown();
   TEST_ASSERT_TRUE(PowerConfigRow::kMode == menu.selectedPowerConfigRow());
@@ -804,6 +804,20 @@ void test_power_config_enter_cycles_auto_poweroff_row_through_minute_options() {
 
   menu.onEnter(0, 0, 0);
   TEST_ASSERT_EQUAL_INT(300, config.autoPoweroffTimeoutSec);
+}
+
+void test_power_config_enter_cycles_led_brightness_row() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig
+  menu.onUp();            // wraps to the last row: LED brightness
+
+  TEST_ASSERT_TRUE(LedBrightness::kLow == config.ledBrightness);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_TRUE(LedBrightness::kMedium == config.ledBrightness);
+  TEST_ASSERT_TRUE(menu.consumePowerConfigChanged());
 }
 
 void test_power_config_enter_without_config_is_noop() {
@@ -1123,6 +1137,7 @@ void test_render_power_config_shows_rows_and_selection() {
   config.offTimeoutSec = 15;
   config.xbeeSleepTimeoutSec = 30;
   config.autoPoweroffTimeoutSec = 300;
+  config.ledBrightness = LedBrightness::kHigh;
   menu.setPowerConfig(&config);
   ScreenBuffer screen;
   selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
@@ -1135,6 +1150,7 @@ void test_render_power_config_shows_rows_and_selection() {
   TEST_ASSERT_EQUAL_STRING("  Off: 15s", screen.line(3));
   TEST_ASSERT_EQUAL_STRING("  XBee sleep: 30s", screen.line(4));
   TEST_ASSERT_EQUAL_STRING("  Auto off: 5m", screen.line(5));
+  TEST_ASSERT_EQUAL_STRING("  LED: High", screen.line(6));
 }
 
 void test_render_power_config_without_config_shows_defaults() {
@@ -1144,6 +1160,28 @@ void test_render_power_config_without_config_shows_defaults() {
   menu.onEnter(0, 0, 0);  // -> kPowerConfig
   renderMenuScreen(menu, &screen);
   TEST_ASSERT_EQUAL_STRING("> Mode: Always on", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("  LED: Low", screen.line(6));
+}
+
+void test_render_power_config_led_brightness_labels() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig
+  menu.onUp();            // select the LED row
+
+  const LedBrightness values[] = {LedBrightness::kLow, LedBrightness::kMedium,
+                                  LedBrightness::kHigh,
+                                  static_cast<LedBrightness>(99)};
+  const char *expected[] = {"> LED: Low", "> LED: Medium", "> LED: High",
+                            "> LED: Unknown"};
+  for (size_t i = 0; i < 4; ++i) {
+    config.ledBrightness = values[i];
+    renderMenuScreen(menu, &screen);
+    TEST_ASSERT_EQUAL_STRING(expected[i], screen.line(6));
+  }
 }
 
 void test_render_switch_droid_list_empty() {
@@ -1308,6 +1346,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_power_config_enter_cycles_mode_row);
   RUN_TEST(test_power_config_enter_cycles_dim_timeout_row);
   RUN_TEST(test_power_config_enter_cycles_auto_poweroff_row_through_minute_options);
+  RUN_TEST(test_power_config_enter_cycles_led_brightness_row);
   RUN_TEST(test_power_config_enter_without_config_is_noop);
   RUN_TEST(test_power_config_back_returns_to_main_menu);
   RUN_TEST(test_enter_stick_deadzone_from_main_menu);
@@ -1337,6 +1376,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_render_display_config_without_registry_shows_placeholder);
   RUN_TEST(test_render_power_config_shows_rows_and_selection);
   RUN_TEST(test_render_power_config_without_config_shows_defaults);
+  RUN_TEST(test_render_power_config_led_brightness_labels);
   RUN_TEST(test_render_switch_droid_list_empty);
   RUN_TEST(test_render_switch_droid_list_marks_selected);
   RUN_TEST(test_render_switch_droid_result);

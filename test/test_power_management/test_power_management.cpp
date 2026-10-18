@@ -178,6 +178,11 @@ void test_next_poweroff_timeout_cycles_through_options_and_wraps() {
   TEST_ASSERT_EQUAL(60, nextPoweroffTimeoutSec(900));
 }
 
+void test_default_config_uses_low_led_brightness() {
+  PowerConfig config;
+  TEST_ASSERT_TRUE(LedBrightness::kLow == config.ledBrightness);
+}
+
 int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_stays_full_with_no_activity_gap);
@@ -195,5 +200,6 @@ int main(int argc, char **argv) {
   RUN_TEST(test_next_cascade_timeout_cycles_through_options_and_wraps);
   RUN_TEST(test_next_cascade_timeout_recovers_from_unknown_value);
   RUN_TEST(test_next_poweroff_timeout_cycles_through_options_and_wraps);
+  RUN_TEST(test_default_config_uses_low_led_brightness);
   return UNITY_END();
 }

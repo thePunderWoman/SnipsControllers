@@ -55,6 +55,7 @@ enum class PowerConfigRow {
   kOffTimeout,
   kXbeeSleepTimeout,
   kAutoPoweroffTimeout,
+  kLedBrightness,
   kCount,
 };
 
