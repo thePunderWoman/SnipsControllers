@@ -184,7 +184,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://componentsearchengine.com/Datasheets/1/XB3-24Z8UT-J.pdf"
+		(property "Datasheet" ""
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -212,32 +212,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "2f202edd-ce65-42a4-9219-5767643f77cf")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Part Number" "888-XB3-24Z8UT-J"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "44f92ef1-cd0c-48bf-990a-25268a55ee95")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Price/Stock" "https://www.mouser.com/Search/Refine.aspx?Keyword=888-XB3-24Z8UT-J"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f5e86273-7809-4920-b141-a16ddcf15b4c")
 			(effects
 				(font
 					(size 1 1)
