@@ -258,7 +258,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "XB3-24Z8UT-J"
+		(property "Manufacturer_Part_Number" "XB3-24Z8UT"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -308,7 +308,7 @@
 				)
 			)
 		)
-		(property "Mouser" "888-XB3-24Z8UT-J"
+		(property "Mouser" "888-XB3-24Z8UT"
 			(at 2 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -317,6 +317,17 @@
 				(font
 					(size 1.27 1.27)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "DigiKey" "602-2190-ND"
+			(at 2 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "e49e43a9-33ae-4f38-8b5b-217e911c18e7")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)

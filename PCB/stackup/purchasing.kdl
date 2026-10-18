@@ -167,6 +167,6 @@ mpn "TYPE-C-31-M-12" manufacturer="Hroparts Elec" value="USB-C" footprint="Conne
     catalog lcsc="C165948"
 }
 
-mpn "XB3-24Z8UT-J" manufacturer="Digi International" value="XBee3" footprint="Xbee3:XB324Z8UTJ" {
-    catalog mouser="888-XB3-24Z8UT-J"
+mpn "XB3-24Z8UT" manufacturer="Digi International" value="XBee3" footprint="Xbee3:XB324Z8UTJ" {
+    catalog mouser="888-XB3-24Z8UT" digikey="602-2190-ND"
 }

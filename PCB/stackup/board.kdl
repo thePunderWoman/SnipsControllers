@@ -398,7 +398,7 @@ design snips_controller {
     match placement {
         when value="XBee3"
         when footprint="Xbee3:XB324Z8UTJ"
-        set mpn="XB3-24Z8UT-J"
+        set mpn="XB3-24Z8UT"
     }
 
 }
