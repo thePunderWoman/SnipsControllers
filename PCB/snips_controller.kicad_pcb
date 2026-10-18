@@ -184,7 +184,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://componentsearchengine.com/Datasheets/1/XB3-24Z8UT-J.pdf"
+		(property "Datasheet" ""
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -219,32 +219,6 @@
 				)
 			)
 		)
-		(property "Mouser Part Number" "888-XB3-24Z8UT-J"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "44f92ef1-cd0c-48bf-990a-25268a55ee95")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Price/Stock" "https://www.mouser.com/Search/Refine.aspx?Keyword=888-XB3-24Z8UT-J"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f5e86273-7809-4920-b141-a16ddcf15b4c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(property "Manufacturer_Name" "Digi International"
 			(at 0 0 270)
 			(unlocked yes)
@@ -258,7 +232,7 @@
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "XB3-24Z8UT-J"
+		(property "Manufacturer_Part_Number" "XB3-24Z8UT"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -308,7 +282,7 @@
 				)
 			)
 		)
-		(property "Mouser" "888-XB3-24Z8UT-J"
+		(property "Mouser" "888-XB3-24Z8UT"
 			(at 2 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -317,6 +291,17 @@
 				(font
 					(size 1.27 1.27)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "DigiKey" "602-2190-ND"
+			(at 2 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "e49e43a9-33ae-4f38-8b5b-217e911c18e7")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)

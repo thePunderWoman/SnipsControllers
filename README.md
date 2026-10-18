@@ -49,7 +49,9 @@ support bluetooth and ESP-Now for connectivity. They will be able to swap betwee
 
 ## Batteries
 
-We're still working on the exact battery spec, but they will either be swappable single 18650 or dual 14500 lithium ion modules. The controllers have a built in charging circuit. So you can charge them via USB-C, or just plain swap mid-event if they run out.
+Each controller runs on a single swappable 14500 lithium ion cell (3.7V Li-ion, not 3.2V LiFePO4). We're using 1300 mAh Keeppower cells. The controllers have a built in charging circuit. So you can charge them via USB-C, or just plain swap mid-event if they run out.
+
+Based on datasheet figures (not yet measured on real hardware), a controller with an XBee3 Pro draws about 100 mA, so a 1300 mAh cell should last roughly 11–12 hours of use, or about 8 hours in the worst case.
 
 ## Case
 

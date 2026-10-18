@@ -13,14 +13,14 @@ through `snips_controller.stackup_sch`; sync it with the Stackup KiCad plugin. R
 |---|---|---|---|
 | MCU | ESP32-S3-WROOM-1 module | Pre-certified: integrated flash, crystal, WiFi/BT radio + antenna. Same MCU family as Amidala. See `GPIO_table.md` for the full support circuitry | — |
 | Display | SSD1306 1.3" OLED | 128x64, monochrome, I2C | — |
-| Radio | XBee3 | Zigbee, SPI mode, THT socket (proto) | — |
+| Radio | XBee3 Pro (XB3-24Z8UT) | Zigbee 3.0 firmware, U.FL, +19 dBm, SPI mode, THT socket (proto) | — |
 | Hall trigger | DRV5055A2 | Ratiometric linear hall effect, 3.3V | — |
 | Thumbstick | GuliKit hall effect module | Native 3.3V, analog X/Y + click | — |
 | Buttons | Omron B3F series | Tactile momentary clicky | — |
 | RGB LED | SK6812 NeoPixel-compatible | RMT-driven status indicator; specified supply begins at 3.7 V, but board supplies 3.3 V | — |
 | Charger | bq25185 | USB/DC input, power path, 4.2V/500mA | [diagram](diagrams/power_charger_layout.md) |
 | Buck | TLV62569 | 3.3V output, 1A | [diagram](diagrams/power_buck_layout.md) |
-| Battery | 18650 or 14500 Li-ion | Swappable single cell, TBD empirically | — |
+| Battery | 14500 Li-ion (Keeppower 1300 mAh) | Swappable single cell; 500 mA charge ≈ 0.38C | — |
 | Power switch | DMG2305UX + 2N7002 | Soft latch, hybrid hardware+firmware | [diagram](diagrams/power_control_layout.md) |
 
 ## Layout Diagrams
