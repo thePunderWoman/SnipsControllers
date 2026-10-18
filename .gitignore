@@ -18,6 +18,10 @@ lib/*
 # Python files
 *.pyc
 
+# Shell generator build output and virtualenv (see shell/claude-generated/README.md)
+shell/claude-generated/scripts/venv/
+shell/claude-generated/scripts/out/
+
 # KiCad files
 
 # Temporary files
