@@ -79,3 +79,13 @@ bool PowerManager::consumeShouldPowerOff() {
   }
   return false;
 }
+
+bool shouldXbeeSleep(PowerTier tier, bool inLowBatteryCountdown) {
+  return tier == PowerTier::kXbeeAsleep || inLowBatteryCountdown;
+}
+
+bool shouldLightSleep(PowerTier tier, bool usbHostConnected, bool charging,
+                      bool inLowBatteryCountdown) {
+  return tier == PowerTier::kXbeeAsleep && !usbHostConnected && !charging &&
+         !inLowBatteryCountdown;
+}

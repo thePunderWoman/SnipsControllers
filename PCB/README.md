@@ -190,7 +190,7 @@ This approach is preferred over per-signal transmission as it is more efficient,
 ### Network Configuration
 - Each droid has its own coordinator with a unique PAN ID
 - All coordinators share the same AES encryption key
-- Controllers are configured as routers
+- Controllers are configured as sleepy end devices (CE=0, SM=1 pin sleep, ET=4 for a 16-minute parent timeout), set at boot by the firmware. Their parent (normally the droid's coordinator) holds downlinks while a controller sleeps, and the controller polls for them every 100 ms while awake
 - "Switch droid" functionality is implemented via XBee API commands to leave the current network and rejoin a different PAN ID on demand
 - Active droid name and connection status are shown on the OLED display
 

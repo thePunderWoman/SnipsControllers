@@ -1,4 +1,7 @@
 #include <Arduino.h>
+#include <driver/gpio.h>
+#include <esp_sleep.h>
+
 #include <cstring>
 
 #include "accelerometer.h"
@@ -45,6 +48,7 @@ Accelerometer accelerometer;
 PowerManager powerManager;
 PowerConfig powerConfig;
 PowerTier previousPowerTier = PowerTier::kFull;
+bool xbeeSleepRequested = false;
 LowBatteryMonitor lowBatteryMonitor;
 bool wasInLowBatteryCountdown = false;
 char deviceSerialLowBuf[9] = {};  // must outlive setup() — see its use below
@@ -74,18 +78,18 @@ void showOperatingScreen() {
   oledDisplay.render(screen);
 }
 
-// Applies one power tier's real hardware effects (see power_management.h)
-// — called only on transition, not every tick. Driving kXbeeSleepRq high
-// on boards where it isn't wired to anything (the first production run —
-// see PCB/GPIO_table.md's Accelerometer section) is a harmless no-op, so
-// this needs no capability check of its own.
+bool oledOnFor(PowerTier tier) {
+  return tier != PowerTier::kOff && tier != PowerTier::kXbeeAsleep;
+}
+
+// Applies one power tier's OLED effects (see power_management.h) — called
+// only on transition, not every tick. The XBee's sleep follows the tier
+// too, but through setXbeeSleep() each tick, since the low-battery
+// countdown also controls it.
 void applyPowerTier(PowerTier tier) {
-  const bool oledShouldBeOn =
-      tier != PowerTier::kOff && tier != PowerTier::kXbeeAsleep;
+  const bool oledShouldBeOn = oledOnFor(tier);
   oledDisplay.setPowerOn(oledShouldBeOn);
   oledDisplay.setDimmed(tier == PowerTier::kDim);
-  digitalWrite(PinAssignment::kXbeeSleepRq,
-              tier == PowerTier::kXbeeAsleep ? HIGH : LOW);
 
   // Coming back from OLED-off: the panel's GDRAM still has whatever was
   // last drawn before it powered off, which is fine for the operating
@@ -101,6 +105,54 @@ void applyPowerTier(PowerTier tier) {
       showOperatingScreen();
     }
   }
+}
+
+// Drives SLEEP_RQ only when the requested state changes. Takes effect
+// because ensureSleepyEndDeviceRole() sets SM=1 at boot (with the factory
+// SM=0 the module ignores this pin). Harmless on boards where the pin
+// isn't wired to the XBee (see PCB/GPIO_table.md's Accelerometer
+// section).
+void setXbeeSleep(bool asleep) {
+  if (asleep == xbeeSleepRequested) return;
+  xbeeSleepRequested = asleep;
+  digitalWrite(PinAssignment::kXbeeSleepRq, asleep ? HIGH : LOW);
+}
+
+// Light-sleep wake sources (see shouldLightSleep() in power_management.h):
+// any button or the power button pressed (all active-low), or
+// accelerometer motion (INT1, active-high and non-latched, so it's high
+// for as long as motion lasts). Stick and trigger movement can't raise a
+// GPIO wake; lightSleepFor()'s timer wake covers them.
+void configureLightSleepWakeSources() {
+  for (size_t i = 0; i < Buttons::kCount; ++i) {
+    gpio_wakeup_enable(static_cast<gpio_num_t>(Buttons::kPins[i]),
+                       GPIO_INTR_LOW_LEVEL);
+  }
+  gpio_wakeup_enable(
+      static_cast<gpio_num_t>(PinAssignment::kPowerButtonSense),
+      GPIO_INTR_LOW_LEVEL);
+  // Only with the chip present: on boards without it, INT1's pin could
+  // float high and wake the ESP32 constantly.
+  if (accelerometer.isPresent()) {
+    gpio_wakeup_enable(static_cast<gpio_num_t>(PinAssignment::kAccelInterrupt),
+                       GPIO_INTR_HIGH_LEVEL);
+  }
+  esp_sleep_enable_gpio_wakeup();
+}
+
+// Light-sleeps for up to `ms`, returning early on any wake source above.
+// millis() keeps counting through the sleep. The power latch and SLEEP_RQ
+// are held at their current levels while asleep: the latch dropping would
+// cut power, and SLEEP_RQ dropping would wake the XBee.
+void lightSleepFor(unsigned long ms) {
+  const auto latchPin = static_cast<gpio_num_t>(PinAssignment::kPowerLatchHold);
+  const auto sleepRqPin = static_cast<gpio_num_t>(PinAssignment::kXbeeSleepRq);
+  gpio_hold_en(latchPin);
+  gpio_hold_en(sleepRqPin);
+  esp_sleep_enable_timer_wakeup(static_cast<uint64_t>(ms) * 1000ULL);
+  esp_light_sleep_start();
+  gpio_hold_dis(sleepRqPin);
+  gpio_hold_dis(latchPin);
 }
 
 // The status color for `state` at the user's chosen LED brightness (see
@@ -125,6 +177,11 @@ void performGracefulShutdown() {
   ScreenBuffer shutdownScreen;
   shutdownScreen.setLine(0, "Powering Off...");
   oledDisplay.render(shutdownScreen);
+
+  // Wake the XBee if it's asleep (deepest idle tier, or the low-battery
+  // countdown), or the shutdown packets below never leave. The retry
+  // delays give it time to wake and poll its parent.
+  setXbeeSleep(false);
 
   UplinkPacket shutdownPacket;
   shutdownPacket.flags = UplinkPacket::kFlagShuttingDown;
@@ -283,6 +340,10 @@ void setup() {
                    "without it).");
   }
 
+  // After the buttons' pinMode() and accelerometer.begin(), so the wake
+  // pins are configured and isPresent() is known.
+  configureLightSleepWakeSources();
+
   xbeeControl.begin();
 
   // Bring-up diagnostic: with R_XBEE_ATTN_PU1 (10kOhm to 3V3) in place,
@@ -297,19 +358,19 @@ void setup() {
                      ? "HIGH (expected idle)"
                      : "LOW (unexpected -- check module seating/wiring)");
 
-  // A controller must join a droid's network, never form its own — CE=1
-  // (coordinator) would strand it on a PAN of its own.
-  switch (ensureRouterRole(&xbeeControl)) {
-    case XbeeRoleResult::kSwitchedToRouter:
-      Serial.println("XBee was set to coordinator; switched to router.");
+  // A controller must join a droid's network as a sleepy end device —
+  // see xbee_role.h for CE/SM/ET.
+  switch (ensureSleepyEndDeviceRole(&xbeeControl)) {
+    case XbeeRoleResult::kReconfigured:
+      Serial.println("XBee reconfigured as a sleepy end device (CE/SM/ET).");
       break;
     case XbeeRoleResult::kQueryFailed:
-      Serial.println("XBee role (CE) query failed at boot.");
+      Serial.println("XBee role (CE/SM/ET) query failed at boot.");
       break;
     case XbeeRoleResult::kSetFailed:
-      Serial.println("XBee role (CE) could not be set to router at boot.");
+      Serial.println("XBee role (CE/SM/ET) could not be set at boot.");
       break;
-    case XbeeRoleResult::kAlreadyRouter:
+    case XbeeRoleResult::kAlreadyConfigured:
     case XbeeRoleResult::kNoTransport:
       break;
   }
@@ -612,10 +673,15 @@ void loop() {
     performGracefulShutdown();  // never returns
   }
 
+  const bool inLowBatteryCountdown = lowBatteryMonitor.isInShutdownCountdown();
+  setXbeeSleep(shouldXbeeSleep(currentPowerTier, inLowBatteryCountdown));
+
   // Uplink: sent periodically over the radio, faster than the
   // human-readable Serial telemetry below — this is what Amidala
   // actually sees.
-  if (now - lastUplinkSendMs >= kUplinkSendIntervalMs) {
+  // Nothing to send through while the XBee sleeps; Amidala sees the
+  // controller go quiet, the same as if it were switched off.
+  if (!xbeeSleepRequested && now - lastUplinkSendMs >= kUplinkSendIntervalMs) {
     lastUplinkSendMs = now;
 
     const bool menuActive =
@@ -696,7 +762,7 @@ void loop() {
     lastTelemetryLogMs = now;
 
     int rssiDbm = 0;
-    if (xbeeControl.queryLocalRssiDbm(&rssiDbm)) {
+    if (!xbeeSleepRequested && xbeeControl.queryLocalRssiDbm(&rssiDbm)) {
       complicationData.signalDbm = rssiDbm;
       complicationData.signalKnown = true;
       complications.setData(complicationData);
@@ -722,8 +788,9 @@ void loop() {
         !lowBatteryMonitor.blinkOn();
     rgbLed.show(blinkLedOff ? RgbColor{0, 0, 0} : statusColor(ledState));
 
+    // Skipped while the OLED is off: applyPowerTier() redraws on wake.
     if (menuController.currentScreen() == MenuScreen::kInactive &&
-        !lowBatteryMonitor.isInShutdownCountdown()) {
+        !inLowBatteryCountdown && oledOnFor(currentPowerTier)) {
       // A charging fault takes over the operating screen (but not active
       // menu navigation) for as long as it persists — this checks once a
       // second like the rest of this block rather than every tick, since
@@ -758,14 +825,11 @@ void loop() {
   // above just drew. Redrawn every tick (not just on change) rather than
   // tracked for cheapness; a few extra I2C writes for at most 30 seconds
   // is a non-issue.
-  const bool inLowBatteryCountdown = lowBatteryMonitor.isInShutdownCountdown();
   if (inLowBatteryCountdown) {
     if (!wasInLowBatteryCountdown) {
-      // Force full power regardless of the current low-power tier, and
-      // sleep the XBee immediately — every bit of saved current extends
-      // the safety margin during the countdown.
+      // Force the OLED on regardless of the current low-power tier. The
+      // XBee is already asleep: see setXbeeSleep() above.
       oledDisplay.setPowerOn(true);
-      digitalWrite(PinAssignment::kXbeeSleepRq, HIGH);
     }
     ScreenBuffer countdownScreen;
     renderLowBatteryCountdownScreen(lowBatteryMonitor.secondsRemaining(),
@@ -779,8 +843,16 @@ void loop() {
   }
   wasInLowBatteryCountdown = inLowBatteryCountdown;
 
-  // Idle out the rest of this pass's 5 ms slot (see loop_pacer.h).
-  // delay() blocks this task, so the FreeRTOS idle task halts the CPU
-  // until the next tick interrupt instead of spinning through loop().
-  delay(LoopPacer::idleMsAfterPass(now, millis()));
+  // `Serial` is true while a USB host is connected (see the serial wait in
+  // setup()).
+  if (shouldLightSleep(currentPowerTier, static_cast<bool>(Serial),
+                       chargeState == ChargeState::kCharging,
+                       inLowBatteryCountdown)) {
+    lightSleepFor(kLightSleepPeriodMs);
+  } else {
+    // Idle out the rest of this pass's 5 ms slot (see loop_pacer.h).
+    // delay() blocks this task, so the FreeRTOS idle task halts the CPU
+    // until the next tick interrupt instead of spinning through loop().
+    delay(LoopPacer::idleMsAfterPass(now, millis()));
+  }
 }
