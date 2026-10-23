@@ -63,7 +63,7 @@ PCB/**/*-backups/*.zip
 PCB/.history
 
 # Local project settings
-PCB/*.kicad_prl
+PCB/**/*.kicad_prl
 
 # Production reports
 PCB/production/misc/*
