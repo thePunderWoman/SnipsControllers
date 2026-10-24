@@ -346,18 +346,6 @@ void setup() {
 
   xbeeControl.begin();
 
-  // Bring-up diagnostic: with R_XBEE_ATTN_PU1 (10kOhm to 3V3) in place,
-  // ATTN should read HIGH here (idle, no frame queued) whenever the
-  // module is actually connected and powered — regardless of whether any
-  // AT command below succeeds. A LOW or erratic reading instead points at
-  // a physical connection problem (e.g. the module's THT socket, used
-  // for prototyping per PCB/GPIO_table.md) rather than at command
-  // sequencing/timing.
-  Serial.print("XBee ATTN pin at boot: ");
-  Serial.println(digitalRead(PinAssignment::kXbeeSpiAttn) == HIGH
-                     ? "HIGH (expected idle)"
-                     : "LOW (unexpected -- check module seating/wiring)");
-
   // A controller must join a droid's network as a sleepy end device —
   // see xbee_role.h for CE/SM/ET.
   switch (ensureSleepyEndDeviceRole(&xbeeControl)) {
