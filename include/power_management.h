@@ -38,6 +38,9 @@ enum class PowerTier {
   kXbeeAsleep,  // OLED off and XBee asleep.
 };
 
+// Short lowercase name for logging tier changes, e.g. "dim".
+const char *powerTierName(PowerTier tier);
+
 // The discrete option lists each configurable timeout cycles through via
 // the menu — small, fixed sets rather than freeform numeric entry, same
 // spirit as everything else in this on-device menu.
