@@ -1,9 +1,9 @@
-### Footprint positions - created on 2026-10-08T19:56:44 ###
+### Footprint positions - created on 2026-10-24T08:21:22 ###
 ### Printed by KiCad version 10.0.5
 ## Unit = mm, Angle = deg.
 ## Side : All
 # Ref            Val                                      Package                                                PosX       PosY       Rot  Side
-BT1              PH_2-pin_battery_RIGHT-ANGLE_HORIZONTAL  JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal            152.5000   -68.9000  180.0000  bottom
+BT1              PH_2-pin_battery_RIGHT-ANGLE_HORIZONTAL  JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal            152.5000   -77.5000  180.0000  bottom
 C_ACCEL_1        10nF                                     C_0402_1005Metric                                  137.6500   -77.3300   90.0000  bottom
 C_ACCEL_2        100pF                                    C_0402_1005Metric                                  139.6500   -77.3300   90.0000  bottom
 C_ACCEL_3        2.2nF                                    C_0402_1005Metric                                  138.6500   -77.3300   90.0000  bottom
@@ -22,7 +22,6 @@ D_OR2            1N4148W                                  D_SOD-123             
 D_VBUS_TVS1      TPPESD5V0S1BA                            D_SOD-323                                          137.4000  -156.2000  -90.0000  bottom
 FID4             Fiducial_1mm_Mask2mm                     Fiducial_1mm_Mask2mm                               150.4000  -105.2000  180.0000  bottom
 FID5             Fiducial_1mm_Mask2mm                     Fiducial_1mm_Mask2mm                               125.9000   -95.3000  180.0000  bottom
-FID6             Fiducial_1mm_Mask2mm                     Fiducial_1mm_Mask2mm                               122.8000   -75.7000  180.0000  bottom
 L_BUCK1          2.2µH                                    L_Bourns-SRN4018                                   126.5250  -110.0000  180.0000  bottom
 Q_INV1           MMBT3904(RANGE:100-300)                  SOT-23                                             146.7875  -125.9000    0.0000  bottom
 Q_LATCH1         AO3400A                                  SOT-23                                             149.4375  -120.9500    0.0000  bottom
@@ -57,8 +56,8 @@ C_XBEE_VCC1      100nF                                    C_0402_1005Metric     
 C_XBEE_VCC2      1µF                                      C_0603_1608Metric                                  143.7500  -130.0000  -90.0000  top
 C_XBEE_VCC3      47pF                                     C_0402_1005Metric                                  142.2500  -129.5000  -90.0000  top
 C_XBEE_VCC4      10µF                                     C_0603_1608Metric                                  142.5000  -133.7750  -90.0000  top
-D_RGB1           SK6812MINI-HS-012                        SK6812MINI-HS-012                                  146.5500  -156.6500    0.0000  top
-FID1             Fiducial_1mm_Mask2mm                     Fiducial_1mm_Mask2mm                               124.4500   -81.6500    0.0000  top
+D_RGB1           SK6812MINI-HS-012                        SK6812MINI-HS-012                                  145.8500  -156.6500    0.0000  top
+FID1             Fiducial_1mm_Mask2mm                     Fiducial_1mm_Mask2mm                               123.0000   -95.0000    0.0000  top
 FID2             Fiducial_1mm_Mask2mm                     Fiducial_1mm_Mask2mm                               151.3000  -127.3000    0.0000  top
 FID3             Fiducial_1mm_Mask2mm                     Fiducial_1mm_Mask2mm                               147.0000  -150.1000    0.0000  top
 J_STICK1         GuliKit_Thumbstick                       GuliKit_HallStick                                  137.5000   -95.2500    0.0000  top
@@ -66,12 +65,12 @@ J_USB1           USB-C                                    USB_C_Receptacle_HRO_T
 R_BOOT_PU1       10kΩ                                     R_0402_1005Metric                                  148.5000   -82.7400  -90.0000  top
 R_CC1            5.1kΩ                                    R_0402_1005Metric                                  130.2500  -153.7600  -90.0000  top
 R_CC2            5.1kΩ                                    R_0402_1005Metric                                  144.2500  -152.7500    0.0000  top
-R_EN_PU1         10kΩ                                     R_0402_1005Metric                                  126.0500   -78.5600  -90.0000  top
+R_EN_PU1         10kΩ                                     R_0402_1005Metric                                  127.2000   -78.5600  -90.0000  top
 R_RGB1           470Ω                                     R_0402_1005Metric                                  148.2500  -152.7500   90.0000  top
 R_USB_DM1        27Ω                                      R_0402_1005Metric                                  127.7500  -153.7600   90.0000  top
 R_USB_DP1        27Ω                                      R_0402_1005Metric                                  129.0000  -153.7600   90.0000  top
-R_VSYS1          200kΩ                                    R_0402_1005Metric                                  122.2900   -84.6000    0.0000  top
-R_VSYS2          100kΩ                                    R_0402_1005Metric                                  122.2800   -83.4000  180.0000  top
+R_VSYS1          200kΩ                                    R_0402_1005Metric                                  125.0900   -87.0000    0.0000  top
+R_VSYS2          100kΩ                                    R_0402_1005Metric                                  125.0800   -85.8000  180.0000  top
 R_XBEE_ATTN_PU1  10kΩ                                     R_0402_1005Metric                                  139.6000  -147.2900  -90.0000  top
 R_XBEE_RC1       100Ω                                     R_0402_1005Metric                                  134.7500  -130.0000  180.0000  top
 R_XBEE_RST1      10kΩ                                     R_0402_1005Metric                                  137.2500  -130.0000  180.0000  top
