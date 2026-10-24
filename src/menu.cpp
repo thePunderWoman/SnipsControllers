@@ -429,12 +429,16 @@ void MenuController::onButtonTestPress(size_t buttonIndex) {
 }
 
 bool MenuController::tick(int rawStickX, int rawStickY, int stickYPercent) {
-  if (screen_ == MenuScreen::kCalibrateStick &&
-      stickFlow_.currentStep() == StickCalibrationFlow::Step::kRolling) {
+  if (screen_ == MenuScreen::kCalibrateStick) {
+    if (stickFlow_.currentStep() != StickCalibrationFlow::Step::kRolling) {
+      return false;
+    }
+    // Rolling progress is on screen, so a newly-reached side needs a
+    // redraw — without this the screen stayed on its entry text forever.
+    const int sidesBefore = stickFlow_.sidesWithEnoughRange();
     stickFlow_.sample(rawStickX, rawStickY);
+    return stickFlow_.sidesWithEnoughRange() != sidesBefore;
   }
-
-  if (screen_ == MenuScreen::kCalibrateStick) return false;
 
   if (stickNavArmed_) {
     if (stickYPercent >= kStickNavFireThreshold) {
@@ -695,14 +699,20 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
           screen->setLine(1, "Center stick,");
           screen->setLine(2, "press Macro1");
           break;
-        case StickCalibrationFlow::Step::kRolling:
+        case StickCalibrationFlow::Step::kRolling: {
           screen->setLine(1, "Rotate stick all the");
           screen->setLine(2, "way around 3 times,");
           screen->setLine(3, "return to center,");
-          screen->setLine(4, menu.stickCalibrationHasEnoughRange()
-                                 ? "then press Macro1"
-                                 : "not enough yet");
+          if (menu.stickCalibrationHasEnoughRange()) {
+            screen->setLine(4, "then press Macro1");
+          } else {
+            char line[ScreenBuffer::kMaxLineLength + 1];
+            std::snprintf(line, sizeof(line), "%d of 4 sides done",
+                          menu.stickCalibrationSidesDone());
+            screen->setLine(4, line);
+          }
           break;
+        }
         case StickCalibrationFlow::Step::kDone:
           screen->setLine(1, "Done!");
           break;

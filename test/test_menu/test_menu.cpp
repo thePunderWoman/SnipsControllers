@@ -446,6 +446,25 @@ void test_stick_must_return_to_center_before_firing_again() {
   TEST_ASSERT_TRUE(MainMenuItem::kButtonTest == menu.selectedMainMenuItem());
 }
 
+// Regression: the rolling step's progress only appears if the screen is
+// redrawn, and tick() was the only signal that could ask for that while
+// the stick is being rolled -- it always returned false here, so on real
+// hardware the screen sat on its entry text even after enough range.
+void test_tick_reports_change_when_stick_calibration_progress_changes() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kCalibrateStick);
+  menu.onEnter(0, 0, 0);
+  menu.onEnter(0, 2000, 2100);  // confirm center -> rolling
+
+  TEST_ASSERT_FALSE(menu.tick(2100, 2150, 0));  // within range of center
+  TEST_ASSERT_TRUE(menu.tick(1500, 2100, 0));   // X-min reached
+  TEST_ASSERT_FALSE(menu.tick(1400, 2100, 0));  // further, same side
+  TEST_ASSERT_TRUE(menu.tick(2500, 2600, 0));   // X-max and Y-max
+  TEST_ASSERT_TRUE(menu.tick(2000, 1700, 0));   // Y-min: all four
+  TEST_ASSERT_TRUE(menu.stickCalibrationHasEnoughRange());
+  TEST_ASSERT_FALSE(menu.tick(2000, 2100, 0));
+}
+
 void test_stick_nav_is_disabled_during_stick_calibration() {
   MenuController menu;
   selectMainMenuItem(&menu, MainMenuItem::kCalibrateStick);
@@ -1053,7 +1072,18 @@ void test_render_stick_calibration_rolling_step_text() {
   TEST_ASSERT_EQUAL_STRING("way around 3 times,", screen.line(2));
   TEST_ASSERT_EQUAL_STRING("return to center,", screen.line(3));
   // Nothing rolled yet -- range requirement not met.
-  TEST_ASSERT_EQUAL_STRING("not enough yet", screen.line(4));
+  TEST_ASSERT_EQUAL_STRING("0 of 4 sides done", screen.line(4));
+}
+
+void test_render_stick_calibration_rolling_step_shows_partial_progress() {
+  MenuController menu;
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kCalibrateStick);
+  menu.onEnter(0, 0, 0);
+  menu.onEnter(0, 2000, 2100);
+  menu.tick(1500, 2600, 0);  // X-min and Y-max
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("2 of 4 sides done", screen.line(4));
 }
 
 void test_render_stick_calibration_rolling_step_shows_done_once_enough_range() {
@@ -1323,6 +1353,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_stick_below_threshold_does_not_navigate);
   RUN_TEST(test_stick_must_return_to_center_before_firing_again);
   RUN_TEST(test_stick_nav_is_disabled_during_stick_calibration);
+  RUN_TEST(test_tick_reports_change_when_stick_calibration_progress_changes);
   RUN_TEST(test_back_during_stick_calibration_cancels_and_resets);
   RUN_TEST(test_switch_droid_list_empty_stays_put_on_enter);
   RUN_TEST(test_switch_droid_navigates_and_reports_no_transport_by_default);
@@ -1368,6 +1399,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_render_trigger_calibration_step_text);
   RUN_TEST(test_render_stick_calibration_awaiting_center_step_text);
   RUN_TEST(test_render_stick_calibration_rolling_step_text);
+  RUN_TEST(test_render_stick_calibration_rolling_step_shows_partial_progress);
   RUN_TEST(test_render_stick_calibration_rolling_step_shows_done_once_enough_range);
   RUN_TEST(test_render_device_info);
   RUN_TEST(test_device_serial_low_defaults_then_reflects_what_was_set);

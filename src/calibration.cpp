@@ -118,11 +118,15 @@ void StickCalibrationFlow::sample(int rawX, int rawY) {
   if (rawY > maxY_) maxY_ = rawY;
 }
 
+int StickCalibrationFlow::sidesWithEnoughRange() const {
+  return ((maxX_ - centerX_) >= kMinRangeCounts ? 1 : 0) +
+         ((centerX_ - minX_) >= kMinRangeCounts ? 1 : 0) +
+         ((maxY_ - centerY_) >= kMinRangeCounts ? 1 : 0) +
+         ((centerY_ - minY_) >= kMinRangeCounts ? 1 : 0);
+}
+
 bool StickCalibrationFlow::hasEnoughRange() const {
-  return (maxX_ - centerX_) >= kMinRangeCounts &&
-         (centerX_ - minX_) >= kMinRangeCounts &&
-         (maxY_ - centerY_) >= kMinRangeCounts &&
-         (centerY_ - minY_) >= kMinRangeCounts;
+  return sidesWithEnoughRange() == 4;
 }
 
 void StickCalibrationFlow::confirmDone() {
