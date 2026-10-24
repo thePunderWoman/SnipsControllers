@@ -76,3 +76,6 @@ PCB/full_erc*.json
 manifest.local.kdl
 .stackup/
 ci/stackup/target/
+
+# Solidcraft editor backups
+shell/solidcraft/*.bak
