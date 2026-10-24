@@ -209,6 +209,15 @@ void test_light_sleep_period_is_short_enough_for_stick_sampling() {
   TEST_ASSERT_EQUAL_UINT32(100, kLightSleepPeriodMs);
 }
 
+void test_power_tier_names() {
+  TEST_ASSERT_EQUAL_STRING("full", powerTierName(PowerTier::kFull));
+  TEST_ASSERT_EQUAL_STRING("dim", powerTierName(PowerTier::kDim));
+  TEST_ASSERT_EQUAL_STRING("display off", powerTierName(PowerTier::kOff));
+  TEST_ASSERT_EQUAL_STRING("display off + XBee asleep",
+                           powerTierName(PowerTier::kXbeeAsleep));
+  TEST_ASSERT_EQUAL_STRING("unknown", powerTierName(static_cast<PowerTier>(99)));
+}
+
 int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_stays_full_with_no_activity_gap);
@@ -231,5 +240,6 @@ int main(int argc, char **argv) {
   RUN_TEST(test_light_sleep_only_in_deepest_tier);
   RUN_TEST(test_no_light_sleep_with_usb_host_charging_or_countdown);
   RUN_TEST(test_light_sleep_period_is_short_enough_for_stick_sampling);
+  RUN_TEST(test_power_tier_names);
   return UNITY_END();
 }

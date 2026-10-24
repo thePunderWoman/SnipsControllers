@@ -5,6 +5,7 @@
 #include <cstring>
 
 #include "accelerometer.h"
+#include "activity.h"
 #include "battery.h"
 #include "buttons.h"
 #include "calibration.h"
@@ -45,6 +46,7 @@ XbeeControl xbeeControl;
 ComplicationRegistry complications;
 ComplicationData complicationData;
 Accelerometer accelerometer;
+ActivityDetector activityDetector;
 PowerManager powerManager;
 PowerConfig powerConfig;
 PowerTier previousPowerTier = PowerTier::kFull;
@@ -315,6 +317,7 @@ void setup() {
   // Restores any previously-run trigger/stick calibration; defaults to an
   // uncalibrated full ADC range if none has been saved yet.
   calibrationData = CalibrationStore::load();
+  activityDetector.setCalibration(calibrationData);
   menuController.setStickDeadzonePercent(calibrationData.stickDeadzonePercent);
 
   // Restores any previously-saved droid list; defaults to empty if none
@@ -541,6 +544,7 @@ void loop() {
     calibrationData.triggerMin = newTriggerMin;
     calibrationData.triggerMax = newTriggerMax;
     CalibrationStore::save(calibrationData);
+    activityDetector.setCalibration(calibrationData);
     Serial.println("Trigger calibration saved.");
   }
 
@@ -555,12 +559,14 @@ void loop() {
     calibrationData.stickYMin = newMinY;
     calibrationData.stickYMax = newMaxY;
     CalibrationStore::save(calibrationData);
+    activityDetector.setCalibration(calibrationData);
     Serial.println("Stick calibration saved.");
   }
 
   if (menuController.consumeFactoryResetConfirmed()) {
     calibrationData = CalibrationData();
     CalibrationStore::save(calibrationData);
+    activityDetector.setCalibration(calibrationData);
     Serial.println("Factory reset: calibration cleared.");
   }
 
@@ -620,31 +626,46 @@ void loop() {
   const bool stat1High = digitalRead(PinAssignment::kChargeStat1) == HIGH;
   const bool stat2High = digitalRead(PinAssignment::kChargeStat2) == HIGH;
 
-  // Low-power mode's idea of "activity" — any button held, the stick or
-  // trigger moved off center/released, or (if present) accelerometer
-  // motion. Buttons use level (isPressed), not just the press edge, so
-  // holding one down doesn't let the screen dim out from under a long
-  // press.
-  bool anyButtonHeld = false;
+  // Low-power mode's idea of "activity" — see activity.h. Buttons use
+  // level (isPressed), not just the press edge, so holding one down
+  // doesn't let the screen dim out from under a long press.
+  ActivityInputs activityInputs;
   for (size_t i = 0; i < Buttons::kCount; ++i) {
     if (buttonPanel.isPressed(i)) {
-      anyButtonHeld = true;
+      activityInputs.anyButtonHeld = true;
       break;
     }
   }
-  const bool activityThisTick =
-      anyButtonHeld || stickXPercent != 0 || stickYPercent != 0 ||
-      triggerPercent != 0 ||
-      (accelerometer.isPresent() && accelerometer.motionDetected());
-  powerManager.update(activityThisTick, now);
+  activityInputs.rawStickX = rawStickX;
+  activityInputs.rawStickY = rawStickY;
+  activityInputs.stickXPercent = stickXPercent;
+  activityInputs.stickYPercent = stickYPercent;
+  activityInputs.triggerPercent = triggerPercent;
+  activityInputs.motion =
+      accelerometer.isPresent() && accelerometer.motionDetected();
+  const uint8_t activeSources = activityDetector.update(activityInputs);
+  powerManager.update(activeSources != 0, now);
+
+  // Logged on each source's rising edge only, so a held input prints
+  // once rather than every tick.
+  if (activityDetector.newlyActiveSources() != 0) {
+    char sourcesText[40];
+    describeActivitySources(activityDetector.newlyActiveSources(),
+                            sourcesText, sizeof(sourcesText));
+    Serial.print("Activity: ");
+    Serial.println(sourcesText);
+  }
 
   const PowerTier currentPowerTier = powerManager.currentTier();
   if (currentPowerTier != previousPowerTier) {
+    Serial.print("Power tier: ");
+    Serial.println(powerTierName(currentPowerTier));
     applyPowerTier(currentPowerTier);
     previousPowerTier = currentPowerTier;
   }
 
   if (powerManager.consumeShouldPowerOff()) {
+    Serial.println("Idle timeout reached: powering off.");
     performGracefulShutdown();  // never returns
   }
 

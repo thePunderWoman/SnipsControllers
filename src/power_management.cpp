@@ -80,6 +80,16 @@ bool PowerManager::consumeShouldPowerOff() {
   return false;
 }
 
+const char *powerTierName(PowerTier tier) {
+  switch (tier) {
+    case PowerTier::kFull: return "full";
+    case PowerTier::kDim: return "dim";
+    case PowerTier::kOff: return "display off";
+    case PowerTier::kXbeeAsleep: return "display off + XBee asleep";
+  }
+  return "unknown";
+}
+
 bool shouldXbeeSleep(PowerTier tier, bool inLowBatteryCountdown) {
   return tier == PowerTier::kXbeeAsleep || inLowBatteryCountdown;
 }
