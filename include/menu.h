@@ -97,8 +97,10 @@ class MenuController {
   //    holding it doesn't spam repeated scrolls. Skipped entirely on
   //    kCalibrateStick, where stick position is the data being
   //    captured, not a nav input.
-  // Returns true if it fired a nav event this call — SnipsController.ino
-  // needs this to know when to redraw (see its menuStateChanged comment).
+  // Returns true if it fired a nav event, or if stick calibration's
+  // rolling progress (sides with enough range) changed, this call —
+  // SnipsController.ino needs this to know when to redraw (see its
+  // menuStateChanged comment).
   bool tick(int rawStickX, int rawStickY, int stickYPercent);
 
   TriggerCalibrationFlow::Step triggerCalibrationStep() const {
@@ -109,6 +111,9 @@ class MenuController {
   }
   bool stickCalibrationHasEnoughRange() const {
     return stickFlow_.hasEnoughRange();
+  }
+  int stickCalibrationSidesDone() const {
+    return stickFlow_.sidesWithEnoughRange();
   }
 
   // Each returns true exactly once, the tick a new result becomes ready

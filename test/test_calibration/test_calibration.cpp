@@ -258,6 +258,24 @@ void test_stick_flow_has_enough_range_reflects_all_four_sides() {
   TEST_ASSERT_TRUE(flow.hasEnoughRange());
 }
 
+void test_stick_flow_sides_with_enough_range_counts_each_side() {
+  StickCalibrationFlow flow;
+  flow.confirmCenter(2000, 2100);
+  TEST_ASSERT_EQUAL_INT(0, flow.sidesWithEnoughRange());
+
+  flow.sample(1750, 2100);  // X-min only 250 counts out -- not yet
+  TEST_ASSERT_EQUAL_INT(0, flow.sidesWithEnoughRange());
+
+  flow.sample(1700, 2100);  // X-min exactly kMinRangeCounts
+  TEST_ASSERT_EQUAL_INT(1, flow.sidesWithEnoughRange());
+
+  flow.sample(2500, 2600);  // X-max and Y-max
+  TEST_ASSERT_EQUAL_INT(3, flow.sidesWithEnoughRange());
+
+  flow.sample(2000, 1700);  // Y-min
+  TEST_ASSERT_EQUAL_INT(4, flow.sidesWithEnoughRange());
+}
+
 int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_trigger_at_min_is_zero_percent);
@@ -293,5 +311,6 @@ int main(int argc, char **argv) {
   RUN_TEST(test_stick_flow_confirm_done_rejects_insufficient_range);
   RUN_TEST(test_stick_flow_confirm_done_rejects_partial_range);
   RUN_TEST(test_stick_flow_has_enough_range_reflects_all_four_sides);
+  RUN_TEST(test_stick_flow_sides_with_enough_range_counts_each_side);
   return UNITY_END();
 }

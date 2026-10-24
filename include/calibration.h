@@ -94,6 +94,12 @@ class StickCalibrationFlow {
   // Step 2: call every tick while rolling; no-op outside kRolling.
   void sample(int rawX, int rawY);
 
+  // How many of the four extremes (X min/max, Y min/max) are already at
+  // least kMinRangeCounts away from center, 0-4 — shown on screen as
+  // rolling progress, so the user can see it moving and tell when one
+  // side is falling short.
+  int sidesWithEnoughRange() const;
+
   // True once every one of the four extremes is at least
   // kMinRangeCounts away from center — see confirmDone().
   bool hasEnoughRange() const;
