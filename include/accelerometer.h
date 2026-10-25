@@ -9,17 +9,13 @@
 // "QMA6100P Preliminary Datasheet" (Doc #13-52-20, Rev A1) sections
 // 7.3/7.9 and the register map (9.1/9.2); the values written are in
 // qma6100p_registers.h.
-// Non-latched interrupt mode is used deliberately: INT1 then directly
-// tracks "is the any-motion condition true right now," so motionDetected()
-// is a plain digitalRead with no register read-and-clear needed.
+// The interrupt is latched: INT1 stays high after motion until
+// motionDetected() reads the status register to clear it, so a short
+// movement can't be missed between loop passes or during light sleep.
 //
 // Register-level values (in particular ANY_MOT_TH's sensitivity) are a
-// best-effort reading of a preliminary datasheet, not yet validated
-// against real hardware — same caveat as XbeeControl's AT command
-// sequencing. Confirm/tune during this part's hardware bring-up (the
-// first production boards don't have this part populated at all — see
-// PCB/GPIO_table.md's Accelerometer section — so that bring-up happens
-// on a later board revision).
+// best-effort reading of a preliminary datasheet plus Meshtastic's
+// working setup for this chip, still being tuned on real hardware.
 //
 // Gracefully absent on boards that don't have this part populated:
 // begin() returns false and every other call becomes a safe no-op, so
@@ -36,9 +32,10 @@ class Accelerometer {
 
   bool isPresent() const { return present_; }
 
-  // True if the any-motion interrupt condition is currently active.
-  // Always false if begin() found nothing (or was never called).
-  bool motionDetected() const;
+  // True if any motion has latched since the last call; clears the latch
+  // (an I2C read, only when INT1 is high). Always false if begin() found
+  // nothing (or was never called).
+  bool motionDetected();
 
  private:
   bool present_ = false;

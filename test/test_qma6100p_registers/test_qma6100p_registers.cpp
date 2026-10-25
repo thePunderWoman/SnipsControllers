@@ -50,10 +50,32 @@ void test_any_motion_duration_and_threshold_registers() {
   // Register 0x2C (MOT_CONF0): ANY_MOT_DUR<1:0> in bits 0-1, so the
   // value must fit there and leave NO_MOT_DUR (bits 2-7) at 0.
   TEST_ASSERT_EQUAL_HEX8(0x2C, Qma6100p::kRegMotConf0);
-  TEST_ASSERT_EQUAL_HEX8(0, Qma6100p::kAnyMotDuration4Samples & ~0x03);
-  TEST_ASSERT_EQUAL_HEX8(0x03, Qma6100p::kAnyMotDuration4Samples);
+  TEST_ASSERT_EQUAL_HEX8(0, Qma6100p::kAnyMotDuration2Samples & ~0x03);
+  TEST_ASSERT_EQUAL_HEX8(0x01, Qma6100p::kAnyMotDuration2Samples);
   // Register 0x2E (MOT_CONF2): ANY_MOT_TH<7:0>.
   TEST_ASSERT_EQUAL_HEX8(0x2E, Qma6100p::kRegAnyMotTh);
+}
+
+// Regression: with INT1 non-latched and INT_ST never read, motion
+// registered once on hardware and never again. INT1 is now latched and
+// cleared by the INT_ST0 read in motionDetected().
+void test_int_cfg_latches_and_clears_on_status_read() {
+  // Register 0x21 (INT_CFG), p. 33: bit 7 INT_RD_CLR, bit 0 LATCH_INT.
+  TEST_ASSERT_EQUAL_HEX8(0x21, Qma6100p::kRegIntCfg);
+  TEST_ASSERT_EQUAL_HEX8(0x01, Qma6100p::kLatchInt);
+  TEST_ASSERT_EQUAL_HEX8(0x80, Qma6100p::kIntRdClr);
+  TEST_ASSERT_EQUAL_HEX8(0x81, Qma6100p::kIntCfgLatchedClearOnRead);
+  // Register 0x09 (INT_ST0) is within the 0x09-0x0D range INT_RD_CLR
+  // clears on.
+  TEST_ASSERT_EQUAL_HEX8(0x09, Qma6100p::kRegIntSt0);
+}
+
+void test_soft_reset_sequence() {
+  // Register 0x36 (S_RESET): writing 0xB6 resets all registers to default
+  // (section 6.1).
+  TEST_ASSERT_EQUAL_HEX8(0x36, Qma6100p::kRegSoftReset);
+  TEST_ASSERT_EQUAL_HEX8(0xB6, Qma6100p::kSoftReset);
+  TEST_ASSERT_EQUAL_HEX8(0x00, Qma6100p::kSoftResetRelease);
 }
 
 void test_power_mode_sets_active_bit() {
@@ -70,6 +92,8 @@ int main(int argc, char **argv) {
   RUN_TEST(test_any_motion_routed_to_int1);
   RUN_TEST(test_range_is_2g);
   RUN_TEST(test_any_motion_duration_and_threshold_registers);
+  RUN_TEST(test_int_cfg_latches_and_clears_on_status_read);
+  RUN_TEST(test_soft_reset_sequence);
   RUN_TEST(test_power_mode_sets_active_bit);
   return UNITY_END();
 }

@@ -60,21 +60,39 @@ bool Accelerometer::begin() {
 
   pinMode(PinAssignment::kAccelInterrupt, INPUT);
 
+  // Start from the chip's defaults: it stays powered across an ESP32
+  // reset, so it can still hold an earlier boot's settings or a latched
+  // interrupt.
+  writeRegister(kRegSoftReset, kSoftReset);
+  delay(20);
+  writeRegister(kRegSoftReset, kSoftResetRelease);
+  delay(20);
+
   writeRegister(kRegRange, kRangeValue2g);
   writeRegister(kRegIntEn2, kAnyMotEnAllAxes);
   writeRegister(kRegAnyMotTh, kAnyMotThreshold);
-  writeRegister(kRegMotConf0, kAnyMotDuration4Samples);
+  writeRegister(kRegMotConf0, kAnyMotDuration2Samples);
   writeRegister(kRegIntMap1, kInt1AnyMotBit);
   writeRegister(kRegIntPinConf, kIntPinConfValue);
+  // Read-modify-write: INT_CFG's reset value has bits the datasheet
+  // doesn't describe, so keep them.
+  uint8_t intCfg = 0;
+  readRegister(kRegIntCfg, &intCfg);
+  writeRegister(kRegIntCfg, intCfg | kIntCfgLatchedClearOnRead);
   writeRegister(kRegPowerMode, kModeBitActive);
 
   present_ = true;
   return true;
 }
 
-bool Accelerometer::motionDetected() const {
-  if (!present_) {
+bool Accelerometer::motionDetected() {
+  if (!present_ ||
+      digitalRead(PinAssignment::kAccelInterrupt) != HIGH) {
     return false;
   }
-  return digitalRead(PinAssignment::kAccelInterrupt) == HIGH;
+  // Reading INT_ST0 clears the latch (INT_RD_CLR); INT1 latches again on
+  // the next sample if the motion is still going.
+  uint8_t status = 0;
+  readRegister(kRegIntSt0, &status);
+  return true;
 }
