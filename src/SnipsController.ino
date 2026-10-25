@@ -826,6 +826,18 @@ void loop() {
     Serial.print(stickXPercent);
     Serial.print(" Y ");
     Serial.println(stickYPercent);
+
+    // What low-power mode sees right now — the "Activity:" lines above
+    // only print on a rising edge, so an input stuck active shows up
+    // only here.
+    char activeText[40];
+    describeActivitySources(activeSources, activeText, sizeof(activeText));
+    Serial.print("Power ");
+    Serial.print(powerTierName(currentPowerTier));
+    Serial.print(", idle ");
+    Serial.print(powerManager.idleMs(now) / 1000);
+    Serial.print("s, active: ");
+    Serial.println(activeText);
   }
 
   // Low battery countdown takes over the display unconditionally, as the

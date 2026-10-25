@@ -209,6 +209,16 @@ void test_light_sleep_period_is_short_enough_for_stick_sampling() {
   TEST_ASSERT_EQUAL_UINT32(100, kLightSleepPeriodMs);
 }
 
+void test_idle_ms_counts_from_last_activity() {
+  PowerManager manager;
+  manager.setConfig(testConfig());
+  manager.update(true, 1000);
+  manager.update(false, 3500);
+  TEST_ASSERT_EQUAL_UINT32(2500, manager.idleMs(3500));
+  manager.update(true, 4000);
+  TEST_ASSERT_EQUAL_UINT32(0, manager.idleMs(4000));
+}
+
 void test_power_tier_names() {
   TEST_ASSERT_EQUAL_STRING("full", powerTierName(PowerTier::kFull));
   TEST_ASSERT_EQUAL_STRING("dim", powerTierName(PowerTier::kDim));
@@ -240,6 +250,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_light_sleep_only_in_deepest_tier);
   RUN_TEST(test_no_light_sleep_with_usb_host_charging_or_countdown);
   RUN_TEST(test_light_sleep_period_is_short_enough_for_stick_sampling);
+  RUN_TEST(test_idle_ms_counts_from_last_activity);
   RUN_TEST(test_power_tier_names);
   return UNITY_END();
 }

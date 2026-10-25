@@ -7,7 +7,8 @@
 // the chip's own ANY_MOT_INT hardware interrupt engine, mapped to INT1
 // (host GPIO46), rather than polling raw acceleration data — see QST
 // "QMA6100P Preliminary Datasheet" (Doc #13-52-20, Rev A1) sections
-// 7.3/7.9 and the register map (9.1/9.2) for the bits used in the .cpp.
+// 7.3/7.9 and the register map (9.1/9.2); the values written are in
+// qma6100p_registers.h.
 // Non-latched interrupt mode is used deliberately: INT1 then directly
 // tracks "is the any-motion condition true right now," so motionDetected()
 // is a plain digitalRead with no register read-and-clear needed.
