@@ -66,6 +66,36 @@ void test_percent_clamps_raw_beyond_range_to_hundred() {
   TEST_ASSERT_EQUAL_INT(100, monitor.percentFor(999999));
 }
 
+void test_usb_host_is_detected_whatever_the_charger_says() {
+  TEST_ASSERT_TRUE(UsbPower::kHost ==
+                   usbPowerFor(true, ChargeState::kDone));
+  TEST_ASSERT_TRUE(UsbPower::kHost ==
+                   usbPowerFor(true, ChargeState::kCharging));
+}
+
+void test_charging_without_host_means_power_only_usb() {
+  TEST_ASSERT_TRUE(UsbPower::kPowerOnly ==
+                   usbPowerFor(false, ChargeState::kCharging));
+}
+
+void test_no_host_and_not_charging_is_not_detected() {
+  // STAT reads "done" both on battery and on a finished USB charge.
+  TEST_ASSERT_TRUE(UsbPower::kNotDetected ==
+                   usbPowerFor(false, ChargeState::kDone));
+  TEST_ASSERT_TRUE(UsbPower::kNotDetected ==
+                   usbPowerFor(false, ChargeState::kRecoverableFault));
+  TEST_ASSERT_TRUE(UsbPower::kNotDetected ==
+                   usbPowerFor(false, ChargeState::kLatchedFault));
+}
+
+void test_usb_power_names() {
+  TEST_ASSERT_EQUAL_STRING("not detected",
+                           usbPowerName(UsbPower::kNotDetected));
+  TEST_ASSERT_EQUAL_STRING("power only", usbPowerName(UsbPower::kPowerOnly));
+  TEST_ASSERT_EQUAL_STRING("host connected", usbPowerName(UsbPower::kHost));
+  TEST_ASSERT_EQUAL_STRING("unknown", usbPowerName(static_cast<UsbPower>(99)));
+}
+
 int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_charge_state_both_high_is_done);
@@ -78,5 +108,9 @@ int main(int argc, char **argv) {
   RUN_TEST(test_percent_at_raw_max_clamps_to_hundred);
   RUN_TEST(test_percent_clamps_negative_raw_to_zero);
   RUN_TEST(test_percent_clamps_raw_beyond_range_to_hundred);
+  RUN_TEST(test_usb_host_is_detected_whatever_the_charger_says);
+  RUN_TEST(test_charging_without_host_means_power_only_usb);
+  RUN_TEST(test_no_host_and_not_charging_is_not_detected);
+  RUN_TEST(test_usb_power_names);
   return UNITY_END();
 }

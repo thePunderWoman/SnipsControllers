@@ -80,10 +80,14 @@ void OledDisplay::renderBitmapCentered(const uint8_t *bitmap, int width,
   display_.display();
 }
 
-void OledDisplay::setContrast(uint8_t contrast) {
+void OledDisplay::setDrive(const ScreenDrive &drive) {
   if (!ready_) return;
   display_.ssd1306_command(SSD1306_SETCONTRAST);
-  display_.ssd1306_command(contrast);
+  display_.ssd1306_command(drive.contrast);
+  display_.ssd1306_command(SSD1306_SETPRECHARGE);
+  display_.ssd1306_command(drive.precharge);
+  display_.ssd1306_command(SSD1306_SETVCOMDETECT);
+  display_.ssd1306_command(drive.vcomh);
 }
 
 void OledDisplay::setPowerOn(bool on) {

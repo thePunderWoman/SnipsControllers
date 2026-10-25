@@ -3,6 +3,7 @@
 #include <Adafruit_SSD1306.h>
 
 #include "screen.h"
+#include "screen_brightness.h"
 
 // Thin hardware adapter over Adafruit_SSD1306/GFX — owns the real display
 // object and draws whatever a ScreenBuffer currently holds. No content
@@ -37,11 +38,11 @@ class OledDisplay {
   void renderBitmapCentered(const uint8_t *bitmap, int width, int height);
 
   // Brightness and low-power mode support (see screen_brightness.h and
-  // power_management.h). Contrast changes and powering the panel back on
+  // power_management.h). Drive changes and powering the panel back on
   // take effect immediately; they don't need a render() call to show
   // existing content again since the panel's GDRAM is untouched while
   // off.
-  void setContrast(uint8_t contrast);
+  void setDrive(const ScreenDrive &drive);
   void setPowerOn(bool on);
 
  private:

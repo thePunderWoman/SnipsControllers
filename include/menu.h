@@ -52,16 +52,17 @@ enum class MainMenuItem {
 // cycles that row's value, same interaction pattern as Display Config's
 // slots.
 enum class PowerConfigRow {
-  kMode = 0,
-  kDimTimeout,
+  kDimTimeout = 0,
   kOffTimeout,
   kXbeeSleepTimeout,
   kAutoPoweroffTimeout,
   kCount,
 };
 
-// One row of the Brightness screen — same interaction as Power Config.
-// Both values live in PowerConfig.
+// One row of the Brightness screen. Up/Down select a row like Power
+// Config, but Left/Right step its percentage down/up by 10, stopping at
+// 10% and 100%, and Enter steps up, wrapping 100% back to 10%. Both
+// values live in PowerConfig.
 enum class BrightnessRow {
   kScreen = 0,
   kLed,
@@ -88,6 +89,10 @@ class MenuController {
   void onUp();
   void onDown();
   void onBack();
+  // Left/Right only do anything on the Brightness screen. There are no
+  // Left/Right buttons; they come from the stick (see tick()).
+  void onLeft();
+  void onRight();
 
   // Enter needs the current raw analog readings so the calibration
   // screens can capture a sample at the moment of confirmation; ignored
@@ -99,18 +104,21 @@ class MenuController {
   //  - Stick calibration's "roll to extremes" step continuously tracks
   //    min/max from the raw readings — no-op unless currentScreen() ==
   //    kCalibrateStick and its internal flow is in the rolling step.
-  //  - The stick doubles as menu Up/Down navigation (same effect as the
-  //    Left Up/Down buttons) via stickYPercent, the already-calibrated
-  //    reading — a threshold push counts as one discrete nav event, and
-  //    the stick must return near center before it can fire again, so
-  //    holding it doesn't spam repeated scrolls. Skipped entirely on
+  //  - The stick doubles as menu navigation via stickXPercent and
+  //    stickYPercent, the already-calibrated readings: Up/Down (same
+  //    effect as the Left Up/Down buttons) and Left/Right. A threshold
+  //    push along whichever axis is pushed further counts as one
+  //    discrete nav event, and the stick must return near center before
+  //    it can fire again, so holding it doesn't spam repeated scrolls
+  //    or brightness steps. Skipped entirely on
   //    kCalibrateStick, where stick position is the data being
   //    captured, not a nav input.
   // Returns true if it fired a nav event, or if stick calibration's
   // rolling progress (sides with enough range) changed, this call —
   // SnipsController.ino needs this to know when to redraw (see its
   // menuStateChanged comment).
-  bool tick(int rawStickX, int rawStickY, int stickYPercent);
+  bool tick(int rawStickX, int rawStickY, int stickXPercent,
+            int stickYPercent);
 
   TriggerCalibrationFlow::Step triggerCalibrationStep() const {
     return triggerFlow_.currentStep();
@@ -226,6 +234,7 @@ class MenuController {
 
   void open();
   void enterMainMenuItem(MainMenuItem item);
+  void stepSelectedBrightness(int (*step)(int percent));
   static int wrapIndex(int index, int count);
 
   MenuScreen screen_ = MenuScreen::kInactive;

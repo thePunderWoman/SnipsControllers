@@ -1,8 +1,10 @@
 #include "menu.h"
 
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 
+#include "brightness_level.h"
 #include "buttons.h"
 #include "firmware_version.h"
 
@@ -163,6 +165,41 @@ void MenuController::onDown() {
       break;
     default:
       break;
+  }
+}
+
+void MenuController::onLeft() {
+  if (screen_ == MenuScreen::kBrightness) {
+    stepSelectedBrightness(BrightnessLevel::decrease);
+  }
+}
+
+void MenuController::onRight() {
+  if (screen_ == MenuScreen::kBrightness) {
+    stepSelectedBrightness(BrightnessLevel::increase);
+  }
+}
+
+// Applies one BrightnessLevel step to the selected Brightness row's value.
+// Hitting either end of the range isn't a change, so it doesn't trigger a
+// save.
+void MenuController::stepSelectedBrightness(int (*step)(int percent)) {
+  if (powerConfig_ == nullptr) return;
+  int *percent = nullptr;
+  switch (selectedBrightnessRow()) {
+    case BrightnessRow::kScreen:
+      percent = &powerConfig_->screenBrightnessPercent;
+      break;
+    case BrightnessRow::kLed:
+      percent = &powerConfig_->ledBrightnessPercent;
+      break;
+    case BrightnessRow::kCount:
+      return;
+  }
+  const int next = step(*percent);
+  if (next != *percent) {
+    *percent = next;
+    powerConfigChanged_ = true;
   }
 }
 
@@ -365,9 +402,6 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
     case MenuScreen::kPowerConfig:
       if (powerConfig_ != nullptr) {
         switch (selectedPowerConfigRow()) {
-          case PowerConfigRow::kMode:
-            powerConfig_->mode = nextPowerManagementMode(powerConfig_->mode);
-            break;
           case PowerConfigRow::kDimTimeout:
             powerConfig_->dimTimeoutSec =
                 nextCascadeTimeoutSec(powerConfig_->dimTimeoutSec);
@@ -392,21 +426,7 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
       break;
 
     case MenuScreen::kBrightness:
-      if (powerConfig_ != nullptr) {
-        switch (selectedBrightnessRow()) {
-          case BrightnessRow::kScreen:
-            powerConfig_->screenBrightness =
-                nextScreenBrightness(powerConfig_->screenBrightness);
-            break;
-          case BrightnessRow::kLed:
-            powerConfig_->ledBrightness =
-                nextLedBrightness(powerConfig_->ledBrightness);
-            break;
-          case BrightnessRow::kCount:
-            break;
-        }
-        powerConfigChanged_ = true;
-      }
+      stepSelectedBrightness(BrightnessLevel::cycle);
       break;
 
     case MenuScreen::kDeviceInfo:
@@ -456,7 +476,8 @@ void MenuController::onButtonTestPress(size_t buttonIndex) {
   lastTestedButtonIndex_ = static_cast<int>(buttonIndex);
 }
 
-bool MenuController::tick(int rawStickX, int rawStickY, int stickYPercent) {
+bool MenuController::tick(int rawStickX, int rawStickY, int stickXPercent,
+                          int stickYPercent) {
   if (screen_ == MenuScreen::kCalibrateStick) {
     if (stickFlow_.currentStep() != StickCalibrationFlow::Step::kRolling) {
       return false;
@@ -469,17 +490,31 @@ bool MenuController::tick(int rawStickX, int rawStickY, int stickYPercent) {
   }
 
   if (stickNavArmed_) {
-    if (stickYPercent >= kStickNavFireThreshold) {
-      onUp();
+    // Only the axis pushed further counts, so a diagonal push fires one
+    // event, not both.
+    const bool horizontal =
+        std::abs(stickXPercent) > std::abs(stickYPercent);
+    const int push = horizontal ? stickXPercent : stickYPercent;
+    if (push >= kStickNavFireThreshold) {
+      // Positive X is physically left (see SnipsController.ino's uplink).
+      if (horizontal) {
+        onLeft();
+      } else {
+        onUp();
+      }
       stickNavArmed_ = false;
       return true;
-    } else if (stickYPercent <= -kStickNavFireThreshold) {
-      onDown();
+    } else if (push <= -kStickNavFireThreshold) {
+      if (horizontal) {
+        onRight();
+      } else {
+        onDown();
+      }
       stickNavArmed_ = false;
       return true;
     }
-  } else if (stickYPercent > -kStickNavRearmThreshold &&
-             stickYPercent < kStickNavRearmThreshold) {
+  } else if (std::abs(stickXPercent) < kStickNavRearmThreshold &&
+             std::abs(stickYPercent) < kStickNavRearmThreshold) {
     stickNavArmed_ = true;
   }
   return false;
@@ -552,39 +587,14 @@ void renderTextEntryLine(const TextEntryWidget &widget, ScreenBuffer *screen,
   screen->setLine(lineIndex, line);
 }
 
-const char *powerModeLabel(PowerManagementMode mode) {
-  switch (mode) {
-    case PowerManagementMode::kAlwaysOn: return "Always on";
-    case PowerManagementMode::kDimOnly: return "Dim OLED";
-    case PowerManagementMode::kDimAndOff: return "Dim+Off OLED";
-    case PowerManagementMode::kDimOffAndXbeeSleep: return "+XBee sleep";
-    default: return "Unknown";
-  }
-}
-
-const char *ledBrightnessLabel(LedBrightness brightness) {
-  switch (brightness) {
-    case LedBrightness::kLow: return "Low";
-    case LedBrightness::kMedium: return "Medium";
-    case LedBrightness::kHigh: return "High";
-    default: return "Unknown";
-  }
-}
-
-const char *screenBrightnessLabel(ScreenBrightness brightness) {
-  switch (brightness) {
-    case ScreenBrightness::kLow: return "Low";
-    case ScreenBrightness::kMedium: return "Medium";
-    case ScreenBrightness::kHigh: return "High";
-    default: return "Unknown";
-  }
-}
-
-// Formats a duration in seconds as "Ns" below one minute, "Nm" at exact
-// minutes (the only case that matters for the auto-poweroff row, whose
-// options are all whole minutes).
-void formatSeconds(int totalSeconds, char *out, size_t outCapacity) {
-  if (totalSeconds % 60 == 0) {
+// Formats a power timeout as "Never" for PowerConfigOptions::kNever,
+// "Ns" below one minute, "Nm" at exact minutes (the only case that
+// matters for the auto-poweroff row, whose options are all whole
+// minutes).
+void formatTimeout(int totalSeconds, char *out, size_t outCapacity) {
+  if (totalSeconds <= PowerConfigOptions::kNever) {
+    std::snprintf(out, outCapacity, "Never");
+  } else if (totalSeconds % 60 == 0) {
     std::snprintf(out, outCapacity, "%dm", totalSeconds / 60);
   } else {
     std::snprintf(out, outCapacity, "%ds", totalSeconds);
@@ -792,29 +802,25 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
         const char *rowPrefix = "";
         const char *rowValue = "";
         switch (static_cast<PowerConfigRow>(i)) {
-          case PowerConfigRow::kMode:
-            rowPrefix = "Mode: ";
-            rowValue = powerModeLabel(config.mode);
-            break;
           case PowerConfigRow::kDimTimeout:
-            rowPrefix = "Dim: ";
-            formatSeconds(config.dimTimeoutSec, valueBuf, sizeof(valueBuf));
+            rowPrefix = "OLED Dim: ";
+            formatTimeout(config.dimTimeoutSec, valueBuf, sizeof(valueBuf));
             rowValue = valueBuf;
             break;
           case PowerConfigRow::kOffTimeout:
-            rowPrefix = "Off: ";
-            formatSeconds(config.offTimeoutSec, valueBuf, sizeof(valueBuf));
+            rowPrefix = "OLED Off: ";
+            formatTimeout(config.offTimeoutSec, valueBuf, sizeof(valueBuf));
             rowValue = valueBuf;
             break;
           case PowerConfigRow::kXbeeSleepTimeout:
             rowPrefix = "XBee sleep: ";
-            formatSeconds(config.xbeeSleepTimeoutSec, valueBuf,
+            formatTimeout(config.xbeeSleepTimeoutSec, valueBuf,
                           sizeof(valueBuf));
             rowValue = valueBuf;
             break;
           case PowerConfigRow::kAutoPoweroffTimeout:
             rowPrefix = "Auto off: ";
-            formatSeconds(config.autoPoweroffTimeoutSec, valueBuf,
+            formatTimeout(config.autoPoweroffTimeoutSec, valueBuf,
                           sizeof(valueBuf));
             rowValue = valueBuf;
             break;
@@ -839,26 +845,29 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
       char line[ScreenBuffer::kMaxLineLength + 1];
       for (int i = 0; i < static_cast<int>(BrightnessRow::kCount); ++i) {
         const char *rowPrefix = "";
-        const char *rowValue = "";
+        int rowPercent = 0;
         switch (static_cast<BrightnessRow>(i)) {
           case BrightnessRow::kScreen:
             rowPrefix = "Screen: ";
-            rowValue = screenBrightnessLabel(config.screenBrightness);
+            rowPercent = config.screenBrightnessPercent;
             break;
           case BrightnessRow::kLed:
             rowPrefix = "LED: ";
-            rowValue = ledBrightnessLabel(config.ledBrightness);
+            rowPercent = config.ledBrightnessPercent;
             break;
           case BrightnessRow::kCount:
             break;
         }
-        std::snprintf(line, sizeof(line), "%s%s%s",
+        // Sanitized so the screen shows the level that's actually in
+        // effect, even for a value that never went through the menu.
+        std::snprintf(line, sizeof(line), "%s%s%d%%",
                       i == static_cast<int>(menu.selectedBrightnessRow())
                           ? "> "
                           : "  ",
-                      rowPrefix, rowValue);
+                      rowPrefix, BrightnessLevel::sanitize(rowPercent));
         screen->setLine(1 + i, line);
       }
+      screen->setLine(4, "Left/Right: change");
       break;
     }
 

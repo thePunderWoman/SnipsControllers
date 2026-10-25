@@ -10,6 +10,24 @@ enum class ChargeState {
   kLatchedFault,       // ILIM/ISET short, BATOCP, or safety timer expired
 };
 
+// Whether the controller is on USB, as far as the board can tell. VBUS
+// reaches only the charger's IN pin (no GPIO senses it), so USB shows up
+// only indirectly: a computer's USB host is seen by the ESP32-S3's
+// native USB, and the charger reporting kCharging means VBUS is present.
+// A power-only supply (wall charger, power bank) with the charger
+// reporting done is indistinguishable from running on battery: STAT
+// reads the same for "charge complete" and "no input power".
+enum class UsbPower {
+  kNotDetected,  // On battery, or USB power the board can't see.
+  kPowerOnly,    // Charging, so VBUS is present, but no USB host.
+  kHost,         // A USB host (computer) is connected.
+};
+
+UsbPower usbPowerFor(bool usbHostConnected, ChargeState chargeState);
+
+// Short lowercase description for Serial logging, e.g. "host connected".
+const char *usbPowerName(UsbPower usbPower);
+
 class BatteryMonitor {
  public:
   // Truth table is bq25185 datasheet (SLUSF65A) Table 7-2 "Status Pins
