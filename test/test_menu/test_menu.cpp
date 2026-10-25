@@ -115,6 +115,8 @@ void test_down_cycles_through_every_main_menu_item_in_order() {
   TEST_ASSERT_TRUE(MainMenuItem::kDisplayConfig ==
                     menu.selectedMainMenuItem());
   menu.onDown();
+  TEST_ASSERT_TRUE(MainMenuItem::kBrightness == menu.selectedMainMenuItem());
+  menu.onDown();
   TEST_ASSERT_TRUE(MainMenuItem::kPowerConfig ==
                     menu.selectedMainMenuItem());
   menu.onDown();
@@ -350,8 +352,8 @@ void test_stick_calibration_full_flow() {
   TEST_ASSERT_TRUE(StickCalibrationFlow::Step::kRolling ==
                     menu.stickCalibrationStep());
 
-  menu.tick(1500, 2600, 0);
-  menu.tick(2500, 1800, 0);
+  menu.tick(1500, 2600, 0, 0);
+  menu.tick(2500, 1800, 0, 0);
   menu.onEnter(0, 9999, 9999);  // confirm done (values here are ignored)
 
   TEST_ASSERT_TRUE(MenuScreen::kMainMenu == menu.currentScreen());
@@ -375,17 +377,17 @@ void test_tick_is_noop_outside_rolling_stick_calibration() {
   selectMainMenuItem(&menu, MainMenuItem::kCalibrateStick);
   // Menu is open but not even in the stick screen yet -- must not crash
   // or affect anything.
-  menu.tick(1234, 5678, 0);
+  menu.tick(1234, 5678, 0, 0);
   menu.onEnter(0, 0, 0);  // -> kCalibrateStick, awaiting center
   // Still awaiting center, not rolling yet -- an extreme value here
   // must not get sampled; if it wrongly did, it would show up in
   // min/max below instead of the real rolling samples that follow.
-  menu.tick(9999, 9999, 0);
+  menu.tick(9999, 9999, 0, 0);
   menu.onEnter(0, 2000, 2100);  // confirm center -> rolling
 
   // Roll for real, enough to clear the minimum-range gate.
-  menu.tick(1500, 2600, 0);
-  menu.tick(2500, 1700, 0);
+  menu.tick(1500, 2600, 0, 0);
+  menu.tick(2500, 1700, 0, 0);
 
   int centerX, centerY, minX, maxX, minY, maxY;
   menu.onEnter(0, 0, 0);  // confirm done
@@ -403,7 +405,7 @@ void test_stick_push_up_navigates_like_left_up_button() {
   MenuController menu;
   openMenu(&menu);
   TEST_ASSERT_TRUE(MainMenuItem::kSwitchDroid == menu.selectedMainMenuItem());
-  menu.tick(0, 0, 75);  // past the fire threshold
+  menu.tick(0, 0, 0, 75);  // past the fire threshold
   TEST_ASSERT_TRUE(MainMenuItem::kFactoryReset ==
                     menu.selectedMainMenuItem());  // onUp() wraps to the last item
 }
@@ -411,7 +413,7 @@ void test_stick_push_up_navigates_like_left_up_button() {
 void test_stick_push_down_navigates_like_left_down_button() {
   MenuController menu;
   openMenu(&menu);
-  menu.tick(0, 0, -75);  // past the fire threshold, opposite direction
+  menu.tick(0, 0, 0, -75);  // past the fire threshold, opposite direction
   TEST_ASSERT_TRUE(MainMenuItem::kManageDroids == menu.selectedMainMenuItem());
 }
 
@@ -420,29 +422,55 @@ void test_tick_returns_true_only_when_it_fires_a_nav_event() {
   // redraw the active screen -- see its menuInputHandled comment.
   MenuController menu;
   openMenu(&menu);
-  TEST_ASSERT_FALSE(menu.tick(0, 0, 15));  // short of threshold
-  TEST_ASSERT_TRUE(menu.tick(0, 0, 75));   // fires
-  TEST_ASSERT_FALSE(menu.tick(0, 0, 75));  // still held, already fired
-  TEST_ASSERT_FALSE(menu.tick(0, 0, 0));   // returning to center, no fire
-  TEST_ASSERT_TRUE(menu.tick(0, 0, -75));  // rearmed, fires again
+  TEST_ASSERT_FALSE(menu.tick(0, 0, 0, 15));  // short of threshold
+  TEST_ASSERT_TRUE(menu.tick(0, 0, 0, 75));   // fires
+  TEST_ASSERT_FALSE(menu.tick(0, 0, 0, 75));  // still held, already fired
+  TEST_ASSERT_FALSE(menu.tick(0, 0, 0, 0));   // returning to center, no fire
+  TEST_ASSERT_TRUE(menu.tick(0, 0, 0, -75));  // rearmed, fires again
 }
 
 void test_stick_below_threshold_does_not_navigate() {
   MenuController menu;
   openMenu(&menu);
-  menu.tick(0, 0, 15);  // short of the fire threshold (25)
+  menu.tick(0, 0, 0, 15);  // short of the fire threshold (25)
   TEST_ASSERT_TRUE(MainMenuItem::kSwitchDroid == menu.selectedMainMenuItem());
+}
+
+void test_diagonal_stick_push_fires_only_the_stronger_axis() {
+  MenuController menu;
+  openMenu(&menu);
+  // Mostly sideways: Left on the main menu, which does nothing — and no
+  // Up either.
+  TEST_ASSERT_TRUE(menu.tick(0, 0, 75, 40));
+  TEST_ASSERT_TRUE(MainMenuItem::kSwitchDroid == menu.selectedMainMenuItem());
+  menu.tick(0, 0, 0, 0);
+  // Mostly down: Down, even with some sideways push.
+  TEST_ASSERT_TRUE(menu.tick(0, 0, 40, -75));
+  TEST_ASSERT_TRUE(MainMenuItem::kManageDroids == menu.selectedMainMenuItem());
+}
+
+void test_stick_rearms_only_when_both_axes_return_to_center() {
+  MenuController menu;
+  openMenu(&menu);
+  menu.tick(0, 0, 0, -75);  // Down -> kManageDroids
+  menu.tick(0, 0, 40, 0);   // Y centered but X still off center: not rearmed
+  menu.tick(0, 0, 0, -75);
+  TEST_ASSERT_TRUE(MainMenuItem::kManageDroids == menu.selectedMainMenuItem());
+  menu.tick(0, 0, 0, 0);  // both centered: rearms
+  menu.tick(0, 0, 0, -75);
+  TEST_ASSERT_TRUE(MainMenuItem::kCalibrateStick ==
+                   menu.selectedMainMenuItem());
 }
 
 void test_stick_must_return_to_center_before_firing_again() {
   MenuController menu;
   openMenu(&menu);
-  menu.tick(0, 0, 75);   // fires once -> kManageDroids... (wraps via onUp -> last)
-  menu.tick(0, 0, 75);   // still held past threshold -- must not fire again
+  menu.tick(0, 0, 0, 75);   // fires once -> kManageDroids... (wraps via onUp -> last)
+  menu.tick(0, 0, 0, 75);   // still held past threshold -- must not fire again
   TEST_ASSERT_TRUE(MainMenuItem::kFactoryReset == menu.selectedMainMenuItem());
 
-  menu.tick(0, 0, 0);    // back near center -- rearms
-  menu.tick(0, 0, 75);   // fires once more, one step further up from last
+  menu.tick(0, 0, 0, 0);    // back near center -- rearms
+  menu.tick(0, 0, 0, 75);   // fires once more, one step further up from last
   TEST_ASSERT_TRUE(MainMenuItem::kButtonTest == menu.selectedMainMenuItem());
 }
 
@@ -456,20 +484,20 @@ void test_tick_reports_change_when_stick_calibration_progress_changes() {
   menu.onEnter(0, 0, 0);
   menu.onEnter(0, 2000, 2100);  // confirm center -> rolling
 
-  TEST_ASSERT_FALSE(menu.tick(2100, 2150, 0));  // within range of center
-  TEST_ASSERT_TRUE(menu.tick(1500, 2100, 0));   // X-min reached
-  TEST_ASSERT_FALSE(menu.tick(1400, 2100, 0));  // further, same side
-  TEST_ASSERT_TRUE(menu.tick(2500, 2600, 0));   // X-max and Y-max
-  TEST_ASSERT_TRUE(menu.tick(2000, 1700, 0));   // Y-min: all four
+  TEST_ASSERT_FALSE(menu.tick(2100, 2150, 0, 0));  // within range of center
+  TEST_ASSERT_TRUE(menu.tick(1500, 2100, 0, 0));   // X-min reached
+  TEST_ASSERT_FALSE(menu.tick(1400, 2100, 0, 0));  // further, same side
+  TEST_ASSERT_TRUE(menu.tick(2500, 2600, 0, 0));   // X-max and Y-max
+  TEST_ASSERT_TRUE(menu.tick(2000, 1700, 0, 0));   // Y-min: all four
   TEST_ASSERT_TRUE(menu.stickCalibrationHasEnoughRange());
-  TEST_ASSERT_FALSE(menu.tick(2000, 2100, 0));
+  TEST_ASSERT_FALSE(menu.tick(2000, 2100, 0, 0));
 }
 
 void test_stick_nav_is_disabled_during_stick_calibration() {
   MenuController menu;
   selectMainMenuItem(&menu, MainMenuItem::kCalibrateStick);
   menu.onEnter(0, 0, 0);  // -> kCalibrateStick
-  menu.tick(0, 0, 75);    // would fire onUp() anywhere else
+  menu.tick(0, 0, 0, 75);    // would fire onUp() anywhere else
   TEST_ASSERT_TRUE(MenuScreen::kCalibrateStick == menu.currentScreen());
   TEST_ASSERT_TRUE(StickCalibrationFlow::Step::kAwaitingCenter ==
                     menu.stickCalibrationStep());
@@ -773,27 +801,15 @@ void test_power_config_up_down_wraps_over_rows() {
   menu.setPowerConfig(&config);
   selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
   menu.onEnter(0, 0, 0);  // -> kPowerConfig
-  TEST_ASSERT_TRUE(PowerConfigRow::kMode == menu.selectedPowerConfigRow());
+  TEST_ASSERT_TRUE(PowerConfigRow::kDimTimeout ==
+                   menu.selectedPowerConfigRow());
 
   menu.onUp();  // wraps to the last row
-  TEST_ASSERT_TRUE(PowerConfigRow::kLedBrightness ==
+  TEST_ASSERT_TRUE(PowerConfigRow::kAutoPoweroffTimeout ==
                    menu.selectedPowerConfigRow());
   menu.onDown();
-  TEST_ASSERT_TRUE(PowerConfigRow::kMode == menu.selectedPowerConfigRow());
-}
-
-void test_power_config_enter_cycles_mode_row() {
-  MenuController menu;
-  PowerConfig config;
-  menu.setPowerConfig(&config);
-  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
-  menu.onEnter(0, 0, 0);  // -> kPowerConfig, row 0 (mode)
-
-  TEST_ASSERT_TRUE(PowerManagementMode::kAlwaysOn == config.mode);
-  menu.onEnter(0, 0, 0);
-  TEST_ASSERT_TRUE(PowerManagementMode::kDimOnly == config.mode);
-  TEST_ASSERT_TRUE(menu.consumePowerConfigChanged());
-  TEST_ASSERT_FALSE(menu.consumePowerConfigChanged());
+  TEST_ASSERT_TRUE(PowerConfigRow::kDimTimeout ==
+                   menu.selectedPowerConfigRow());
 }
 
 void test_power_config_enter_cycles_dim_timeout_row() {
@@ -802,11 +818,36 @@ void test_power_config_enter_cycles_dim_timeout_row() {
   config.dimTimeoutSec = 5;
   menu.setPowerConfig(&config);
   selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
-  menu.onEnter(0, 0, 0);  // -> kPowerConfig
-  menu.onDown();          // row 1: dim timeout
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig, row 0: dim timeout
 
   menu.onEnter(0, 0, 0);
   TEST_ASSERT_EQUAL_INT(10, config.dimTimeoutSec);
+  TEST_ASSERT_TRUE(menu.consumePowerConfigChanged());
+  TEST_ASSERT_FALSE(menu.consumePowerConfigChanged());
+}
+
+void test_power_config_cascade_rows_cycle_through_never() {
+  MenuController menu;
+  PowerConfig config;
+  config.dimTimeoutSec = 60;
+  config.offTimeoutSec = 60;
+  config.xbeeSleepTimeoutSec = 60;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig, row 0: dim timeout
+
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL_INT(PowerConfigOptions::kNever, config.dimTimeoutSec);
+  menu.onEnter(0, 0, 0);  // wraps back to the shortest
+  TEST_ASSERT_EQUAL_INT(5, config.dimTimeoutSec);
+
+  menu.onDown();  // off
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL_INT(PowerConfigOptions::kNever, config.offTimeoutSec);
+  menu.onDown();  // XBee sleep
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL_INT(PowerConfigOptions::kNever,
+                        config.xbeeSleepTimeoutSec);
 }
 
 void test_power_config_enter_cycles_auto_poweroff_row_through_minute_options() {
@@ -823,20 +864,14 @@ void test_power_config_enter_cycles_auto_poweroff_row_through_minute_options() {
 
   menu.onEnter(0, 0, 0);
   TEST_ASSERT_EQUAL_INT(300, config.autoPoweroffTimeoutSec);
-}
-
-void test_power_config_enter_cycles_led_brightness_row() {
-  MenuController menu;
-  PowerConfig config;
-  menu.setPowerConfig(&config);
-  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
-  menu.onEnter(0, 0, 0);  // -> kPowerConfig
-  menu.onUp();            // wraps to the last row: LED brightness
-
-  TEST_ASSERT_TRUE(LedBrightness::kLow == config.ledBrightness);
   menu.onEnter(0, 0, 0);
-  TEST_ASSERT_TRUE(LedBrightness::kMedium == config.ledBrightness);
-  TEST_ASSERT_TRUE(menu.consumePowerConfigChanged());
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL_INT(900, config.autoPoweroffTimeoutSec);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL_INT(PowerConfigOptions::kNever,
+                        config.autoPoweroffTimeoutSec);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL_INT(60, config.autoPoweroffTimeoutSec);
 }
 
 void test_power_config_enter_without_config_is_noop() {
@@ -851,6 +886,186 @@ void test_power_config_back_returns_to_main_menu() {
   MenuController menu;
   selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
   menu.onEnter(0, 0, 0);  // -> kPowerConfig
+  menu.onBack();
+  TEST_ASSERT_TRUE(MenuScreen::kMainMenu == menu.currentScreen());
+}
+
+// ---- brightness -------------------------------------------------------------
+
+void test_brightness_up_down_wraps_over_rows() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness
+  TEST_ASSERT_TRUE(MenuScreen::kBrightness == menu.currentScreen());
+  TEST_ASSERT_TRUE(BrightnessRow::kScreen == menu.selectedBrightnessRow());
+
+  menu.onDown();
+  TEST_ASSERT_TRUE(BrightnessRow::kLed == menu.selectedBrightnessRow());
+  menu.onDown();  // wraps
+  TEST_ASSERT_TRUE(BrightnessRow::kScreen == menu.selectedBrightnessRow());
+  menu.onUp();    // wraps back
+  TEST_ASSERT_TRUE(BrightnessRow::kLed == menu.selectedBrightnessRow());
+}
+
+void test_brightness_enter_cycles_screen_row() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness, row 0 (screen)
+
+  TEST_ASSERT_EQUAL(80, config.screenBrightnessPercent);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL(90, config.screenBrightnessPercent);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL(100, config.screenBrightnessPercent);
+  menu.onEnter(0, 0, 0);  // wraps
+  TEST_ASSERT_EQUAL(10, config.screenBrightnessPercent);
+  TEST_ASSERT_TRUE(menu.consumePowerConfigChanged());
+  TEST_ASSERT_FALSE(menu.consumePowerConfigChanged());
+  TEST_ASSERT_EQUAL(10, config.ledBrightnessPercent);
+}
+
+void test_brightness_enter_cycles_led_row() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness
+  menu.onDown();          // row 1: LED
+
+  TEST_ASSERT_EQUAL(10, config.ledBrightnessPercent);
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_EQUAL(20, config.ledBrightnessPercent);
+  TEST_ASSERT_TRUE(menu.consumePowerConfigChanged());
+  TEST_ASSERT_EQUAL(80, config.screenBrightnessPercent);
+}
+
+void test_brightness_right_and_left_step_screen_row_by_ten() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness, row 0 (screen)
+
+  menu.onRight();
+  TEST_ASSERT_EQUAL(90, config.screenBrightnessPercent);
+  TEST_ASSERT_TRUE(menu.consumePowerConfigChanged());
+  menu.onLeft();
+  menu.onLeft();
+  TEST_ASSERT_EQUAL(70, config.screenBrightnessPercent);
+  TEST_ASSERT_TRUE(menu.consumePowerConfigChanged());
+  TEST_ASSERT_EQUAL(10, config.ledBrightnessPercent);
+}
+
+void test_brightness_right_and_left_step_led_row_by_ten() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness
+  menu.onDown();          // row 1: LED
+
+  menu.onRight();
+  menu.onRight();
+  TEST_ASSERT_EQUAL(30, config.ledBrightnessPercent);
+  menu.onLeft();
+  TEST_ASSERT_EQUAL(20, config.ledBrightnessPercent);
+  TEST_ASSERT_TRUE(menu.consumePowerConfigChanged());
+  TEST_ASSERT_EQUAL(80, config.screenBrightnessPercent);
+}
+
+void test_brightness_left_right_stop_at_ends_without_a_change() {
+  MenuController menu;
+  PowerConfig config;
+  config.screenBrightnessPercent = 100;
+  config.ledBrightnessPercent = 10;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness, row 0 (screen)
+
+  menu.onRight();  // already at 100%: no wrap, no save
+  TEST_ASSERT_EQUAL(100, config.screenBrightnessPercent);
+  TEST_ASSERT_FALSE(menu.consumePowerConfigChanged());
+
+  menu.onDown();  // row 1: LED
+  menu.onLeft();  // already at 10%: no wrap, no save
+  TEST_ASSERT_EQUAL(10, config.ledBrightnessPercent);
+  TEST_ASSERT_FALSE(menu.consumePowerConfigChanged());
+}
+
+void test_left_right_do_nothing_outside_brightness() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  openMenu(&menu);
+  menu.onRight();
+  menu.onLeft();
+  TEST_ASSERT_TRUE(MainMenuItem::kSwitchDroid == menu.selectedMainMenuItem());
+
+  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
+  menu.onEnter(0, 0, 0);  // -> kPowerConfig
+  menu.onRight();
+  TEST_ASSERT_TRUE(PowerConfigRow::kDimTimeout ==
+                   menu.selectedPowerConfigRow());
+  TEST_ASSERT_EQUAL(80, config.screenBrightnessPercent);
+  TEST_ASSERT_EQUAL(10, config.ledBrightnessPercent);
+  TEST_ASSERT_FALSE(menu.consumePowerConfigChanged());
+}
+
+void test_brightness_left_right_without_config_is_noop() {
+  MenuController menu;  // no setPowerConfig() call
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness
+  menu.onRight();         // should not crash
+  menu.onLeft();
+  TEST_ASSERT_FALSE(menu.consumePowerConfigChanged());
+}
+
+void test_stick_push_right_and_left_step_brightness() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness, row 0 (screen)
+
+  // Negative X is physically right.
+  TEST_ASSERT_TRUE(menu.tick(0, 0, -75, 0));
+  TEST_ASSERT_EQUAL(90, config.screenBrightnessPercent);
+  TEST_ASSERT_FALSE(menu.tick(0, 0, -75, 0));  // still held: one step only
+  TEST_ASSERT_EQUAL(90, config.screenBrightnessPercent);
+  menu.tick(0, 0, 0, 0);  // back to center: rearms
+  TEST_ASSERT_TRUE(menu.tick(0, 0, 75, 0));  // physically left
+  TEST_ASSERT_EQUAL(80, config.screenBrightnessPercent);
+  TEST_ASSERT_TRUE(BrightnessRow::kScreen == menu.selectedBrightnessRow());
+}
+
+void test_brightness_reentering_starts_at_first_row() {
+  MenuController menu;
+  PowerConfig config;
+  menu.setPowerConfig(&config);
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness
+  menu.onDown();          // row 1: LED
+  menu.onBack();
+  menu.onEnter(0, 0, 0);  // back into kBrightness
+  TEST_ASSERT_TRUE(BrightnessRow::kScreen == menu.selectedBrightnessRow());
+}
+
+void test_brightness_enter_without_config_is_noop() {
+  MenuController menu;  // no setPowerConfig() call
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness
+  menu.onEnter(0, 0, 0);  // should not crash
+  TEST_ASSERT_FALSE(menu.consumePowerConfigChanged());
+}
+
+void test_brightness_back_returns_to_main_menu() {
+  MenuController menu;
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness
   menu.onBack();
   TEST_ASSERT_TRUE(MenuScreen::kMainMenu == menu.currentScreen());
 }
@@ -979,6 +1194,8 @@ void test_main_menu_item_labels() {
                            mainMenuItemLabel(MainMenuItem::kCalibrateTrigger));
   TEST_ASSERT_EQUAL_STRING("Display Config",
                            mainMenuItemLabel(MainMenuItem::kDisplayConfig));
+  TEST_ASSERT_EQUAL_STRING("Brightness",
+                           mainMenuItemLabel(MainMenuItem::kBrightness));
   TEST_ASSERT_EQUAL_STRING("Power Management",
                            mainMenuItemLabel(MainMenuItem::kPowerConfig));
   TEST_ASSERT_EQUAL_STRING("Device Info",
@@ -1012,7 +1229,7 @@ void test_render_main_menu_marks_selected_item() {
 }
 
 void test_render_main_menu_scrolls_so_last_item_is_visible() {
-  // Regression test: MainMenuItem::kCount (8) + the title line exceeds
+  // Regression test: MainMenuItem::kCount (11) + the title line exceeds
   // ScreenBuffer::kMaxLines (8), so without scrolling the last item
   // (Factory Reset) would silently never be drawn at all (setLine()
   // ignores out-of-range indices rather than failing loudly).
@@ -1081,7 +1298,7 @@ void test_render_stick_calibration_rolling_step_shows_partial_progress() {
   selectMainMenuItem(&menu, MainMenuItem::kCalibrateStick);
   menu.onEnter(0, 0, 0);
   menu.onEnter(0, 2000, 2100);
-  menu.tick(1500, 2600, 0);  // X-min and Y-max
+  menu.tick(1500, 2600, 0, 0);  // X-min and Y-max
   renderMenuScreen(menu, &screen);
   TEST_ASSERT_EQUAL_STRING("2 of 4 sides done", screen.line(4));
 }
@@ -1092,8 +1309,8 @@ void test_render_stick_calibration_rolling_step_shows_done_once_enough_range() {
   selectMainMenuItem(&menu, MainMenuItem::kCalibrateStick);
   menu.onEnter(0, 0, 0);
   menu.onEnter(0, 2000, 2100);
-  menu.tick(1500, 2600, 0);
-  menu.tick(2500, 1700, 0);
+  menu.tick(1500, 2600, 0, 0);
+  menu.tick(2500, 1700, 0, 0);
   renderMenuScreen(menu, &screen);
   TEST_ASSERT_EQUAL_STRING("then press Macro1", screen.line(4));
 }
@@ -1162,25 +1379,23 @@ void test_render_display_config_without_registry_shows_placeholder() {
 void test_render_power_config_shows_rows_and_selection() {
   MenuController menu;
   PowerConfig config;
-  config.mode = PowerManagementMode::kDimOnly;
   config.dimTimeoutSec = 10;
-  config.offTimeoutSec = 15;
+  config.offTimeoutSec = PowerConfigOptions::kNever;
   config.xbeeSleepTimeoutSec = 30;
   config.autoPoweroffTimeoutSec = 300;
-  config.ledBrightness = LedBrightness::kHigh;
   menu.setPowerConfig(&config);
   ScreenBuffer screen;
   selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
   menu.onEnter(0, 0, 0);  // -> kPowerConfig
-  menu.onDown();          // select row 1 (dim timeout)
+  menu.onDown();          // select row 1 (off timeout)
   renderMenuScreen(menu, &screen);
   TEST_ASSERT_EQUAL_STRING("Power Management", screen.line(0));
-  TEST_ASSERT_EQUAL_STRING("  Mode: Dim OLED", screen.line(1));
-  TEST_ASSERT_EQUAL_STRING("> Dim: 10s", screen.line(2));
-  TEST_ASSERT_EQUAL_STRING("  Off: 15s", screen.line(3));
-  TEST_ASSERT_EQUAL_STRING("  XBee sleep: 30s", screen.line(4));
-  TEST_ASSERT_EQUAL_STRING("  Auto off: 5m", screen.line(5));
-  TEST_ASSERT_EQUAL_STRING("  LED: High", screen.line(6));
+  TEST_ASSERT_EQUAL_STRING("  OLED Dim: 10s", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("> OLED Off: Never", screen.line(2));
+  TEST_ASSERT_EQUAL_STRING("  XBee sleep: 30s", screen.line(3));
+  TEST_ASSERT_EQUAL_STRING("  Auto off: 5m", screen.line(4));
+  // No Mode row any more; LED brightness moved to the Brightness screen.
+  TEST_ASSERT_EQUAL_STRING("", screen.line(5));
 }
 
 void test_render_power_config_without_config_shows_defaults() {
@@ -1189,29 +1404,52 @@ void test_render_power_config_without_config_shows_defaults() {
   selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
   menu.onEnter(0, 0, 0);  // -> kPowerConfig
   renderMenuScreen(menu, &screen);
-  TEST_ASSERT_EQUAL_STRING("> Mode: Always on", screen.line(1));
-  TEST_ASSERT_EQUAL_STRING("  LED: Low", screen.line(6));
+  TEST_ASSERT_EQUAL_STRING("> OLED Dim: Never", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("  OLED Off: Never", screen.line(2));
+  TEST_ASSERT_EQUAL_STRING("  XBee sleep: Never", screen.line(3));
+  TEST_ASSERT_EQUAL_STRING("  Auto off: 5m", screen.line(4));
 }
 
-void test_render_power_config_led_brightness_labels() {
+void test_render_brightness_shows_rows_and_selection() {
   MenuController menu;
   PowerConfig config;
+  config.screenBrightnessPercent = 50;
+  config.ledBrightnessPercent = 100;
   menu.setPowerConfig(&config);
   ScreenBuffer screen;
-  selectMainMenuItem(&menu, MainMenuItem::kPowerConfig);
-  menu.onEnter(0, 0, 0);  // -> kPowerConfig
-  menu.onUp();            // select the LED row
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness
+  menu.onDown();          // select the LED row
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("Brightness", screen.line(0));
+  TEST_ASSERT_EQUAL_STRING("  Screen: 50%", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("> LED: 100%", screen.line(2));
+  TEST_ASSERT_EQUAL_STRING("", screen.line(3));
+  TEST_ASSERT_EQUAL_STRING("Left/Right: change", screen.line(4));
+}
 
-  const LedBrightness values[] = {LedBrightness::kLow, LedBrightness::kMedium,
-                                  LedBrightness::kHigh,
-                                  static_cast<LedBrightness>(99)};
-  const char *expected[] = {"> LED: Low", "> LED: Medium", "> LED: High",
-                            "> LED: Unknown"};
-  for (size_t i = 0; i < 4; ++i) {
-    config.ledBrightness = values[i];
-    renderMenuScreen(menu, &screen);
-    TEST_ASSERT_EQUAL_STRING(expected[i], screen.line(6));
-  }
+void test_render_brightness_without_config_shows_defaults() {
+  MenuController menu;  // no setPowerConfig() call
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("> Screen: 80%", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("  LED: 10%", screen.line(2));
+}
+
+void test_render_brightness_shows_sanitized_levels() {
+  MenuController menu;
+  PowerConfig config;
+  config.screenBrightnessPercent = 999;
+  config.ledBrightnessPercent = 34;
+  menu.setPowerConfig(&config);
+  ScreenBuffer screen;
+  selectMainMenuItem(&menu, MainMenuItem::kBrightness);
+  menu.onEnter(0, 0, 0);  // -> kBrightness
+  renderMenuScreen(menu, &screen);
+  TEST_ASSERT_EQUAL_STRING("> Screen: 100%", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("  LED: 30%", screen.line(2));
 }
 
 void test_render_switch_droid_list_empty() {
@@ -1351,6 +1589,8 @@ int main(int argc, char **argv) {
   RUN_TEST(test_stick_push_down_navigates_like_left_down_button);
   RUN_TEST(test_tick_returns_true_only_when_it_fires_a_nav_event);
   RUN_TEST(test_stick_below_threshold_does_not_navigate);
+  RUN_TEST(test_diagonal_stick_push_fires_only_the_stronger_axis);
+  RUN_TEST(test_stick_rearms_only_when_both_axes_return_to_center);
   RUN_TEST(test_stick_must_return_to_center_before_firing_again);
   RUN_TEST(test_stick_nav_is_disabled_during_stick_calibration);
   RUN_TEST(test_tick_reports_change_when_stick_calibration_progress_changes);
@@ -1374,12 +1614,23 @@ int main(int argc, char **argv) {
   RUN_TEST(test_display_config_enter_without_registry_is_noop);
   RUN_TEST(test_display_config_back_returns_to_main_menu);
   RUN_TEST(test_power_config_up_down_wraps_over_rows);
-  RUN_TEST(test_power_config_enter_cycles_mode_row);
   RUN_TEST(test_power_config_enter_cycles_dim_timeout_row);
+  RUN_TEST(test_power_config_cascade_rows_cycle_through_never);
   RUN_TEST(test_power_config_enter_cycles_auto_poweroff_row_through_minute_options);
-  RUN_TEST(test_power_config_enter_cycles_led_brightness_row);
   RUN_TEST(test_power_config_enter_without_config_is_noop);
   RUN_TEST(test_power_config_back_returns_to_main_menu);
+  RUN_TEST(test_brightness_up_down_wraps_over_rows);
+  RUN_TEST(test_brightness_enter_cycles_screen_row);
+  RUN_TEST(test_brightness_enter_cycles_led_row);
+  RUN_TEST(test_brightness_right_and_left_step_screen_row_by_ten);
+  RUN_TEST(test_brightness_right_and_left_step_led_row_by_ten);
+  RUN_TEST(test_brightness_left_right_stop_at_ends_without_a_change);
+  RUN_TEST(test_left_right_do_nothing_outside_brightness);
+  RUN_TEST(test_brightness_left_right_without_config_is_noop);
+  RUN_TEST(test_stick_push_right_and_left_step_brightness);
+  RUN_TEST(test_brightness_reentering_starts_at_first_row);
+  RUN_TEST(test_brightness_enter_without_config_is_noop);
+  RUN_TEST(test_brightness_back_returns_to_main_menu);
   RUN_TEST(test_enter_stick_deadzone_from_main_menu);
   RUN_TEST(test_stick_deadzone_defaults_to_three_percent);
   RUN_TEST(test_stick_deadzone_up_increases_and_wraps);
@@ -1408,7 +1659,9 @@ int main(int argc, char **argv) {
   RUN_TEST(test_render_display_config_without_registry_shows_placeholder);
   RUN_TEST(test_render_power_config_shows_rows_and_selection);
   RUN_TEST(test_render_power_config_without_config_shows_defaults);
-  RUN_TEST(test_render_power_config_led_brightness_labels);
+  RUN_TEST(test_render_brightness_shows_rows_and_selection);
+  RUN_TEST(test_render_brightness_without_config_shows_defaults);
+  RUN_TEST(test_render_brightness_shows_sanitized_levels);
   RUN_TEST(test_render_switch_droid_list_empty);
   RUN_TEST(test_render_switch_droid_list_marks_selected);
   RUN_TEST(test_render_switch_droid_result);

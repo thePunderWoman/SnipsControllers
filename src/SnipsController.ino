@@ -24,6 +24,7 @@
 #include "power_management.h"
 #include "rgb_led.h"
 #include "screen.h"
+#include "screen_brightness.h"
 #include "snips_logo_bitmap.h"
 #include "status_led.h"
 #include "xbee_control.h"
@@ -49,7 +50,7 @@ Accelerometer accelerometer;
 ActivityDetector activityDetector;
 PowerManager powerManager;
 PowerConfig powerConfig;
-PowerTier previousPowerTier = PowerTier::kFull;
+PowerState previousPowerState;
 bool xbeeSleepRequested = false;
 LowBatteryMonitor lowBatteryMonitor;
 bool wasInLowBatteryCountdown = false;
@@ -80,18 +81,20 @@ void showOperatingScreen() {
   oledDisplay.render(screen);
 }
 
-bool oledOnFor(PowerTier tier) {
-  return tier != PowerTier::kOff && tier != PowerTier::kXbeeAsleep;
+bool oledOnFor(const PowerState &state) {
+  return state.screen != ScreenPower::kOff;
 }
 
-// Applies one power tier's OLED effects (see power_management.h) — called
-// only on transition, not every tick. The XBee's sleep follows the tier
-// too, but through setXbeeSleep() each tick, since the low-battery
-// countdown also controls it.
-void applyPowerTier(PowerTier tier) {
-  const bool oledShouldBeOn = oledOnFor(tier);
+// Applies a power state's OLED effects (see power_management.h) — called
+// only on change, not every tick. The drive follows the user's screen
+// brightness, lowered only in the dim stage (see screen_brightness.h).
+// The XBee's sleep follows the state too, but through setXbeeSleep() each
+// tick, since the low-battery countdown also controls it.
+void applyPowerState(const PowerState &state) {
+  const bool oledShouldBeOn = oledOnFor(state);
   oledDisplay.setPowerOn(oledShouldBeOn);
-  oledDisplay.setDimmed(tier == PowerTier::kDim);
+  oledDisplay.setDrive(screenDriveFor(powerConfig.screenBrightnessPercent,
+                                      state.screen == ScreenPower::kDim));
 
   // Coming back from OLED-off: the panel's GDRAM still has whatever was
   // last drawn before it powered off, which is fine for the operating
@@ -162,7 +165,7 @@ void lightSleepFor(unsigned long ms) {
 // status_led.h).
 RgbColor statusColor(SystemState state) {
   return scaleColor(statusLedController.colorFor(state),
-                    ledBrightnessScale(powerConfig.ledBrightness));
+                    ledBrightnessScale(powerConfig.ledBrightnessPercent));
 }
 
 void copyField(char *dest, size_t destCapacity, const char *src) {
@@ -181,7 +184,7 @@ void performGracefulShutdown() {
   shutdownScreen.setLine(0, "Powering Off...");
   oledDisplay.render(shutdownScreen);
 
-  // Wake the XBee if it's asleep (deepest idle tier, or the low-battery
+  // Wake the XBee if it's asleep (XBee sleep stage, or the low-battery
   // countdown), or the shutdown packets below never leave. The retry
   // delays give it time to wake and poll its parent.
   setXbeeSleep(false);
@@ -331,7 +334,8 @@ void setup() {
   menuController.setComplications(&complications);
 
   // Restores any previously-saved power management settings; defaults to
-  // kAlwaysOn (no behavior change) if none has been saved yet.
+  // every idle stage on Never (no behavior change) if none has been saved
+  // yet.
   powerConfig = PowerConfigStore::load();
   powerManager.setConfig(powerConfig);
   menuController.setPowerConfig(&powerConfig);
@@ -402,6 +406,8 @@ void setup() {
   // confirmation text — loop() takes over with the real complications
   // screen once real sensor data starts flowing.
   if (oledDisplay.begin()) {
+    oledDisplay.setDrive(
+        screenDriveFor(powerConfig.screenBrightnessPercent, /*dimmed=*/false));
     oledDisplay.renderBitmapCentered(SnipsLogo::kBitmap, SnipsLogo::kWidth,
                                      SnipsLogo::kHeight);
     constexpr unsigned long kBootSplashMs = 1200;
@@ -493,7 +499,7 @@ void loop() {
   bool menuInputHandled = false;
 
   const bool stickNavFired =
-      menuController.tick(rawStickX, rawStickY, stickYPercent);
+      menuController.tick(rawStickX, rawStickY, stickXPercent, stickYPercent);
   if (stickNavFired) menuInputHandled = true;
 
   // Button Test (see menu.h's onButtonTestPress()) wants to see every raw
@@ -614,6 +620,11 @@ void loop() {
   if (menuController.consumePowerConfigChanged()) {
     PowerConfigStore::save(powerConfig);
     powerManager.setConfig(powerConfig);
+    // A Brightness menu change shows immediately (the LED picks its new
+    // level up on its next once-a-second refresh).
+    oledDisplay.setDrive(
+        screenDriveFor(powerConfig.screenBrightnessPercent,
+                       previousPowerState.screen == ScreenPower::kDim));
     Serial.println("Power config saved.");
   }
 
@@ -657,12 +668,12 @@ void loop() {
     Serial.println(sourcesText);
   }
 
-  const PowerTier currentPowerTier = powerManager.currentTier();
-  if (currentPowerTier != previousPowerTier) {
-    Serial.print("Power tier: ");
-    Serial.println(powerTierName(currentPowerTier));
-    applyPowerTier(currentPowerTier);
-    previousPowerTier = currentPowerTier;
+  const PowerState currentPowerState = powerManager.currentState();
+  if (currentPowerState != previousPowerState) {
+    Serial.print("Power state: ");
+    Serial.println(powerStateName(currentPowerState));
+    applyPowerState(currentPowerState);
+    previousPowerState = currentPowerState;
   }
 
   if (powerManager.consumeShouldPowerOff()) {
@@ -684,7 +695,7 @@ void loop() {
   }
 
   const bool inLowBatteryCountdown = lowBatteryMonitor.isInShutdownCountdown();
-  setXbeeSleep(shouldXbeeSleep(currentPowerTier, inLowBatteryCountdown));
+  setXbeeSleep(shouldXbeeSleep(currentPowerState, inLowBatteryCountdown));
 
   // Uplink: sent periodically over the radio, faster than the
   // human-readable Serial telemetry below — this is what Amidala
@@ -759,6 +770,12 @@ void loop() {
   complicationData.batteryPercent = batteryPercent;
   complicationData.batteryIndicatorVisible =
       !lowBatteryMonitor.isWarning() || lowBatteryMonitor.blinkOn();
+  // `Serial` is true while a USB host is connected (see the serial wait
+  // in setup()).
+  const UsbPower usbPower =
+      usbPowerFor(static_cast<bool>(Serial), chargeState);
+  complicationData.usbPower = usbPower;
+  complicationData.charging = chargeState == ChargeState::kCharging;
   copyField(complicationData.droidName, sizeof(complicationData.droidName),
            menuController.currentDroidName());
   complications.setData(complicationData);
@@ -798,9 +815,9 @@ void loop() {
         !lowBatteryMonitor.blinkOn();
     rgbLed.show(blinkLedOff ? RgbColor{0, 0, 0} : statusColor(ledState));
 
-    // Skipped while the OLED is off: applyPowerTier() redraws on wake.
+    // Skipped while the OLED is off: applyPowerState() redraws on wake.
     if (menuController.currentScreen() == MenuScreen::kInactive &&
-        !inLowBatteryCountdown && oledOnFor(currentPowerTier)) {
+        !inLowBatteryCountdown && oledOnFor(currentPowerState)) {
       // A charging fault takes over the operating screen (but not active
       // menu navigation) for as long as it persists — this checks once a
       // second like the rest of this block rather than every tick, since
@@ -819,7 +836,8 @@ void loop() {
     Serial.print(batteryPercent);
     Serial.print("% (");
     Serial.print(chargeStateName(chargeState));
-    Serial.println(")");
+    Serial.print("), USB ");
+    Serial.println(usbPowerName(usbPower));
     Serial.print("Trigger ");
     Serial.print(triggerPercent);
     Serial.println("%");
@@ -834,7 +852,7 @@ void loop() {
     char activeText[40];
     describeActivitySources(activeSources, activeText, sizeof(activeText));
     Serial.print("Power ");
-    Serial.print(powerTierName(currentPowerTier));
+    Serial.print(powerStateName(currentPowerState));
     Serial.print(", idle ");
     Serial.print(powerManager.idleMs(now) / 1000);
     Serial.print("s, active: ");
@@ -849,9 +867,12 @@ void loop() {
   // is a non-issue.
   if (inLowBatteryCountdown) {
     if (!wasInLowBatteryCountdown) {
-      // Force the OLED on regardless of the current low-power tier. The
-      // XBee is already asleep: see setXbeeSleep() above.
+      // Force the OLED on, at the user's full brightness, regardless of
+      // the current power state. The XBee is already asleep: see
+      // setXbeeSleep() above.
       oledDisplay.setPowerOn(true);
+      oledDisplay.setDrive(
+          screenDriveFor(powerConfig.screenBrightnessPercent, /*dimmed=*/false));
     }
     ScreenBuffer countdownScreen;
     renderLowBatteryCountdownScreen(lowBatteryMonitor.secondsRemaining(),
@@ -859,15 +880,13 @@ void loop() {
     oledDisplay.render(countdownScreen);
   } else if (wasInLowBatteryCountdown) {
     // Cancelled (charging plugged in, or the reading recovered) —
-    // restore whatever the current power tier and menu state say should
+    // restore whatever the current power state and menu state say should
     // actually be showing/powered.
-    applyPowerTier(previousPowerTier);
+    applyPowerState(previousPowerState);
   }
   wasInLowBatteryCountdown = inLowBatteryCountdown;
 
-  // `Serial` is true while a USB host is connected (see the serial wait in
-  // setup()).
-  if (shouldLightSleep(currentPowerTier, static_cast<bool>(Serial),
+  if (shouldLightSleep(currentPowerState, usbPower == UsbPower::kHost,
                        chargeState == ChargeState::kCharging,
                        inLowBatteryCountdown)) {
     lightSleepFor(kLightSleepPeriodMs);

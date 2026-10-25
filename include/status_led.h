@@ -24,24 +24,13 @@ class StatusLedController {
   RgbColor colorFor(SystemState state) const;
 };
 
-// User-selectable status LED brightness, cycled from the Power Management
-// menu. Full brightness costs ~12-24 mA depending on color (one or two
-// LED channels lit), a large share of the whole controller's draw, so the
-// default is kLow. Ordered dimmest first.
-enum class LedBrightness {
-  kLow = 0,
-  kMedium,
-  kHigh,
-  kCount,
-};
-
-// Cycles to the next brightness, wrapping around. An out-of-range value
-// (e.g. corrupt NVS data) restarts at kLow.
-LedBrightness nextLedBrightness(LedBrightness current);
-
-// The 0-255 scale factor a brightness applies to every channel. An
-// out-of-range value gets kLow's scale, the safe choice for battery life.
-uint8_t ledBrightnessScale(LedBrightness brightness);
+// The 0-255 scale factor a status LED brightness percentage (see
+// brightness_level.h) applies to every channel. Full drive costs ~12-24
+// mA depending on color (one or two LED channels lit), a large share of
+// the whole controller's draw, and was too bright, so 100% is capped well
+// below it (about 30% duty) and the default is 10%. Scales linearly in
+// between. An off-grid or out-of-range percentage is sanitized first.
+uint8_t ledBrightnessScale(int brightnessPercent);
 
 // Scales each channel by scale/255, rounded to nearest. A scale of 255
 // returns the color unchanged.

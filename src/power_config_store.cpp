@@ -17,16 +17,22 @@ PowerConfig PowerConfigStore::load() {
     return config;
   }
 
-  config.mode = static_cast<PowerManagementMode>(
-      prefs.getInt("mode", static_cast<int>(config.mode)));
   config.dimTimeoutSec = prefs.getInt("dimSec", config.dimTimeoutSec);
   config.offTimeoutSec = prefs.getInt("offSec", config.offTimeoutSec);
   config.xbeeSleepTimeoutSec =
       prefs.getInt("xbeeSec", config.xbeeSleepTimeoutSec);
   config.autoPoweroffTimeoutSec =
       prefs.getInt("offAllSec", config.autoPoweroffTimeoutSec);
-  config.ledBrightness = static_cast<LedBrightness>(
-      prefs.getInt("ledBright", static_cast<int>(config.ledBrightness)));
+  // Saved before each stage had its own Never option; save() drops it.
+  if (prefs.isKey("mode")) {
+    applyLegacyPowerMode(prefs.getInt("mode", 0), &config);
+  }
+  // New keys for the percentage settings: the old "ledBright" held a
+  // Low/Medium/High index, which would read as a near-zero percentage.
+  config.ledBrightnessPercent = BrightnessLevel::sanitize(
+      prefs.getInt("ledPct", config.ledBrightnessPercent));
+  config.screenBrightnessPercent = BrightnessLevel::sanitize(
+      prefs.getInt("scrPct", config.screenBrightnessPercent));
   prefs.end();
 
   return config;
@@ -38,11 +44,13 @@ void PowerConfigStore::save(const PowerConfig &config) {
     return;
   }
 
-  prefs.putInt("mode", static_cast<int>(config.mode));
+  // The Never timeouts now carry what the old mode did (see load()).
+  prefs.remove("mode");
   prefs.putInt("dimSec", config.dimTimeoutSec);
   prefs.putInt("offSec", config.offTimeoutSec);
   prefs.putInt("xbeeSec", config.xbeeSleepTimeoutSec);
   prefs.putInt("offAllSec", config.autoPoweroffTimeoutSec);
-  prefs.putInt("ledBright", static_cast<int>(config.ledBrightness));
+  prefs.putInt("ledPct", config.ledBrightnessPercent);
+  prefs.putInt("scrPct", config.screenBrightnessPercent);
   prefs.end();
 }

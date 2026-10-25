@@ -14,17 +14,15 @@ int nextInList(int current, const int *options, size_t count) {
   return options[0];
 }
 
-bool modeAtLeast(PowerManagementMode mode, PowerManagementMode threshold) {
-  return static_cast<int>(mode) >= static_cast<int>(threshold);
+bool isNever(int timeoutSec) {
+  return timeoutSec <= PowerConfigOptions::kNever;
+}
+
+unsigned long toMs(int timeoutSec) {
+  return static_cast<unsigned long>(timeoutSec) * 1000UL;
 }
 
 }  // namespace
-
-PowerManagementMode nextPowerManagementMode(PowerManagementMode current) {
-  const int next = (static_cast<int>(current) + 1) %
-                    static_cast<int>(PowerManagementMode::kCount);
-  return static_cast<PowerManagementMode>(next);
-}
 
 int nextCascadeTimeoutSec(int currentSec) {
   return nextInList(currentSec, PowerConfigOptions::kCascadeTimeoutsSec,
@@ -36,38 +34,40 @@ int nextPoweroffTimeoutSec(int currentSec) {
                      PowerConfigOptions::kPoweroffTimeoutCount);
 }
 
+void applyLegacyPowerMode(int legacyMode, PowerConfig *config) {
+  if (legacyMode < 1) config->dimTimeoutSec = PowerConfigOptions::kNever;
+  if (legacyMode < 2) config->offTimeoutSec = PowerConfigOptions::kNever;
+  if (legacyMode < 3) {
+    config->xbeeSleepTimeoutSec = PowerConfigOptions::kNever;
+  }
+}
+
 void PowerManager::update(bool activityThisTick, unsigned long nowMs) {
   if (activityThisTick) {
     lastActivityMs_ = nowMs;
   }
   const unsigned long idleMs = nowMs - lastActivityMs_;
 
-  tier_ = PowerTier::kFull;
-  const unsigned long dimAtMs =
-      static_cast<unsigned long>(config_.dimTimeoutSec) * 1000UL;
-  const unsigned long offAtMs =
-      dimAtMs + static_cast<unsigned long>(config_.offTimeoutSec) * 1000UL;
-  const unsigned long xbeeSleepAtMs =
-      offAtMs +
-      static_cast<unsigned long>(config_.xbeeSleepTimeoutSec) * 1000UL;
-
-  if (modeAtLeast(config_.mode, PowerManagementMode::kDimOnly) &&
-      idleMs >= dimAtMs) {
-    tier_ = PowerTier::kDim;
+  // Each stage in use fires its own timeout after the previous one in
+  // use; a Never stage is skipped and adds no delay.
+  state_ = PowerState();
+  unsigned long stageAtMs = 0;
+  if (!isNever(config_.dimTimeoutSec)) {
+    stageAtMs += toMs(config_.dimTimeoutSec);
+    if (idleMs >= stageAtMs) state_.screen = ScreenPower::kDim;
   }
-  if (modeAtLeast(config_.mode, PowerManagementMode::kDimAndOff) &&
-      idleMs >= offAtMs) {
-    tier_ = PowerTier::kOff;
+  if (!isNever(config_.offTimeoutSec)) {
+    stageAtMs += toMs(config_.offTimeoutSec);
+    if (idleMs >= stageAtMs) state_.screen = ScreenPower::kOff;
   }
-  if (modeAtLeast(config_.mode, PowerManagementMode::kDimOffAndXbeeSleep) &&
-      idleMs >= xbeeSleepAtMs) {
-    tier_ = PowerTier::kXbeeAsleep;
+  if (!isNever(config_.xbeeSleepTimeoutSec)) {
+    stageAtMs += toMs(config_.xbeeSleepTimeoutSec);
+    if (idleMs >= stageAtMs) state_.xbeeAsleep = true;
   }
 
-  // Independent of mode — see header comment.
-  const unsigned long poweroffAtMs =
-      static_cast<unsigned long>(config_.autoPoweroffTimeoutSec) * 1000UL;
-  if (idleMs >= poweroffAtMs) {
+  // Independent of the idle stages — see header comment.
+  if (!isNever(config_.autoPoweroffTimeoutSec) &&
+      idleMs >= toMs(config_.autoPoweroffTimeoutSec)) {
     poweroffPending_ = true;
   }
 }
@@ -80,22 +80,24 @@ bool PowerManager::consumeShouldPowerOff() {
   return false;
 }
 
-const char *powerTierName(PowerTier tier) {
-  switch (tier) {
-    case PowerTier::kFull: return "full";
-    case PowerTier::kDim: return "dim";
-    case PowerTier::kOff: return "display off";
-    case PowerTier::kXbeeAsleep: return "display off + XBee asleep";
+const char *powerStateName(const PowerState &state) {
+  switch (state.screen) {
+    case ScreenPower::kFull:
+      return state.xbeeAsleep ? "full + XBee asleep" : "full";
+    case ScreenPower::kDim:
+      return state.xbeeAsleep ? "dim + XBee asleep" : "dim";
+    case ScreenPower::kOff:
+      return state.xbeeAsleep ? "display off + XBee asleep" : "display off";
   }
   return "unknown";
 }
 
-bool shouldXbeeSleep(PowerTier tier, bool inLowBatteryCountdown) {
-  return tier == PowerTier::kXbeeAsleep || inLowBatteryCountdown;
+bool shouldXbeeSleep(const PowerState &state, bool inLowBatteryCountdown) {
+  return state.xbeeAsleep || inLowBatteryCountdown;
 }
 
-bool shouldLightSleep(PowerTier tier, bool usbHostConnected, bool charging,
-                      bool inLowBatteryCountdown) {
-  return tier == PowerTier::kXbeeAsleep && !usbHostConnected && !charging &&
-         !inLowBatteryCountdown;
+bool shouldLightSleep(const PowerState &state, bool usbHostConnected,
+                      bool charging, bool inLowBatteryCountdown) {
+  return state.screen == ScreenPower::kOff && state.xbeeAsleep &&
+         !usbHostConnected && !charging && !inLowBatteryCountdown;
 }

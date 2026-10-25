@@ -2,6 +2,7 @@
 
 #include <cstddef>
 
+#include "battery.h"
 #include "packet.h"
 #include "screen.h"
 
@@ -29,6 +30,11 @@ struct ComplicationData {
   // low_battery.h's warning blink. Always true outside a low-battery
   // condition.
   bool batteryIndicatorVisible = true;
+  // Shown after the Battery slot's percentage: "chg" while charging,
+  // otherwise "USB" when USB is detected (see UsbPower), so a
+  // USB-powered controller doesn't look like it's on battery.
+  UsbPower usbPower = UsbPower::kNotDetected;
+  bool charging = false;
   char leftLabel[DownlinkPacket::kFieldLength + 1] = {};
   char leftValue[DownlinkPacket::kFieldLength + 1] = {};
   char rightLabel[DownlinkPacket::kFieldLength + 1] = {};

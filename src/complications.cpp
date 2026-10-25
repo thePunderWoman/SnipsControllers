@@ -41,8 +41,14 @@ void ComplicationRegistry::render(ScreenBuffer *screen) const {
     switch (slots_[i]) {
       case ComplicationSource::kBattery:
         if (data_.batteryIndicatorVisible) {
-          std::snprintf(line, sizeof(line), "Battery: %d%%",
-                        data_.batteryPercent);
+          const char *suffix = "";
+          if (data_.charging) {
+            suffix = " chg";
+          } else if (data_.usbPower != UsbPower::kNotDetected) {
+            suffix = " USB";
+          }
+          std::snprintf(line, sizeof(line), "Battery: %d%%%s",
+                        data_.batteryPercent, suffix);
         } else {
           line[0] = '\0';
         }

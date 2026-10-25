@@ -1,5 +1,20 @@
 #include "battery.h"
 
+UsbPower usbPowerFor(bool usbHostConnected, ChargeState chargeState) {
+  if (usbHostConnected) return UsbPower::kHost;
+  if (chargeState == ChargeState::kCharging) return UsbPower::kPowerOnly;
+  return UsbPower::kNotDetected;
+}
+
+const char *usbPowerName(UsbPower usbPower) {
+  switch (usbPower) {
+    case UsbPower::kNotDetected: return "not detected";
+    case UsbPower::kPowerOnly: return "power only";
+    case UsbPower::kHost: return "host connected";
+  }
+  return "unknown";
+}
+
 ChargeState BatteryMonitor::chargeStateFor(bool stat1High,
                                             bool stat2High) const {
   if (stat1High && stat2High) return ChargeState::kDone;
