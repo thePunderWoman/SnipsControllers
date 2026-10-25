@@ -116,6 +116,11 @@ class PowerManager {
 
   PowerTier currentTier() const { return tier_; }
 
+  // How long since the last tick with activity, for logging.
+  unsigned long idleMs(unsigned long nowMs) const {
+    return nowMs - lastActivityMs_;
+  }
+
   // True exactly once, the tick the idle time first crosses the
   // auto-poweroff threshold — independent of `mode`, per design (a
   // forgotten, fully-idle controller should eventually shut itself off

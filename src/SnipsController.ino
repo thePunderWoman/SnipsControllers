@@ -122,9 +122,10 @@ void setXbeeSleep(bool asleep) {
 
 // Light-sleep wake sources (see shouldLightSleep() in power_management.h):
 // any button or the power button pressed (all active-low), or
-// accelerometer motion (INT1, active-high and non-latched, so it's high
-// for as long as motion lasts). Stick and trigger movement can't raise a
-// GPIO wake; lightSleepFor()'s timer wake covers them.
+// accelerometer motion (INT1, active-high and latched, so it stays high
+// until loop() clears it via motionDetected()). Stick and trigger
+// movement can't raise a GPIO wake; lightSleepFor()'s timer wake covers
+// them.
 void configureLightSleepWakeSources() {
   for (size_t i = 0; i < Buttons::kCount; ++i) {
     gpio_wakeup_enable(static_cast<gpio_num_t>(Buttons::kPins[i]),
@@ -826,6 +827,18 @@ void loop() {
     Serial.print(stickXPercent);
     Serial.print(" Y ");
     Serial.println(stickYPercent);
+
+    // What low-power mode sees right now — the "Activity:" lines above
+    // only print on a rising edge, so an input stuck active shows up
+    // only here.
+    char activeText[40];
+    describeActivitySources(activeSources, activeText, sizeof(activeText));
+    Serial.print("Power ");
+    Serial.print(powerTierName(currentPowerTier));
+    Serial.print(", idle ");
+    Serial.print(powerManager.idleMs(now) / 1000);
+    Serial.print("s, active: ");
+    Serial.println(activeText);
   }
 
   // Low battery countdown takes over the display unconditionally, as the
