@@ -2,6 +2,7 @@
 
 #include <cstddef>
 
+#include "screen_brightness.h"
 #include "status_led.h"
 
 // Pure logic for the low-power mode feature. Knows nothing about real
@@ -70,8 +71,12 @@ struct PowerConfig {
   int offTimeoutSec = PowerConfigOptions::kCascadeTimeoutsSec[0];
   int xbeeSleepTimeoutSec = PowerConfigOptions::kCascadeTimeoutsSec[0];
   int autoPoweroffTimeoutSec = PowerConfigOptions::kPoweroffTimeoutsSec[1];
-  // Not a tier step: applies at every tier, whatever `mode` is.
+  // Brightness settings, edited from the Brightness menu rather than
+  // Power Management but stored here with the rest. Not tier steps: they
+  // apply at every tier, whatever `mode` is (the dim tier dims the screen
+  // below its setting; see screenContrastFor()).
   LedBrightness ledBrightness = LedBrightness::kLow;
+  ScreenBrightness screenBrightness = ScreenBrightness::kHigh;
 };
 
 // Cycles to the next value in a fixed option list, wrapping around —

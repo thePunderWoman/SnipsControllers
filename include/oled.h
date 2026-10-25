@@ -36,11 +36,12 @@ class OledDisplay {
   // since nothing else on the device draws bitmaps.
   void renderBitmapCentered(const uint8_t *bitmap, int width, int height);
 
-  // Low-power mode support (see power_management.h). Dimming/undimming
-  // and powering the panel back on take effect immediately; they don't
-  // need a render() call to show existing content again since the
-  // panel's GDRAM is untouched while off.
-  void setDimmed(bool dimmed);
+  // Brightness and low-power mode support (see screen_brightness.h and
+  // power_management.h). Contrast changes and powering the panel back on
+  // take effect immediately; they don't need a render() call to show
+  // existing content again since the panel's GDRAM is untouched while
+  // off.
+  void setContrast(uint8_t contrast);
   void setPowerOn(bool on);
 
  private:

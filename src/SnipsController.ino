@@ -85,13 +85,15 @@ bool oledOnFor(PowerTier tier) {
 }
 
 // Applies one power tier's OLED effects (see power_management.h) — called
-// only on transition, not every tick. The XBee's sleep follows the tier
+// only on transition, not every tick. Contrast follows the user's screen
+// brightness, lowered only in the dim tier (see screen_brightness.h). The XBee's sleep follows the tier
 // too, but through setXbeeSleep() each tick, since the low-battery
 // countdown also controls it.
 void applyPowerTier(PowerTier tier) {
   const bool oledShouldBeOn = oledOnFor(tier);
   oledDisplay.setPowerOn(oledShouldBeOn);
-  oledDisplay.setDimmed(tier == PowerTier::kDim);
+  oledDisplay.setContrast(screenContrastFor(powerConfig.screenBrightness,
+                                            tier == PowerTier::kDim));
 
   // Coming back from OLED-off: the panel's GDRAM still has whatever was
   // last drawn before it powered off, which is fine for the operating
@@ -402,6 +404,8 @@ void setup() {
   // confirmation text — loop() takes over with the real complications
   // screen once real sensor data starts flowing.
   if (oledDisplay.begin()) {
+    oledDisplay.setContrast(
+        screenContrastFor(powerConfig.screenBrightness, /*dimmed=*/false));
     oledDisplay.renderBitmapCentered(SnipsLogo::kBitmap, SnipsLogo::kWidth,
                                      SnipsLogo::kHeight);
     constexpr unsigned long kBootSplashMs = 1200;
@@ -614,6 +618,10 @@ void loop() {
   if (menuController.consumePowerConfigChanged()) {
     PowerConfigStore::save(powerConfig);
     powerManager.setConfig(powerConfig);
+    // A Brightness menu change shows immediately (the LED picks its new
+    // level up on its next once-a-second refresh).
+    oledDisplay.setContrast(screenContrastFor(
+        powerConfig.screenBrightness, previousPowerTier == PowerTier::kDim));
     Serial.println("Power config saved.");
   }
 
@@ -849,9 +857,12 @@ void loop() {
   // is a non-issue.
   if (inLowBatteryCountdown) {
     if (!wasInLowBatteryCountdown) {
-      // Force the OLED on regardless of the current low-power tier. The
-      // XBee is already asleep: see setXbeeSleep() above.
+      // Force the OLED on, at the user's full brightness, regardless of
+      // the current low-power tier. The XBee is already asleep: see
+      // setXbeeSleep() above.
       oledDisplay.setPowerOn(true);
+      oledDisplay.setContrast(
+          screenContrastFor(powerConfig.screenBrightness, /*dimmed=*/false));
     }
     ScreenBuffer countdownScreen;
     renderLowBatteryCountdownScreen(lowBatteryMonitor.secondsRemaining(),

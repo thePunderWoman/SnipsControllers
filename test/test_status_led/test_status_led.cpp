@@ -68,15 +68,15 @@ void test_next_led_brightness_recovers_from_out_of_range_value() {
                    nextLedBrightness(static_cast<LedBrightness>(-1)));
 }
 
-void test_led_brightness_scales_increase_to_full() {
-  TEST_ASSERT_EQUAL_UINT8(51, ledBrightnessScale(LedBrightness::kLow));
-  TEST_ASSERT_EQUAL_UINT8(128, ledBrightnessScale(LedBrightness::kMedium));
-  TEST_ASSERT_EQUAL_UINT8(255, ledBrightnessScale(LedBrightness::kHigh));
+void test_led_brightness_scales_increase_but_stay_below_full() {
+  TEST_ASSERT_EQUAL_UINT8(10, ledBrightnessScale(LedBrightness::kLow));
+  TEST_ASSERT_EQUAL_UINT8(31, ledBrightnessScale(LedBrightness::kMedium));
+  TEST_ASSERT_EQUAL_UINT8(77, ledBrightnessScale(LedBrightness::kHigh));
 }
 
 void test_out_of_range_led_brightness_uses_low_scale() {
   TEST_ASSERT_EQUAL_UINT8(
-      51, ledBrightnessScale(static_cast<LedBrightness>(99)));
+      10, ledBrightnessScale(static_cast<LedBrightness>(99)));
 }
 
 void test_scale_color_full_scale_is_unchanged() {
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_unknown_state_is_off);
   RUN_TEST(test_next_led_brightness_cycles_and_wraps);
   RUN_TEST(test_next_led_brightness_recovers_from_out_of_range_value);
-  RUN_TEST(test_led_brightness_scales_increase_to_full);
+  RUN_TEST(test_led_brightness_scales_increase_but_stay_below_full);
   RUN_TEST(test_out_of_range_led_brightness_uses_low_scale);
   RUN_TEST(test_scale_color_full_scale_is_unchanged);
   RUN_TEST(test_scale_color_rounds_each_channel);

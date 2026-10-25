@@ -26,6 +26,7 @@ enum class MenuScreen {
   kStickDeadzone,
   kCalibrateTrigger,
   kDisplayConfig,
+  kBrightness,
   kPowerConfig,
   kDeviceInfo,
   kButtonTest,
@@ -39,6 +40,7 @@ enum class MainMenuItem {
   kStickDeadzone,
   kCalibrateTrigger,
   kDisplayConfig,
+  kBrightness,
   kPowerConfig,
   kDeviceInfo,
   kButtonTest,
@@ -55,7 +57,14 @@ enum class PowerConfigRow {
   kOffTimeout,
   kXbeeSleepTimeout,
   kAutoPoweroffTimeout,
-  kLedBrightness,
+  kCount,
+};
+
+// One row of the Brightness screen — same interaction as Power Config.
+// Both values live in PowerConfig.
+enum class BrightnessRow {
+  kScreen = 0,
+  kLed,
   kCount,
 };
 
@@ -192,6 +201,12 @@ class MenuController {
   }
   bool consumePowerConfigChanged();
 
+  // Brightness edits the same PowerConfig (setPowerConfig()) and reports
+  // changes through consumePowerConfigChanged().
+  BrightnessRow selectedBrightnessRow() const {
+    return static_cast<BrightnessRow>(brightnessRowIndex_);
+  }
+
   // Stick deadzone: unlike Display/Power Config, this isn't an
   // externally-owned pointer — it's a plain value MenuController tracks
   // itself (SnipsController.ino seeds it once at boot from the loaded
@@ -257,6 +272,7 @@ class MenuController {
 
   PowerConfig *powerConfig_ = nullptr;
   int powerConfigRowIndex_ = 0;
+  int brightnessRowIndex_ = 0;
   bool powerConfigChanged_ = false;
 
   int stickDeadzonePercent_ = StickDeadzoneOptions::kPercents[1];

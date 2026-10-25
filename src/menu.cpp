@@ -35,6 +35,7 @@ const char *mainMenuItemLabel(MainMenuItem item) {
     case MainMenuItem::kStickDeadzone: return "Stick Deadzone";
     case MainMenuItem::kCalibrateTrigger: return "Calibrate Trigger";
     case MainMenuItem::kDisplayConfig: return "Display Config";
+    case MainMenuItem::kBrightness: return "Brightness";
     case MainMenuItem::kPowerConfig: return "Power Management";
     case MainMenuItem::kDeviceInfo: return "Device Info";
     case MainMenuItem::kButtonTest: return "Button Test";
@@ -109,6 +110,10 @@ void MenuController::onUp() {
       powerConfigRowIndex_ = wrapIndex(
           powerConfigRowIndex_ - 1, static_cast<int>(PowerConfigRow::kCount));
       break;
+    case MenuScreen::kBrightness:
+      brightnessRowIndex_ = wrapIndex(
+          brightnessRowIndex_ - 1, static_cast<int>(BrightnessRow::kCount));
+      break;
     case MenuScreen::kStickDeadzone:
       stickDeadzonePercent_ = nextDeadzonePercent(stickDeadzonePercent_);
       stickDeadzoneChanged_ = true;
@@ -147,6 +152,10 @@ void MenuController::onDown() {
     case MenuScreen::kPowerConfig:
       powerConfigRowIndex_ = wrapIndex(
           powerConfigRowIndex_ + 1, static_cast<int>(PowerConfigRow::kCount));
+      break;
+    case MenuScreen::kBrightness:
+      brightnessRowIndex_ = wrapIndex(
+          brightnessRowIndex_ + 1, static_cast<int>(BrightnessRow::kCount));
       break;
     case MenuScreen::kStickDeadzone:
       stickDeadzonePercent_ = prevDeadzonePercent(stickDeadzonePercent_);
@@ -191,6 +200,7 @@ void MenuController::onBack() {
       break;
     case MenuScreen::kStickDeadzone:
     case MenuScreen::kDisplayConfig:
+    case MenuScreen::kBrightness:
     case MenuScreen::kPowerConfig:
     case MenuScreen::kDeviceInfo:
     case MenuScreen::kButtonTest:
@@ -226,6 +236,10 @@ void MenuController::enterMainMenuItem(MainMenuItem item) {
     case MainMenuItem::kDisplayConfig:
       displayConfigSlotIndex_ = 0;
       screen_ = MenuScreen::kDisplayConfig;
+      break;
+    case MainMenuItem::kBrightness:
+      brightnessRowIndex_ = 0;
+      screen_ = MenuScreen::kBrightness;
       break;
     case MainMenuItem::kPowerConfig:
       powerConfigRowIndex_ = 0;
@@ -370,11 +384,25 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
             powerConfig_->autoPoweroffTimeoutSec =
                 nextPoweroffTimeoutSec(powerConfig_->autoPoweroffTimeoutSec);
             break;
-          case PowerConfigRow::kLedBrightness:
+          case PowerConfigRow::kCount:
+            break;
+        }
+        powerConfigChanged_ = true;
+      }
+      break;
+
+    case MenuScreen::kBrightness:
+      if (powerConfig_ != nullptr) {
+        switch (selectedBrightnessRow()) {
+          case BrightnessRow::kScreen:
+            powerConfig_->screenBrightness =
+                nextScreenBrightness(powerConfig_->screenBrightness);
+            break;
+          case BrightnessRow::kLed:
             powerConfig_->ledBrightness =
                 nextLedBrightness(powerConfig_->ledBrightness);
             break;
-          case PowerConfigRow::kCount:
+          case BrightnessRow::kCount:
             break;
         }
         powerConfigChanged_ = true;
@@ -539,6 +567,15 @@ const char *ledBrightnessLabel(LedBrightness brightness) {
     case LedBrightness::kLow: return "Low";
     case LedBrightness::kMedium: return "Medium";
     case LedBrightness::kHigh: return "High";
+    default: return "Unknown";
+  }
+}
+
+const char *screenBrightnessLabel(ScreenBrightness brightness) {
+  switch (brightness) {
+    case ScreenBrightness::kLow: return "Low";
+    case ScreenBrightness::kMedium: return "Medium";
+    case ScreenBrightness::kHigh: return "High";
     default: return "Unknown";
   }
 }
@@ -781,15 +818,42 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
                           sizeof(valueBuf));
             rowValue = valueBuf;
             break;
-          case PowerConfigRow::kLedBrightness:
-            rowPrefix = "LED: ";
-            rowValue = ledBrightnessLabel(config.ledBrightness);
-            break;
           case PowerConfigRow::kCount:
             break;
         }
         std::snprintf(line, sizeof(line), "%s%s%s",
                       i == static_cast<int>(menu.selectedPowerConfigRow())
+                          ? "> "
+                          : "  ",
+                      rowPrefix, rowValue);
+        screen->setLine(1 + i, line);
+      }
+      break;
+    }
+
+    case MenuScreen::kBrightness: {
+      screen->setLine(0, "Brightness");
+      const PowerConfig fallback;
+      const PowerConfig &config =
+          menu.powerConfig() != nullptr ? *menu.powerConfig() : fallback;
+      char line[ScreenBuffer::kMaxLineLength + 1];
+      for (int i = 0; i < static_cast<int>(BrightnessRow::kCount); ++i) {
+        const char *rowPrefix = "";
+        const char *rowValue = "";
+        switch (static_cast<BrightnessRow>(i)) {
+          case BrightnessRow::kScreen:
+            rowPrefix = "Screen: ";
+            rowValue = screenBrightnessLabel(config.screenBrightness);
+            break;
+          case BrightnessRow::kLed:
+            rowPrefix = "LED: ";
+            rowValue = ledBrightnessLabel(config.ledBrightness);
+            break;
+          case BrightnessRow::kCount:
+            break;
+        }
+        std::snprintf(line, sizeof(line), "%s%s%s",
+                      i == static_cast<int>(menu.selectedBrightnessRow())
                           ? "> "
                           : "  ",
                       rowPrefix, rowValue);

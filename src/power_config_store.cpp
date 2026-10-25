@@ -27,6 +27,8 @@ PowerConfig PowerConfigStore::load() {
       prefs.getInt("offAllSec", config.autoPoweroffTimeoutSec);
   config.ledBrightness = static_cast<LedBrightness>(
       prefs.getInt("ledBright", static_cast<int>(config.ledBrightness)));
+  config.screenBrightness = static_cast<ScreenBrightness>(
+      prefs.getInt("scrBright", static_cast<int>(config.screenBrightness)));
   prefs.end();
 
   return config;
@@ -44,5 +46,6 @@ void PowerConfigStore::save(const PowerConfig &config) {
   prefs.putInt("xbeeSec", config.xbeeSleepTimeoutSec);
   prefs.putInt("offAllSec", config.autoPoweroffTimeoutSec);
   prefs.putInt("ledBright", static_cast<int>(config.ledBrightness));
+  prefs.putInt("scrBright", static_cast<int>(config.screenBrightness));
   prefs.end();
 }

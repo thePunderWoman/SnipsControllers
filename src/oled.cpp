@@ -80,9 +80,10 @@ void OledDisplay::renderBitmapCentered(const uint8_t *bitmap, int width,
   display_.display();
 }
 
-void OledDisplay::setDimmed(bool dimmed) {
+void OledDisplay::setContrast(uint8_t contrast) {
   if (!ready_) return;
-  display_.dim(dimmed);
+  display_.ssd1306_command(SSD1306_SETCONTRAST);
+  display_.ssd1306_command(contrast);
 }
 
 void OledDisplay::setPowerOn(bool on) {

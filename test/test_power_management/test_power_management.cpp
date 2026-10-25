@@ -183,6 +183,11 @@ void test_default_config_uses_low_led_brightness() {
   TEST_ASSERT_TRUE(LedBrightness::kLow == config.ledBrightness);
 }
 
+void test_default_config_uses_high_screen_brightness() {
+  PowerConfig config;
+  TEST_ASSERT_TRUE(ScreenBrightness::kHigh == config.screenBrightness);
+}
+
 void test_xbee_sleeps_only_in_deepest_tier_or_countdown() {
   TEST_ASSERT_FALSE(shouldXbeeSleep(PowerTier::kFull, false));
   TEST_ASSERT_FALSE(shouldXbeeSleep(PowerTier::kDim, false));
@@ -246,6 +251,7 @@ int main(int argc, char **argv) {
   RUN_TEST(test_next_cascade_timeout_recovers_from_unknown_value);
   RUN_TEST(test_next_poweroff_timeout_cycles_through_options_and_wraps);
   RUN_TEST(test_default_config_uses_low_led_brightness);
+  RUN_TEST(test_default_config_uses_high_screen_brightness);
   RUN_TEST(test_xbee_sleeps_only_in_deepest_tier_or_countdown);
   RUN_TEST(test_light_sleep_only_in_deepest_tier);
   RUN_TEST(test_no_light_sleep_with_usb_host_charging_or_countdown);

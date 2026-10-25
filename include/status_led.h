@@ -24,10 +24,11 @@ class StatusLedController {
   RgbColor colorFor(SystemState state) const;
 };
 
-// User-selectable status LED brightness, cycled from the Power Management
-// menu. Full brightness costs ~12-24 mA depending on color (one or two
-// LED channels lit), a large share of the whole controller's draw, so the
-// default is kLow. Ordered dimmest first.
+// User-selectable status LED brightness, cycled from the Brightness menu.
+// Full drive costs ~12-24 mA depending on color (one or two LED channels
+// lit), a large share of the whole controller's draw, and was too bright,
+// so even kHigh is well below it and the default is kLow. Ordered dimmest
+// first.
 enum class LedBrightness {
   kLow = 0,
   kMedium,
