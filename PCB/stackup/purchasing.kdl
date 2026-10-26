@@ -1,10 +1,6 @@
 // Board-selected purchasing parts, preserving the previous factory BOM.
 // Values and footprints are checked against each matched placement.
 
-mpn "0402CG101J500NT" manufacturer="FH (Guangdong Fenghua Advanced Tech)" value="100pF" footprint="Capacitor_SMD:C_0402_1005Metric" {
-    catalog lcsc="C1546"
-}
-
 mpn "0402CG470J500NT" manufacturer="FH (Guangdong Fenghua Advanced Tech)" value="47pF" footprint="Capacitor_SMD:C_0402_1005Metric" {
     catalog lcsc="C1567"
 }
@@ -77,8 +73,8 @@ mpn "CL05B104KO5NNNC" manufacturer="Samsung Electro-Mechanics" value="100nF" foo
     catalog lcsc="C1525"
 }
 
-mpn "CL05B222KB5NNNC" manufacturer="Samsung Electro-Mechanics" value="2.2nF" footprint="Capacitor_SMD:C_0402_1005Metric" {
-    catalog lcsc="C84703"
+mpn "CL10B225KP8NNNC" manufacturer="Samsung Electro-Mechanics" value="2.2µF" footprint="Capacitor_SMD:C_0603_1608Metric" {
+    catalog lcsc="C100082"
 }
 
 mpn "CL10A105KB8NNNC" manufacturer="Samsung Electro-Mechanics" value="1µF" footprint="Capacitor_SMD:C_0603_1608Metric" {
@@ -115,8 +111,8 @@ mpn "MMBT3904(RANGE:100-300)" manufacturer="Jiangsu Changjing Electronics Techno
     catalog lcsc="C20526"
 }
 
-mpn "QMA6100P" manufacturer="QST" value="QMA6100P" footprint="SnipsControllers_Custom:QMA6100P" {
-    catalog lcsc="C2887190"
+mpn "ICM-42670-P" manufacturer="TDK InvenSense" value="ICM-42670-P" footprint="Package_LGA:LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y" {
+    catalog lcsc="C3288646"
 }
 
 mpn "RC0402FR-0718KL" manufacturer="Yageo" value="18kΩ" footprint="Resistor_SMD:R_0402_1005Metric" {

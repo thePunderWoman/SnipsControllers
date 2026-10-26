@@ -67,3 +67,77 @@ part sk6812mini-hs {
     port din type=output pin=DIN
     port dout type=output pin=DOUT
 }
+
+// TDK InvenSense ICM-42670-P 6-axis IMU (3-axis gyroscope + 3-axis accelerometer), 2.5 x 3.0 x
+// 0.76 mm LGA-14. Datasheet: DS-000451 Rev 1.1. Pin numbers and names are the datasheet's
+// (section 4.1, Table 9 and Figure 4). The stock KiCad LGA-14 footprint matches the package
+// drawing (section 10.2): pad centers at +/-1.1625 mm and +/-0.9125 mm, pin 1 top-left, numbered
+// counter-clockwise. VDD and VDDIO are each 1.71-3.6 V (Table 3). In I2C mode AP_CS is tied to
+// VDDIO, FSYNC to GND when unused, and the RESV pins may be left open or tied to GND or VDDIO
+// (Figure 5 and Table 9). AP_AD0 sets the I2C address LSB: 0x68 low, 0x69 high (p. 32).
+// INT1 resets to open-drain, active-low (INT_CONFIG = 0x00, p. 51), so it doesn't drive
+// its line until firmware configures it.
+part icm42670p {
+    reference "U"
+    symbol "SnipsControllers_Custom:ICM-42670-P"
+    value "ICM-42670-P"
+    datasheet "https://invensense.tdk.com/download-pdf/icm-42670-p-datasheet/"
+    description "6-axis IMU (gyroscope + accelerometer), I2C/SPI/I3C, wake-on-motion interrupt, LGA-14 2.5x3mm"
+    manufacturer "TDK InvenSense"
+    order mpn="ICM-42670-P" lcsc=C3288646
+
+    pin AP_AD0 input required
+    pin RESV2 passive
+    pin RESV3 passive
+    pin INT1 output
+    pin VDDIO power_in
+    pin GND power_in
+    pin FSYNC input required
+    pin VDD power_in
+    pin INT2 output
+    pin RESV10 passive
+    pin RESV11 passive
+    pin AP_CS input required
+    pin AP_SCL input
+    pin AP_SDA bidirectional
+
+    package lga14 footprint="Package_LGA:LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y" {
+        pad AP_AD0 1
+        pad RESV2 2
+        pad RESV3 3
+        pad INT1 4
+        pad VDDIO 5
+        pad GND 6
+        pad FSYNC 7
+        pad VDD 8
+        pad INT2 9
+        pad RESV10 10
+        pad RESV11 11
+        pad AP_CS 12
+        pad AP_SCL 13
+        pad AP_SDA 14
+    }
+
+    // Accelerometer + gyroscope in low-noise mode: 0.55 mA typical (Table 3).
+    port vdd type=power {
+        require net.voltage min="1.71V" max="3.6V"
+        add net.draw "0.55mA"
+        line rail pin=VDD
+        line gnd pin=GND
+    }
+
+    port vddio type=power {
+        require net.voltage min="1.71V" max="3.6V"
+        line rail pin=VDDIO
+    }
+
+    // AP_AD0 is tied to GND on this board.
+    port i2c type=i2c {
+        claim signal.address 0x68
+        line sda pin=AP_SDA
+        line scl pin=AP_SCL
+    }
+
+    port int1 pin=INT1
+    port int2 pin=INT2
+}

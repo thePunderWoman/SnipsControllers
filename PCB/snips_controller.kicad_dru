@@ -10,6 +10,11 @@
    (condition "A.Reference == 'U_XBEE1' || B.Reference == 'U_XBEE1'")
 )
 
+(rule "ICM-42670-P LGA-14 pad-to-pad clearance"
+   (constraint clearance (min 0.15mm))
+   (condition "A.Reference == 'U_IMU1' && A.Reference == B.Reference")
+)
+
 (rule "BQ25185 thermal-pad via clearance"
    (constraint clearance (min 0mm))
    (constraint hole_clearance (min 0mm))
