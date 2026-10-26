@@ -13,7 +13,6 @@ use "@stackup/passives"
 use "@stackup/power/buck/tlv62569"
 use "@stackup/power/charger/bq25185"
 use "@stackup/radio/xbee3"
-use "@stackup/sensor/accel/qma6100p"
 use "@stackup/sensor/hall/drv5055"
 use "@stackup/switch/push-button"
 use "./parts.kdl"; use "./purchasing.kdl"
@@ -24,13 +23,13 @@ design snips_controller {
     place capacitor "C_3V3_1" designator="C_3V3_1" footprint="Capacitor_SMD:C_0603_1608Metric" value="10µF"
     place capacitor "C_3V3_2" designator="C_3V3_2" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
     place capacitor "C_3V3_3" designator="C_3V3_3" footprint="Capacitor_SMD:C_0402_1005Metric" value="39pF"
-    place capacitor "C_ACCEL_1" designator="C_ACCEL_1" footprint="Capacitor_SMD:C_0402_1005Metric" value="10nF"
-    place capacitor "C_ACCEL_2" designator="C_ACCEL_2" footprint="Capacitor_SMD:C_0402_1005Metric" value="100pF"
-    place capacitor "C_ACCEL_3" designator="C_ACCEL_3" footprint="Capacitor_SMD:C_0402_1005Metric" value="2.2nF"
     place capacitor "C_BAT1" designator="C_BAT1" footprint="Capacitor_SMD:C_0805_2012Metric" value="10µF"
     place capacitor "C_BUCK_IN1" designator="C_BUCK_IN1" footprint="Capacitor_SMD:C_0805_2012Metric" value="10µF"
     place capacitor "C_BUCK_OUT1" designator="C_BUCK_OUT1" footprint="Capacitor_SMD:C_0805_2012Metric" value="22µF"
     place capacitor "C_DBNC1" designator="C_DBNC1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_IMU_1" designator="C_IMU_1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_IMU_2" designator="C_IMU_2" footprint="Capacitor_SMD:C_0603_1608Metric" value="2.2µF"
+    place capacitor "C_IMU_3" designator="C_IMU_3" footprint="Capacitor_SMD:C_0402_1005Metric" value="10nF"
     place capacitor "C_HALL1" designator="C_HALL1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
     place capacitor "C_LATCH_G1" designator="C_LATCH_G1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
     place capacitor "C_OLED_1" designator="C_OLED_1" footprint="Capacitor_SMD:C_0805_2012Metric" value="10µF"
@@ -97,17 +96,17 @@ design snips_controller {
     place push-button "SW_TRIG_DIG1" designator="SW_TRIG_DIG1" footprint="Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010" package="alps" value="SKRTLAE010"
     place push-button "SW_VOL_DN1" designator="SW_VOL_DN1" footprint="Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010" package="alps" value="SKRTLAE010"
     place push-button "SW_VOL_UP1" designator="SW_VOL_UP1" footprint="Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010" package="alps" value="SKRTLAE010"
-    place qma6100p "U_ACCEL1" designator="U_ACCEL1" footprint="SnipsControllers_Custom:QMA6100P" value="QMA6100P" { without supply; without i2c-mode; without returns }
     place tlv62569 "U_BUCK1" designator="U_BUCK1" footprint="Package_TO_SOT_SMD:SOT-23-5" value="TLV62569DBVR"
     place bq25185 "U_CHG1" designator="U_CHG1" footprint="BQ25185DLHR:IC_BQ25185DLHR" value="BQ25185DLHR" { without program; without always-enabled; without ts-fixed; without thermal; without supply }
     place drv5055a2 "U_HALL1" designator="U_HALL1" footprint="Package_TO_SOT_THT:TO-92_Inline" value="DRV5055A2QLPGM" hand=#true { without supply }
+    place icm42670p "U_IMU1" designator="U_IMU1" footprint="Package_LGA:LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y" value="ICM-42670-P"
     place esp32-s3-wroom-1 "U_MCU1" designator="U_MCU1" footprint="Espressif:ESP32-S3-WROOM-1" package="n8" value="ESP32-S3-WROOM-1-N8" { without supply; without enable; without boot }
     place qwiic "U_OLED1" designator="U_OLED1" footprint="Connector_JST:JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal" value="Qwiic connector" { without tab }
     place xbee3-zigbee "U_XBEE1" designator="U_XBEE1" footprint="Xbee3:XB324Z8UTJ" value="XBee3" hand=#true { without supply; without bootmode }
 
     // Electrical nets
-    circuit "U_ACCEL1.SCX" "U_MCU1.IO9" "U_OLED1.4" name="/Accelerometer/I2C_SCL"
-    circuit "U_ACCEL1.SDX" "U_MCU1.IO8" "U_OLED1.3" name="/Accelerometer/I2C_SDA"
+    circuit "U_IMU1.AP_SCL" "U_MCU1.IO9" "U_OLED1.4" name="/Accelerometer/I2C_SCL"
+    circuit "U_IMU1.AP_SDA" "U_MCU1.IO8" "U_OLED1.3" name="/Accelerometer/I2C_SDA"
     circuit "SW_MACRO1.1" "U_MCU1.IO47" name="/Buttons_Direct/BTN_MACRO1"
     circuit "SW_MACRO2.1" "U_MCU1.IO48" name="/Buttons_Direct/BTN_MACRO2"
     circuit "SW_MACRO3.1" "U_MCU1.IO35" name="/Buttons_Direct/BTN_MACRO3"
@@ -156,10 +155,10 @@ design snips_controller {
     circuit "R_XBEE_RC1.B" "U_XBEE1.RESET" name="/XBee/XBEE_RESET"
     circuit "C_XBEE_RC1.A" "R_XBEE_RC1.A" "R_XBEE_RST1.B" name="/XBee/XBEE_RST_PU"
     circuit "R_XBEE_ATTN_PU1.B" "U_MCU1.IO15" "U_XBEE1.SPI_ATTN" name="/XBee/XBEE_SPI_ATTN"
-    circuit "C_3V3_1.A" "C_3V3_2.A" "C_3V3_3.A" "C_ACCEL_1.A" "C_ACCEL_2.A" "C_ACCEL_3.A" "C_BUCK_OUT1.A" "C_HALL1.A" "C_OLED_1.A" "C_OLED_2.A" "C_RGB1.A" "C_STICK1.A" "C_XBEE_VCC1.A" "C_XBEE_VCC2.A" "C_XBEE_VCC3.A" "C_XBEE_VCC4.A" "D_RGB1.VDD" "J_STICK1.p_3" "J_STICK1.p_3_" "L_BUCK1.B" "R_BOOT_PU1.B" "R_BTN_PU1.A" "R_EN_PU1.B" "R_FB1.B" "R_STAT1.B" "R_STAT2.B" "R_XBEE_ATTN_PU1.A" "R_XBEE_RST1.A" "U_ACCEL1.SENB" "U_ACCEL1.VDD" "U_HALL1.VCC" "U_MCU1.3V3" "U_OLED1.2" "U_XBEE1.VCC" name="3V3"
+    circuit "C_3V3_1.A" "C_3V3_2.A" "C_3V3_3.A" "C_BUCK_OUT1.A" "C_HALL1.A" "C_IMU_1.A" "C_IMU_2.A" "C_IMU_3.A" "C_OLED_1.A" "C_OLED_2.A" "C_RGB1.A" "C_STICK1.A" "C_XBEE_VCC1.A" "C_XBEE_VCC2.A" "C_XBEE_VCC3.A" "C_XBEE_VCC4.A" "D_RGB1.VDD" "J_STICK1.p_3" "J_STICK1.p_3_" "L_BUCK1.B" "R_BOOT_PU1.B" "R_BTN_PU1.A" "R_EN_PU1.B" "R_FB1.B" "R_STAT1.B" "R_STAT2.B" "R_XBEE_ATTN_PU1.A" "R_XBEE_RST1.A" "U_HALL1.VCC" "U_IMU1.AP_CS" "U_IMU1.VDD" "U_IMU1.VDDIO" "U_MCU1.3V3" "U_OLED1.2" "U_XBEE1.VCC" name="3V3"
     set "C_BUCK_OUT1.A" net.voltage "3.3V"
-    circuit "U_ACCEL1.INT1" "U_MCU1.IO46" name="ACCEL_INT1"
-    circuit "BT1.2" "C_3V3_1.B" "C_3V3_2.B" "C_3V3_3.B" "C_ACCEL_1.B" "C_ACCEL_2.B" "C_ACCEL_3.B" "C_BAT1.B" "C_BUCK_IN1.B" "C_BUCK_OUT1.B" "C_DBNC1.B" "C_HALL1.B" "C_LATCH_G1.A" "C_OLED_1.B" "C_OLED_2.B" "C_RGB1.B" "C_STICK1.B" "C_SYS_1.B" "C_SYS_2.B" "C_VIN_1.B" "C_VIN_2.B" "C_XBEE_RC1.B" "C_XBEE_VCC1.B" "C_XBEE_VCC2.B" "C_XBEE_VCC3.B" "C_XBEE_VCC4.B" "D_RGB1.GND" "D_VBUS_TVS1.A2" "J_STICK1.p_1" "J_STICK1.p_1_" "J_STICK1.p_c" "J_USB1.GND" "J_USB1.SHIELD" "Q_INV1.EMITTER" "Q_LATCH1.SOURCE" "R_CC1.B" "R_CC2.B" "R_FB2.B" "R_ISET1.B" "R_LATCH_G1.A" "R_PWR_EN_PD1.rail.gnd" "R_TS1.B" "R_VSET1.B" "R_VSYS2.B" "SW_BOOT1.1" "SW_MACRO1.2" "SW_MACRO2.2" "SW_MACRO3.2" "SW_MACRO4.2" "SW_MACRO5.2" "SW_MACRO6.2" "SW_PWR1.2" "SW_THR_DN1.2" "SW_THR_UP1.2" "SW_TRIG_DIG1.2" "SW_VOL_DN1.2" "SW_VOL_UP1.2" "U_ACCEL1.AD0" "U_ACCEL1.RESV2" "U_ACCEL1.RESV1" "U_ACCEL1.GNDIO" "U_ACCEL1.GND" "U_BUCK1.GND" "U_CHG1.PAD" "U_CHG1.CE" "U_CHG1.GND" "U_HALL1.GND" "U_MCU1.GND" "U_OLED1.1" "U_XBEE1.GND" name="GND"
+    circuit "U_IMU1.INT1" "U_MCU1.IO46" name="ACCEL_INT1"
+    circuit "BT1.2" "C_3V3_1.B" "C_3V3_2.B" "C_3V3_3.B" "C_BAT1.B" "C_BUCK_IN1.B" "C_BUCK_OUT1.B" "C_DBNC1.B" "C_HALL1.B" "C_IMU_1.B" "C_IMU_2.B" "C_IMU_3.B" "C_LATCH_G1.A" "C_OLED_1.B" "C_OLED_2.B" "C_RGB1.B" "C_STICK1.B" "C_SYS_1.B" "C_SYS_2.B" "C_VIN_1.B" "C_VIN_2.B" "C_XBEE_RC1.B" "C_XBEE_VCC1.B" "C_XBEE_VCC2.B" "C_XBEE_VCC3.B" "C_XBEE_VCC4.B" "D_RGB1.GND" "D_VBUS_TVS1.A2" "J_STICK1.p_1" "J_STICK1.p_1_" "J_STICK1.p_c" "J_USB1.GND" "J_USB1.SHIELD" "Q_INV1.EMITTER" "Q_LATCH1.SOURCE" "R_CC1.B" "R_CC2.B" "R_FB2.B" "R_ISET1.B" "R_LATCH_G1.A" "R_PWR_EN_PD1.rail.gnd" "R_TS1.B" "R_VSET1.B" "R_VSYS2.B" "SW_BOOT1.1" "SW_MACRO1.2" "SW_MACRO2.2" "SW_MACRO3.2" "SW_MACRO4.2" "SW_MACRO5.2" "SW_MACRO6.2" "SW_PWR1.2" "SW_THR_DN1.2" "SW_THR_UP1.2" "SW_TRIG_DIG1.2" "SW_VOL_DN1.2" "SW_VOL_UP1.2" "U_BUCK1.GND" "U_CHG1.PAD" "U_CHG1.CE" "U_CHG1.GND" "U_HALL1.GND" "U_IMU1.AP_AD0" "U_IMU1.FSYNC" "U_IMU1.GND" "U_IMU1.RESV2" "U_IMU1.RESV3" "U_IMU1.RESV10" "U_IMU1.RESV11" "U_MCU1.GND" "U_OLED1.1" "U_XBEE1.GND" name="GND"
     circuit "BT1.1" "C_BAT1.A" "U_CHG1.BAT" name="VBAT"
     circuit "C_VIN_1.A" "C_VIN_2.A" "D_VBUS_TVS1.A1" "J_USB1.VBUS" "U_CHG1.IN" name="VBUS"
     circuit "C_BUCK_IN1.A" "C_SYS_1.A" "C_SYS_2.A" "Q_PWR1.SOURCE" "R_GATE1.A" "R_INV_BASE1.A" "R_INV_PU1.A" "R_VSYS1.A" "U_BUCK1.VIN" "U_CHG1.SYS" name="VSYS"
@@ -168,8 +167,7 @@ design snips_controller {
     nc "D_RGB1.DOUT"
     nc "J_USB1.SBU1"
     nc "J_USB1.SBU2"
-    nc "U_ACCEL1.INT2"
-    nc "U_ACCEL1.NC"
+    nc "U_IMU1.INT2"
     nc "U_MCU1.IO3"
     nc "U_MCU1.IO45"
     nc "U_XBEE1.AD0"
@@ -194,11 +192,6 @@ design snips_controller {
         when value="100nF"
         when footprint="Capacitor_SMD:C_0402_1005Metric"
         set mpn="CL05B104KO5NNNC"
-    }
-    match placement {
-        when value="100pF"
-        when footprint="Capacitor_SMD:C_0402_1005Metric"
-        set mpn="0402CG101J500NT"
     }
     match placement {
         when value="100Ω"
@@ -246,9 +239,9 @@ design snips_controller {
         set mpn="CL10A105KB8NNNC"
     }
     match placement {
-        when value="2.2nF"
-        when footprint="Capacitor_SMD:C_0402_1005Metric"
-        set mpn="CL05B222KB5NNNC"
+        when value="2.2µF"
+        when footprint="Capacitor_SMD:C_0603_1608Metric"
+        set mpn="CL10B225KP8NNNC"
     }
     match placement {
         when value="2.2µH"
@@ -361,9 +354,9 @@ design snips_controller {
         set mpn="EVQP2T02M"
     }
     match placement {
-        when value="QMA6100P"
-        when footprint="SnipsControllers_Custom:QMA6100P"
-        set mpn="QMA6100P"
+        when value="ICM-42670-P"
+        when footprint="Package_LGA:LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y"
+        set mpn="ICM-42670-P"
     }
     match placement {
         when value="Qwiic connector"

@@ -31,7 +31,7 @@ for a static signal, avoid anything that toggles during power-up):
 | Pin | Note |
 |---|---|
 | 15 (GPIO3) | Strapping — JTAG signal source select |
-| 16 (GPIO46) | Strapping — boot message control. Used for the QMA6100P accelerometer's INT1 line (see Accelerometer section below) — safe since INT1 stays inactive through boot until firmware configures it. |
+| 16 (GPIO46) | Strapping — boot message control. Used for the ICM-42670-P IMU's INT1 line (QMA6100P on V1.2 and earlier; see Accelerometer section below) — safe since INT1 is never driven high through boot until firmware configures it. |
 | 26 (GPIO45) | Strapping — flash voltage select |
 
 **Spare, no caveats** (default JTAG — fully reusable as plain GPIO if you
@@ -74,14 +74,15 @@ Accelerometer section below.
 | XBee SPI_ATTN | 8 (GPIO15) |
 | XBee SLEEP_RQ (DTR) | 35 (GPIO42) |
 
-## I2C (OLED, QMA6100P accelerometer)
+## I2C (OLED, ICM-42670-P IMU)
 | Function | Pin |
 |---|---|
 | SDA | 12 (GPIO8) |
 | SCL | 17 (GPIO9) |
 
-Shared bus — QMA6100P accelerometer joins at I2C address 0x12 (AD0 tied
-to GND), distinct from the OLED's 0x3C. See Accelerometer section below.
+Shared bus — the ICM-42670-P IMU joins at I2C address 0x68 (AP_AD0 tied
+to GND), distinct from the OLED's 0x3C. V1.2 and earlier boards have the
+QMA6100P accelerometer at 0x12 instead. See Accelerometer section below.
 
 ## ADC — ADC1 only, see note below
 | Function | Pin | Notes |
@@ -228,7 +229,7 @@ exposed GPIO/ADC path with this sense pin.
 
 ---
 
-## Accelerometer (QMA6100P) — Low-Power Mode
+## Accelerometer (ICM-42670-P IMU) — Low-Power Mode
 
 Added to support an auto low-power mode: after a configurable idle
 timeout (no buttons, no motion), firmware turns the OLED off and puts
@@ -237,7 +238,57 @@ radio powered continuously; after a much longer configurable timeout, it
 does a full soft-latch power-off. Button or accelerometer motion wakes
 the device back up.
 
-**Why QMA6100P:** chosen over MSA311/LIS3DH/ADXL345/MPU-6050 after
+**Why ICM-42670-P (boards after V1.2):** a 6-axis IMU (3-axis gyroscope +
+3-axis accelerometer) replacing the QMA6100P, so later firmware can use
+rotation as well as motion. It was the cheapest current-production 6-axis
+part with deep stock when chosen (2026-10-25, LCSC): ~$1.65 @10 vs $2.52
+BMI270, $3.38 LSM6DSOX, and $1.33 LSM6DS3TR-C (cheaper, but Mouser lists
+it obsolete). It keeps the single-pin wake design: a hardware
+wake-on-motion interrupt on INT1, so no extra GPIO is needed. Cost:
+~$1.20 more per board than the QMA6100P (~$0.47 @10), and higher
+low-power current. The datasheet gives 3.5µA full-chip sleep and 0.20mA
+for the accelerometer in low-noise mode, but no figure for the
+low-power-mode accelerometer that wake-on-motion runs on — **measure the
+idle current on the first board.** Source: TDK InvenSense "ICM-42670-P
+Datasheet" (DS-000451, Rev 1.1).
+
+**I2C wiring** (per the datasheet's Figure 5, I3C/I2C Interface to
+Host): shares the existing OLED bus (GPIO8/9).
+| ICM-42670-P pin | Connection |
+|---|---|
+| AP_AD0 (1) | GND — sets I2C address to 0x68 |
+| RESV (2, 3) | GND (datasheet allows open, GND or VDDIO) |
+| INT1 (4) | Host GPIO46 (pin 16) — see Reserved/Do Not Use above |
+| VDDIO (5) | 3V3 |
+| GND (6) | GND |
+| FSYNC (7) | GND (unused; the datasheet says tie it to GND) |
+| VDD (8) | 3V3 |
+| INT2 (9) | Unused |
+| RESV (10, 11) | GND |
+| AP_CS (12) | 3V3 — selects I2C (tied to VDDIO) |
+| AP_SCL (13) | I2C_SCL (shared with OLED) |
+| AP_SDA (14) | I2C_SDA (shared with OLED) |
+
+Decoupling per the datasheet's Table 10: 100nF and 2.2µF X7R on VDD,
+10nF X7R on VDDIO (C_IMU_1..3).
+
+INT1 resets to open-drain, active-low (INT_CONFIG = 0x00), and the
+reset-done interrupt is routed to it by default, so before firmware runs
+it can only pull GPIO46 low or leave it to the ESP32's default pull-down
+— never high. Firmware turns the reset-done routing off and switches INT1
+to push-pull, active-high and latched, the same signal the QMA6100P
+gave.
+
+**Footprint:** KiCad's stock
+`Package_LGA:LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y`, checked against the
+datasheet's package drawing (section 10.2): pad centers at ±1.1625mm
+(4-pad sides) and ±0.9125mm (3-pad sides), 0.5mm pitch, 0.625×0.35mm pads
+over 0.475×0.25mm leads, pin 1 top-left, numbered counter-clockwise like
+the datasheet's Figure 4.
+
+### V1.2 and earlier: QMA6100P
+
+**Why QMA6100P (at the time):** chosen over MSA311/LIS3DH/ADXL345/MPU-6050 after
 checking JLCPCB's actual parts library (as of 2026-09) — none of the
 candidates are Basic-library (that framing was wrong when first floated;
 corrected after verifying against JLCPCB's own part pages and the
@@ -292,5 +343,5 @@ Pin 34 (GPIO41, default JTAG) — used by bq25185 STAT2.
 Pin 35 (GPIO42, default JTAG) — used by XBee SLEEP_RQ (DTR).
 Pin 15, 26 (GPIO3/45) — usable, but strapping pins, best for a
 static/non-boot-critical signal.
-Pin 16 (GPIO46) — strapping pin, reserved for the QMA6100P accelerometer's
-INT1 (not yet wired in the schematic — see Accelerometer section above).
+Pin 16 (GPIO46) — strapping pin, used for the ICM-42670-P IMU's INT1 (the
+QMA6100P's on V1.2 and earlier — see Accelerometer section above).

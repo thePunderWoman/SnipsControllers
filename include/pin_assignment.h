@@ -25,16 +25,16 @@ constexpr int kXbeeSpiAttn = 15;
 // rather than a pull resistor.
 constexpr int kXbeeSleepRq = 42;
 
-// ---- I2C (OLED, QMA6100P accelerometer) ----------------------------------
+// ---- I2C (OLED, ICM-42670-P IMU or QMA6100P accelerometer) -------------
 constexpr int kI2cSda = 8;
 constexpr int kI2cScl = 9;
 
-// ---- Accelerometer (QMA6100P, shares the I2C bus above) ------------------
+// ---- Accelerometer (ICM-42670-P or QMA6100P, shares the I2C bus above) --
 // INT1 output, wired so the MCU can light-sleep and wake on the
-// accelerometer's hardware any-motion/no-motion interrupt instead of
-// polling. Strapping pin (GPIO46, boot message control only) — safe here
-// since the accelerometer's interrupt output stays inactive through boot
-// until firmware configures it.
+// accelerometer's hardware motion interrupt instead of polling. Strapping
+// pin (GPIO46, boot message control only) — safe here since either chip's
+// interrupt output stays inactive (never driven high) through boot until
+// firmware configures it.
 constexpr int kAccelInterrupt = 46;
 
 // ---- ADC1 (analog trigger, thumbstick, battery sense) -------------------
