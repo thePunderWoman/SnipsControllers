@@ -3,7 +3,7 @@ import orient as O, build_sup as B
 import trimesh
 src='/mnt/user-data/uploads/SnipsControllers/shell/export/stl'
 out='/mnt/user-data/outputs/print/stl'; os.makedirs(out,exist_ok=True)
-ORI={'TopShell':'+Z up (as modelled)','BottomShell':'-Z up (flipped)','BatteryPanel':'-Y up','BumperCap':'-Z up (flipped)','Trigger':'-X up'}
+ORI={'TriggerPost':'-Z up (flipped)','TopShell':'+Z up (as modelled)','BottomShell':'-Z up (flipped)','BatteryPanel':'-Y up','BumperCap':'-Z up (flipped)','Trigger':'-X up'}
 for n in ['HallBridge','PowerPlate','SidePlateL1','SidePlateL2','SidePlateR1','SidePlateR2']+['FaceCap%d'%i for i in range(1,7)]: ORI[n]='+Z up (as modelled)'
 SUP={'BumperCap','Trigger'}
 def write(path,tris,name):
