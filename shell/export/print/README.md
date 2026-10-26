@@ -10,6 +10,7 @@ Designed for a **0.4 mm nozzle**, ~0.2 mm layers.
 | BatteryPanel | standing on end (-Y up) | brim; slicer supports for the groove ceilings |
 | BumperCap | flipped, head top face on the bed | **built in** (`BumperCap_with_supports.stl`) |
 | Trigger | on its side, blade face down | **built in** (`Trigger_with_supports.stl`) |
+| TriggerPost | D flat on the bed, post lying along X | none |
 | HallBridge, PowerPlate, SidePlateL1/L2/R1/R2 | flat, as modelled | none |
 | FaceCap1-6 | stem down, as modelled | none |
 
