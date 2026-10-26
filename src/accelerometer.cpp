@@ -116,7 +116,7 @@ void configureQma6100p() {
 bool Accelerometer::begin() {
   Wire.begin(PinAssignment::kI2cSda, PinAssignment::kI2cScl);
 
-  // Boards after V1.2 carry the ICM-42670-P; V1.2 and earlier the
+  // Boards from V1.2 on carry the ICM-42670-P; V1.1 and earlier the
   // QMA6100P, or nothing on the first production run.
   uint8_t id = 0;
   if (probe(Icm42670p::kI2cAddress) &&
