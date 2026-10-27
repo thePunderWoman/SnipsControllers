@@ -3,9 +3,10 @@ import orient as O, build_sup as B
 import trimesh
 src='/mnt/user-data/uploads/SnipsControllers/shell/export/stl'
 out='/mnt/user-data/outputs/print/stl'; os.makedirs(out,exist_ok=True)
-ORI={'TriggerPost':'-Z up (flipped)','TopShell':'+Z up (as modelled)','BottomShell':'-Z up (flipped)','BatteryPanel':'-Y up','BumperCap':'-Z up (flipped)','Trigger':'-X up'}
-for n in ['HallBridge','PowerPlate','SidePlateL1','SidePlateL2','SidePlateR1','SidePlateR2']+['FaceCap%d'%i for i in range(1,7)]: ORI[n]='+Z up (as modelled)'
-SUP={'BumperCap','Trigger'}
+ORI={'TriggerPost':'-Z up (flipped)','TopShell':'+Z up (as modelled)','BottomShell':'-Z up (flipped)','BatteryPanel':'+Z up (as modelled)','BumperCap':'+Y up','Trigger':'-X up'}
+for n in ['HallBridge','PowerPlate']+['FaceCap%d'%i for i in range(1,7)]: ORI[n]='+Z up (as modelled)'
+ORI['PowerPlate']='+Y up'
+SUP={'Trigger'}
 def write(path,tris,name):
     n=len(tris); nr=np.cross(tris[:,1]-tris[:,0],tris[:,2]-tris[:,0]); l=np.linalg.norm(nr,axis=1,keepdims=True); nr=nr/np.maximum(l,1e-12)
     with open(path,'wb') as f:
@@ -63,4 +64,4 @@ for n,o in ORI.items():
     write(os.path.join(out,n+('_with_supports' if sup is not None else '')+'.stl'),allt,n)
     ext=allt.reshape(-1,3); print(n,o,'bbox %.1f x %.1f x %.1f'%tuple(ext.max(0)-ext.min(0)))
 print(json.dumps(rep,indent=1))
-
+ORI.update({'SidePlateL1':'+X up','SidePlateL2':'+X up','SidePlateR1':'-X up','SidePlateR2':'-X up'})
