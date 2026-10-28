@@ -18,7 +18,7 @@ Designed for a **0.4 mm nozzle**, ~0.2 mm layers.
 
 ## Support blocks (TopShell, BottomShell)
 `TopShell_with_buck.stl` and `BottomShell_with_buck.stl` include a few plain rectangular blocks in the big open voids, already in the right place (separate lumps in the same STL, sitting on the bed). `TopShell.stl` / `BottomShell.stl` are the bare shells (default).
-- TopShell: 3 blocks (about 13.5, 4.9 and 3.6 cm3). BottomShell: 2 side blocks (about 4 cm3 each).
+- TopShell: 2 blocks (about 13.5 and 3.6 cm3; the one out front under the OLED housing was dropped, `--max-y 50`). BottomShell: 2 side blocks (about 4 cm3 each).
 - Each block keeps 0.3 mm or more from the part on every side, and its flat top is lifted to about 0.2 mm under the lowest roof point above it. The sloped parts of the roof, and everything else, still use normal slicer supports.
 - In OrcaSlicer load the STL and answer yes to "split into parts". Give the block parts 1 wall and about 5% infill, no supports.
 - Regenerate with `tools/gen_buck.py <bare print stl> <out stl>` (needs numpy, scipy, scikit-image, trimesh, rtree).
