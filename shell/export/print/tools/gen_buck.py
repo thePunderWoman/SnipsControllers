@@ -106,7 +106,7 @@ def _max_rect(m):
                 start=s0
             st.append((start,cur))
     return best
-def make_boxes(tris,extra=2,min_cm3=3.0,max_boxes=3):
+def make_boxes(tris,extra=2,min_cm3=3.0,max_boxes=3,band=None):
     solid,x0,y0,m=solid_grid(tris)
     fill,_,_=make_buck_from(solid,x0,y0,need_all=True)
     # downsample 2x in XY and Z, erode by `extra` coarse voxels so the blocks stay well clear
@@ -114,6 +114,8 @@ def make_boxes(tris,extra=2,min_cm3=3.0,max_boxes=3):
     f=f.reshape(f.shape[0]//2,2,f.shape[1]//2,2,f.shape[2]//2,2).all(axis=(1,3,5))
     f=ndimage.binary_erosion(f,structure=np.ones((3,3,1)),iterations=extra,border_value=1)
     cx,cz=CX*2,CZ*2; boxes=[]
+    if band:   # only keep free space whose y lies inside the band
+        ys=y0+np.arange(f.shape[1])*cx; f[:,(ys<band[0])|(ys+cx>band[1]),:]=False
     for _ in range(max_boxes):
         best=None; acc=np.ones(f.shape[:2],bool)
         for k in range(f.shape[2]):
@@ -157,6 +159,11 @@ def raise_top(tris,b,gap=Z_GAP,side=0.3):
 if __name__=='__main__':
     # usage: gen_buck.py in_print_plain.stl out_with_buck.stl   (boxes are added as extra lumps in place)
     tris=load(sys.argv[1]); boxes=make_boxes(tris,extra=1,min_cm3=2.5,max_boxes=4)
+    if '--band' in sys.argv:   # extra small blocks in a y band, e.g. around the face buttons / thumbstick: --band -20 22
+        i=sys.argv.index('--band'); bb=(float(sys.argv[i+1]),float(sys.argv[i+2]))
+        boxes+=make_boxes(tris,extra=1,min_cm3=0.3,max_boxes=8,band=bb)
+    if '--max-y' in sys.argv:   # drop blocks out past this print-frame y (e.g. outside the shell, under the OLED housing)
+        my=float(sys.argv[sys.argv.index('--max-y')+1]); boxes=[b for b in boxes if b[3]<=my]
     boxes=[raise_top(tris,b) for b in boxes]
     allt=np.concatenate([tris]+[box_tris(b) for b in boxes]) if boxes else tris
     write(sys.argv[2],allt,'part+buck')
