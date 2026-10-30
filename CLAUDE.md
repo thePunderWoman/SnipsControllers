@@ -32,6 +32,7 @@ Keep `value=` human-readable; specify exact purchasing choices with `manufacture
 `mpn=` and distributor fields on each placement. A `hand=#true` placement remains
 in the purchasing BOM and is marked `DNP` for outsourced assembly.
 
+- V2 is a separate board in `PCB/v2.x`, with the same layout of files and the same commands; CI checks both.
 - The circuit source is `PCB/v1.x/stackup/board.kdl` and `PCB/v1.x/stackup/parts.kdl`. Run
   `stackup check PCB/v1.x/stackup/board.kdl`, then sync the PCB with the Stackup KiCad plugin.
 - The BOM scripts read Stackup's CSV through the Cargo-locked CLI, including

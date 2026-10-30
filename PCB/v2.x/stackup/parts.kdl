@@ -1,0 +1,372 @@
+// Snips-specific GuliKit thumbstick assembly.
+
+part component_J_STICK1 {
+    reference "J"
+    symbol "SnipsControllers_Custom:GuliKit_HallStick"
+    value "GuliKit_Thumbstick"
+    description "OEM-replacement-style hall/TMR analog thumbstick with center-push switch (ALPS RKJXV1224 / C&K THB001P footprint family). 2-axis potentiometer-emulation interface, not a simple VCC/GND/X/Y/SW breakout: pins 1/2/3 are the X axis low/wiper/high, pins 1'/2'/3' are the Y axis low/wiper/high, pins a/c are the switch (b/d are mechanically-redundant duplicate switch legs, intentionally unconnected). Drive 1 and 1' to GND, 3 and 3' to 3V3; read wipers 2 (X) and 2' (Y) on ADC pins; wire switch a to a GPIO and c to GND. Adapted from dbenoy/thumbstick-breakout (CC-BY-SA 4.0, Copyright (c) Daniel Benoy)."
+    pin p_1 passive
+    pin p_2 output
+    pin p_3 passive
+    pin p_1_ passive
+    pin p_2_ output
+    pin p_3_ passive
+    pin p_a passive
+    pin p_b passive
+    pin p_c passive
+    pin p_d passive
+    package pcb footprint="SnipsControllers_Custom:GuliKit_HallStick" {
+        pad p_1 "1"
+        pad p_2 "2"
+        pad p_3 "3"
+        pad p_1_ "1'"
+        pad p_2_ "2'"
+        pad p_3_ "3'"
+        pad p_a "a"
+        pad p_b "b"
+        pad p_c "c"
+        pad p_d "d"
+    }
+}
+
+// OPSCO SK6812MINI-HS-012 addressable RGB LED, top-mount 3.5 x 3.5 mm PLCC4, lens up, using the
+// single-wire WS2812 protocol. Replaces the reverse-mount SK6812MINI-E, whose bottom-view land
+// pattern was mirrored for a lens-up part and had no body cutout. Datasheet: SK6812MINI-HS-012
+// Rev B/0 (PCB/v2.x/datasheets/SK6812MINI-HS-012.pdf). Pin numbers are the datasheet's (section 5),
+// and the footprint's pads carry the same numbers. Supply range is 3.7-5.5 V (section 7); input
+// thresholds are 0.7 / 0.3 x VDD (section 9).
+part sk6812mini-hs {
+    reference "D"
+    symbol "LED:SK6812"
+    value "SK6812MINI-HS-012"
+    datasheet "https://datasheet.lcsc.com/datasheet/pdf/d15550987339dcd676f3ed17cb498c41.pdf?productCode=C2922787"
+    description "Addressable RGB LED with integrated driver, top-mount 3.5x3.5mm PLCC4, lens up"
+    manufacturer "OPSCO Optoelectronics"
+    order mpn="SK6812MINI-HS" lcsc=C2922787
+
+    pin GND power_in
+    pin DIN input
+    pin VDD power_in
+    pin DOUT output
+
+    package mini-hs footprint="SnipsControllers_Custom:SK6812MINI-HS-012" {
+        pad GND 1
+        pad DIN 2
+        pad VDD 3
+        pad DOUT 4
+    }
+
+    // Estimated full-brightness current: the datasheet gives 12 mA per colour (section 9).
+    port vdd type=power {
+        require net.voltage min="3.7V" max="5.5V"
+        add net.draw "36mA"
+        line rail pin=VDD
+        line gnd pin=GND
+    }
+
+    port din type=output pin=DIN
+    port dout type=output pin=DOUT
+}
+
+// TDK InvenSense ICM-42670-P 6-axis IMU (3-axis gyroscope + 3-axis accelerometer), 2.5 x 3.0 x
+// 0.76 mm LGA-14. Datasheet: DS-000451 Rev 1.1. Pin numbers and names are the datasheet's
+// (section 4.1, Table 9 and Figure 4). The stock KiCad LGA-14 footprint matches the package
+// drawing (section 10.2): pad centers at +/-1.1625 mm and +/-0.9125 mm, pin 1 top-left, numbered
+// counter-clockwise. VDD and VDDIO are each 1.71-3.6 V (Table 3). In I2C mode AP_CS is tied to
+// VDDIO, FSYNC to GND when unused, and the RESV pins may be left open or tied to GND or VDDIO
+// (Figure 5 and Table 9). AP_AD0 sets the I2C address LSB: 0x68 low, 0x69 high (p. 32).
+// INT1 resets to open-drain, active-low (INT_CONFIG = 0x00, p. 51), so it doesn't drive
+// its line until firmware configures it.
+part icm42670p {
+    reference "U"
+    symbol "SnipsControllers_Custom:ICM-42670-P"
+    value "ICM-42670-P"
+    datasheet "https://invensense.tdk.com/download-pdf/icm-42670-p-datasheet/"
+    description "6-axis IMU (gyroscope + accelerometer), I2C/SPI/I3C, wake-on-motion interrupt, LGA-14 2.5x3mm"
+    manufacturer "TDK InvenSense"
+    order mpn="ICM-42670-P" lcsc=C3288646
+
+    pin AP_AD0 input required
+    pin RESV2 passive
+    pin RESV3 passive
+    pin INT1 output
+    pin VDDIO power_in
+    pin GND power_in
+    pin FSYNC input required
+    pin VDD power_in
+    pin INT2 output
+    pin RESV10 passive
+    pin RESV11 passive
+    pin AP_CS input required
+    pin AP_SCL input
+    pin AP_SDA bidirectional
+
+    package lga14 footprint="Package_LGA:LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y" {
+        pad AP_AD0 1
+        pad RESV2 2
+        pad RESV3 3
+        pad INT1 4
+        pad VDDIO 5
+        pad GND 6
+        pad FSYNC 7
+        pad VDD 8
+        pad INT2 9
+        pad RESV10 10
+        pad RESV11 11
+        pad AP_CS 12
+        pad AP_SCL 13
+        pad AP_SDA 14
+    }
+
+    // Accelerometer + gyroscope in low-noise mode: 0.55 mA typical (Table 3).
+    port vdd type=power {
+        require net.voltage min="1.71V" max="3.6V"
+        add net.draw "0.55mA"
+        line rail pin=VDD
+        line gnd pin=GND
+    }
+
+    port vddio type=power {
+        require net.voltage min="1.71V" max="3.6V"
+        line rail pin=VDDIO
+    }
+
+    // AP_AD0 is tied to GND on this board.
+    port i2c type=i2c {
+        claim signal.address 0x68
+        line sda pin=AP_SDA
+        line scl pin=AP_SCL
+    }
+
+    port int1 pin=INT1
+    port int2 pin=INT2
+}
+
+// TI DRV5055A2 in SOT-23 (DBZ). The @stackup/sensor/hall/drv5055 library part has only the TO-92
+// package, and the SOT-23 pin order differs (DS SBAS639E, Table 4-1). It is mounted on the bottom
+// of the board under the trigger magnet and reads the field perpendicular to the board (§6.3.1).
+part drv5055a2-sot23 {
+    symbol "Sensor_Magnetic:DRV5055A2xDBZxQ1"
+    reference U
+    value "DRV5055A2QDBZR"
+    datasheet "https://www.ti.com/lit/ds/symlink/drv5055.pdf"
+    description "Ratiometric linear Hall effect sensor, 50mV/mT, 3.3V/5V, SOT-23"
+    manufacturer "Texas Instruments"
+    order mpn=DRV5055A2QDBZR lcsc=C266131
+
+    pin VCC power_in
+    pin GND power_in
+    pin OUT output
+
+    package sot23 footprint="Package_TO_SOT_SMD:SOT-23" {
+        pad VCC 1
+        pad OUT 2
+        pad GND 3
+    }
+
+    // Maximum supply current: 10 mA. The datasheet's 3.0–3.63 V and 4.5–5.5 V ranges are checked
+    // only at the outer limits, as in the library part.
+    port vcc type=power {
+        require net.voltage min="3.0V" max="5.5V"
+        add net.draw "10mA"
+        line rail pin=VCC
+        line gnd pin=GND
+    }
+
+    // Analog output proportional to the supply voltage, for an ADC input.
+    port out type=analog pin=OUT
+}
+
+// Digi XBee 3 PRO Zigbee 3.0 Micro, U.FL antenna. The @stackup/radio/xbee3 library part has only the
+// through-hole package. The Micro's pin numbers differ, so this model takes them from Digi 90001543
+// pp.42-44; it keeps the library part's pin names so the board's nets read the same. The -J parts
+// are the +8 dBm non-PRO modules. The reserved pads (17-20, 22) stay open, as Digi requires.
+part xbee3-micro {
+    symbol "Xbee3:XB3-24Z8UM"
+    reference U
+    value "XBee3 PRO Micro"
+    datasheet "https://docs.digi.com/resources/documentation/digidocs/pdfs/90001543.pdf"
+    description "XBee 3 PRO Zigbee 3.0 module, +19 dBm, 2.4 GHz, U.FL antenna, Micro 13.54x19.30mm castellated"
+    manufacturer "Digi International"
+    order mpn="XB3-24Z8UM" lcsc=C5833776
+
+    pin GND power_in
+    pin VCC power_in
+    pin DOUT output symbol="DOUT/DIO13"
+    pin DIN input symbol="DIN/~{CONFIG}/DIO14"
+    pin DIO12 bidirectional
+    pin RESET input symbol="~{RESET}"
+    pin RSSI_PWM output symbol="RSSI_PWM/DIO10"
+    pin PWM1 output symbol="PWM1/DIO11"
+    pin DTR input symbol="~{DTR}/SLEEP_RQ/DIO8"
+    pin SPI_ATTN output symbol="SPI_~{ATTN}/~{BOOTMODE}/DIO19" {
+        role strap sampled=reset pull=none \
+            note="BOOTMODE: must not be low at reset (90001543); the module's data-ready line afterwards"
+        require net.rest high
+    }
+    pin SPI_CLK input symbol="SPI_CLK/DIO18"
+    pin SPI_SSEL input symbol="SPI_~{SSEL}/DIO17"
+    pin SPI_MOSI input symbol="SPI_MOSI/DIO16"
+    pin SPI_MISO output symbol="SPI_MISO/DIO15"
+    pin DIO4 bidirectional
+    pin CTS output symbol="~{CTS}/DIO7"
+    pin ON_SLEEP output symbol="ON/~{SLEEP}/DIO9"
+    pin ASSOCIATE output symbol="ASSOCIATE/DIO5"
+    pin RTS input symbol="~{RTS}/DIO6"
+    pin AD3 bidirectional symbol="AD3/DIO3"
+    pin AD2 bidirectional symbol="AD2/DIO2"
+    pin AD1 bidirectional symbol="AD1/DIO1"
+    pin AD0 bidirectional symbol="AD0/DIO0"
+    pin RF passive
+
+    package micro footprint="Xbee3:XB3-24Z8UM" {
+        pad GND 1
+        pad VCC 2
+        pad DOUT 3
+        pad DIN 4
+        pad DIO12 5
+        pad RESET 6
+        pad RSSI_PWM 7
+        pad PWM1 8
+        pad DTR 9
+        pad GND 10
+        pad SPI_ATTN 11
+        pad GND 12
+        pad SPI_CLK 13
+        pad SPI_SSEL 14
+        pad SPI_MOSI 15
+        pad SPI_MISO 16
+        pad GND 21
+        pad DIO4 23
+        pad CTS 24
+        pad ON_SLEEP 25
+        pad ASSOCIATE 26
+        pad RTS 27
+        pad AD3 28
+        pad AD2 29
+        pad AD1 30
+        pad AD0 31
+        pad GND 32
+        pad RF 33
+        pad GND 34
+    }
+
+    // 2.1-3.6 V supply; 140 mA transmitting at +19 dBm (90001543, electrical specifications).
+    port vcc type=power {
+        require net.voltage min="2.1V" max="3.6V"
+        add net.draw "140mA"
+        line rail pin=VCC
+        line gnd pin=GND
+    }
+
+    port spi type=spi {
+        line sck pin=SPI_CLK
+        line mosi pin=SPI_MOSI
+        line miso pin=SPI_MISO
+    }
+    port cs type=output pin=SPI_SSEL
+    port sleep-rq type=output pin=DTR
+    port attn pin=SPI_ATTN
+    port on-sleep pin=ON_SLEEP
+    port reset pin=RESET
+}
+
+// Alps SKRP top-actuated tact switch, 4.2 x 3.2 x 2.5 mm, for the macro and boot buttons. The -B- part is the
+// 1.57 N, 100,000-cycle version. SKRPANE010 is the same force and footprint, rated for 1,000,000 cycles.
+part skrp-button {
+    symbol "Switch:SW_Push"
+    reference SW
+    value "SKRPABE010"
+    description "Alps SKRP tact switch, 1.6N, 4.2x3.2x2.5mm, SMD"
+    manufacturer "Alps Alpine"
+    order mpn=SKRPABE010 lcsc=C115360
+
+    pin 1 passive
+    pin 2 passive
+
+    port a pin=1
+    port b pin=2
+
+    package skrp footprint="SnipsControllers_Custom:SW_Alps_SKRP" {
+        pad 1 1
+        pad 2 2
+    }
+}
+
+// TI TCA9555 16-bit I2C GPIO expander in TSSOP-24, carrying the buttons. The local part follows
+// @stackup/interface/expander/pca9555, which only has the SSOP-24 package. Pin numbers are from the
+// TCA9555 datasheet's Pin Functions table; the IOx_y names are TI's Pxy, as on KiCad's symbol.
+// Inputs are high at power-up through internal 100 kOhm pull-ups, so buttons need no resistors.
+part tca9555 {
+    symbol "Interface_Expansion:TCA9555PWR"
+    reference U
+    value "TCA9555PWR"
+    datasheet "https://www.ti.com/lit/ds/symlink/tca9555.pdf"
+    description "16-bit I2C GPIO expander, internal pull-ups, open-drain interrupt, TSSOP-24"
+    manufacturer "Texas Instruments"
+    order mpn=TCA9555PWR lcsc=C465732
+
+    pin INT open_collector symbol="~{INT}"
+    pin A1 input required
+    pin A2 input required
+    pin IO0_0 bidirectional
+    pin IO0_1 bidirectional
+    pin IO0_2 bidirectional
+    pin IO0_3 bidirectional
+    pin IO0_4 bidirectional
+    pin IO0_5 bidirectional
+    pin IO0_6 bidirectional
+    pin IO0_7 bidirectional
+    pin VSS power_in
+    pin IO1_0 bidirectional
+    pin IO1_1 bidirectional
+    pin IO1_2 bidirectional
+    pin IO1_3 bidirectional
+    pin IO1_4 bidirectional
+    pin IO1_5 bidirectional
+    pin IO1_6 bidirectional
+    pin IO1_7 bidirectional
+    pin A0 input required
+    pin SCL input
+    pin SDA bidirectional
+    pin VDD power_in
+
+    package tssop24 footprint="Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm" {
+        pad INT 1
+        pad A1 2
+        pad A2 3
+        pad IO0_0 4
+        pad IO0_1 5
+        pad IO0_2 6
+        pad IO0_3 7
+        pad IO0_4 8
+        pad IO0_5 9
+        pad IO0_6 10
+        pad IO0_7 11
+        pad VSS 12
+        pad IO1_0 13
+        pad IO1_1 14
+        pad IO1_2 15
+        pad IO1_3 16
+        pad IO1_4 17
+        pad IO1_5 18
+        pad IO1_6 19
+        pad IO1_7 20
+        pad A0 21
+        pad SCL 22
+        pad SDA 23
+        pad VDD 24
+    }
+
+    port vdd type=power {
+        require net.voltage min="1.65V" max="5.5V"
+        add net.draw "1mA"
+        line rail pin=VDD
+        line gnd pin=VSS
+    }
+    port i2c type=i2c {
+        line sda pin=SDA
+        line scl pin=SCL
+    }
+    port int pin=INT
+}
