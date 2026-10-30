@@ -1,0 +1,419 @@
+// Snips Controller electrical definition. Artwork and placement live in the PCB.
+use "@stackup/connector/jst-ph"
+use "@stackup/connector/qwiic"
+use "@stackup/connector/usb-c"
+use "@stackup/discrete/bjt/mmbt3904"
+use "@stackup/discrete/diode/bat54w"
+use "@stackup/discrete/diode/diode"
+use "@stackup/discrete/diode/tvs"
+use "@stackup/discrete/fet/ao3400a"
+use "@stackup/discrete/fet/ao3401a"
+use "@stackup/micro/esp32s3"
+use "@stackup/passives"
+use "@stackup/power/buck/tlv62569"
+use "@stackup/power/charger/bq25185"
+use "@stackup/switch/push-button"
+use "./parts.kdl"; use "./purchasing.kdl"
+
+design snips_controller {
+    // Components
+    place jst-ph-2 "BT1" designator="BT1" footprint="Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal" value="PH 2-pin battery RIGHT-ANGLE HORIZONTAL"
+    place capacitor "C_3V3_1" designator="C_3V3_1" footprint="Capacitor_SMD:C_0603_1608Metric" value="10µF"
+    place capacitor "C_3V3_2" designator="C_3V3_2" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_3V3_3" designator="C_3V3_3" footprint="Capacitor_SMD:C_0402_1005Metric" value="39pF"
+    place capacitor "C_BAT1" designator="C_BAT1" footprint="Capacitor_SMD:C_0805_2012Metric" value="10µF"
+    place capacitor "C_BUCK_IN1" designator="C_BUCK_IN1" footprint="Capacitor_SMD:C_0805_2012Metric" value="10µF"
+    place capacitor "C_BUCK_OUT1" designator="C_BUCK_OUT1" footprint="Capacitor_SMD:C_0805_2012Metric" value="22µF"
+    place capacitor "C_DBNC1" designator="C_DBNC1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_IMU_1" designator="C_IMU_1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_IMU_2" designator="C_IMU_2" footprint="Capacitor_SMD:C_0603_1608Metric" value="2.2µF"
+    place capacitor "C_IMU_3" designator="C_IMU_3" footprint="Capacitor_SMD:C_0402_1005Metric" value="10nF"
+    place capacitor "C_HALL1" designator="C_HALL1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_LATCH_G1" designator="C_LATCH_G1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_OLED_1" designator="C_OLED_1" footprint="Capacitor_SMD:C_0805_2012Metric" value="10µF"
+    place capacitor "C_OLED_2" designator="C_OLED_2" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_RGB1" designator="C_RGB1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_STICK1" designator="C_STICK1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_SYS_1" designator="C_SYS_1" footprint="Capacitor_SMD:C_0805_2012Metric" value="10µF"
+    place capacitor "C_SYS_2" designator="C_SYS_2" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_VIN_1" designator="C_VIN_1" footprint="Capacitor_SMD:C_0805_2012Metric" value="10µF"
+    place capacitor "C_VIN_2" designator="C_VIN_2" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_XBEE_RC1" designator="C_XBEE_RC1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_XBEE_VCC1" designator="C_XBEE_VCC1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place capacitor "C_XBEE_VCC2" designator="C_XBEE_VCC2" footprint="Capacitor_SMD:C_0603_1608Metric" value="1µF"
+    place capacitor "C_XBEE_VCC3" designator="C_XBEE_VCC3" footprint="Capacitor_SMD:C_0402_1005Metric" value="47pF"
+    place capacitor "C_XBEE_VCC4" designator="C_XBEE_VCC4" footprint="Capacitor_SMD:C_0603_1608Metric" value="10µF"
+    place bat54w "D_INV_ISO1" designator="D_INV_ISO1" footprint="Package_TO_SOT_SMD:SOT-323_SC-70" value="BAT54W-7-F"
+    place diode "D_OR1" designator="D_OR1" footprint="Diode_SMD:D_SOD-123" value="1N4148W"
+    place diode "D_OR2" designator="D_OR2" footprint="Diode_SMD:D_SOD-123" value="1N4148W"
+    place sk6812mini-hs "D_RGB1" designator="D_RGB1" footprint="SnipsControllers_Custom:SK6812MINI-HS-012" value="SK6812MINI-HS-012" {
+        ignore "vdd.net.voltage" reason="run at 3.3V like the MINI-E it replaces" // Datasheet minimum: 3.7 V; this board supplies 3.3 V.
+    }
+    place tvs "D_VBUS_TVS1" designator="D_VBUS_TVS1" footprint="Diode_SMD:D_SOD-323" value="TPPESD5V0S1BA"
+    place component_J_STICK1 "J_STICK1" designator="J_STICK1" footprint="SnipsControllers_Custom:GuliKit_HallStick" value="GuliKit_Thumbstick" hand=#true
+    place usb-c-receptacle "J_USB1" designator="J_USB1" footprint="Connector_USB:USB_C_Receptacle_HRO_TYPE-C-31-M-12" package="hro" value="USB-C"
+    place inductor "L_BUCK1" designator="L_BUCK1" footprint="Inductor_SMD:L_Bourns-SRN4018" value="2.2µH"
+    place mmbt3904 "Q_INV1" designator="Q_INV1" footprint="Package_TO_SOT_SMD:SOT-23" value="MMBT3904(RANGE:100-300)"
+    place nfet-ao3400a "Q_LATCH1" designator="Q_LATCH1" footprint="Package_TO_SOT_SMD:SOT-23" value="AO3400A"
+    place ao3401a "Q_PWR1" designator="Q_PWR1" footprint="Package_TO_SOT_SMD:SOT-23" value="AO3401A"
+    place resistor "R_BOOT_PU1" designator="R_BOOT_PU1" footprint="Resistor_SMD:R_0402_1005Metric" value="10kΩ"
+    place resistor "R_BTN_PU1" designator="R_BTN_PU1" footprint="Resistor_SMD:R_0402_1005Metric" value="100kΩ"
+    place resistor "R_CC1" designator="R_CC1" footprint="Resistor_SMD:R_0402_1005Metric" value="5.1kΩ"
+    place resistor "R_CC2" designator="R_CC2" footprint="Resistor_SMD:R_0402_1005Metric" value="5.1kΩ"
+    place resistor "R_EN_PU1" designator="R_EN_PU1" footprint="Resistor_SMD:R_0402_1005Metric" value="10kΩ"
+    place resistor "R_FB1" designator="R_FB1" footprint="Resistor_SMD:R_0402_1005Metric" value="255kΩ"
+    place resistor "R_FB2" designator="R_FB2" footprint="Resistor_SMD:R_0402_1005Metric" value="56.2kΩ"
+    place resistor "R_GATE1" designator="R_GATE1" footprint="Resistor_SMD:R_0402_1005Metric" value="100kΩ"
+    place resistor "R_INV_BASE1" designator="R_INV_BASE1" footprint="Resistor_SMD:R_0402_1005Metric" value="100kΩ"
+    place resistor "R_INV_PU1" designator="R_INV_PU1" footprint="Resistor_SMD:R_0402_1005Metric" value="100kΩ"
+    place resistor "R_ISET1" designator="R_ISET1" footprint="Resistor_SMD:R_0402_1005Metric" value="604Ω"
+    place resistor "R_LATCH_G1" designator="R_LATCH_G1" footprint="Resistor_SMD:R_0402_1005Metric" value="1MΩ"
+    place pull-down "R_PWR_EN_PD1" designator="R_PWR_EN_PD1" footprint="Resistor_SMD:R_0402_1005Metric" value="100kΩ"
+    place resistor "R_RGB1" designator="R_RGB1" footprint="Resistor_SMD:R_0402_1005Metric" value="470Ω"
+    place resistor "R_STAT1" designator="R_STAT1" footprint="Resistor_SMD:R_0402_1005Metric" value="10kΩ"
+    place resistor "R_STAT2" designator="R_STAT2" footprint="Resistor_SMD:R_0402_1005Metric" value="10kΩ"
+    place resistor "R_TS1" designator="R_TS1" footprint="Resistor_SMD:R_0402_1005Metric" value="10kΩ"
+    place resistor "R_USB_DM1" designator="R_USB_DM1" footprint="Resistor_SMD:R_0402_1005Metric" value="27Ω"
+    place resistor "R_USB_DP1" designator="R_USB_DP1" footprint="Resistor_SMD:R_0402_1005Metric" value="27Ω"
+    place resistor "R_VSET1" designator="R_VSET1" footprint="Resistor_SMD:R_0402_1005Metric" value="18kΩ"
+    place resistor "R_VSYS1" designator="R_VSYS1" footprint="Resistor_SMD:R_0402_1005Metric" value="200kΩ"
+    place resistor "R_VSYS2" designator="R_VSYS2" footprint="Resistor_SMD:R_0402_1005Metric" value="100kΩ"
+    place resistor "R_XBEE_ATTN_PU1" designator="R_XBEE_ATTN_PU1" footprint="Resistor_SMD:R_0402_1005Metric" value="10kΩ"
+    place resistor "R_XBEE_RC1" designator="R_XBEE_RC1" footprint="Resistor_SMD:R_0402_1005Metric" value="100Ω"
+    place resistor "R_XBEE_RST1" designator="R_XBEE_RST1" footprint="Resistor_SMD:R_0402_1005Metric" value="10kΩ"
+    place skrp-button "SW_BOOT1" designator="SW_BOOT1" footprint="SnipsControllers_Custom:SW_Alps_SKRP" value="SKRPABE010"
+    place skrp-button "SW_MACRO1" designator="SW_MACRO1" footprint="SnipsControllers_Custom:SW_Alps_SKRP" value="SKRPABE010"
+    place skrp-button "SW_MACRO2" designator="SW_MACRO2" footprint="SnipsControllers_Custom:SW_Alps_SKRP" value="SKRPABE010"
+    place skrp-button "SW_MACRO3" designator="SW_MACRO3" footprint="SnipsControllers_Custom:SW_Alps_SKRP" value="SKRPABE010"
+    place skrp-button "SW_MACRO4" designator="SW_MACRO4" footprint="SnipsControllers_Custom:SW_Alps_SKRP" value="SKRPABE010"
+    place skrp-button "SW_MACRO5" designator="SW_MACRO5" footprint="SnipsControllers_Custom:SW_Alps_SKRP" value="SKRPABE010"
+    place skrp-button "SW_MACRO6" designator="SW_MACRO6" footprint="SnipsControllers_Custom:SW_Alps_SKRP" value="SKRPABE010"
+    place push-button "SW_PWR1" designator="SW_PWR1" footprint="Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010" package="alps" value="SKRTLAE010"
+    place push-button "SW_THR_DN1" designator="SW_THR_DN1" footprint="Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010" package="alps" value="SKRTLAE010"
+    place push-button "SW_THR_UP1" designator="SW_THR_UP1" footprint="Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010" package="alps" value="SKRTLAE010"
+    place push-button "SW_TRIG_DIG1" designator="SW_TRIG_DIG1" footprint="Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010" package="alps" value="SKRTLAE010"
+    place push-button "SW_VOL_DN1" designator="SW_VOL_DN1" footprint="Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010" package="alps" value="SKRTLAE010"
+    place push-button "SW_VOL_UP1" designator="SW_VOL_UP1" footprint="Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010" package="alps" value="SKRTLAE010"
+    place tlv62569 "U_BUCK1" designator="U_BUCK1" footprint="Package_TO_SOT_SMD:SOT-23-5" value="TLV62569DBVR"
+    place bq25185 "U_CHG1" designator="U_CHG1" footprint="BQ25185DLHR:IC_BQ25185DLHR" value="BQ25185DLHR" { without program; without always-enabled; without ts-fixed; without thermal; without supply }
+    // All 12 buttons sit on this expander, which frees GPIOs for the USB-to-XBee UART bridge. It needs the
+    // bus up to read any button, so the bus pull-ups are on the board, not left to the OLED module.
+    place tca9555 "U_EXP1" designator="U_EXP1" footprint="Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm" value="TCA9555PWR"
+    place capacitor "C_EXP1" designator="C_EXP1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF"
+    place resistor "R_EXP_INT1" designator="R_EXP_INT1" footprint="Resistor_SMD:R_0402_1005Metric" value="10kΩ"
+    place resistor "R_I2C_SCL1" designator="R_I2C_SCL1" footprint="Resistor_SMD:R_0402_1005Metric" value="4.7kΩ"
+    place resistor "R_I2C_SDA1" designator="R_I2C_SDA1" footprint="Resistor_SMD:R_0402_1005Metric" value="4.7kΩ"
+    place drv5055a2-sot23 "U_HALL1" designator="U_HALL1" footprint="Package_TO_SOT_SMD:SOT-23" value="DRV5055A2QDBZR"
+    place icm42670p "U_IMU1" designator="U_IMU1" footprint="Package_LGA:LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y" value="ICM-42670-P"
+    place esp32-s3-wroom-1 "U_MCU1" designator="U_MCU1" footprint="Espressif:ESP32-S3-WROOM-1U" package="n8" value="ESP32-S3-WROOM-1U-N8" { without supply; without enable; without boot }
+    place qwiic "U_OLED1" designator="U_OLED1" footprint="Connector_JST:JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal" value="Qwiic connector" { without tab }
+    place xbee3-micro "U_XBEE1" designator="U_XBEE1" footprint="Xbee3:XB3-24Z8UM" value="XBee3 PRO Micro"
+
+    // Electrical nets
+    circuit "R_EXP_INT1.B" "U_EXP1.INT" "U_MCU1.IO18" name="/Buttons_Direct/BTN_INT"
+    circuit "U_MCU1.IO47" "U_XBEE1.DOUT" name="/XBee/XBEE_DOUT"
+    circuit "U_MCU1.IO21" "U_XBEE1.DIN" name="/XBee/XBEE_DIN"
+    circuit "U_MCU1.IO38" "U_XBEE1.RTS" name="/XBee/XBEE_RTS"
+    circuit "R_I2C_SCL1.B" "U_EXP1.SCL" "U_IMU1.AP_SCL" "U_MCU1.IO9" "U_OLED1.4" name="/Accelerometer/I2C_SCL"
+    circuit "R_I2C_SDA1.B" "U_EXP1.SDA" "U_IMU1.AP_SDA" "U_MCU1.IO8" "U_OLED1.3" name="/Accelerometer/I2C_SDA"
+    circuit "SW_MACRO1.1" "U_EXP1.IO0_0" name="/Buttons_Direct/BTN_MACRO1"
+    circuit "SW_MACRO2.1" "U_EXP1.IO0_1" name="/Buttons_Direct/BTN_MACRO2"
+    circuit "SW_MACRO3.1" "U_EXP1.IO0_2" name="/Buttons_Direct/BTN_MACRO3"
+    circuit "SW_MACRO4.1" "U_EXP1.IO0_3" name="/Buttons_Direct/BTN_MACRO4"
+    circuit "SW_MACRO5.1" "U_EXP1.IO0_4" name="/Buttons_Direct/BTN_MACRO5"
+    circuit "SW_MACRO6.1" "U_EXP1.IO0_5" name="/Buttons_Direct/BTN_MACRO6"
+    circuit "SW_THR_DN1.1" "U_EXP1.IO0_7" name="/Buttons_Direct/BTN_THR_DN"
+    circuit "SW_THR_UP1.1" "U_EXP1.IO1_1" name="/Buttons_Direct/BTN_THR_UP"
+    circuit "SW_TRIG_DIG1.1" "U_EXP1.IO1_0" name="/Buttons_Direct/BTN_TRIG_DIG"
+    circuit "SW_VOL_DN1.1" "U_EXP1.IO1_3" name="/Buttons_Direct/BTN_VOL_DN"
+    circuit "SW_VOL_UP1.1" "U_EXP1.IO1_2" name="/Buttons_Direct/BTN_VOL_UP"
+    circuit "U_HALL1.OUT" "U_MCU1.IO4" name="/Hall_Trigger/TRIG_ANALOG"
+    circuit "J_STICK1.p_a" "U_EXP1.IO0_6" name="/MCU_Core/BTN_STICK"
+    circuit "R_BOOT_PU1.A" "SW_BOOT1.2" "U_MCU1.IO0" name="/MCU_Core/MCU_BOOT"
+    circuit "R_EN_PU1.A" "U_MCU1.EN" name="/MCU_Core/MCU_EN"
+    circuit "C_DBNC1.A" "D_INV_ISO1.K" "R_BTN_PU1.B" "SW_PWR1.1" "U_MCU1.IO2" name="/MCU_Core/PWR_BTN_SENSE"
+    circuit "D_OR2.A" "U_MCU1.RXD0" name="/MCU_Core/PWR_HOLD"
+    circuit "R_RGB1.B" "U_MCU1.TXD0" name="/MCU_Core/RGB_DIN"
+    circuit "U_MCU1.IO12" "U_XBEE1.SPI_MISO" name="/MCU_Core/SPI_MISO"
+    circuit "U_MCU1.IO11" "U_XBEE1.SPI_MOSI" name="/MCU_Core/SPI_MOSI"
+    circuit "U_MCU1.IO10" "U_XBEE1.SPI_CLK" name="/MCU_Core/SPI_SCK"
+    circuit "R_STAT1.A" "U_CHG1.STAT1" "U_MCU1.IO1" name="/MCU_Core/STAT1"
+    circuit "R_STAT2.A" "U_CHG1.STAT2" "U_MCU1.IO41" name="/MCU_Core/STAT2"
+    circuit "J_STICK1.p_2" "U_MCU1.IO5" name="/MCU_Core/STICK_X"
+    circuit "J_STICK1.p_2_" "U_MCU1.IO6" name="/MCU_Core/STICK_Y"
+    circuit "J_USB1.D-" "R_USB_DM1.A" name="/MCU_Core/USB_DM"
+    circuit "R_USB_DM1.B" "U_MCU1.USB_D-" name="/MCU_Core/USB_DM_MCU"
+    circuit "J_USB1.D+" "R_USB_DP1.A" name="/MCU_Core/USB_DP"
+    circuit "R_USB_DP1.B" "U_MCU1.USB_D+" name="/MCU_Core/USB_DP_MCU"
+    circuit "R_VSYS1.B" "R_VSYS2.A" "U_MCU1.IO7" name="/MCU_Core/VSYS_SENSE"
+    circuit "U_MCU1.IO14" "U_XBEE1.ON_SLEEP" name="/MCU_Core/XBEE_ON_SLEEP"
+    circuit "U_MCU1.IO13" "U_XBEE1.SPI_SSEL" name="/MCU_Core/XBee_CS"
+    circuit "R_FB1.A" "R_FB2.A" "U_BUCK1.FB" name="/Power_Buck/BUCK_FB"
+    circuit "L_BUCK1.A" "U_BUCK1.SW" name="/Power_Buck/BUCK_SW"
+    circuit "Q_PWR1.DRAIN" "R_PWR_EN_PD1.node" "U_BUCK1.EN" name="/Power_Buck/PWR_EN"
+    circuit "R_ISET1.A" "U_CHG1.ISET" name="/Power_Charger/CHG_ISET"
+    circuit "R_TS1.A" "U_CHG1.TS" name="/Power_Charger/CHG_TS"
+    circuit "R_VSET1.A" "U_CHG1.VSET" name="/Power_Charger/CHG_VSET"
+    circuit "D_INV_ISO1.A" "Q_INV1.BASE" "R_INV_BASE1.B" name="/Power_Control/PWR_BTN_INV_BASE"
+    circuit "D_OR1.A" "Q_INV1.COLLECTOR" "R_INV_PU1.B" name="/Power_Control/PWR_BTN_TRIGGER"
+    circuit "Q_LATCH1.DRAIN" "Q_PWR1.GATE" "R_GATE1.B" name="/Power_Control/PWR_GATE"
+    circuit "C_LATCH_G1.B" "D_OR1.K" "D_OR2.K" "Q_LATCH1.GATE" "R_LATCH_G1.B" name="/Power_Control/PWR_LATCH_G"
+    circuit "D_RGB1.DIN" "R_RGB1.A" name="/RGB_LED/RGB_DIN_R"
+    circuit "J_USB1.CC1" "R_CC1.A" name="/USB_C/USB_CC1"
+    circuit "J_USB1.CC2" "R_CC2.A" name="/USB_C/USB_CC2"
+    circuit "R_XBEE_RC1.B" "U_XBEE1.RESET" name="/XBee/XBEE_RESET"
+    circuit "C_XBEE_RC1.A" "R_XBEE_RC1.A" "R_XBEE_RST1.B" name="/XBee/XBEE_RST_PU"
+    circuit "R_XBEE_ATTN_PU1.B" "U_MCU1.IO15" "U_XBEE1.SPI_ATTN" name="/XBee/XBEE_SPI_ATTN"
+    circuit "C_3V3_1.A" "C_3V3_2.A" "C_3V3_3.A" "C_BUCK_OUT1.A" "C_HALL1.A" "C_IMU_1.A" "C_IMU_2.A" "C_IMU_3.A" "C_OLED_1.A" "C_OLED_2.A" "C_RGB1.A" "C_STICK1.A" "C_XBEE_VCC1.A" "C_XBEE_VCC2.A" "C_XBEE_VCC3.A" "C_XBEE_VCC4.A" "D_RGB1.VDD" "J_STICK1.p_3" "J_STICK1.p_3_" "L_BUCK1.B" "R_BOOT_PU1.B" "R_BTN_PU1.A" "R_EN_PU1.B" "R_FB1.B" "R_STAT1.B" "R_STAT2.B" "R_XBEE_ATTN_PU1.A" "R_XBEE_RST1.A" "U_HALL1.VCC" "U_IMU1.AP_CS" "U_IMU1.VDD" "U_IMU1.VDDIO" "U_MCU1.3V3" "C_EXP1.A" "R_EXP_INT1.A" "R_I2C_SCL1.A" "R_I2C_SDA1.A" "U_EXP1.VDD" "U_OLED1.2" "U_XBEE1.VCC" name="3V3"
+    set "C_BUCK_OUT1.A" net.voltage "3.3V"
+    circuit "U_IMU1.INT1" "U_MCU1.IO46" name="ACCEL_INT1"
+    circuit "BT1.2" "C_EXP1.B" "U_EXP1.A0" "U_EXP1.A1" "U_EXP1.A2" "U_EXP1.VSS" "C_3V3_1.B" "C_3V3_2.B" "C_3V3_3.B" "C_BAT1.B" "C_BUCK_IN1.B" "C_BUCK_OUT1.B" "C_DBNC1.B" "C_HALL1.B" "C_IMU_1.B" "C_IMU_2.B" "C_IMU_3.B" "C_LATCH_G1.A" "C_OLED_1.B" "C_OLED_2.B" "C_RGB1.B" "C_STICK1.B" "C_SYS_1.B" "C_SYS_2.B" "C_VIN_1.B" "C_VIN_2.B" "C_XBEE_RC1.B" "C_XBEE_VCC1.B" "C_XBEE_VCC2.B" "C_XBEE_VCC3.B" "C_XBEE_VCC4.B" "D_RGB1.GND" "D_VBUS_TVS1.A2" "J_STICK1.p_1" "J_STICK1.p_1_" "J_STICK1.p_c" "J_USB1.GND" "J_USB1.SHIELD" "Q_INV1.EMITTER" "Q_LATCH1.SOURCE" "R_CC1.B" "R_CC2.B" "R_FB2.B" "R_ISET1.B" "R_LATCH_G1.A" "R_PWR_EN_PD1.rail.gnd" "R_TS1.B" "R_VSET1.B" "R_VSYS2.B" "SW_BOOT1.1" "SW_MACRO1.2" "SW_MACRO2.2" "SW_MACRO3.2" "SW_MACRO4.2" "SW_MACRO5.2" "SW_MACRO6.2" "SW_PWR1.2" "SW_THR_DN1.2" "SW_THR_UP1.2" "SW_TRIG_DIG1.2" "SW_VOL_DN1.2" "SW_VOL_UP1.2" "U_BUCK1.GND" "U_CHG1.PAD" "U_CHG1.CE" "U_CHG1.GND" "U_HALL1.GND" "U_IMU1.AP_AD0" "U_IMU1.FSYNC" "U_IMU1.GND" "U_IMU1.RESV2" "U_IMU1.RESV3" "U_IMU1.RESV10" "U_IMU1.RESV11" "U_MCU1.GND" "U_OLED1.1" "U_XBEE1.GND" name="GND"
+    circuit "BT1.1" "C_BAT1.A" "U_CHG1.BAT" name="VBAT"
+    circuit "C_VIN_1.A" "C_VIN_2.A" "D_VBUS_TVS1.A1" "J_USB1.VBUS" "U_CHG1.IN" name="VBUS"
+    circuit "C_BUCK_IN1.A" "C_SYS_1.A" "C_SYS_2.A" "Q_PWR1.SOURCE" "R_GATE1.A" "R_INV_BASE1.A" "R_INV_PU1.A" "R_VSYS1.A" "U_BUCK1.VIN" "U_CHG1.SYS" name="VSYS"
+    circuit "U_MCU1.IO42" "U_XBEE1.DTR" name="XBEE_SLEEP_RQ"
+    nc "D_INV_ISO1.NC"
+    nc "D_RGB1.DOUT"
+    nc "J_USB1.SBU1"
+    nc "J_USB1.SBU2"
+    nc "U_IMU1.INT2"
+    nc "U_MCU1.IO3"
+    nc "U_MCU1.IO45"
+    nc "U_MCU1.IO16"
+    nc "U_MCU1.IO17"
+    nc "U_MCU1.IO35"
+    nc "U_MCU1.IO36"
+    nc "U_MCU1.IO37"
+    nc "U_MCU1.IO39"
+    nc "U_MCU1.IO40"
+    nc "U_MCU1.IO48"
+    nc "U_EXP1.IO1_4"
+    nc "U_EXP1.IO1_5"
+    nc "U_EXP1.IO1_6"
+    nc "U_EXP1.IO1_7"
+    nc "U_XBEE1.AD0"
+    nc "U_XBEE1.AD1"
+    nc "U_XBEE1.AD2"
+    nc "U_XBEE1.AD3"
+    nc "U_XBEE1.DIO4"
+    nc "U_XBEE1.DIO12"
+    nc "U_XBEE1.RF" note="for the RF-pad module; this one has a U.FL connector"
+    nc "U_XBEE1.ASSOCIATE"
+    nc "U_XBEE1.PWM1"
+    nc "U_XBEE1.RSSI_PWM"
+    nc "U_XBEE1.CTS"
+
+    // Select the pre-port components by resolved value and footprint.
+    // This also applies to future support parts with the same specification.
+    match placement {
+        when value="100kΩ"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="0402WGF1003TCE"
+    }
+    match placement {
+        when value="100nF"
+        when footprint="Capacitor_SMD:C_0402_1005Metric"
+        set mpn="CL05B104KO5NNNC"
+    }
+    match placement {
+        when value="100Ω"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="0402WGF1000TCE"
+    }
+    match placement {
+        when value="4.7kΩ"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="0402WGF4701TCE"
+    }
+    match placement {
+        when value="10kΩ"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="0402WGF1002TCE"
+    }
+    match placement {
+        when value="10nF"
+        when footprint="Capacitor_SMD:C_0402_1005Metric"
+        set mpn="CL05B103KB5NNNC"
+    }
+    match placement {
+        when value="10µF"
+        when footprint="Capacitor_SMD:C_0603_1608Metric"
+        set mpn="CL10A106KP8NNNC"
+    }
+    match placement {
+        when value="10µF"
+        when footprint="Capacitor_SMD:C_0805_2012Metric"
+        set mpn="CL21A106KAYNNNE"
+    }
+    match placement {
+        when value="18kΩ"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="RC0402FR-0718KL"
+    }
+    match placement {
+        when value="1MΩ"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="0402WGF1004TCE"
+    }
+    match placement {
+        when value="1N4148W"
+        when footprint="Diode_SMD:D_SOD-123"
+        set mpn="1N4148W"
+    }
+    match placement {
+        when value="1µF"
+        when footprint="Capacitor_SMD:C_0603_1608Metric"
+        set mpn="CL10A105KB8NNNC"
+    }
+    match placement {
+        when value="2.2µF"
+        when footprint="Capacitor_SMD:C_0603_1608Metric"
+        set mpn="CL10B225KP8NNNC"
+    }
+    match placement {
+        when value="2.2µH"
+        when footprint="Inductor_SMD:L_Bourns-SRN4018"
+        set mpn="SRN4018-2R2M"
+    }
+    match placement {
+        when value="200kΩ"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="0402WGF2003TCE"
+    }
+    match placement {
+        when value="22µF"
+        when footprint="Capacitor_SMD:C_0805_2012Metric"
+        set mpn="CL21A226MAQNNNE"
+    }
+    match placement {
+        when value="255kΩ"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="RC0402FR-07255KL"
+    }
+    match placement {
+        when value="27Ω"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="RC0402FR-0727RL"
+    }
+    match placement {
+        when value="39pF"
+        when footprint="Capacitor_SMD:C_0402_1005Metric"
+        set mpn="CC0402JRNPO9BN390"
+    }
+    match placement {
+        when value="470Ω"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="0402WGF4700TCE"
+    }
+    match placement {
+        when value="47pF"
+        when footprint="Capacitor_SMD:C_0402_1005Metric"
+        set mpn="0402CG470J500NT"
+    }
+    match placement {
+        when value="5.1kΩ"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="0402WGF5101TCE"
+    }
+    match placement {
+        when value="56.2kΩ"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="RC0402FR-0756K2L"
+    }
+    match placement {
+        when value="604Ω"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="AC0402FR-07604RL"
+    }
+    match placement {
+        when value="SKRPABE010"
+        when footprint="SnipsControllers_Custom:SW_Alps_SKRP"
+        set mpn="SKRPABE010"
+    }
+    match placement {
+        when value="AO3400A"
+        when footprint="Package_TO_SOT_SMD:SOT-23"
+        set mpn="AO3400A"
+    }
+    match placement {
+        when value="AO3401A"
+        when footprint="Package_TO_SOT_SMD:SOT-23"
+        set mpn="AO3401A"
+    }
+    match placement {
+        when value="BAT54W-7-F"
+        when footprint="Package_TO_SOT_SMD:SOT-323_SC-70"
+        set mpn="BAT54W-7-F"
+    }
+    match placement {
+        when value="BQ25185DLHR"
+        when footprint="BQ25185DLHR:IC_BQ25185DLHR"
+        set mpn="BQ25185DLHR"
+    }
+    match placement {
+        when value="DRV5055A2QDBZR"
+        when footprint="Package_TO_SOT_SMD:SOT-23"
+        set mpn="DRV5055A2QDBZR"
+    }
+    match placement {
+        when value="ESP32-S3-WROOM-1U-N8"
+        when footprint="Espressif:ESP32-S3-WROOM-1U"
+        set mpn="ESP32-S3-WROOM-1U-N8"
+    }
+    match placement {
+        when value="GuliKit_Thumbstick"
+        when footprint="SnipsControllers_Custom:GuliKit_HallStick"
+        set mpn="GuliKit_Thumbstick"
+    }
+    match placement {
+        when value="MMBT3904(RANGE:100-300)"
+        when footprint="Package_TO_SOT_SMD:SOT-23"
+        set mpn="MMBT3904(RANGE:100-300)"
+    }
+    match placement {
+        when value="PH 2-pin battery RIGHT-ANGLE HORIZONTAL"
+        when footprint="Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal"
+        set mpn="S2B-PH-K(LF)(SN)"
+    }
+    match placement {
+        when value="ICM-42670-P"
+        when footprint="Package_LGA:LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y"
+        set mpn="ICM-42670-P"
+    }
+    match placement {
+        when value="Qwiic connector"
+        when footprint="Connector_JST:JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal"
+        set mpn="SM04B-SRSS-TB(LF)(SN)"
+    }
+    match placement {
+        when value="SK6812MINI-HS-012"
+        when footprint="SnipsControllers_Custom:SK6812MINI-HS-012"
+        set mpn="SK6812MINI-HS"
+    }
+    match placement {
+        when value="SKRTLAE010"
+        when footprint="Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010"
+        set mpn="SKRTLAE010"
+    }
+    match placement {
+        when value="TLV62569DBVR"
+        when footprint="Package_TO_SOT_SMD:SOT-23-5"
+        set mpn="TLV62569DBVR"
+    }
+    match placement {
+        when value="TPPESD5V0S1BA"
+        when footprint="Diode_SMD:D_SOD-323"
+        set mpn="TPPESD5V0S1BA"
+    }
+    match placement {
+        when value="USB-C"
+        when footprint="Connector_USB:USB_C_Receptacle_HRO_TYPE-C-31-M-12"
+        set mpn="TYPE-C-31-M-12"
+    }
+    match placement {
+        when value="XBee3 PRO Micro"
+        when footprint="Xbee3:XB3-24Z8UM"
+        set mpn="XB3-24Z8UM"
+    }
+
+}
