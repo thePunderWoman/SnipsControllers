@@ -54,7 +54,8 @@ def pillars(tris, R, cell=0.3, pitch=2.4, edge_margin=0.6):
     return out, zmin
 
 if __name__ == '__main__':
-    d = '/mnt/user-data/uploads/SnipsControllers/shell/export/stl'
+    import paths as P
+    d = P.SRC_STL
     jobs = {'BumperCap': '-Z up (flipped)', 'Trigger': '-X up'}
     res = {}
     for n, o in jobs.items():

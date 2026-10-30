@@ -1,7 +1,8 @@
 import numpy as np, os, json, math
 import orient as O, gen_supports as G
 from scipy import ndimage
-d='/mnt/user-data/uploads/SnipsControllers/shell/export/stl'
+import paths as P
+d=P.SRC_STL
 GAP=0.2; BASE_W=1.0; TIP_W=0.6
 def pillar_mesh(x,y,z0,z1,bw=None,tw=None):
     h0=(bw or BASE_W)/2; h1=(tw or TIP_W)/2

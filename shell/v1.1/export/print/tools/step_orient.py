@@ -1,8 +1,9 @@
 import os
 from build123d import import_step, export_step, Pos, Rot
 import export_print_cfg as C
-src='/mnt/user-data/uploads/SnipsControllers/shell/export/step'
-out='/mnt/user-data/outputs/print/step'; os.makedirs(out,exist_ok=True)
+import paths as P
+src=P.SRC_STEP
+out=P.OUT_STEP; os.makedirs(out,exist_ok=True)
 RR={'+Z up (as modelled)':Rot(0,0,0),'-Z up (flipped)':Rot(X=180),'-Y up':Rot(X=90),'+Y up':Rot(X=-90),'-X up':Rot(Y=-90),'+X up':Rot(Y=90)}
 for n,o in C.ORI.items():
     s=RR[o]*import_step(os.path.join(src,n+'.step'))
