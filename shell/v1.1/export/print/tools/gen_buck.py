@@ -3,7 +3,8 @@
 Fills the void under overhangs (surfaces flatter than 45 deg) with a solid block that sits on the
 bed (or on upward faces of the part), keeping a gap to the part: XY_GAP sideways, Z_GAP under the
 overhang. The block is cut by thin kerfs into chunks so it can be popped out in pieces.
-usage: gen_buck.py in_print.stl out_buck.stl"""
+usage: gen_buck.py in_print.stl out_buck.stl [--max-y 50] [--band ya yb] [--conform ya yb ...]
+(--conform = roof-following kerfed buck over that y band; plain blocks stay out of it)"""
 import numpy as np, sys, struct, trimesh
 from scipy import ndimage
 from skimage import measure
@@ -40,7 +41,7 @@ def solid_grid(tris):
 def make_buck(tris):
     solid,x0,y0,m=solid_grid(tris)
     return make_buck_from(solid,x0,y0)
-def make_buck_from(solid,x0,y0,kerfs=False,need_all=False):
+def make_buck_from(solid,x0,y0,kerfs=False,need_all=False,conform=False):
     nx,ny,nz=solid.shape
     BIG=10**6
     # ceiling index (lowest solid at or above k)
@@ -68,6 +69,13 @@ def make_buck_from(solid,x0,y0,kerfs=False,need_all=False):
     forbid|=np.concatenate([solid[:,:,1:],np.zeros((nx,ny,1),bool)],axis=2)
     # also forbid the diagonal corners in a 3x3x3 neighbourhood above-side
     fill&=~forbid
+    if conform:
+        # removable + clear: (1) no part material anywhere BELOW a buck voxel, so every buck column runs from the bed up to just under
+        # the roof and the shell lifts straight off it (nothing can sit on a ledge or be trapped under an overhang);
+        # (2) 0.8 mm sideways and 0.2-0.4 mm under the part, in all directions around the surface
+        below=np.logical_or.accumulate(solid,axis=2)      # True from the first part voxel in a column upward
+        fill&=~ndimage.binary_dilation(below,structure=np.ones((3,3,1),bool),iterations=2)   # nothing of the part below or within 0.8 mm beside it
+        fill&=~ndimage.binary_dilation(solid,structure=np.ones((3,3,3),bool),iterations=1)
     # kerfs
     xs=x0+(np.arange(nx)+.5)*CX; ys=y0+(np.arange(ny)+.5)*CX
     kx=np.abs(((xs+CHUNK/2)%CHUNK)-CHUNK/2)<KERF/2
@@ -106,7 +114,7 @@ def _max_rect(m):
                 start=s0
             st.append((start,cur))
     return best
-def make_boxes(tris,extra=2,min_cm3=3.0,max_boxes=3,band=None):
+def make_boxes(tris,extra=2,min_cm3=3.0,max_boxes=3,band=None,exclude=None):
     solid,x0,y0,m=solid_grid(tris)
     fill,_,_=make_buck_from(solid,x0,y0,need_all=True)
     # downsample 2x in XY and Z, erode by `extra` coarse voxels so the blocks stay well clear
@@ -116,6 +124,8 @@ def make_boxes(tris,extra=2,min_cm3=3.0,max_boxes=3,band=None):
     cx,cz=CX*2,CZ*2; boxes=[]
     if band:   # only keep free space whose y lies inside the band
         ys=y0+np.arange(f.shape[1])*cx; f[:,(ys<band[0])|(ys+cx>band[1]),:]=False
+    for ea,eb in (exclude or []):   # y-bands that are filled by conforming bucks instead
+        ys=y0+np.arange(f.shape[1])*cx; f[:,(ys+cx>ea-0.8)&(ys<eb+0.8),:]=False
     for _ in range(max_boxes):
         best=None; acc=np.ones(f.shape[:2],bool)
         for k in range(f.shape[2]):
@@ -129,6 +139,36 @@ def make_boxes(tris,extra=2,min_cm3=3.0,max_boxes=3,band=None):
         boxes.append((x0+i0*cx,x0+(i1+1)*cx,y0+j0*cx,y0+(j1+1)*cx,0.0,(k+1)*cz))
         f[max(i0-1,0):i1+2,max(j0-1,0):j1+2,:k+1]=False
     return boxes
+def make_conform(tris,ya,yb,min_vox=400):
+    """roof-following buck (0.2 mm under the roof, 0.4 mm from walls), kerfed every CHUNK mm so it lifts out in pieces,
+    only for y in [ya,yb] (print frame)"""
+    solid,x0,y0,m=solid_grid(tris)
+    fill,_,_=make_buck_from(solid,x0,y0,kerfs=True,need_all=True,conform=True)
+    ys=y0+(np.arange(fill.shape[1])+.5)*CX
+    fill[:,(ys<ya)|(ys>yb),:]=False
+    # mesh-level safety pass: the voxel model can miss thin skins, so trim every buck voxel on a boundary that is
+    # closer than 0.4 mm to the real part mesh, drop slivers (< 3 voxels wide) and small leftovers; repeat once
+    from trimesh.proximity import closest_point
+    for _ in range(2):
+        fill=ndimage.binary_opening(fill,structure=np.ones((3,3,1),bool))
+        bnd=fill&~ndimage.binary_erosion(fill,structure=np.ones((3,3,3),bool),border_value=1)
+        ii=np.argwhere(bnd)
+        if len(ii):
+            c=np.c_[x0+(ii[:,0]+.5)*CX,y0+(ii[:,1]+.5)*CX,(ii[:,2]+.5)*CZ]
+            d=np.concatenate([closest_point(m,c[a:a+4000])[1] for a in range(0,len(c),4000)])
+            bad=ii[d<0.4]; fill[bad[:,0],bad[:,1],bad[:,2]]=False
+    lab,n=ndimage.label(fill,structure=np.ones((3,3,3)))
+    sz=ndimage.sum(fill,lab,index=np.arange(n+1)); keep=sz>=min_vox; keep[0]=False
+    fill=keep[lab]
+    mt=mesh_from(fill,x0,y0)
+    try:   # marching cubes is very dense: decimate 90% (checked: stays watertight, gap to the part within ~0.02 mm)
+        import fast_simplification as fs
+        v=mt.reshape(-1,3); m=trimesh.Trimesh(v,np.arange(len(v)).reshape(-1,3),process=True)
+        pv,pf=fs.simplify(np.asarray(m.vertices,float),np.asarray(m.faces,np.int32),target_reduction=0.85)
+        sm=trimesh.Trimesh(pv,pf,process=False)
+        if sm.is_watertight: mt=np.asarray(sm.vertices)[np.asarray(sm.faces)]
+    except Exception as e: print('decimation skipped:',e)
+    return mt,int(keep.sum())
 def box_tris(b):
     x0,x1,y0,y1,z0,z1=b
     v=np.array([[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]])
@@ -158,13 +198,18 @@ def raise_top(tris,b,gap=Z_GAP,side=0.3):
     return b
 if __name__=='__main__':
     # usage: gen_buck.py in_print_plain.stl out_with_buck.stl   (boxes are added as extra lumps in place)
-    tris=load(sys.argv[1]); boxes=make_boxes(tris,extra=1,min_cm3=2.5,max_boxes=4)
+    tris=load(sys.argv[1])
+    conf=[(float(sys.argv[i+1]),float(sys.argv[i+2])) for i,a in enumerate(sys.argv) if a=='--conform']
+    boxes=make_boxes(tris,extra=1,min_cm3=2.5,max_boxes=4,exclude=conf)
     if '--band' in sys.argv:   # extra small blocks in a y band, e.g. around the face buttons / thumbstick: --band -20 22
         i=sys.argv.index('--band'); bb=(float(sys.argv[i+1]),float(sys.argv[i+2]))
-        boxes+=make_boxes(tris,extra=1,min_cm3=0.3,max_boxes=8,band=bb)
+        boxes+=make_boxes(tris,extra=1,min_cm3=0.3,max_boxes=8,band=bb,exclude=conf)
     if '--max-y' in sys.argv:   # drop blocks out past this print-frame y (e.g. outside the shell, under the OLED housing)
         my=float(sys.argv[sys.argv.index('--max-y')+1]); boxes=[b for b in boxes if b[3]<=my]
     boxes=[raise_top(tris,b) for b in boxes]
-    allt=np.concatenate([tris]+[box_tris(b) for b in boxes]) if boxes else tris
+    extra=[]
+    for ya,yb in conf:
+        mt,nl=make_conform(tris,ya,yb); extra.append(mt); print('conforming buck y %.1f..%.1f: %d pieces, %d triangles'%(ya,yb,nl,len(mt)))
+    allt=np.concatenate([tris]+[box_tris(b) for b in boxes]+extra) if (boxes or extra) else tris
     write(sys.argv[2],allt,'part+buck')
     for b in boxes: print('box x %.1f..%.1f y %.1f..%.1f z %.1f..%.1f  (%.1f cm3)'%(b[0],b[1],b[2],b[3],b[4],b[5],(b[1]-b[0])*(b[3]-b[2])*(b[5]-b[4])/1000))
