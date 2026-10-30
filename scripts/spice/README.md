@@ -1,7 +1,7 @@
 # SPICE check for the Power_Control soft-latch
 
 `latch_sim.py` simulates the button, inverter, diode-OR, latch FET and power PMOS from
-`PCB/stackup/board.kdl` and asserts the behavior we need. DRC and the netlist only prove
+`PCB/v1.x/stackup/board.kdl` and asserts the behavior we need. DRC and the netlist only prove
 the wiring; they cannot show that a gate is driven high enough or that a power-up transient stays
 quiet. This was written after exactly that kind of bug got through (see PRs #58-#60).
 

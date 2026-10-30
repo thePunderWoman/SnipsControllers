@@ -10,7 +10,7 @@
 namespace Icm42670p {
 
 // I2C address: AP_AD0 (pin 1) tied to GND (p. 32) — see
-// PCB/GPIO_table.md.
+// PCB/v1.x/GPIO_table.md.
 constexpr uint8_t kI2cAddress = 0x68;
 
 // WHO_AM_I (0x75) reads 0x67 on this part.

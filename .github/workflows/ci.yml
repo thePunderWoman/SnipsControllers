@@ -24,10 +24,10 @@ jobs:
         run: rustup toolchain install 1.96.0 --profile minimal
 
       - name: Check Stackup design
-        run: cargo +1.96.0 run --locked --manifest-path ci/stackup/Cargo.toml -- check PCB/stackup/board.kdl --locked
+        run: cargo +1.96.0 run --locked --manifest-path ci/stackup/Cargo.toml -- check PCB/v1.x/stackup/board.kdl --locked
 
       - name: Check purchasing BOM
-        run: cargo +1.96.0 run --locked --manifest-path ci/stackup/Cargo.toml -- bom PCB/stackup/board.kdl --locked -o /tmp/snips-bom.csv
+        run: cargo +1.96.0 run --locked --manifest-path ci/stackup/Cargo.toml -- bom PCB/v1.x/stackup/board.kdl --locked -o /tmp/snips-bom.csv
 
       - name: Install KiCad 10
         run: |
@@ -39,7 +39,7 @@ jobs:
 
       - name: Check PCB sync
         run: |
-          /usr/bin/python3 ci/check_pcb_sync.py PCB/snips_controller.kicad_pcb \
+          /usr/bin/python3 ci/check_pcb_sync.py PCB/v1.x/snips_controller.kicad_pcb \
             --stackup ci/stackup/target/debug/snips-stackup-check \
             --plugin-dir stackup-tool/kicad-plugin
 

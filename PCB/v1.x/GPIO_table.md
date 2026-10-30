@@ -1,7 +1,7 @@
 # Snips Controller — ESP32-S3-WROOM-1 GPIO Table
 
-> The current circuit and footprint choices are in `PCB/stackup/board.kdl`
-> and `PCB/stackup/parts.kdl`. References to the older YAML and KiCad schematic
+> The current circuit and footprint choices are in `PCB/v1.x/stackup/board.kdl`
+> and `PCB/v1.x/stackup/parts.kdl`. References to the older YAML and KiCad schematic
 > below describe the design history; use Stackup for changes.
 
 > **MCU:** ESP32-S3-WROOM-1 module (pre-certified, integrated flash +
@@ -12,7 +12,7 @@
 > module whose USB is hardwired to its own onboard connector).
 > Pins referenced by GPIO number, not name — the module's pins are
 > heavily multi-function (e.g. pin 4 is "GPIO4/TOUCH4/ADC1_CH3") and
-> numbers are unambiguous. The wiring source is `PCB/stackup/board.kdl`.
+> numbers are unambiguous. The wiring source is `PCB/v1.x/stackup/board.kdl`.
 
 ## Reserved / Do Not Use
 | Pin | Reason |
@@ -189,7 +189,7 @@ firmware, wire to GND. Applies to vol up/down, digital trigger, stick
 click, and all 6 macro buttons.
 
 ### XBee
-Reusing Amidala's verified `XB3-24Z8UT-J` symbol (`PCB/libraries/Xbee3.kicad_sym`).
+Reusing Amidala's verified `XB3-24Z8UT-J` symbol (`PCB/v1.x/libraries/Xbee3.kicad_sym`).
 THT socket footprint used for prototyping; SMT module footprint TBD for final PCB.
 
 Beyond the 4-wire SPI bus (SCK/MOSI/MISO/CS) and RESET, three more pins are
@@ -327,7 +327,7 @@ on VDD (10nF, 100pF, 2.2nF) rather than this board's usual single
 in a preliminary-datasheet figure and should be visually re-checked
 against the datasheet before fab.**
 
-**Status: in Stackup** (`PCB/stackup/board.kdl`), with
+**Status: in Stackup** (`PCB/v1.x/stackup/board.kdl`), with
 a hand-authored symbol + footprint (`SnipsControllers_Custom:QMA6100P`) —
 pad geometry pulled from JLCPCB/LCSC's own EasyEDA component data (LCSC
 C2887190) rather than estimated from the datasheet's low-resolution

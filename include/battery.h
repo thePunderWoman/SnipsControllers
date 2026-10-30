@@ -37,7 +37,7 @@ class BatteryMonitor {
   ChargeState chargeStateFor(bool stat1High, bool stat2High) const;
 
   // Raw ADC (0-4095, ESP32 12-bit) -> battery percentage (0-100), via the
-  // VSYS divide-by-3 network (R_VSYS1/R_VSYS2, see PCB/GPIO_table.md) and a
+  // VSYS divide-by-3 network (R_VSYS1/R_VSYS2, see PCB/v1.x/GPIO_table.md) and a
   // linear approximation between empty/full cell voltage. Assumes the ADC
   // is configured for its default ~3.3V full-scale range — confirm against
   // real hardware, and note a linear curve is a simplification of a real

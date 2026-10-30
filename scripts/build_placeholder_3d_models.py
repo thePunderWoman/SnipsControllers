@@ -28,7 +28,7 @@ from OCP.Interface import Interface_Static
 from OCP.STEPControl import STEPControl_AsIs, STEPControl_Writer
 
 INCH = 25.4
-OUT_DIR = Path(__file__).resolve().parent.parent / "PCB" / "libraries" / "3dmodels"
+OUT_DIR = Path(__file__).resolve().parent.parent / "PCB" / "v1.x" / "libraries" / "3dmodels"
 
 # --- XBee 3 TH geometry (mm), from the Digi drawing ---
 PIN_ROW_SPACING = 22.0            # 2 x 0.433"

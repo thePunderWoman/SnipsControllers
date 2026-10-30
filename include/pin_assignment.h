@@ -5,7 +5,7 @@
 // module's physical pin numbers used in the PCB docs.
 //
 // This file is pure reference data — it should stay a 1:1 mirror of
-// PCB/GPIO_table.md. Cross-reference that file for the physical-pin-to-GPIO
+// PCB/v1.x/GPIO_table.md. Cross-reference that file for the physical-pin-to-GPIO
 // mapping, reserved pins, and the rationale behind each assignment.
 
 namespace PinAssignment {
@@ -45,7 +45,7 @@ constexpr int kVsysSense = 7;
 
 // ---- Digital buttons -----------------------------------------------------
 // "Vol" and "Trigger" up/down are two generic, symmetric button pairs —
-// see PCB/GPIO_table.md. What each pair does is assigned by Amidala, not
+// see PCB/v1.x/GPIO_table.md. What each pair does is assigned by Amidala, not
 // fixed in firmware; these names just match the PCB's schematic/net names.
 constexpr int kVolUp = 40;
 constexpr int kVolDown = 39;

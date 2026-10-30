@@ -18,10 +18,10 @@ enum Index : size_t {
   kMacro4,
   kMacro5,
   kMacro6,
-  kBumper,       // "Digital trigger" in PCB/GPIO_table.md
+  kBumper,       // "Digital trigger" in PCB/v1.x/GPIO_table.md
   kStickClick,
   // The two generic, symmetric up/down button pairs — see
-  // PCB/GPIO_table.md. What each pair does is assigned by Amidala, not
+  // PCB/v1.x/GPIO_table.md. What each pair does is assigned by Amidala, not
   // fixed in firmware. "Left"/"Right" here is just a fixed, arbitrary
   // application-level label: Left = the "Trigger" pair, Right = the "Vol"
   // pair, matching PinAssignment's hardware-truth names. (Originally

@@ -16,7 +16,7 @@ namespace Oled {
 constexpr int kWidth = 128;
 constexpr int kHeight = 64;
 // Confirmed against the real hardware — printed on the display module's
-// own silkscreen (also documented in PCB/GPIO_table.md's Accelerometer
+// own silkscreen (also documented in PCB/v1.x/GPIO_table.md's Accelerometer
 // section, which shares the bus at a different address).
 constexpr uint8_t kI2cAddress = 0x3C;
 constexpr uint8_t kI2cAddressAlt = 0x3D;

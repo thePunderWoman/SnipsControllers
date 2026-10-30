@@ -1,7 +1,7 @@
 #pragma once
 
 // Pure logic for the power-button hold-to-shutdown gesture. See
-// PCB/GPIO_table.md and PCB/README.md's "Power Architecture" section: the
+// PCB/v1.x/GPIO_table.md and PCB/v1.x/README.md's "Power Architecture" section: the
 // soft-latch circuit powers the 3.3V rail on any press of the power button,
 // and firmware must drive the latch-hold pin HIGH immediately on boot or
 // the rail collapses when the button is released. This class only handles

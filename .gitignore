@@ -25,52 +25,52 @@ shell/claude-generated/scripts/out/
 # KiCad files
 
 # Temporary files
-PCB/*.000
-PCB/*.bak
-PCB/*.bck
-PCB/*.kicad_pcb-bak
-PCB/*.kicad_sch-bak
-PCB/*-backups
-PCB/*-cache*
-PCB/*-bak
-PCB/*-bak*
-PCB/*~
-PCB/~*
-PCB/_autosave-*
-PCB/\#auto_saved_files\#
-PCB/*.tmp
-PCB/*-save.pro
-PCB/*-save.kicad_pcb
+PCB/**/*.000
+PCB/**/*.bak
+PCB/**/*.bck
+PCB/**/*.kicad_pcb-bak
+PCB/**/*.kicad_sch-bak
+PCB/**/*-backups
+PCB/**/*-cache*
+PCB/**/*-bak
+PCB/**/*-bak*
+PCB/**/*~
+PCB/**/~*
+PCB/**/_autosave-*
+PCB/**/\#auto_saved_files\#
+PCB/**/*.tmp
+PCB/**/*-save.pro
+PCB/**/*-save.kicad_pcb
 fp-info-cache
 ~*.lck
 
 # Netlist files (exported from Eeschema)
-PCB/*.net
+PCB/**/*.net
 
 # Autorouter files (exported from Pcbnew)
-PCB/*.dsn
-PCB/*.ses
+PCB/**/*.dsn
+PCB/**/*.ses
 
 # Exported BOM files
 PCB/**/*.xml
 PCB/**/*.csv
-!PCB/production/bom/*.csv
+!PCB/**/production/bom/*.csv
 
 # Archived Backups (KiCad 6.0)
 PCB/**/*-backups/*.zip
 
 # Local git-based history (KiCad 9.0+)
-PCB/.history
+PCB/**/.history
 
 # Local project settings
-PCB/*.kicad_prl
+PCB/**/*.kicad_prl
 
 # Production reports
-PCB/production/misc/*
+PCB/**/production/misc/*
 
 # ERC report JSON scratch files (from kicad-cli sch erc)
-PCB/erc*.json
-PCB/full_erc*.json
+PCB/**/erc*.json
+PCB/**/full_erc*.json
 
 # Local Stackup library checkout for development
 manifest.local.kdl

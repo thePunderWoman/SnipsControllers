@@ -26,14 +26,14 @@
 ## Purchasing BOM
 
 The electrical design is the source for purchasing. Export its BOM with
-`stackup bom PCB/stackup/board.kdl --locked -o snips-bom.csv`. The CSV has separate
+`stackup bom PCB/v1.x/stackup/board.kdl --locked -o snips-bom.csv`. The CSV has separate
 references, quantity, value, footprint, manufacturer, MPN and distributor columns.
 Keep `value=` human-readable; specify exact purchasing choices with `manufacturer=`,
 `mpn=` and distributor fields on each placement. A `hand=#true` placement remains
 in the purchasing BOM and is marked `DNP` for outsourced assembly.
 
-- The circuit source is `PCB/stackup/board.kdl` and `PCB/stackup/parts.kdl`. Run
-  `stackup check PCB/stackup/board.kdl`, then sync the PCB with the Stackup KiCad plugin.
+- The circuit source is `PCB/v1.x/stackup/board.kdl` and `PCB/v1.x/stackup/parts.kdl`. Run
+  `stackup check PCB/v1.x/stackup/board.kdl`, then sync the PCB with the Stackup KiCad plugin.
 - The BOM scripts read Stackup's CSV through the Cargo-locked CLI, including
   defaults from library parts. CI checks the export and PCB sync.
 - Prefer common parts (several makers, broadly stocked, one package per name). The retired JLCPCB

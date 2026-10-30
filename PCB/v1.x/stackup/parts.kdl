@@ -32,7 +32,7 @@ part component_J_STICK1 {
 // OPSCO SK6812MINI-HS-012 addressable RGB LED, top-mount 3.5 x 3.5 mm PLCC4, lens up, using the
 // single-wire WS2812 protocol. Replaces the reverse-mount SK6812MINI-E, whose bottom-view land
 // pattern was mirrored for a lens-up part and had no body cutout. Datasheet: SK6812MINI-HS-012
-// Rev B/0 (PCB/datasheets/SK6812MINI-HS-012.pdf). Pin numbers are the datasheet's (section 5),
+// Rev B/0 (PCB/v1.x/datasheets/SK6812MINI-HS-012.pdf). Pin numbers are the datasheet's (section 5),
 // and the footprint's pads carry the same numbers. Supply range is 3.7-5.5 V (section 7); input
 // thresholds are 0.7 / 0.3 x VDD (section 9).
 part sk6812mini-hs {

@@ -141,7 +141,7 @@ class MenuController {
                                    int *outMaxY);
   bool consumeFactoryResetConfirmed();
 
-  // Button Test screen (bring-up/support tool — see PCB/README.md's
+  // Button Test screen (bring-up/support tool — see PCB/v1.x/README.md's
   // Bringup Sequence, step 4): records the most recent raw button press
   // for display, by index into Buttons::Index. While this screen is
   // active, SnipsController.ino routes every button's press edge here
