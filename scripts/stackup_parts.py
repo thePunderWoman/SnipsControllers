@@ -12,8 +12,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PARTS_FILE = ROOT / "PCB" / "stackup" / "board.kdl"
-PCB_FILE = ROOT / "PCB" / "snips_controller.kicad_pcb"
+PARTS_FILE = ROOT / "PCB" / "v1.x" / "stackup" / "board.kdl"
+PCB_FILE = ROOT / "PCB" / "v1.x" / "snips_controller.kicad_pcb"
 
 
 @dataclass(frozen=True)

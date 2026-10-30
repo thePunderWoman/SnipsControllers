@@ -8,7 +8,7 @@
 // tests can check every value against the datasheet's bit layout.
 namespace Qma6100p {
 
-// I2C address: AD0 (pin 1) tied to GND — see PCB/GPIO_table.md.
+// I2C address: AD0 (pin 1) tied to GND — see PCB/v1.x/GPIO_table.md.
 constexpr uint8_t kI2cAddress = 0x12;
 
 // Register addresses. Only the ones this driver touches.

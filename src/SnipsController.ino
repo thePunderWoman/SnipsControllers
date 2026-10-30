@@ -115,7 +115,7 @@ void applyPowerState(const PowerState &state) {
 // Drives SLEEP_RQ only when the requested state changes. Takes effect
 // because ensureSleepyEndDeviceRole() sets SM=1 at boot (with the factory
 // SM=0 the module ignores this pin). Harmless on boards where the pin
-// isn't wired to the XBee (see PCB/GPIO_table.md's Accelerometer
+// isn't wired to the XBee (see PCB/v1.x/GPIO_table.md's Accelerometer
 // section).
 void setXbeeSleep(bool asleep) {
   if (asleep == xbeeSleepRequested) return;
@@ -229,13 +229,13 @@ void setup() {
   // keeps the 3.3V rail up because the power button is physically held.
   // If this pin isn't driven HIGH before the user releases the button,
   // power collapses before the rest of setup() ever runs. See
-  // PCB/README.md's "Power Architecture" section.
+  // PCB/v1.x/README.md's "Power Architecture" section.
   pinMode(PinAssignment::kPowerLatchHold, OUTPUT);
   digitalWrite(PinAssignment::kPowerLatchHold, HIGH);
 
   // XBee SLEEP_RQ: must be driven low (stay awake) before anything else
   // touches it — see pin_assignment.h. Harmless on boards where this pin
-  // isn't wired to the XBee at all (see PCB/GPIO_table.md).
+  // isn't wired to the XBee at all (see PCB/v1.x/GPIO_table.md).
   pinMode(PinAssignment::kXbeeSleepRq, OUTPUT);
   digitalWrite(PinAssignment::kXbeeSleepRq, LOW);
 
@@ -249,7 +249,7 @@ void setup() {
   Serial.begin(115200);
 
   // Bring-up aid: this board has no external USB-UART bridge chip (bare
-  // WROOM-1 module, see PCB/GPIO_table.md) — Serial goes over the
+  // WROOM-1 module, see PCB/v1.x/GPIO_table.md) — Serial goes over the
   // ESP32-S3's native USB-CDC peripheral, which has to fully
   // re-enumerate with the host after every reset. That consistently
   // takes longer than this firmware needs to reach its early boot
@@ -297,7 +297,7 @@ void setup() {
   }
 
   // Confirmed against real hardware during bring-up: this line idles HIGH
-  // (100kOhm R_PWR_SENSE pull-up to 3V3, per PCB/stackup/board.kdl)
+  // (100kOhm R_PWR_SENSE pull-up to 3V3, per PCB/v1.x/stackup/board.kdl)
   // and the switch pulls it to GND when held — active-low, same sense as
   // every other button, just via an external pull-up instead of the
   // internal one. The original active-high assumption had this backwards,
@@ -314,7 +314,7 @@ void setup() {
   }
 
   // bq25185 STAT1/STAT2: open-drain, external 10kOhm pull-up to 3V3 (see
-  // PCB/GPIO_table.md) — plain INPUT, no internal pull needed.
+  // PCB/v1.x/GPIO_table.md) — plain INPUT, no internal pull needed.
   pinMode(PinAssignment::kChargeStat1, INPUT);
   pinMode(PinAssignment::kChargeStat2, INPUT);
 
@@ -341,7 +341,7 @@ void setup() {
   menuController.setPowerConfig(&powerConfig);
 
   // Absent entirely on the first production boards (see
-  // PCB/GPIO_table.md's Accelerometer section) — motion just never
+  // PCB/v1.x/GPIO_table.md's Accelerometer section) — motion just never
   // counts as activity in that case, no special-casing needed elsewhere.
   if (!accelerometer.begin()) {
     Serial.println("Accelerometer not found at boot (expected on boards "
@@ -417,7 +417,7 @@ void setup() {
     Serial.println("OLED not found at boot.");
   }
 
-  // Bring-up check per PCB/README.md's recommended order: cycle through
+  // Bring-up check per PCB/v1.x/README.md's recommended order: cycle through
   // every status color once to prove RMT output on the real LED. Real
   // state takes over once loop() starts running (see the once-a-second
   // block below).

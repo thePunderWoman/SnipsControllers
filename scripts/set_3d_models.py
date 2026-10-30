@@ -8,7 +8,7 @@ footprints had no model or a model path that only existed on an old install
 footprints, both in the board file and in the project's own footprint
 libraries, to the table below. Offsets/rotations were derived by matching each
 model's pins/pegs/legs to the footprint's pads; see
-PCB/libraries/3dmodels/README.md for sources.
+PCB/v1.x/libraries/3dmodels/README.md for sources.
 
 KiCad model axes: +X right, +Y up the board (PCB -Y), +Z out of the board.
 
@@ -27,7 +27,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-PCB_DIR = REPO / "PCB"
+PCB_DIR = REPO / "PCB" / "v1.x"
 BOARD = PCB_DIR / "snips_controller.kicad_pcb"
 KICAD_3D = os.environ.get(
     "KICAD10_3DMODEL_DIR",

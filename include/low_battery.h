@@ -92,6 +92,6 @@ void renderBatteryEmptyScreen(ScreenBuffer *screen);
 // Table 7-2). Per that datasheet, the *only* way to clear this fault is
 // toggling the CE pin or input power — this board's CE is hardwired to
 // GND (always-enable, no firmware control — see the GND net in
-// PCB/stackup/board.kdl), so unplugging and
+// PCB/v1.x/stackup/board.kdl), so unplugging and
 // replugging the charge cable is the only recovery a user actually has.
 void renderChargingFaultScreen(ScreenBuffer *screen);

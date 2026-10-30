@@ -19,7 +19,7 @@
 
 **Awaiting prototype PCBs.**
 
-The Stackup circuit design, part matching, and layout review are complete; boards are in the ordering/fab pipeline. See [PCB/README.md](PCB/README.md) for the full hardware writeup and [PCB/design-review-2026-08-23.md](PCB/design-review-2026-08-23.md)
+The Stackup circuit design, part matching, and layout review are complete; boards are in the ordering/fab pipeline. See [PCB/v1.x/README.md](PCB/v1.x/README.md) for the full hardware writeup and [PCB/v1.x/design-review-2026-08-23.md](PCB/v1.x/design-review-2026-08-23.md)
 for the latest design review. PCBs will likely arrive middle to late September. Once the controllers have been validated, we'll start ordering larger runs and make them available for people to buy.
 
 ## What they are

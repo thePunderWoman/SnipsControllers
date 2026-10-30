@@ -6,7 +6,7 @@
 // ICM-42670-P 6-axis IMU (LGA-14, I2C address 0x68, AP_AD0 tied to GND)
 // from board V1.2 on, or the QST QMA6100P accelerometer (LGA-12, I2C
 // address 0x12, AD0 tied to GND) on V1.1 and earlier — see
-// PCB/GPIO_table.md. begin() probes for the ICM-42670-P first, then the
+// PCB/v1.x/GPIO_table.md. begin() probes for the ICM-42670-P first, then the
 // QMA6100P. Either way it uses the chip's own motion interrupt engine
 // (ICM-42670-P wake-on-motion, QMA6100P ANY_MOT_INT), mapped to INT1
 // (host GPIO46), rather than polling raw acceleration data; the values

@@ -17,7 +17,7 @@
 // special-casing here at all. Callers on such a board simply never pass
 // true for accelerometer activity, and the XBee sleep stage's hardware
 // action (driving the sleep pin) is a no-op on unwired hardware — see
-// PCB/GPIO_table.md's Accelerometer section.
+// PCB/v1.x/GPIO_table.md's Accelerometer section.
 //
 // The idle stages (dim, OLED off, XBee sleep) run in that order, each
 // after its own timeout counted from the previous stage that's in use.
