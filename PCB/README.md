@@ -14,7 +14,7 @@ through `snips_controller.stackup_sch`; sync it with the Stackup KiCad plugin. R
 | MCU | ESP32-S3-WROOM-1 module | Pre-certified: integrated flash, crystal, WiFi/BT radio + antenna. Same MCU family as Amidala. See `GPIO_table.md` for the full support circuitry | — |
 | Display | SSD1306 1.3" OLED | 128x64, monochrome, I2C | — |
 | Radio | XBee3 Pro (XB3-24Z8UT) | Zigbee 3.0 firmware, U.FL, +19 dBm, SPI mode, THT socket (proto) | — |
-| Hall trigger | DRV5055A2 | Ratiometric linear hall effect, 3.3V | — |
+| Hall trigger | DRV5055A2QDBZR (SOT-23) | Ratiometric linear hall effect, 3.3V. On the bottom of the board under the trigger magnet; senses the field perpendicular to the board. Trigger calibration accepts either magnet polarity | — |
 | Thumbstick | GuliKit hall effect module | Native 3.3V, analog X/Y + click | — |
 | Buttons | Omron B3F series | Tactile momentary clicky | — |
 | RGB LED | SK6812 NeoPixel-compatible | RMT-driven status indicator; specified supply begins at 3.7 V, but board supplies 3.3 V | — |
@@ -93,7 +93,7 @@ consuming GPIO, unlike the bare-RP2350A design this replaced.
 | Vol down | 32 | Active low, internal pull-up |
 | Trigger up (mirrored VOL pair, opposite-handed variant) | 9 | Active low, internal pull-up |
 | Trigger down (mirrored VOL pair, opposite-handed variant) | 10 | Active low, internal pull-up |
-| Digital trigger (bumper) | 11 | Active low, internal pull-up |
+| Digital trigger (bumper) | 11 | Active low, internal pull-up. Two switches in parallel (SW_TRIG_DIG1/2), one at each end of the top edge, so the bumper presses from either side |
 | Thumbstick click (KEY) | 23 | Active low, internal pull-up |
 | Macro buttons 1-6 | 24, 25, 28, 29, 30, 31 | Active low, internal pull-up — direct-wired, no scan matrix |
 | Power button sense | 38 | Input, 3-second hold detect |

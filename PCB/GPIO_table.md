@@ -10,9 +10,9 @@
 > USB-C for firmware flashing, charging, and future accessory expansion
 > (the module's native USB is genuinely exposed, unlike a Pico-family
 > module whose USB is hardwired to its own onboard connector).
-> Pins referenced by number in the yaml, not name — the module's pins are
+> Pins referenced by GPIO number, not name — the module's pins are
 > heavily multi-function (e.g. pin 4 is "GPIO4/TOUCH4/ADC1_CH3") and
-> numbers are unambiguous. See `MCU_Core` section of `snips_controller.yaml`.
+> numbers are unambiguous. The wiring source is `PCB/stackup/board.kdl`.
 
 ## Reserved / Do Not Use
 | Pin | Reason |
@@ -104,7 +104,7 @@ QMA6100P accelerometer at 0x12 instead. See Accelerometer section below.
 | Vol down | 32 (GPIO39) | Internal pull-up, active low |
 | Trigger up (mirrored VOL pair, opposite-handed variant) | 9 (GPIO16) | Internal pull-up, active low |
 | Trigger down (mirrored VOL pair, opposite-handed variant) | 10 (GPIO17) | Internal pull-up, active low |
-| Digital trigger (bumper) | 11 (GPIO18) | Internal pull-up, active low |
+| Digital trigger (bumper) | 11 (GPIO18) | Internal pull-up, active low. SW_TRIG_DIG1 and SW_TRIG_DIG2 in parallel, one at each end of the top edge |
 | Thumbstick click (KEY) | 23 (GPIO21) | Internal pull-up, active low |
 | Macro button 1-6 | 24, 25, 28, 29, 30, 31 (GPIO47, 48, 35, 36, 37, 38) | Internal pull-up, active low — direct-wired, no scan matrix |
 | Power button sense | 38 (GPIO2) | Input, monitors for 3-second hold |
