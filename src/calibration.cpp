@@ -51,8 +51,8 @@ int prevDeadzonePercent(int currentPercent) {
 }
 
 int AnalogCalibration::calibrateTrigger(int raw, const CalibrationData &data) {
-  if (data.triggerMax <= data.triggerMin) {
-    return 0;  // uncalibrated/degenerate range
+  if (data.triggerMax == data.triggerMin) {
+    return 0;  // degenerate range
   }
   const float percent = static_cast<float>(raw - data.triggerMin) /
                         (data.triggerMax - data.triggerMin) * 100.0f;

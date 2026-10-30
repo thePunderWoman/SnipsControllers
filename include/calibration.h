@@ -37,6 +37,9 @@ struct CalibrationData {
 class AnalogCalibration {
  public:
   // Raw trigger ADC -> 0-100 (0 = released, 100 = fully pulled).
+  // triggerMin is the released reading and triggerMax the fully pulled one;
+  // triggerMax may be the lower of the two, since the hall sensor's output
+  // falls instead of rising when the magnet's other pole faces it.
   static int calibrateTrigger(int raw, const CalibrationData &data);
 
   // Raw stick-axis ADC -> -100..100 (0 = center), with a deadzone around

@@ -548,7 +548,7 @@
       "plot": "production/gerbers/",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "snips_controller.step",
+      "step": "step/v1.2/snips_controller.step",
       "svg": "",
       "vrml": ""
     },

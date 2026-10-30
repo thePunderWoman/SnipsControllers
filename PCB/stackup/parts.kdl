@@ -141,3 +141,38 @@ part icm42670p {
     port int1 pin=INT1
     port int2 pin=INT2
 }
+
+// TI DRV5055A2 in SOT-23 (DBZ). The @stackup/sensor/hall/drv5055 library part has only the TO-92
+// package, and the SOT-23 pin order differs (DS SBAS639E, Table 4-1). It is mounted on the bottom
+// of the board under the trigger magnet and reads the field perpendicular to the board (§6.3.1).
+part drv5055a2-sot23 {
+    symbol "Sensor_Magnetic:DRV5055A2xDBZxQ1"
+    reference U
+    value "DRV5055A2QDBZR"
+    datasheet "https://www.ti.com/lit/ds/symlink/drv5055.pdf"
+    description "Ratiometric linear Hall effect sensor, 50mV/mT, 3.3V/5V, SOT-23"
+    manufacturer "Texas Instruments"
+    order mpn=DRV5055A2QDBZR lcsc=C266131
+
+    pin VCC power_in
+    pin GND power_in
+    pin OUT output
+
+    package sot23 footprint="Package_TO_SOT_SMD:SOT-23" {
+        pad VCC 1
+        pad OUT 2
+        pad GND 3
+    }
+
+    // Maximum supply current: 10 mA. The datasheet's 3.0–3.63 V and 4.5–5.5 V ranges are checked
+    // only at the outer limits, as in the library part.
+    port vcc type=power {
+        require net.voltage min="3.0V" max="5.5V"
+        add net.draw "10mA"
+        line rail pin=VCC
+        line gnd pin=GND
+    }
+
+    // Analog output proportional to the supply voltage, for an ADC input.
+    port out type=analog pin=OUT
+}

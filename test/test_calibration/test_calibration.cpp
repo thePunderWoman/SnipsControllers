@@ -39,6 +39,37 @@ void test_trigger_degenerate_range_returns_zero() {
   TEST_ASSERT_EQUAL_INT(0, AnalogCalibration::calibrateTrigger(2048, data));
 }
 
+// Regression: a reversed magnet makes the pulled reading lower than the
+// released one, which used to be treated as uncalibrated and read 0.
+void test_trigger_inverted_range_maps_released_to_zero() {
+  CalibrationData data;
+  data.triggerMin = 3000;
+  data.triggerMax = 1000;
+  TEST_ASSERT_EQUAL_INT(0, AnalogCalibration::calibrateTrigger(3000, data));
+}
+
+void test_trigger_inverted_range_maps_pulled_to_hundred() {
+  CalibrationData data;
+  data.triggerMin = 3000;
+  data.triggerMax = 1000;
+  TEST_ASSERT_EQUAL_INT(100, AnalogCalibration::calibrateTrigger(1000, data));
+}
+
+void test_trigger_inverted_range_midpoint_is_fifty_percent() {
+  CalibrationData data;
+  data.triggerMin = 3000;
+  data.triggerMax = 1000;
+  TEST_ASSERT_EQUAL_INT(50, AnalogCalibration::calibrateTrigger(2000, data));
+}
+
+void test_trigger_inverted_range_clamps_both_ends() {
+  CalibrationData data;
+  data.triggerMin = 3000;
+  data.triggerMax = 1000;
+  TEST_ASSERT_EQUAL_INT(0, AnalogCalibration::calibrateTrigger(3500, data));
+  TEST_ASSERT_EQUAL_INT(100, AnalogCalibration::calibrateTrigger(500, data));
+}
+
 // ---- AnalogCalibration::calibrateStickAxis --------------------------------
 
 void test_stick_axis_at_center_is_zero() {
@@ -284,6 +315,10 @@ int main(int argc, char **argv) {
   RUN_TEST(test_trigger_clamps_beyond_max);
   RUN_TEST(test_trigger_clamps_below_min);
   RUN_TEST(test_trigger_degenerate_range_returns_zero);
+  RUN_TEST(test_trigger_inverted_range_maps_released_to_zero);
+  RUN_TEST(test_trigger_inverted_range_maps_pulled_to_hundred);
+  RUN_TEST(test_trigger_inverted_range_midpoint_is_fifty_percent);
+  RUN_TEST(test_trigger_inverted_range_clamps_both_ends);
   RUN_TEST(test_stick_axis_at_center_is_zero);
   RUN_TEST(test_stick_axis_within_deadzone_is_zero);
   RUN_TEST(test_stick_axis_just_outside_deadzone_is_nonzero);

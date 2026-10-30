@@ -7,7 +7,7 @@ import json, math, traceback
 
 app = core.Application.get()
 OX, OY, OZ = 137.5, -104.75, -2.2
-DATA = '/Users/jessica/repos/SnipsControllers/shell/fusion/'
+DATA = '/Users/jessica/repos/SnipsControllers/shell/v1.1/fusion/'
 
 _sk = None
 _ft = None

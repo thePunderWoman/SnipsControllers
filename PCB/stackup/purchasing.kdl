@@ -93,7 +93,9 @@ mpn "CL21A226MAQNNNE" manufacturer="Samsung Electro-Mechanics" value="22µF" foo
     catalog lcsc="C45783"
 }
 
-mpn "DRV5055A2QLPGM" manufacturer="Texas Instruments" value="DRV5055A2QLPGM" footprint="Package_TO_SOT_THT:TO-92_Inline"
+mpn "DRV5055A2QDBZR" manufacturer="Texas Instruments" value="DRV5055A2QDBZR" footprint="Package_TO_SOT_SMD:SOT-23" {
+    catalog lcsc="C266131"
+}
 
 mpn "ESP32-S3-WROOM-1-N8" manufacturer="Espressif Systems" value="ESP32-S3-WROOM-1-N8" footprint="Espressif:ESP32-S3-WROOM-1" {
     catalog lcsc="C2913198" mouser="356-ESP32S3WROOM1N8"
