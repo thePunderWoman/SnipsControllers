@@ -5,21 +5,41 @@ Designed for a **0.4 mm nozzle**, ~0.2 mm layers.
 
 | Part | Orientation | Supports |
 |---|---|---|
-| TopShell | seam rim on the bed (as modelled) | slicer tree/organic supports for the roof (interior scarring OK) |
-| BottomShell | flipped, rim on the bed, belly up | slicer supports for the belly (interior scarring OK) |
-| BatteryPanel | standing on end (-Y up) | brim; slicer supports for the groove ceilings |
-| BumperCap | flat front face on the bed (face down) | slicer supports, small: about 90 mm² of overhang under the rear cross-bar and the rod tie plates (`BumperCap.stl`) |
-| Trigger | on its side, blade face down | **built in** (`Trigger_with_supports.stl`) |
+| TopShell | seam rim on the bed (as modelled), one piece (no split) | slicer supports for the roof, or use `TopShell_with_buck.stl` (see Support blocks) |
+| BottomShell | flipped, rim on the bed, belly up | slicer supports for the belly (interior scarring OK). The alignment lip is level with the screw mounts (top at z 1.99), so the rim, lip and mounts all sit on the bed. Hall bridge plate (x -12.9..10.9, y 30.4..36.8) is now part of this body, top raised to z1.99 so it sits on the bed with the rim; it carries the spring fixed-leg groove, the wire channel and the sensor pocket. Spring slid 0.8 mm toward the trigger body (+X): the coil rib and fixed-leg groove were relieved inside (rev 3), nothing changes on the outside |
+| BatteryPanel | flat, belly (outer face) on the bed, cradle up; the snap arms flex in the bed plane | none needed (the front hook tabs are short; add a little support under them if your slicer complains) |
+| BumperCap | flat front face on the bed (face down) | no supports expected. v1.1 rev 2: button face sticks out 1 mm more (front at y 51.0, plate y 49.2..51.0) with two legs that press the left switch, an internal top ledge (L-section under the window ceiling, z 5.4..6.7), PCB-edge slots in the legs/ties, and about 0.3 mm clearance to the window. Travel before a hard stop: about 1.4 mm (bottom shell front wall), 1.65 mm (ESP32). |
+| Trigger | on its side, the big flat +X arm face down (about 43 mm2 of bed contact; overhang off the bed is about 62 mm2), spring ear (the little block with the wire channel) up | none needed (`Trigger.stl`). The ear has a 45 deg gusset. The wire channel is now OPEN ON TOP (0.6 mm slot, hook pocket included) so the spring leg and its hook drop in from above; the spring preload keeps the leg seated on the channel floor. Ear is a simple hook (rev 3): odd void beside the spring filled, a solid 1 mm left wall (x -11.9..-10.95), floor thickened to about 0.6 mm under the wire, solid end catch behind the hook tip. The spring now sits 0.8 mm further toward the trigger body (+X) than in rev 1/2, so the channel is at x -10.95..-10.35 |
 | TriggerPost | D flat on the bed, post lying along X | none |
-| HallBridge, PowerPlate, SidePlateL1/L2/R1/R2 | flat, as modelled | none |
-| FaceCap1-6 | stem down, as modelled | none |
+| HallBridge | OBSOLETE for the current v1.1 shell: the plate is now fused into BottomShell (print `BottomShell`). The old HallBridge files are kept for reference only |
+| PowerPlate | flange (back face, with the small switch recess) on the bed, diagonal stem standing up, rounded front end on top | none needed (the stem leans about 29 deg from vertical, under the 45 deg limit) |
+| SidePlateL1/L2/R1/R2 | D-shaped caps, flat base on the bed, D stem pointing up | none |
+| FaceCap1-6 | stem down, as modelled. The stem is now the full flange width (6 x 6 mm) down to the bed, so there is no flange overhang | none |
+
+## Support blocks (TopShell, BottomShell)
+`TopShell_with_buck.stl` and `BottomShell_with_buck.stl` include support bucks in the big open voids, already in the right place (separate lumps in the same STL, sitting on the bed). Two kinds: plain rectangular blocks in the large voids, and roof-following ('conforming') bucks that cut into 14 mm pieces with 0.4 mm kerfs. TopShell: conforming bucks cover the whole face-button area and the underside of the thumbstick bump (y -25..23). BottomShell: conforming bucks cover the front end (y -53.5..-5, print frame). Rules every buck follows: it stands on the bed, there is never any shell material below it or within 0.8 mm beside its footprint (so the shell lifts straight off and nothing is trapped under an overhang), at least about 0.2 mm clearance to the shell, and it is a separate lump (not fused). Checked against the shell mesh: 0 points inside, 0 with shell below, min clearance 0.25 mm (TopShell) / 0.23 mm (BottomShell). `TopShell.stl` / `BottomShell.stl` are the bare shells (default).
+- TopShell: 10 blocks: the big one in the main cavity (about 13.5 cm3), one by the posts (about 3.4 cm3), and 8 small ones around the face buttons and under the thumbstick (side strips, between the button columns, beside and behind the stick; 0.5 to 2.3 cm3 each, all at least 0.3 mm from the part). The one out front under the OLED housing was dropped (`--max-y 50`). BottomShell: 2 side blocks (about 4 cm3 each).
+- Each block keeps 0.3 mm or more from the part on every side, and its flat top is lifted to about 0.2 mm under the lowest roof point above it. The sloped parts of the roof, and everything else, still use normal slicer supports.
+- In OrcaSlicer load the STL and answer yes to "split into parts". Give the block parts 1 wall and about 5% infill, no supports.
+- Run the tools from this version's `tools/` folder; they find `export/stl|step` and `print/` from their own location (override with `SNIPS_EXPORT_DIR` / `SNIPS_PRINT_DIR`). Regenerate with `tools/gen_buck.py <bare print stl> <out stl> [--max-y 50] [--conform ya yb ...]` (`--conform` = roof-following kerfed buck over that y band, plain blocks stay out of it; TopShell: `--max-y 50 --conform -25 23`; BottomShell: `--max-y 50 --conform -53.5 -5`; old `--band` still works) (needs numpy, scipy, scikit-image, trimesh, rtree).
 
 ## Built-in breakaway supports
 - Tapered pillars: 1.0 mm base, 0.6 mm tip (0.7/0.5 mm in tight spots), ending 0.2 mm below the part so they snap off.
 - Spaced 2 mm apart, covering every overhang over 45 deg and 0.6 mm tall.
-- **Turn slicer supports OFF for the Trigger**, or the slicer will add its own on top.
+- The Trigger no longer needs supports (it did before the 45 deg ear gusset). Leave slicer supports off for it, or limit them to the wire channel.
 - The supports are STL only. The STEP files are the bare parts, oriented.
 - They are NOT in the Fusion design. `tools/` regenerates them from the STLs
   (`export_print.py`, with `step_orient.py` for the STEP rotation) if a part changes.
   Needs numpy, scipy, trimesh, rtree and build123d.
 - If they're too hard to remove, raise `GAP` in `build_sup.py` to 0.25-0.3. If they're too weak, raise `TIP_W` to 0.8.
+
+## Trigger torsion spring (not printed)
+The trigger return spring is a small steel torsion spring: 0.35 mm wire, coil ID 3.65 mm / OD 4.35 mm, 2 turns, legs 6.5 mm straight plus a 1.5 mm 90 degree hook on each end, about 180 degrees between the legs at rest. It sits on the printed D-post at x = -11.1 mm (right-handed coil; the moving leg is on the -x side).
+- **Moving leg** goes in the channel and hook pocket in the Trigger. **Fixed leg** lies in the groove under the HallBridge. The BottomShell has a ring relief for the coil and clearance for the legs.
+- Channels are 0.6 mm wide (0.25 mm clearance on the wire). If they print too tight for the wire or the hook, drill or ream them slightly instead of changing the model.
+- The pull rotates the moving leg toward the fixed leg and winds the coil tighter. Expect roughly 0.5 N at a 30 mm lever at rest (an estimate; tune on the bench).
+- `../reference/` has a non-printing `SpringRef` body (coil envelope, legs and hooks) in the same coordinates as the other parts, for checking fit in a viewer.
+- Details and checks: `claude/trigger-torsion-spring.md` in the Snips project.
+
+## PCB / shell screws (M2 x 12)
+Four M2 self-tapping screws, all the same length: **M2 x 12 mm** (pan or button head, head under 4.4 mm). They go up from the belly through the PCB holes into the top-shell posts, about 4 mm of thread. Each hole has a 4.6 mm head well in a 7 mm tube; the head seat is at z -4.3 (front wells about 8.5 mm deep, rear about 12.4 mm). Use a driver with at least 13 mm of reach. The 2.4 mm clearance hole continues up through the seat and the standoff.
