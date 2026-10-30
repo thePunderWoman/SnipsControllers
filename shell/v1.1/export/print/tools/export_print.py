@@ -4,7 +4,7 @@ import trimesh
 import paths as P
 src=P.SRC_STL
 out=P.OUT_STL; os.makedirs(out,exist_ok=True)
-ORI={'TriggerPost':'-Z up (flipped)','TopShell':'+Z up (as modelled)','BottomShell':'-Z up (flipped)','BatteryPanel':'+Z up (as modelled)','BumperCap':'+Y up','Trigger':'-X up'}
+ORI={'TriggerPost':'-Z up (flipped)','TopShell':'+Z up (as modelled)','BottomShell':'-Z up (flipped)','BatteryPanel':'+Z up (as modelled)','BumperCap':'+Y up','Trigger':'+X up'}
 for n in ['HallBridge','PowerPlate']+['FaceCap%d'%i for i in range(1,7)]: ORI[n]='+Z up (as modelled)'
 ORI['PowerPlate']='+Y up'
 SUP={'Trigger'}
