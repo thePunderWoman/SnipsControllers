@@ -6,7 +6,7 @@ Designed for a **0.4 mm nozzle**, ~0.2 mm layers.
 | Part | Orientation | Supports |
 |---|---|---|
 | TopShell | seam rim on the bed (as modelled), one piece (no split) | slicer supports for the roof, or use `TopShell_with_buck.stl` (see Support blocks) |
-| BottomShell | flipped, rim on the bed, belly up | slicer supports for the belly (interior scarring OK). The alignment lip now stops 1.2 mm above the bed plane, so it needs support under its top edge too (supports everywhere, not just touching build plate) |
+| BottomShell | flipped, rim on the bed, belly up | slicer supports for the belly (interior scarring OK). The alignment lip is level with the screw mounts (top at z 1.99), so the rim, lip and mounts all sit on the bed |
 | BatteryPanel | flat, belly (outer face) on the bed, cradle up; the snap arms flex in the bed plane | none needed (the front hook tabs are short; add a little support under them if your slicer complains) |
 | BumperCap | flat front face on the bed (face down) | slicer supports, small: under the side flange ties (about 2.4 mm wide overhang each side). New simple design: a flat button (34 x 6.7 mm) that goes through the window from INSIDE before the PCB, with a flange on each side behind the front wall and a 4.5 mm post on each flange |
 | Trigger | on its side, the +X arm face down, spring ear (the little block with the wire channel) up | none needed (`Trigger.stl`). The ear has a 45 deg gusset, and the only overhangs left are tiny bridges inside the 0.6 mm wire channel (about 6 mm2) |
@@ -21,7 +21,7 @@ Designed for a **0.4 mm nozzle**, ~0.2 mm layers.
 - TopShell: 10 blocks: the big one in the main cavity (about 13.5 cm3), one by the posts (about 3.4 cm3), and 8 small ones around the face buttons and under the thumbstick (side strips, between the button columns, beside and behind the stick; 0.5 to 2.3 cm3 each, all at least 0.3 mm from the part). The one out front under the OLED housing was dropped (`--max-y 50`). BottomShell: 2 side blocks (about 4 cm3 each).
 - Each block keeps 0.3 mm or more from the part on every side, and its flat top is lifted to about 0.2 mm under the lowest roof point above it. The sloped parts of the roof, and everything else, still use normal slicer supports.
 - In OrcaSlicer load the STL and answer yes to "split into parts". Give the block parts 1 wall and about 5% infill, no supports.
-- Regenerate with `tools/gen_buck.py <bare print stl> <out stl> [--max-y 50] [--band -20.5 22.5]` (`--band` adds the small face-button/thumbstick blocks; TopShell uses both flags) (needs numpy, scipy, scikit-image, trimesh, rtree).
+- Run the tools from this version's `tools/` folder; they find `export/stl|step` and `print/` from their own location (override with `SNIPS_EXPORT_DIR` / `SNIPS_PRINT_DIR`). Regenerate with `tools/gen_buck.py <bare print stl> <out stl> [--max-y 50] [--band -20.5 22.5]` (`--band` adds the small face-button/thumbstick blocks; TopShell uses both flags) (needs numpy, scipy, scikit-image, trimesh, rtree).
 
 ## Built-in breakaway supports
 - Tapered pillars: 1.0 mm base, 0.6 mm tip (0.7/0.5 mm in tight spots), ending 0.2 mm below the part so they snap off.
