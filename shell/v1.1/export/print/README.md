@@ -8,7 +8,7 @@ Designed for a **0.4 mm nozzle**, ~0.2 mm layers.
 | TopShell | seam rim on the bed (as modelled), one piece (no split) | slicer supports for the roof, or use `TopShell_with_buck.stl` (see Support blocks) |
 | BottomShell | flipped, rim on the bed, belly up | slicer supports for the belly (interior scarring OK). The alignment lip is level with the screw mounts (top at z 1.99), so the rim, lip and mounts all sit on the bed |
 | BatteryPanel | flat, belly (outer face) on the bed, cradle up; the snap arms flex in the bed plane | none needed (the front hook tabs are short; add a little support under them if your slicer complains) |
-| BumperCap | flat front face on the bed (face down) | slicer supports, small: under the side flange ties (about 2.4 mm wide overhang each side). New simple design: a flat button (34 x 6.7 mm) that goes through the window from INSIDE before the PCB, with a flange on each side behind the front wall and a 4.5 mm post on each flange |
+| BumperCap | flat front face on the bed (face down) | no supports expected. v1.1 rev 2: button face sticks out 1 mm more (front at y 51.0, plate y 49.2..51.0) with two legs that press the left switch, an internal top ledge (L-section under the window ceiling, z 5.4..6.7), PCB-edge slots in the legs/ties, and about 0.3 mm clearance to the window. Travel before a hard stop: about 1.4 mm (bottom shell front wall), 1.65 mm (ESP32). |
 | Trigger | on its side, the +X arm face down, spring ear (the little block with the wire channel) up | none needed (`Trigger.stl`). The ear has a 45 deg gusset, and the only overhangs left are tiny bridges inside the 0.6 mm wire channel (about 6 mm2) |
 | TriggerPost | D flat on the bed, post lying along X | none |
 | HallBridge | flat, as modelled | none |
