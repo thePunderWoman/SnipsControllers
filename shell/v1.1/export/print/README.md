@@ -6,12 +6,12 @@ Designed for a **0.4 mm nozzle**, ~0.2 mm layers.
 | Part | Orientation | Supports |
 |---|---|---|
 | TopShell | seam rim on the bed (as modelled), one piece (no split) | slicer supports for the roof, or use `TopShell_with_buck.stl` (see Support blocks) |
-| BottomShell | flipped, rim on the bed, belly up | slicer supports for the belly (interior scarring OK). The alignment lip is level with the screw mounts (top at z 1.99), so the rim, lip and mounts all sit on the bed |
+| BottomShell | flipped, rim on the bed, belly up | slicer supports for the belly (interior scarring OK). The alignment lip is level with the screw mounts (top at z 1.99), so the rim, lip and mounts all sit on the bed. Hall bridge plate (x -12.9..10.9, y 30.4..36.8) is now part of this body, top raised to z1.99 so it sits on the bed with the rim; it carries the spring fixed-leg groove, the wire channel and the sensor pocket |
 | BatteryPanel | flat, belly (outer face) on the bed, cradle up; the snap arms flex in the bed plane | none needed (the front hook tabs are short; add a little support under them if your slicer complains) |
 | BumperCap | flat front face on the bed (face down) | no supports expected. v1.1 rev 2: button face sticks out 1 mm more (front at y 51.0, plate y 49.2..51.0) with two legs that press the left switch, an internal top ledge (L-section under the window ceiling, z 5.4..6.7), PCB-edge slots in the legs/ties, and about 0.3 mm clearance to the window. Travel before a hard stop: about 1.4 mm (bottom shell front wall), 1.65 mm (ESP32). |
-| Trigger | on its side, the +X arm face down, spring ear (the little block with the wire channel) up | none needed (`Trigger.stl`). The ear has a 45 deg gusset, and the only overhangs left are tiny bridges inside the 0.6 mm wire channel (about 6 mm2) |
+| Trigger | on its side, the +X arm face down, spring ear (the little block with the wire channel) up | none needed (`Trigger.stl`). The ear has a 45 deg gusset. The wire channel is now OPEN ON TOP (0.6 mm slot, hook pocket included) so the spring leg and its hook drop in from above; the spring preload keeps the leg seated on the channel floor |
 | TriggerPost | D flat on the bed, post lying along X | none |
-| HallBridge | flat, as modelled | none |
+| HallBridge | OBSOLETE for the current v1.1 shell: the plate is now fused into BottomShell (print `BottomShell`). The old HallBridge files are kept for reference only |
 | PowerPlate | flange (back face, with the small switch recess) on the bed, diagonal stem standing up, rounded front end on top | none needed (the stem leans about 29 deg from vertical, under the 45 deg limit) |
 | SidePlateL1/L2/R1/R2 | D-shaped caps, flat base on the bed, D stem pointing up | none |
 | FaceCap1-6 | stem down, as modelled. The stem is now the full flange width (6 x 6 mm) down to the bed, so there is no flange overhang | none |
