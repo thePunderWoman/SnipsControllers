@@ -165,14 +165,6 @@ mpn "TYPE-C-31-M-12" manufacturer="Hroparts Elec" value="USB-C" footprint="Conne
     catalog lcsc="C165948"
 }
 
-mpn "BT840XE" manufacturer="Fanstel" value="BT840XE" footprint="SnipsControllers_Custom:BT840XE" {
-    catalog lcsc="C6132678"
-}
-
-mpn "BLM18KG601SN1D" manufacturer="Murata" value="600Ω@100MHz" footprint="Inductor_SMD:L_0603_1608Metric" {
-    catalog lcsc="C85833"
-}
-
-mpn "CL31A476MPHNNNE" manufacturer="Samsung Electro-Mechanics" value="47µF" footprint="Capacitor_SMD:C_1206_3216Metric" {
-    catalog lcsc="C96123"
+mpn "ESP32-S3-MINI-1U-N8" manufacturer="Espressif Systems" value="ESP32-S3-MINI-1U-N8" footprint="Espressif:ESP32-S3-MINI-1U" {
+    catalog lcsc="C2980299"
 }

@@ -569,10 +569,6 @@
       {
         "netclass": "Power",
         "pattern": "VSYS"
-      },
-      {
-        "netclass": "Power",
-        "pattern": "/MCU_Core/3V3_RF"
       }
     ]
   },

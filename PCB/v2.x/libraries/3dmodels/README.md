@@ -11,7 +11,7 @@ a model that does not resolve.
 | `USB_C_Receptacle_HRO_TYPE-C-31-M-12.step` | J_USB1, HRO TYPE-C-31-M-12 | EasyEDA/LCSC C165948, fetched with `easyeda2kicad` | Rotated 180° and offset -1.05mm in Y so the shell legs, pegs and SMD tails land on the KiCad footprint's pads |
 | `SW_Alps_SKRTLAE010.step` | SW_PWR1, SW_VOL_*, SW_THR_*, SW_TRIG_DIG1 (side buttons) | EasyEDA/LCSC C110293 | Pegs, terminals and plunger already match the KiCad footprint. No offset |
 | `Thumbstick_ALPS_RKJXV1224005.step` | J_STICK1 (DNP) | EasyEDA/LCSC C146170 (ALPS RKJXV1224005) | **Stand-in**: the GuliKit hall stick is a drop-in for this ALPS footprint family, but its body may differ. Z offset +11.4mm puts the housing standoffs on the board |
-| `BT840X_outline.step` | U_MCU1 (BT840XE) | Fanstel `bt832x_1211.stp`, same 15 x 28 mm body (license not stated) | **Stand-in**: one solid with BT832X markings and no u.FL. Rotate -90 about X, offset (0, -0.3, 0.3) |
+| `ESP32-S3-MINI-1U.step` | U_MCU1, ESP32-S3-MINI-1U | Espressif `kicad-libraries` (CC-BY-SA 4.0), as is `../Espressif.pretty` | Used as supplied, no offset |
 
 Models taken from KiCad's own library (`${KICAD10_3DMODEL_DIR}`) with no local copy:
 
