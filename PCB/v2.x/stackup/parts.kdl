@@ -293,80 +293,176 @@ part skrp-button {
     }
 }
 
-// TI TCA9555 16-bit I2C GPIO expander in TSSOP-24, carrying the buttons. The local part follows
-// @stackup/interface/expander/pca9555, which only has the SSOP-24 package. Pin numbers are from the
-// TCA9555 datasheet's Pin Functions table; the IOx_y names are TI's Pxy, as on KiCad's symbol.
-// Inputs are high at power-up through internal 100 kOhm pull-ups, so buttons need no resistors.
-part tca9555 {
-    symbol "Interface_Expansion:TCA9555PWR"
+
+// Tag-Connect TC2030-NL footprint: six pads and three locating holes, no part fitted. A TC2030-CTX-NL cable
+// presses against it to reach SWD. Pinout is from Tag-Connect's TC2030-CTX sheet.
+part tc2030-nl {
+    symbol "Connector_Generic:Conn_02x03_Odd_Even"
+    reference J
+    value "TC2030-NL"
+    description "Tag-Connect TC2030-NL SWD pads, no part fitted"
+
+    pin VCC passive
+    pin SWDIO passive
+    pin RESET passive
+    pin SWCLK passive
+    pin GND passive
+    pin SWO passive
+
+    package tc2030 footprint="Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical" {
+        pad VCC "1"
+        pad SWDIO "2"
+        pad RESET "3"
+        pad SWCLK "4"
+        pad GND "5"
+        pad SWO "6"
+    }
+}
+
+
+// Fanstel BT840XE: nRF52840-QIAA, SKY66112 PA, 32.768 kHz crystal, u.FL. Runs the whole controller and
+// the Zigbee link. Pin data is from Fanstel's Product Specifications Ver 1.26. P0.06, P0.08, P0.17 and
+// P0.19 drive the PA and are not connected at the pads. P0.00 and P0.01 go to the module's crystal.
+// VDD must be regulated 3.3 V, 300 mA minimum; VDDH alone cannot power the PA (Note 1).
+part bt840xe {
+    symbol "SnipsControllers_Custom:BT840XE"
     reference U
-    value "TCA9555PWR"
-    datasheet "https://www.ti.com/lit/ds/symlink/tca9555.pdf"
-    description "16-bit I2C GPIO expander, internal pull-ups, open-drain interrupt, TSSOP-24"
-    manufacturer "Texas Instruments"
-    order mpn=TCA9555PWR lcsc=C465732
+    value "BT840XE"
+    datasheet "https://www.fanstel.com/s/BT840X-p-Product-Specifications-cjd4.pdf"
+    description "nRF52840 Zigbee/Thread/BLE module, +21 dBm PA, u.FL, 15x28x1.9mm"
+    manufacturer "Fanstel"
+    order mpn=BT840XE lcsc=C6132678
 
-    pin INT open_collector symbol="~{INT}"
-    pin A1 input required
-    pin A2 input required
-    pin IO0_0 bidirectional
-    pin IO0_1 bidirectional
-    pin IO0_2 bidirectional
-    pin IO0_3 bidirectional
-    pin IO0_4 bidirectional
-    pin IO0_5 bidirectional
-    pin IO0_6 bidirectional
-    pin IO0_7 bidirectional
-    pin VSS power_in
-    pin IO1_0 bidirectional
-    pin IO1_1 bidirectional
-    pin IO1_2 bidirectional
-    pin IO1_3 bidirectional
-    pin IO1_4 bidirectional
-    pin IO1_5 bidirectional
-    pin IO1_6 bidirectional
-    pin IO1_7 bidirectional
-    pin A0 input required
-    pin SCL input
-    pin SDA bidirectional
+    pin P0_26 bidirectional
+    pin P0_27 bidirectional
+    pin P0_00 bidirectional
+    pin P0_01 bidirectional
+    pin P0_02 bidirectional
+    pin P0_03 bidirectional
+    pin P0_09 bidirectional
+    pin P0_10 bidirectional
     pin VDD power_in
+    pin GND power_in
+    pin P0_11 bidirectional
+    pin P1_00 bidirectional
+    pin P0_13 bidirectional
+    pin RESET input
+    pin SWDCLK input
+    pin SWDIO bidirectional
+    pin P1_11 bidirectional
+    pin P1_12 bidirectional
+    pin P1_13 bidirectional
+    pin P1_14 bidirectional
+    pin P1_15 bidirectional
+    pin P1_10 bidirectional
+    pin P1_06 bidirectional
+    pin P0_28 bidirectional
+    pin P0_29 bidirectional
+    pin P0_04 bidirectional
+    pin P0_05 bidirectional
+    pin P0_07 bidirectional
+    pin P1_08 bidirectional
+    pin P0_25 bidirectional
+    pin P0_30 bidirectional
+    pin P0_31 bidirectional
+    pin P0_06 bidirectional
+    pin P0_08 bidirectional
+    pin P1_03 bidirectional
+    pin P0_24 bidirectional
+    pin P0_22 bidirectional
+    pin P0_17 bidirectional
+    pin P0_15 bidirectional
+    pin P1_02 bidirectional
+    pin P1_04 bidirectional
+    pin P0_23 bidirectional
+    pin P0_19 bidirectional
+    pin P0_16 bidirectional
+    pin P0_14 bidirectional
+    pin P1_01 bidirectional
+    pin P1_05 bidirectional
+    pin P1_07 bidirectional
+    pin P0_20 bidirectional
+    pin P0_21 bidirectional
+    pin P1_09 bidirectional
+    pin USB_DP bidirectional
+    pin USB_DM bidirectional
+    pin P0_12 bidirectional
+    pin VDDH power_in
+    pin DCCH passive
+    pin VBUS power_in
 
-    package tssop24 footprint="Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm" {
-        pad INT 1
-        pad A1 2
-        pad A2 3
-        pad IO0_0 4
-        pad IO0_1 5
-        pad IO0_2 6
-        pad IO0_3 7
-        pad IO0_4 8
-        pad IO0_5 9
-        pad IO0_6 10
-        pad IO0_7 11
-        pad VSS 12
-        pad IO1_0 13
-        pad IO1_1 14
-        pad IO1_2 15
-        pad IO1_3 16
-        pad IO1_4 17
-        pad IO1_5 18
-        pad IO1_6 19
-        pad IO1_7 20
-        pad A0 21
-        pad SCL 22
-        pad SDA 23
-        pad VDD 24
+    package module footprint="SnipsControllers_Custom:BT840XE" {
+        pad P0_26 "1"
+        pad P0_27 "2"
+        pad P0_00 "3"
+        pad P0_01 "4"
+        pad P0_02 "5"
+        pad P0_03 "6"
+        pad P0_09 "7"
+        pad P0_10 "8"
+        pad VDD "9"
+        pad GND "10"
+        pad P0_11 "11"
+        pad P1_00 "12"
+        pad P0_13 "13"
+        pad RESET "14"
+        pad SWDCLK "15"
+        pad SWDIO "16"
+        pad P1_11 "Z0"
+        pad P1_12 "Z1"
+        pad P1_13 "Z2"
+        pad P1_14 "Z3"
+        pad P1_15 "Z4"
+        pad P1_10 "Z5"
+        pad P1_06 "Z6"
+        pad GND "A0"
+        pad P0_28 "A1"
+        pad P0_29 "A2"
+        pad P0_04 "A3"
+        pad P0_05 "A4"
+        pad P0_07 "A5"
+        pad P1_08 "A6"
+        pad GND "B0"
+        pad P0_25 "B1"
+        pad P0_30 "B2"
+        pad P0_31 "B3"
+        pad P0_06 "B4"
+        pad P0_08 "B5"
+        pad P1_03 "B6"
+        pad GND "C0"
+        pad P0_24 "C1"
+        pad P0_22 "C2"
+        pad P0_17 "C3"
+        pad P0_15 "C4"
+        pad P1_02 "C5"
+        pad P1_04 "C6"
+        pad GND "D0"
+        pad P0_23 "D1"
+        pad P0_19 "D2"
+        pad P0_16 "D3"
+        pad P0_14 "D4"
+        pad P1_01 "D5"
+        pad P1_05 "D6"
+        pad P1_07 "E0"
+        pad P0_20 "E1"
+        pad P0_21 "E2"
+        pad P1_09 "E3"
+        pad USB_DP "E4"
+        pad USB_DM "E5"
+        pad P0_12 "E6"
+        pad GND "F0"
+        pad GND "F1"
+        pad GND "F2"
+        pad GND "F3"
+        pad VDDH "F4"
+        pad DCCH "F5"
+        pad VBUS "F6"
     }
 
     port vdd type=power {
-        require net.voltage min="1.65V" max="5.5V"
-        add net.draw "1mA"
+        require net.voltage min="1.7V" max="3.6V"
+        add net.draw "300mA"
         line rail pin=VDD
-        line gnd pin=VSS
+        line gnd pin=GND
     }
-    port i2c type=i2c {
-        line sda pin=SDA
-        line scl pin=SCL
-    }
-    port int pin=INT
 }
