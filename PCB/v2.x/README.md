@@ -9,7 +9,7 @@ through `snips_controller.stackup_sch`; sync it with the Stackup KiCad plugin. R
 
 ## V2 board
 
-70 x 30 mm, 4 layers. The placement is a first pass and is not routed.
+70 x 30 mm, 4 layers: F.Cu signals, In1 signals with a partial 3V3 fill, In2 solid GND, B.Cu signals. Routed, not yet fabricated.
 
 - **One module:** the BT840XE replaces the ESP32 and XBee, which could not sit back to back. Espressif requires a single reflow, and Digi forbids reflowing the XBee upside down.
 - **Reflow:** Fanstel allows at most 2 cycles and no opposite-side reflow, so the bottom side, which carries the module, must be the last pass. It is MSL 3 per JLC's listing.

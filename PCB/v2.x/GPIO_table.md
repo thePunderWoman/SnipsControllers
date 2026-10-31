@@ -28,7 +28,7 @@ It replaces the ESP32 and XBee used on V1.x.
 | Macro 1 | P1.10 | Z5 | Direct, active low, internal pull-up |
 | Macro 2 | P0.07 | A5 | Direct, active low, internal pull-up |
 | Macro 3 | P1.09 | E3 | Direct, active low, internal pull-up |
-| Macro 4 | P0.21 | E2 | Direct, active low, internal pull-up |
+| Macro 4 | P1.11 | Z0 | Direct, active low, internal pull-up |
 | Macro 5 | P1.07 | E0 | Direct, active low, internal pull-up |
 | Macro 6 | P0.20 | E1 | Direct, active low, internal pull-up |
 | Thumbstick click | P1.03 | B6 | Direct, active low, internal pull-up |
