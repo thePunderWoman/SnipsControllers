@@ -3,5 +3,6 @@
 	(lib (name "SnipsControllers") (type "KiCad") (uri "${KIPRJMOD}/libraries/SnipsControllers.pretty") (options "") (descr ""))
 	(lib (name "BQ25185DLHR") (type "KiCad") (uri "${KIPRJMOD}/libraries/BQ25185DLHR.pretty") (options "") (descr ""))
 	(lib (name "SnipsControllers_Custom") (type "KiCad") (uri "${KIPRJMOD}/libraries/SnipsControllers_Custom.pretty") (options "") (descr ""))
+	(lib (name "Espressif") (type "KiCad") (uri "${KIPRJMOD}/libraries/Espressif.pretty") (options "") (descr ""))
 	(lib (name "R2Builders") (type "KiCad") (uri "${KIPRJMOD}/libraries") (options "") (descr ""))
 )

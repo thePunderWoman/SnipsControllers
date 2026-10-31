@@ -9,18 +9,19 @@ through `snips_controller.stackup_sch`; sync it with the Stackup KiCad plugin. R
 
 ## V2 board
 
-70 x 30 mm, 4 layers: F.Cu signals, In1 signals with a partial 3V3 fill, In2 solid GND, B.Cu signals. Routed, not yet fabricated.
+70 x 30 mm, 4 layers: F.Cu signals, In1 solid 3V3, In2 solid GND, B.Cu signals. 1.6 mm thick. Routed, not yet fabricated.
 
-- **One module:** the BT840XE replaces the ESP32 and XBee, which could not sit back to back. Espressif requires a single reflow, and Digi forbids reflowing the XBee upside down.
-- **Reflow:** Fanstel allows at most 2 cycles and no opposite-side reflow, so the bottom side, which carries the module, must be the last pass. It is MSL 3 per JLC's listing.
-- **Radio link:** Amidala's droids use XBee Zigbee 3.0, so the controller must join that network. That Zigbee firmware is still to be written.
-- **First programming:** SWD, through J_SWD1, a TC2030-NL Tag-Connect footprint on the bottom with no part fitted; use a TC2030-CTX-NL cable. New modules hold Fanstel's AT firmware, so USB only works once a bootloader is loaded. The latch only stays on through the power button or `PWR_HOLD`, not USB, so hold the power button while flashing a new board.
-- **Bootloader entry:** hold SW_BOOT1 (P1.00) while pressing the power button. The bootloader must drive `PWR_HOLD` high straight away. SW_RST1, on the bottom, resets the module. That releases `PWR_HOLD`, so it forces the board off when firmware hangs, which the power button cannot do; a quick tap may only restart it. The bootloader must enable the reset pin. Use the BT840XE, not the -p part, which has access port protection on.
-- **Power:** VDD and VDDH are tied together after FB_RF1 and C_RF_BULK1, per Fanstel's Note 1 and supply design note.
+- **Module:** an ESP32-S3-MINI-1U-N8 on the top, between the macro buttons and USB, turned 270 degrees. The 19.2 mm WROOM-1U does not fit the 17.5 mm there. The turn puts the pinless GND edge on the side and the signal pins toward the stick, the OLED and the carrier; pins are assigned by position, as `GPIO_table.md` explains. USB runs about 15 mm as a result, which is well within full-speed limits. Bluetooth and ESP-NOW work with no other radio.
+- **XBee:** optional. U_XBEE1 is a row of 12 hand-solder pads on the bottom for a 22 x 17 mm castellated daughter board, which carries the XBee 3 Micro, its decoupling, the RESET pull-up and RC, and the ATTN/BOOTMODE pull-up. The link is UART with flow control, not SPI. RTS and DTR also allow XBee serial firmware recovery through the ESP32. Leave the area inside the pads free of parts; vias there stay tented. See `GPIO_table.md`.
+- **Reflow:** the bottom side goes first and the top side last, because Espressif requires a single reflow for the module (datasheet section 12.3). The XBee reflows on its own carrier and never goes upside down, which is what stopped the two modules from sharing this board before.
+- **Radio link:** Amidala's droids use XBee Zigbee 3.0, so a Zigbee controller needs the carrier. The firmware still has to move from the XBee's SPI interface to UART, and needs a V2 pin map.
+- **Programming:** USB, through the module's native USB. To force download mode, hold SW_BOOT1 while pressing the power button. The latch only stays on through the power button or `PWR_HOLD`, not USB, so hold the power button while flashing a new board.
+- **No reset button:** the power button can only turn the board on, and PWR_HOLD on RXD0 keeps its pull-up through a reset, so a reset reboots the board and does not turn it off. Firmware must keep a watchdog running to recover from a hang. If firmware hangs before it can drive `PWR_HOLD` low on shutdown, disconnecting the battery is the only way off.
 - **Buttons:** all 13 connect directly to module GPIOs. See `GPIO_table.md`.
-- **Power blocks:** the buck, charger and power latch keep V1's exact relative placement and routing, moved as rigid blocks. The buck and charger are mirrored onto the top side, near USB; the latch stays on the bottom. Two charger GND vias were later moved 0.1-0.75 mm in V1's layout to clear earlier button positions. The latch is too long to fit whole, so it is split at `PWR_BTN_TRIGGER`: the switch and `PWR_LATCH_G` node sit under the stick, turned 270 degrees, and the inverter sits beside the stick's lower pins. Change them as blocks, and see `diagrams/` for why they are arranged this way.
-- **Hall sensor:** U_HALL1 sits off-center at (20.3, 4.0) mm, 7.8 mm from the stick's top sensing block rather than 3.3 mm, to reduce magnetic coupling. Confirm on a real stick.
-- **Mounting:** four Ø2.2 mm unplated holes, MH1-4, at (2.5, 2.6), (27.4, 2.8), (3, 62.5) and (27, 67) from the top-left corner, for M2 self-tapping screws into shell posts. MH3 sits above the power button, which holds the true corner, so a Ø4 post clears `C_VIN_1` and `C_DBNC1` by only about 0.15 mm.
+- **Power blocks:** the buck, charger and power latch follow V1's relative placement, all on the bottom. Two charger GND vias were moved 0.1-0.75 mm in V1's layout to clear earlier button positions. C_BUCK_IN1 turned 90 degrees with its VSYS pad straight above the VIN pin. BUCK_FB runs around the input cap and hops to F.Cu past the inductor, so both planes shield it; keep it out from under L_BUCK1. The latch is too long to fit whole, so it is split at `PWR_BTN_TRIGGER`: the switch and `PWR_LATCH_G` node sit under the stick, turned 270 degrees, and the inverter sits beside the stick's lower pins. See `diagrams/` for why they are arranged this way.
+- **OLED cable:** U_OLED1's opening faces USB, and a Qwiic plug is 7.0 mm wide with its protrusions, so keep top-side parts out of x 0.9-7.9 mm from the mouth at y 52.7 mm down to the MH3 post. Check that a real cable goes in before committing the shell.
+- **Hall sensor:** U_HALL1 is on the bottom at (6.5, 4.75) mm, rotated 180 degrees, forward and left of the stick, 7.8 mm from its nearest pot pin in plan view against about 15.4 mm on V1. A 2 x 2 mm N52 magnet swings up to sit directly under the package centre. Keep at least 1.8 mm from the top of the package to the magnet at full press, or the output clips at the sensor's ±44 mT range. The stick reading against trigger travel still needs a bench test.
+- **Mounting:** four Ø2.2 mm unplated holes, MH1-4, at (2.5, 2.6), (27.4, 2.8), (3, 62.5) and (27, 67) from the top-left corner, for M2 self-tapping screws into shell posts. MH3 sits above the power button, which holds the true corner, so a Ø4 post clears `C_DBNC1` by only about 0.15 mm. The carrier has a long shallow chamfer at that corner, which also clears a Ø4 post on the bottom.
 - **Battery:** BT1 is a 2-pin JST PH, the common connector on pouch cells this size: pin 1 VBAT, pin 2 GND. R_TS1 ties the charger's TS pin to a fixed 10 kΩ, so there is no pack temperature monitoring. Check the polarity of the cell's lead before plugging it in.
 - **USB and status LED:** J_USB1 sits 2 mm right of centre, with its CC resistors and TVS moved with it. D_RGB1 sits between SW_PWR1 and J_USB1, turned 90 degrees.
 - **Through-board parts:** the Alps pegs, stick pins, USB stakes and BT1 pins all reach the other side.
@@ -33,7 +34,8 @@ See [`GPIO_table.md`](GPIO_table.md) for every module pin.
 
 | Component | Part | Notes | Layout diagram |
 |---|---|---|---|
-| MCU and radio | Fanstel BT840XE | nRF52840 with SKY66112 PA, +21 dBm, u.FL, 15 x 28 x 1.9 mm. Runs the firmware and the Zigbee link | — |
+| MCU and radio | Espressif ESP32-S3-MINI-1U-N8 | Wi-Fi, Bluetooth LE and ESP-NOW, 8 MB flash, 15.4 x 15.4 x 2.4 mm, external antenna | — |
+| XBee (optional) | Digi XB3-24Z8UM on a castellated carrier | Zigbee 3.0, +19 dBm, U.FL. Hand-soldered to the underside | — |
 | Display | SSD1306 1.3" OLED | 128x64, monochrome, I2C | — |
 | Hall trigger | DRV5055A2QDBZR (SOT-23) | Ratiometric linear hall effect, 3.3V. On the bottom of the board under the trigger magnet; senses the field perpendicular to the board. Trigger calibration accepts either magnet polarity | — |
 | Thumbstick | GuliKit hall effect module | Native 3.3V, analog X/Y + click | — |
@@ -62,8 +64,8 @@ files are organized.
 ### Decoupling Caps
 | Component | Value | Notes |
 |---|---|---|
-| DRV5055 VCC | 100nF ceramic | On 3V3_RF |
-| GuliKit VCC | 100nF ceramic | On 3V3_RF |
+| DRV5055 VCC | 100nF ceramic | |
+| GuliKit VCC | 100nF ceramic | |
 | SK6812 VCC | 100nF ceramic | Close to supply pin |
 | ICM-42670-P | 100nF + 2.2µF on VDD, 10nF on VDDIO | Close to their pins |
 | OLED connector | 1µF + 100nF ceramic | |
@@ -71,9 +73,10 @@ files are organized.
 | bq25185 SYS | 10µF + 100nF ceramic | |
 | bq25185 BAT | 10µF ceramic | |
 | TLV62569 VIN | 10µF ceramic | |
-| TLV62569 VOUT | 10µF ceramic | TI specifies 10-47 µF and the rail totals about 70 µF nominal, less under DC bias. Check with a load step |
-| BT840XE VDD | 47µF + 10µF + 100nF ceramic | After FB_RF1, per Fanstel's noisy-supply note |
-| BT840XE VBUS | 1µF ceramic | Kept small so VBUS stays near USB's 10 µF limit. Nordic's value is unconfirmed |
+| TLV62569 VOUT | 22µF ceramic | As on V1. TI specifies 10-47 µF |
+| ESP32-S3-MINI-1U 3V3 | 10µF + 100nF + 39pF ceramic | As on V1 |
+| ESP32-S3-MINI-1U EN | 1µF ceramic | With R_EN_PU1, per Espressif |
+| XBee VCC | 10µF + 1µF + 100nF + 47pF ceramic | On the carrier |
 
 ### Resistors
 | Signal | Value | Notes |
@@ -82,10 +85,11 @@ files are organized.
 | bq25185 TS/MR | 10kΩ to GND | Required with no thermistor: floating means no charging |
 | I2C SDA/SCL | 4.7kΩ | So the IMU works with no OLED attached |
 | Boot button | 10kΩ to 3V3 | R_BOOT_PU1 |
+| ESP32 EN | 10kΩ to 3V3 | R_EN_PU1 |
+| USB D+/D- | 27Ω series | R_USB_DP1 and R_USB_DM1, as on V1 |
 | Trigger output | 1kΩ + 100nF | R_TRIG1 and C_TRIG1, about 1.6 kHz. The DRV5055 must not see a capacitor without a resistor |
 | SK6812 DIN | 470Ω | R_RGB1 |
 
-USB D+/D- connect directly, with no series resistors. That is unconfirmed against Nordic's datasheet.
 
 ### Buttons
 No external parts. Every button wires to GND and a module GPIO, using the internal pull-ups; see [`GPIO_table.md`](GPIO_table.md).
@@ -94,33 +98,33 @@ No external parts. Every button wires to GND and a module GPIO, using the intern
 
 ## Communication Architecture
 
-The droids use XBee Zigbee 3.0, so the controller has to join that network. The nRF52840 runs the Zigbee stack, and the firmware for it is not written yet. Each droid has its own coordinator and PAN ID, and all coordinators share one AES key.
+The droids use XBee Zigbee 3.0, so the controller joins that network through the XBee on the carrier, over UART in API mode. Each droid has its own coordinator and PAN ID, and all coordinators share one AES key. Without the carrier the ESP32 can use Bluetooth or ESP-NOW.
 
 ---
 
 ## Bringup Sequence
 
 Recommended bringup order:
-1. Current-limited supply on VSYS: check 3V3 and idle current with the power button held.
-2. Load the bootloader over SWD through J_SWD1, holding the power button. Confirm it drives `PWR_HOLD` high, enables the reset pin, and enumerates over USB.
-3. Boot entry and reset: hold BOOT while pressing power, and confirm RESET forces the board off.
+1. Current-limited supply on VSYS, with no carrier fitted: check 3V3 and idle current with the power button held.
+2. Flash over USB, holding the power button, with SW_BOOT1 held if the chip does not enumerate. Confirm firmware drives `PWR_HOLD` high.
+3. Tap power briefly to check that the EN delay does not lose the press. Trigger a watchdog reset and confirm the board reboots and stays on.
 4. OLED and ICM-42670-P on I2C.
 5. SK6812 RGB LED.
 6. Buttons, using the pin table.
 7. Charge status on STAT1 and STAT2, and VSYS sense.
-8. DRV5055 and thumbstick on the ADC, with the SAADC's VDD/4 reference. Sweep the stick and the trigger together to measure how much each moves the other.
-9. Radio: limit nRF TX to +2 dBm with ANT000, per Fanstel, and join a droid's network.
+8. DRV5055 and thumbstick on the ADC. Sweep the stick and the trigger together to measure how much each moves the other.
+9. Solder the carrier on. Check UART traffic, CTS, SLEEP_RQ and ON/SLEEP, then XBee reset, then join a droid's network.
 
 ---
 
 ## Power Architecture
 
-- Battery → bq25185 (charger and power path, 4.2V, 500mA) → TLV62569 (3.3V buck) → 3V3 logic, and through FB_RF1 to 3V3_RF for the module, DRV5055 and thumbstick.
+- Battery → bq25185 (charger and power path, 4.2V, 500mA) → TLV62569 (3.3V buck) → 3V3 for everything, including the carrier.
 - Power switch: soft latch (AO3401A PFET + AO3400A NFET) controls the TLV62569 EN pin. USB does not hold it on.
-- Boot: press the power button → latch enables 3V3 → module boots → P1.13 goes high through D_OR2 to hold the latch.
-- Shutdown: firmware sees a hold on P0.11 → graceful shutdown → P1.13 low → power cut. A reset also releases the latch.
-- bq25185 STAT1 and STAT2 go to P1.14 and P1.15 (open drain, 10kΩ pull-ups to 3V3).
-- Battery voltage: VSYS through R_VSYS1/R_VSYS2 to P0.05, reading VSYS/3.
+- Boot: press the power button → latch enables 3V3 → module boots → RXD0 (IO44) goes high through D_OR2 to hold the latch.
+- Shutdown: firmware sees a hold on IO33 → graceful shutdown → IO44 low → power cut.
+- bq25185 STAT1 and STAT2 go to IO15 and IO14 (open drain, 10kΩ pull-ups to 3V3).
+- Battery voltage: VSYS through R_VSYS1/R_VSYS2 to IO7, reading VSYS/3.
 - Below about 3.3 V on the battery the buck passes it through, and the DRV5055's minimum is 3.0 V, so the firmware cutoff should sit above that.
 
 ## Power Management

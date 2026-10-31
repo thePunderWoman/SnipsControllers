@@ -1,60 +1,94 @@
-# Snips Controller V2 — BT840XE pin table
+# Snips Controller V2 — ESP32-S3-MINI-1U pin table
 
 > The wiring source is `PCB/v2.x/stackup/board.kdl`, and the module is modeled in
-> `PCB/v2.x/stackup/parts.kdl`. Pin data is from Fanstel's BT840X/BT840XE Product
-> Specifications Ver 1.26, in `datasheets/`. The module is on the bottom side.
+> `PCB/v2.x/stackup/parts.kdl`. Pin data is from Espressif's ESP32-S3-MINI-1 & MINI-1U datasheet
+> v1.7, in `datasheets/`. The module is on the top side.
 
-The Fanstel BT840XE (nRF52840-QIAA, SKY66112 PA, u.FL) runs the firmware and the Zigbee link.
-It replaces the ESP32 and XBee used on V1.x.
+The ESP32-S3-MINI-1U-N8 runs the firmware. The XBee 3 is optional: it sits on a castellated daughter board on the underside, and the ESP32's own Bluetooth and ESP-NOW work without it.
+
+Pins are chosen by position, not carried over from V1, so V2 needs its own firmware pin map. The module is turned 270 degrees so its pins face what they connect to:
+
+| Module side on the board | Pins | Faces |
+|---|---|---|
+| Top edge, left to right | IO11 ... IO0, 3V3, GND | Macro buttons, stick, trigger |
+| Left edge, top to bottom | IO12 ... IO18, USB, IO21 ... IO48 | OLED connector, USB route, charger, lower-left parts |
+| Bottom edge, left to right | IO35 ... IO42, TXD0, RXD0, IO45, GND, IO46, EN | XBee pad row toward USB |
+| Right edge | GND only | Nothing needs it, so the side strip stays free |
 
 ## Module rules
-- **Power:** VDD and VDDH are both tied to 3V3_RF, the 3.3 V rail after FB_RF1. The hall sensor and stick also use 3V3_RF, so their ratiometric outputs track the ADC's VDD reference. Sample them with the SAADC's VDD/4 reference. Fanstel Note 1 requires
-  a regulated 3.3 V, 300 mA minimum, on VDD; VDDH alone cannot power the PA. DCCH stays open.
-- **Reserved:** P0.06, P0.08, P0.17 and P0.19 control the PA and are not connected at the pads.
-  P0.00 and P0.01 go to the module's 32.768 kHz crystal.
-- **Pads:** castellated pins 1-16 are the only hand-solderable ones. All others are LGA.
+- **Variant:** use the -N8.
+- **Straps:** IO0 is pulled up by R_BOOT_PU1. IO3, IO45 and IO46 are unconnected, so nothing can disturb the boot mode or flash voltage.
+- **ADC:** analog inputs stay on ADC1 (IO1-IO10), since ADC2 is not usable while the Wi-Fi radio runs, which ESP-NOW needs.
+- **PWR_HOLD stays on RXD0 (IO44).** Its weak pull-up stays on at and after reset (ESP32-S3 datasheet Table 2-1), so a reset holds the latch and reboots the board. On a pin with no pull, a reset would drop the latch and turn the board off. V1 hardware has verified this pin.
+- **Power button sense stays on an RTC-domain pin.** With the board off, VSYS lifts this node through R_INV_BASE1 and D_INV_ISO1. V1 verified that on a VDD3P3_RTC pin; IO33-IO37 are in the VDD_SPI domain (Table 2-1).
+- **TXD0 (IO43)** prints the boot log, so it stays free for debugging. RGB data has moved off it, so the LED no longer sees that traffic.
+- **Boot glitches:** the low-level power-up glitches on IO1-IO17 (Table 2-2, where IO15 and IO16 appear as XTAL_32K) are 60 µs. Those pins carry only inputs, except IO1 (SLEEP_RQ, where low means awake). XBee RESET is on IO42, which has no listed glitch.
+- **IO26 stays unconnected.** It is the PSRAM chip-select, and Arduino runs a PSRAM probe at every boot, so it is driven before `setup()`. The probe fails on the -N8, which has no PSRAM, and boot continues.
+- **Do not flash V1 firmware on V2.** It would drive IO42 low, which is XBee RESET here, and treat other V2 pins as SPI. V2 needs its own pin map.
+- **EN:** 10 kΩ and 1 µF, as Espressif advises (Peripheral Schematics), so EN crosses 0.75 × VDD about 14 ms after the rail is up. V1 has no capacitor.
+- **Pad 61:** the thermal pad is 9 segments, soldered to GND.
 
 ## Pin assignments
 
-| Function | nRF52840 | Module pad | Notes |
+| Function | GPIO | Module pin | Notes |
 |---|---|---|---|
-| I2C SDA | P0.26 | 1 | OLED, IMU. R_I2C_SDA1 4.7k fitted |
-| I2C SCL | P0.27 | 2 | R_I2C_SCL1 4.7k fitted |
-| Stick X | P0.02 (AIN0) | 5 | Analog |
-| Stick Y | P0.03 (AIN1) | 6 | Analog |
-| Analog trigger | P0.04 (AIN2) | A3 | DRV5055 through R_TRIG1 and C_TRIG1, about 1.6 kHz low-pass |
-| VSYS sense | P0.05 (AIN3) | A4 | Divide-by-3 from VSYS |
-| Digital trigger (bumper) | P1.04 | C6 | Direct, active low, internal pull-up |
-| Macro 1 | P1.10 | Z5 | Direct, active low, internal pull-up |
-| Macro 2 | P0.07 | A5 | Direct, active low, internal pull-up |
-| Macro 3 | P1.09 | E3 | Direct, active low, internal pull-up |
-| Macro 4 | P1.11 | Z0 | Direct, active low, internal pull-up |
-| Macro 5 | P1.07 | E0 | Direct, active low, internal pull-up |
-| Macro 6 | P0.20 | E1 | Direct, active low, internal pull-up |
-| Thumbstick click | P1.03 | B6 | Direct, active low, internal pull-up |
-| Trigger down | P1.06 | Z6 | Direct, active low, internal pull-up |
-| Trigger up | P1.08 | A6 | Direct, active low, internal pull-up |
-| Vol down | P0.12 | E6 | Direct, active low, internal pull-up |
-| Vol up | P1.05 | D6 | Direct, active low, internal pull-up |
-| IMU interrupt | P1.12 | Z1 | ICM-42670-P INT1 |
-| Power hold (PWR_HOLD) | P1.13 | Z2 | Must go high early in boot |
-| Charger STAT1 | P1.14 | Z3 | Open drain, pulled up |
-| Charger STAT2 | P1.15 | Z4 | Open drain, pulled up |
-| Power button sense | P0.11 | 11 | Direct, so power-off does not depend on I2C |
-| Boot button | P1.00 | 12 | R_BOOT_PU1 pull-up |
-| RGB LED data | P0.13 | 13 | SK6812, needs a fast pin |
-| USB D+ / D- | D+ / D- | E4 / E5 | Native USB |
-| USB VBUS | VBUS | F6 | |
-| Reset | P0.18 | 14 | J_SWD1 pin 3, SW_RST1 |
-| SWD | SWDIO / SWDCLK | 16 / 15 | J_SWD1 pins 2 and 4. First programming |
+| Boot button | IO0 | 4 | R_BOOT_PU1 pull-up |
+| XBee SLEEP_RQ (DTR) | IO1 | 5 | Directly over carrier pad 7. Drive it low as one of the first instructions in `setup()` |
+| Macro 6 | IO2 | 6 | Direct, active low, internal pull-up |
+| Macro 3 | IO4 | 8 | Direct, active low, internal pull-up |
+| Macro 2 | IO5 | 9 | Direct, active low, internal pull-up |
+| Stick Y | IO6 (ADC1_CH5) | 10 | Analog |
+| Stick X | IO7 (ADC1_CH6) | 11 | Analog |
+| Macro 5 | IO8 | 12 | Direct, active low, internal pull-up |
+| Analog trigger | IO9 (ADC1_CH8) | 13 | DRV5055 through R_TRIG1 and C_TRIG1, about 1.6 kHz low-pass. C_TRIG1 sits beside the pin |
+| VSYS sense | IO10 (ADC1_CH9) | 14 | Divide-by-3 from VSYS. The divider sits beside the pin |
+| Macro 4 | IO11 | 15 | Direct, active low, internal pull-up |
+| I2C SDA | IO12 | 16 | OLED, IMU. R_I2C_SDA1 4.7k fitted. Top of the left edge, so SDA and SCL do not cross at the connector |
+| I2C SCL | IO13 | 17 | R_I2C_SCL1 4.7k fitted |
+| Charger STAT2 | IO14 | 18 | Open drain, pulled up |
+| Charger STAT1 | IO15 | 19 | Open drain, pulled up |
+| Macro 1 | IO16 | 20 | Direct, active low, internal pull-up |
+| Thumbstick click | IO17 | 21 | Direct, active low, internal pull-up |
+| Trigger down | IO18 | 22 | Direct, active low, internal pull-up |
+| USB D- / D+ | IO19 / IO20 | 23 / 24 | Native USB, through R_USB_DM1 and R_USB_DP1 27 Ω |
+| Power button sense | IO21 | 25 | RTC-domain pin, like V1's IO2 |
+| Digital trigger (bumper) | IO47 | 27 | Direct, active low, internal pull-up |
+| Trigger up | IO33 | 28 | Direct, active low, internal pull-up |
+| XBee CTS | IO34 | 29 | Carrier pad 1 |
+| RGB LED data | IO48 | 30 | SK6812 through R_RGB1 |
+| XBee DIN | IO35 | 31 | Carrier pad 2. ESP32 transmits here |
+| XBee DOUT | IO36 | 32 | Carrier pad 3. ESP32 receives here |
+| IMU interrupt | IO37 | 33 | ICM-42670-P INT1. No longer on a strap pin |
+| Vol up | IO38 | 34 | Direct, active low, internal pull-up |
+| XBee RTS | IO39 | 35 | Carrier pad 4 |
+| Vol down | IO40 | 36 | Direct, active low, internal pull-up |
+| XBee ON/SLEEP | IO41 | 37 | Carrier pad 5 |
+| XBee RESET | IO42 | 38 | Carrier pad 6. Drive open drain only: low or released. The pull-up is on the carrier |
+| Power hold (PWR_HOLD) | RXD0 (IO44) | 40 | Must go high early in boot |
+| Reset | EN | 45 | R_EN_PU1 and C_EN1 only, no button |
 
-Antenna: one u.FL on the module.
+Antenna: the module's connector is the W.FL/MHF III size, not standard U.FL. The XBee on the carrier has its own U.FL, so each radio has a separate antenna.
+
+## XBee carrier pads
+
+U_XBEE1 is 12 pads on the bottom side, 2.54 mm pitch, for a 22 x 17 mm castellated board. The chamfered corner sits by MH3. Pads 1-6 are the row toward USB, left to right seen from the top side; pads 7-12 are the row toward the stick, right to left.
+
+| Pad | Signal | Pad | Signal |
+|---|---|---|---|
+| 1 | CTS | 7 | SLEEP_RQ |
+| 2 | DIN | 8 | GND |
+| 3 | DOUT | 9 | 3V3 |
+| 4 | RTS | 10 | 3V3 |
+| 5 | ON/SLEEP | 11 | GND |
+| 6 | RESET | 12 | GND |
+
+With no carrier fitted these lines float, so firmware should enable pulls on IO34, IO36 and IO41 and treat a failed XBee AT query as "no XBee".
 
 ## Buttons
-Every button wires straight to a module GPIO and to GND, using the internal pull-ups, so simultaneous presses need no diodes. The pins are on the outer LGA ring, matched to the nearest button.
+Every button wires straight to a module GPIO and to GND, using the internal pull-ups, so simultaneous presses need no diodes.
 
 ## Addresses
 OLED 0x3C, ICM-42670-P 0x68. R_I2C_SDA1 and R_I2C_SCL1 stay on the board so the IMU works with no OLED attached.
 
 ## Free pins
-The module still has plenty of LGA GPIOs free. P0.09 and P0.10 are NFC pins by default. AIN4-7 (P0.28-31) are free analog inputs.
+TXD0 (IO43) is free. Leave IO26 unconnected (see Module rules). IO3, IO45 and IO46 are straps, so leave them unconnected.
