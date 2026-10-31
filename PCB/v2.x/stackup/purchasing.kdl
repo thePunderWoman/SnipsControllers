@@ -5,6 +5,10 @@ mpn "0402CG470J500NT" manufacturer="FH (Guangdong Fenghua Advanced Tech)" value=
     catalog lcsc="C1567"
 }
 
+mpn "0402WGF1001TCE" manufacturer="UNI-ROYAL(Uniroyal Elec)" value="1kΩ" footprint="Resistor_SMD:R_0402_1005Metric" {
+    catalog lcsc="C11702"
+}
+
 mpn "0402WGF1000TCE" manufacturer="UNI-ROYAL(Uniroyal Elec)" value="100Ω" footprint="Resistor_SMD:R_0402_1005Metric" {
     catalog lcsc="C25076"
 }
@@ -101,10 +105,6 @@ mpn "DRV5055A2QDBZR" manufacturer="Texas Instruments" value="DRV5055A2QDBZR" foo
     catalog lcsc="C266131"
 }
 
-mpn "ESP32-S3-WROOM-1U-N8" manufacturer="Espressif Systems" value="ESP32-S3-WROOM-1U-N8" footprint="Espressif:ESP32-S3-WROOM-1U" {
-    catalog lcsc="C2980297"
-}
-
 // Internal assembly identifier: the pre-port PCB named the GuliKit hall stick
 // but recorded no orderable manufacturer part number. This is hand installed.
 mpn "GuliKit_Thumbstick" manufacturer="GuliKit" value="GuliKit_Thumbstick" footprint="SnipsControllers_Custom:GuliKit_HallStick"
@@ -165,6 +165,14 @@ mpn "TYPE-C-31-M-12" manufacturer="Hroparts Elec" value="USB-C" footprint="Conne
     catalog lcsc="C165948"
 }
 
-mpn "XB3-24Z8UM" manufacturer="Digi International" value="XBee3 PRO Micro" footprint="Xbee3:XB3-24Z8UM" {
-    catalog lcsc="C5833776"
+mpn "BT840XE" manufacturer="Fanstel" value="BT840XE" footprint="SnipsControllers_Custom:BT840XE" {
+    catalog lcsc="C6132678"
+}
+
+mpn "BLM18KG601SN1D" manufacturer="Murata" value="600Ω@100MHz" footprint="Inductor_SMD:L_0603_1608Metric" {
+    catalog lcsc="C85833"
+}
+
+mpn "CL31A476MPHNNNE" manufacturer="Samsung Electro-Mechanics" value="47µF" footprint="Capacitor_SMD:C_1206_3216Metric" {
+    catalog lcsc="C96123"
 }
