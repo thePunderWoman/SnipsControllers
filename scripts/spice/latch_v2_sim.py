@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ngspice check of the V2 soft latch, which differs from V1 in three ways.
 
-PWR_HOLD is on IO42, which has no reset pull, so the pin floats during a reset. C_LATCH_G1 is 1 uF so
+PWR_HOLD is on IO3, which has no reset pull, so the pin floats during a reset. C_LATCH_G1 is 1 uF so
 the latch rides through a short reset, and R_INV_BASE1 and R_INV_PU1 are 220k to cut the off current.
 
   insert    battery plugged in with the board off: the gate stays low
@@ -80,7 +80,7 @@ def dead_rail():
 
 
 def clamped_rail(crail):
-    """The dead rail with the ESD diodes of IO21, IO42 and IO10 into it, and the VSYS divider on IO10."""
+    """The dead rail with the ESD diodes of IO21, IO3 and IO10 into it, and the VSYS divider on IO10."""
     return (f"Rv1 vsys io10 200k\nRv2 io10 0 100k\nCv io10 0 100n\nDio10 io10 v3v3 DESD\nDio21 sense v3v3 DESD\n"
             f"Dio42 hold v3v3 DESD\n.model DESD D(IS=1e-14 N=1.05)\nR3 v3v3 0 311k\nC3 v3v3 0 {crail}\nRh hold 0 100Meg\n")
 
