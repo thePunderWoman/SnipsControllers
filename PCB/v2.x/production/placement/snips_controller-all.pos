@@ -1,4 +1,4 @@
-### Footprint positions - created on 2026-11-01T11:07:59 ###
+### Footprint positions - created on 2026-11-01T11:55:16 ###
 ### Printed by KiCad version 10.0.5
 ## Unit = mm, Angle = deg.
 ## Side : All
@@ -11,6 +11,7 @@ C_HALL1       100nF_16V_X7R_±10%_|_CL05B104KO5NNNC_|_Samsung_|_0402            
 C_IMU_1       100nF_16V_X7R_±10%_|_CL05B104KO5NNNC_|_Samsung_|_0402                                                                                        C_0402_1005Metric                                  127.2000  -125.9000    0.0000  bottom
 C_IMU_2       2.2µF_10V_X7R_±10%_|_CL10B225KP8NNNC_|_Samsung_|_0603                                                                                        C_0603_1608Metric                                  124.7000  -125.7000  180.0000  bottom
 C_IMU_3       10nF_50V_X7R_±10%_|_CL05B103KB5NNNC_|_Samsung_|_0402                                                                                         C_0402_1005Metric                                  127.1800  -128.5000  180.0000  bottom
+C_LATCH_FB1   470nF_25V_X7R_±10%_|_CL10B474KA8NNNC_|_Samsung_|_0603                                                                                        C_0603_1608Metric                                  137.4000   -80.8000  180.0000  bottom
 C_LATCH_G1    1µF_6.3V_X5R_±10%_|_CL05A105KQ5NNNC_|_Samsung_|_0402                                                                                         C_0402_1005Metric                                  135.0050   -74.8900  180.0000  bottom
 C_STICK1      100nF_16V_X7R_±10%_|_CL05B104KO5NNNC_|_Samsung_|_0402                                                                                        C_0402_1005Metric                                  145.5050   -76.2050  -90.0000  bottom
 C_SYS_1       10µF_25V_X5R_±10%_|_CL21A106KAYNNNE_|_Samsung_|_0805                                                                                         C_0805_2012Metric                                  134.7000   -94.2500    0.0000  bottom
@@ -38,7 +39,7 @@ R_INV_BASE1   220kΩ_±1%_62.5mW_|_0402WGF2203TCE_|_UNI-ROYAL_|_0402            
 R_INV_PU1     220kΩ_±1%_62.5mW_|_0402WGF2203TCE_|_UNI-ROYAL_|_0402                                                                                         R_0402_1005Metric                                  128.4613   -91.2150   90.0000  bottom
 R_ISET1       604Ω_±1%_62.5mW_|_AC0402FR-07604RL_|_Yageo_|_0402                                                                                            R_0402_1005Metric                                  121.7900   -98.2500  180.0000  bottom
 R_LATCH_G1    1MΩ_±1%_62.5mW_|_0402WGF1004TCE_|_UNI-ROYAL_|_0402                                                                                           R_0402_1005Metric                                  132.2850   -74.4400    0.0000  bottom
-R_PWR_EN_PD1  100kΩ_±1%_62.5mW_|_0402WGF1003TCE_|_UNI-ROYAL_|_0402                                                                                         R_0402_1005Metric                                  140.9350   -80.2400    0.0000  bottom
+R_PWR_EN_PD1  22kΩ_±1%_62.5mW_|_0402WGF2202TCE_|_UNI-ROYAL_|_0402                                                                                          R_0402_1005Metric                                  140.9350   -80.2400    0.0000  bottom
 R_STAT1       10kΩ_±1%_62.5mW_|_0402WGF1002TCE_|_UNI-ROYAL_|_0402                                                                                          R_0402_1005Metric                                  124.1600   -97.2500  180.0000  bottom
 R_STAT2       10kΩ_±1%_62.5mW_|_0402WGF1002TCE_|_UNI-ROYAL_|_0402                                                                                          R_0402_1005Metric                                  133.3500  -100.0500    0.0000  bottom
 R_TRIG1       1kΩ_±1%_62.5mW_|_0402WGF1001TCE_|_UNI-ROYAL_|_0402                                                                                           R_0402_1005Metric                                  129.7500   -91.2500  -90.0000  bottom
