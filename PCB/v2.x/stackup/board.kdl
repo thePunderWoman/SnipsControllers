@@ -93,9 +93,10 @@ design snips_controller {
     // Reflows on the last pass, on top: Espressif requires a single reflow for the module. The MINI-1U fits the
     // 17.5 mm between the macro row and the USB pads, where the 19.2 mm WROOM-1U does not.
     // Turned 270 degrees so the signal pins face the stick, the OLED and the carrier, and the GND edge faces the side.
-    // Pins are assigned by position, not from V1's map. PWR_HOLD is on IO42, which has no reset pull (ESP32-S3
+    // Pins are assigned by position, not from V1's map. PWR_HOLD is on IO3, which has no reset pull (ESP32-S3
     // datasheet Table 2-1): RXD0's pull-up could re-latch the board as the rail collapses at power-off. C_LATCH_G1
-    // carries the latch through a short reset, and firmware holds the pin with gpio_hold_en for USB uploads.
+    // carries the latch through a short reset, and firmware holds the pin with gpio_hold_en for USB uploads. It has
+    // to be an RTC pad: on V1 hardware IO3 held through a full upload, and IO42, a digital pad, lost its hold.
     place esp32-s3-mini-1u "U_MCU1" designator="U_MCU1" footprint="Espressif:ESP32-S3-MINI-1U" value="ESP32-S3-MINI-1U-N8" bom_value="Wi-Fi BLE module 8MB flash no PSRAM | ESP32-S3-MINI-1U-N8 | Espressif | SMD module 15.4x15.4mm | N8 variant with external antenna connector"
     // Optional XBee 3 daughter board, hand-soldered to these pads by its castellations. It carries the XBee's
     // decoupling, the RESET pull-up and RC, and the ATTN/BOOTMODE pull-up, so nothing here depends on it being fitted.
@@ -133,7 +134,7 @@ design snips_controller {
     circuit "J_STICK1.p_a" "U_MCU1.IO17" name="/MCU_Core/BTN_STICK"
     circuit "R_BOOT_PU1.A" "SW_BOOT1.2" "U_MCU1.IO0" name="/MCU_Core/MCU_BOOT"
     circuit "C_DBNC1.A" "D_INV_ISO1.K" "R_BTN_PU1.B" "SW_PWR1.1" "U_MCU1.IO21" name="/MCU_Core/PWR_BTN_SENSE"
-    circuit "D_OR2.A" "U_MCU1.IO42" name="/MCU_Core/PWR_HOLD"
+    circuit "D_OR2.A" "U_MCU1.IO3" name="/MCU_Core/PWR_HOLD"
     circuit "R_RGB1.B" "U_MCU1.IO48" name="/MCU_Core/RGB_DIN"
     circuit "R_STAT1.A" "U_CHG1.STAT1" "U_MCU1.IO15" name="/MCU_Core/STAT1"
     circuit "R_STAT2.A" "U_CHG1.STAT2" "U_MCU1.IO14" name="/MCU_Core/STAT2"
@@ -173,7 +174,7 @@ design snips_controller {
     nc "J_USB1.SBU1"
     nc "J_USB1.SBU2"
     nc "U_IMU1.INT2"
-    nc "U_MCU1.IO3" // strap: floating is fine, and a load could upset the JTAG source select
+    nc "U_MCU1.IO42" // no reset pull and free since PWR_HOLD left it: a digital-pad hold does not survive an upload
     nc "U_MCU1.IO45" // strap: stays on its internal pull-down, since high would select 1.8 V flash
     nc "U_MCU1.IO46" // strap: stays on its internal pull-down, so no load can disturb the boot mode
     nc "U_MCU1.TXD0" // prints the boot log, so it stays free for debugging

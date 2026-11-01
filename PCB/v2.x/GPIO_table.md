@@ -17,15 +17,15 @@ Pins are chosen by position, not carried over from V1, so V2 needs its own firmw
 
 ## Module rules
 - **Variant:** use the -N8.
-- **Straps:** IO0 is pulled up by R_BOOT_PU1. IO3, IO45 and IO46 are unconnected, so nothing can disturb the boot mode or flash voltage.
+- **Straps:** IO0 is pulled up by R_BOOT_PU1. IO45 and IO46 are unconnected, so nothing can disturb the boot mode or flash voltage. IO3 carries PWR_HOLD: its strap only selects the JTAG source, which is ignored at default eFuses (Table 3-5).
 - **ADC:** analog inputs stay on ADC1 (IO1-IO10), since ADC2 is not usable while the Wi-Fi radio runs, which ESP-NOW needs.
-- **PWR_HOLD is on IO42,** which has no reset pull (ESP32-S3 datasheet Table 2-1). RXD0's pull-up could re-latch the board as the rail collapses at power-off. C_LATCH_G1 (1 µF) carries the latch through a reset of about 300 ms at worst (derated capacitor, flat cell).
-- **Firmware must latch PWR_HOLD with `gpio_hold_en(IO42)` once it has driven it high,** so it survives resets and USB uploads, and must call `gpio_hold_dis(IO42)` before driving it low to power off. Espressif documents hold across chip and system resets; confirm it through ROM download mode on hardware.
+- **PWR_HOLD is on IO3,** which has no reset pull (ESP32-S3 datasheet Table 2-1). RXD0's pull-up could re-latch the board as the rail collapses at power-off. It has to be an RTC pad (IO0-IO21): on V1 hardware IO3's hold lasted through a full USB upload, while IO42, a digital pad, lost its hold on the USB reset that ends an upload. C_LATCH_G1 (1 µF) carries the latch through a reset of about 300 ms at worst (derated capacitor, flat cell).
+- **Firmware must latch PWR_HOLD with `gpio_hold_en(IO3)` once it has driven it high,** so it survives resets and USB uploads, and must call `gpio_hold_dis(IO3)` before driving it low to power off. Light sleep must not release it. The V1 test ran IO3 with no load, so confirm with a real upload at V2 bring-up.
 - **Power button sense stays on an RTC-domain pin.** With the board off, VSYS lifts this node through R_INV_BASE1 and D_INV_ISO1. V1 verified that on a VDD3P3_RTC pin; IO33-IO37 are in the VDD_SPI domain (Table 2-1).
 - **TXD0 (IO43)** prints the boot log, so it stays free for debugging. RGB data has moved off it, so the LED no longer sees that traffic.
-- **Boot glitches:** the low-level power-up glitches on IO1-IO17 (Table 2-2, where IO15 and IO16 appear as XTAL_32K) are 60 µs. Those pins carry only inputs, except IO1 (SLEEP_RQ, where low means awake). XBee RESET is on RXD0, which has no listed glitch.
+- **Boot glitches:** the low-level power-up glitches on IO1-IO17 (Table 2-2, where IO15 and IO16 appear as XTAL_32K) are 60 µs. Those pins carry only inputs, except IO1 (SLEEP_RQ, where low means awake) and IO3 (PWR_HOLD, where D_OR2 blocks a low). XBee RESET is on RXD0, which has no listed glitch.
 - **IO26 stays unconnected.** It is the PSRAM chip-select, and Arduino runs a PSRAM probe at every boot, so it is driven before `setup()`. The probe fails on the -N8, which has no PSRAM, and boot continues.
-- **Do not flash V1 firmware on V2.** It would leave PWR_HOLD unheld on IO42, since V1 holds IO44, and treat other V2 pins as SPI. V2 needs its own pin map.
+- **Do not flash V1 firmware on V2.** It would leave PWR_HOLD unheld on IO3, since V1 holds IO44, and treat other V2 pins as SPI. V2 needs its own pin map.
 - **EN:** 10 kΩ and 1 µF, as Espressif advises (Peripheral Schematics), so EN crosses 0.75 × VDD about 14 ms after the rail is up. V1 has no capacitor.
 - **Pad 61:** the thermal pad is 9 segments, soldered to GND.
 
@@ -64,7 +64,7 @@ Pins are chosen by position, not carried over from V1, so V2 needs its own firmw
 | XBee RTS | IO39 | 35 | Carrier pad 4 |
 | Vol down | IO40 | 36 | Direct, active low, internal pull-up |
 | XBee ON/SLEEP | IO41 | 37 | Carrier pad 5 |
-| Power hold (PWR_HOLD) | IO42 | 38 | Must go high early in boot, then latched with `gpio_hold_en` |
+| Power hold (PWR_HOLD) | IO3 | 7 | Must go high early in boot, then latched with `gpio_hold_en` |
 | XBee RESET | RXD0 (IO44) | 40 | Carrier pad 6. Drive open drain only: low or released. The pull-up is on the carrier, and RXD0's own pull-up is harmless here |
 | Reset | EN | 45 | R_EN_PU1 and C_EN1 only, no button |
 
@@ -92,4 +92,4 @@ Every button wires straight to a module GPIO and to GND, using the internal pull
 OLED 0x3C, ICM-42670-P 0x68. R_I2C_SDA1 and R_I2C_SCL1 stay on the board so the IMU works with no OLED attached.
 
 ## Free pins
-TXD0 (IO43) is free. Leave IO26 unconnected (see Module rules). IO3, IO45 and IO46 are straps, so leave them unconnected.
+TXD0 (IO43) and IO42 are free. Leave IO26 unconnected (see Module rules). IO45 and IO46 are straps, so leave them unconnected.
