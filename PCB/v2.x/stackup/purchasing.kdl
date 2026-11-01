@@ -173,6 +173,14 @@ mpn "CL05A105KQ5NNNC" manufacturer="Samsung Electro-Mechanics" value="1µF" foot
     catalog lcsc="C107372"
 }
 
+mpn "CL10B474KA8NNNC" manufacturer="Samsung Electro-Mechanics" value="470nF" footprint="Capacitor_SMD:C_0603_1608Metric" rated_voltage="25V" {
+    catalog lcsc="C1623"
+}
+
+mpn "0402WGF2202TCE" manufacturer="UNI-ROYAL(Uniroyal Elec)" value="22kΩ" footprint="Resistor_SMD:R_0402_1005Metric" {
+    catalog lcsc="C25768"
+}
+
 mpn "0402WGF2203TCE" manufacturer="UNI-ROYAL(Uniroyal Elec)" value="220kΩ" footprint="Resistor_SMD:R_0402_1005Metric" {
     catalog lcsc="C25767"
 }

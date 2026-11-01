@@ -15,8 +15,8 @@ through `snips_controller.stackup_sch`; sync it with the Stackup KiCad plugin. R
 - **XBee:** optional. U_XBEE1 is a row of 12 hand-solder pads on the bottom for a 22 x 17 mm castellated daughter board, which carries the XBee 3 Micro, its decoupling, the RESET pull-up and RC, and the ATTN/BOOTMODE pull-up. The link is UART with flow control, not SPI. RTS and DTR also allow XBee serial firmware recovery through the ESP32. Leave the area inside the pads free of parts; vias there stay tented. See `GPIO_table.md`.
 - **Reflow:** the bottom side goes first and the top side last, because Espressif requires a single reflow for the module (datasheet section 12.3). The XBee reflows on its own carrier and never goes upside down, which is what stopped the two modules from sharing this board before.
 - **Radio link:** Amidala's droids use XBee Zigbee 3.0, so a Zigbee controller needs the carrier. The firmware still has to move from the XBee's SPI interface to UART, and needs a V2 pin map.
-- **Programming:** USB, through the module's native USB. To force download mode, hold SW_BOOT1 while pressing the power button. A blank board has no firmware to latch PWR_HOLD, so hold the power button through its first flash. After that, uploads need no button.
-- **No reset button:** the power button can only turn the board on. PWR_HOLD is on IO3, an RTC pad with no reset pull, and C_LATCH_G1 (1 µF) carries the latch through a reset of about 300 ms at worst (derated capacitor, flat cell). Firmware latches the pin with `gpio_hold_en`, so a longer reset or a USB upload holds power with no button, and releases it with `gpio_hold_dis` to power off. Keep a watchdog running to recover from a hang.
+- **Programming:** USB, through the module's native USB. To force download mode, hold SW_BOOT1 while pressing the power button. RXD0's pull-up holds the latch with no firmware, so a blank board flashes after a 1 s press, with no button held during the upload.
+- **No reset button:** the power button turns the board on, and only firmware turns it off. PWR_HOLD is on RXD0, whose pull-up holds the latch through any reset or USB upload, so a blank or hung board stays on until USB and the battery are removed. Keep a watchdog running to recover from a hang. C_LATCH_FB1 gives the latch hysteresis, so that pull-up cannot restart the board at power-off, and R_PWR_EN_PD1 is 22 kΩ so a rising gate cannot couple through it and lift EN.
 - **Buttons:** all 13 connect directly to module GPIOs. See `GPIO_table.md`.
 - **Power blocks:** the buck, charger and power latch follow V1's relative placement, all on the bottom. Two charger GND vias were moved 0.1-0.75 mm in V1's layout to clear earlier button positions. C_BUCK_IN1 turned 90 degrees with its VSYS pad straight above the VIN pin. BUCK_FB runs around the input cap and hops to F.Cu past the inductor, so both planes shield it; keep it out from under L_BUCK1. The latch is too long to fit whole, so it is split at `PWR_BTN_TRIGGER`: the switch and `PWR_LATCH_G` node sit under the stick, turned 270 degrees, and the inverter sits beside the stick's lower pins. See `diagrams/` for why they are arranged this way.
 - **OLED cable:** U_OLED1's opening faces USB, and a Qwiic plug is 7.0 mm wide with its protrusions, so keep top-side parts out of x 0.9-7.9 mm from the mouth at y 52.7 mm down to the MH3 post. Check that a real cable goes in before committing the shell.
@@ -106,9 +106,9 @@ The droids use XBee Zigbee 3.0, so the controller joins that network through the
 ## Bringup Sequence
 
 Recommended bringup order:
-1. Current-limited supply on VSYS, with no carrier fitted: check 3V3 and idle current with the power button held.
-2. Flash over USB, holding the power button, with SW_BOOT1 held if the chip does not enumerate. Confirm firmware drives `PWR_HOLD` high.
-3. Time the shortest press that stays on, at 3.3 V and 4.2 V. The simulation gives 0.1-0.2 s on a normal cell and up to about 0.4 s on a flat one, set by when firmware drives `PWR_HOLD`, so plan on a half-second press and keep that drive early in boot. Run a USB upload with no button held, which is the first test of IO3's hold under D_OR2's load, then confirm a watchdog reset reboots the board and a graceful shutdown stays off.
+1. Current-limited supply on VSYS, with no carrier fitted: press power for 1 s, then check 3V3 and idle current.
+2. Flash over USB with no button held, with SW_BOOT1 held at power-on if the chip does not enumerate. Confirm `PWR_HOLD` reads high.
+3. Time the shortest press that stays on, at 3.3 V and 4.2 V. The simulation gives under 0.3 s at worst, so a 1 s press is well clear. Run a USB upload with no button held, then confirm a watchdog reset reboots the board. Power off at least 20 times, on USB and on battery, and scope `PWR_EN` and `PWR_LATCH_G`: the board must stay off every time, since the simulation's margin has not been measured.
 4. OLED and ICM-42670-P on I2C.
 5. SK6812 RGB LED.
 6. Buttons, using the pin table.
@@ -122,8 +122,8 @@ Recommended bringup order:
 
 - Battery → bq25185 (charger and power path, 4.2V, 500mA) → TLV62569 (3.3V buck) → 3V3 for everything, including the carrier.
 - Power switch: soft latch (AO3401A PFET + AO3400A NFET) controls the TLV62569 EN pin. USB does not hold it on.
-- Boot: press the power button → latch enables 3V3 → module boots → IO3 goes high through D_OR2 to hold the latch, then firmware latches it with `gpio_hold_en`.
-- Shutdown: firmware sees a hold on IO21 → graceful shutdown → `gpio_hold_dis`, IO3 low → the gate decays through R_LATCH_G1 in about 0.6-1.7 s → power cut.
+- Boot: press the power button for about a second → latch enables 3V3 → RXD0's pull-up holds the latch through D_OR2 as soon as the chip has power → firmware drives RXD0 high.
+- Shutdown: firmware sees a hold on IO21 → graceful shutdown → RXD0 low → the gate decays through R_LATCH_G1 → C_LATCH_FB1 kicks it clear of threshold as PWR_EN falls → power cut after about 0.6-2 s, counted from release if the button is still held.
 - bq25185 STAT1 and STAT2 go to IO15 and IO14 (open drain, 10kΩ pull-ups to 3V3).
 - Battery voltage: VSYS through R_VSYS1/R_VSYS2 to IO7, reading VSYS/3.
 - Below about 3.3 V on the battery the buck passes it through, and the DRV5055's minimum is 3.0 V, so the firmware cutoff should sit above that.
