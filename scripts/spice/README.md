@@ -24,6 +24,10 @@ Set `NGSPICE_LIB` to use a different copy. No Python packages are needed.
 | `press` | A held button turns `PWR_EN` on within 20ms at VSYS 3.0V with worst-case FET thresholds, and at typical/best-case corners. |
 | `shutdown` | The 3V3 rail collapsing after shutdown never lifts the latch gate or `PWR_EN`. |
 
+## V2
+
+`latch_v2_sim.py` covers the V2 latch, which differs from V1: PWR_HOLD is on IO42 with no reset pull, C_LATCH_G1 is 1 uF, and R_INV_BASE1 and R_INV_PU1 are 220k. It asserts battery insertion, USB hot-plug with the board off, press time, power-off, riding through a reset (500 ms at 1 uF, 300 ms at an estimated 0.55 uF after bias and tolerance), insertion with the pad ESD diodes into the dead rail, the off drain from the resistors, and a 500 ms press surviving until firmware drives PWR_HOLD 350 ms after the rail comes up. That 350 ms is an estimate until measured. Run it with `python3 scripts/spice/latch_v2_sim.py`. It uses a behavioural buck, and `gpio_hold_en` is firmware, so it is not modeled.
+
 ## Keeping it in sync
 
 The netlist is written by hand to mirror the Stackup power-control circuit. When it changes
