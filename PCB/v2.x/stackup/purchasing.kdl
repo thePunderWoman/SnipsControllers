@@ -69,35 +69,35 @@ mpn "BQ25185DLHR" manufacturer="Texas Instruments" value="BQ25185DLHR" footprint
     catalog lcsc="C19725033"
 }
 
-mpn "CC0402JRNPO9BN390" manufacturer="Yageo" value="39pF" footprint="Capacitor_SMD:C_0402_1005Metric" {
+mpn "CC0402JRNPO9BN390" manufacturer="Yageo" value="39pF" footprint="Capacitor_SMD:C_0402_1005Metric" rated_voltage="50V" {
     catalog lcsc="C106223"
 }
 
-mpn "CL05B103KB5NNNC" manufacturer="Samsung Electro-Mechanics" value="10nF" footprint="Capacitor_SMD:C_0402_1005Metric" {
+mpn "CL05B103KB5NNNC" manufacturer="Samsung Electro-Mechanics" value="10nF" footprint="Capacitor_SMD:C_0402_1005Metric" rated_voltage="50V" {
     catalog lcsc="C15195"
 }
 
-mpn "CL05B104KO5NNNC" manufacturer="Samsung Electro-Mechanics" value="100nF" footprint="Capacitor_SMD:C_0402_1005Metric" {
+mpn "CL05B104KO5NNNC" manufacturer="Samsung Electro-Mechanics" value="100nF" footprint="Capacitor_SMD:C_0402_1005Metric" rated_voltage="16V" {
     catalog lcsc="C1525"
 }
 
-mpn "CL10B225KP8NNNC" manufacturer="Samsung Electro-Mechanics" value="2.2µF" footprint="Capacitor_SMD:C_0603_1608Metric" {
+mpn "CL10B225KP8NNNC" manufacturer="Samsung Electro-Mechanics" value="2.2µF" footprint="Capacitor_SMD:C_0603_1608Metric" rated_voltage="10V" {
     catalog lcsc="C100082"
 }
 
-mpn "CL10A105KB8NNNC" manufacturer="Samsung Electro-Mechanics" value="1µF" footprint="Capacitor_SMD:C_0603_1608Metric" {
+mpn "CL10A105KB8NNNC" manufacturer="Samsung Electro-Mechanics" value="1µF" footprint="Capacitor_SMD:C_0603_1608Metric" rated_voltage="50V" {
     catalog lcsc="C15849"
 }
 
-mpn "CL10A106KP8NNNC" manufacturer="Samsung Electro-Mechanics" value="10µF" footprint="Capacitor_SMD:C_0603_1608Metric" {
+mpn "CL10A106KP8NNNC" manufacturer="Samsung Electro-Mechanics" value="10µF" footprint="Capacitor_SMD:C_0603_1608Metric" rated_voltage="10V" {
     catalog lcsc="C19702"
 }
 
-mpn "CL21A106KAYNNNE" manufacturer="Samsung Electro-Mechanics" value="10µF" footprint="Capacitor_SMD:C_0805_2012Metric" {
+mpn "CL21A106KAYNNNE" manufacturer="Samsung Electro-Mechanics" value="10µF" footprint="Capacitor_SMD:C_0805_2012Metric" rated_voltage="25V" {
     catalog lcsc="C15850"
 }
 
-mpn "CL21A226MAQNNNE" manufacturer="Samsung Electro-Mechanics" value="22µF" footprint="Capacitor_SMD:C_0805_2012Metric" {
+mpn "CL21A226MAQNNNE" manufacturer="Samsung Electro-Mechanics" value="22µF" footprint="Capacitor_SMD:C_0805_2012Metric" rated_voltage="25V" {
     catalog lcsc="C45783"
 }
 
@@ -167,4 +167,12 @@ mpn "TYPE-C-31-M-12" manufacturer="Hroparts Elec" value="USB-C" footprint="Conne
 
 mpn "ESP32-S3-MINI-1U-N8" manufacturer="Espressif Systems" value="ESP32-S3-MINI-1U-N8" footprint="Espressif:ESP32-S3-MINI-1U" {
     catalog lcsc="C2980299"
+}
+
+mpn "CL05A105KQ5NNNC" manufacturer="Samsung Electro-Mechanics" value="1µF" footprint="Capacitor_SMD:C_0402_1005Metric" rated_voltage="6.3V" {
+    catalog lcsc="C107372"
+}
+
+mpn "0402WGF2203TCE" manufacturer="UNI-ROYAL(Uniroyal Elec)" value="220kΩ" footprint="Resistor_SMD:R_0402_1005Metric" {
+    catalog lcsc="C25767"
 }
