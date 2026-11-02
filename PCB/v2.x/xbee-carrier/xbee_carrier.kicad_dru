@@ -1,0 +1,9 @@
+(version 1)
+
+(rule "Carrier clearance"
+   (constraint clearance (min 0.15mm))
+)
+
+(rule "Carrier edge clearance"
+   (constraint edge_clearance (min 0.2mm))
+)

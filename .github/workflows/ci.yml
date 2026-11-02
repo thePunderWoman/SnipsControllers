@@ -35,6 +35,12 @@ jobs:
       - name: Check purchasing BOM (v2)
         run: cargo +1.96.0 run --locked --manifest-path ci/stackup/Cargo.toml -- bom PCB/v2.x/stackup/board.kdl --locked -o /tmp/snips-bom-v2.csv
 
+      - name: Check Stackup design (XBee carrier)
+        run: cargo +1.96.0 run --locked --manifest-path ci/stackup/Cargo.toml -- check PCB/v2.x/xbee-carrier/stackup/board.kdl --locked
+
+      - name: Check purchasing BOM (XBee carrier)
+        run: cargo +1.96.0 run --locked --manifest-path ci/stackup/Cargo.toml -- bom PCB/v2.x/xbee-carrier/stackup/board.kdl --locked
+
       - name: Install KiCad 10
         run: |
           sudo apt-get update
@@ -52,6 +58,12 @@ jobs:
       - name: Check PCB sync (v2)
         run: |
           /usr/bin/python3 ci/check_pcb_sync.py PCB/v2.x/snips_controller.kicad_pcb \
+            --stackup ci/stackup/target/debug/snips-stackup-check \
+            --plugin-dir stackup-tool/kicad-plugin
+
+      - name: Check PCB sync (XBee carrier)
+        run: |
+          /usr/bin/python3 ci/check_pcb_sync.py PCB/v2.x/xbee-carrier/xbee_carrier.kicad_pcb \
             --stackup ci/stackup/target/debug/snips-stackup-check \
             --plugin-dir stackup-tool/kicad-plugin
 
