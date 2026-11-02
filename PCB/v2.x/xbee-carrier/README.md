@@ -2,6 +2,13 @@
 
 A 2-layer castellated daughter board that puts a Digi XBee 3 PRO Micro on the V2 controller's underside. It is optional, and V2 runs without it. The mating footprint on V2 is `U_XBEE1`, `XBee_Carrier_Castellated`.
 
+<p align="center">
+  <img src="assets/xbee-carrier-v1-front.png" alt="KiCad render of the XBee side of the carrier, with the XBee 3 Micro, its U.FL connector and the support parts around the edge" width="400">
+  <img src="assets/xbee-carrier-v1-back.png" alt="KiCad render of the mating side of the carrier, with the castellated edges and the label This side faces V2" width="368">
+</p>
+
+A STEP model of the assembled board is in [`step/xbee_carrier.step`](step/xbee_carrier.step).
+
 ## Board
 
 - **Size:** 22 x 17 mm, 0.8 mm thick, 2 layers. The chamfer clears the MH3 shell post on V2.
