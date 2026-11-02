@@ -7,6 +7,13 @@ Stackup library plus a [local thumbstick model](stackup/parts.kdl). The existing
 through `snips_controller.stackup_sch`; sync it with the Stackup KiCad plugin. Run
 `stackup check PCB/v2.x/snips/stackup/board.kdl` from the repository root before syncing.
 
+<p align="center">
+  <img src="assets/snips-v2-front.png" alt="KiCad render of the front of the Snips V2 board, with the thumbstick, macro buttons, ESP32 module and USB-C port" width="300">
+  <img src="assets/snips-v2-back.png" alt="KiCad render of the back of the Snips V2 board, with the power circuits, the carrier pads and the battery connector" width="289">
+</p>
+
+A STEP model of the assembled board is in [`step/v2.0/snips_controller.step`](step/v2.0/snips_controller.step).
+
 ## V2 board
 
 70 x 30 mm, 4 layers: F.Cu signals, In1 solid 3V3, In2 solid GND, B.Cu signals. 1.6 mm thick. Routed, not yet fabricated.
