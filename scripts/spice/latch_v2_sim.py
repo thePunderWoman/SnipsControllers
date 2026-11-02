@@ -19,7 +19,7 @@ falls it kicks the gate down, so the returning pull-up has real ground to make u
   offheld   the same with the button still held: off comes on release
   ratio     the same as off at both extremes of the two capacitors' ratio
 
-Reuses the models and solver wrapper in latch_sim.py. The netlist mirrors PCB/v2.x/stackup/board.kdl by
+Reuses the models and solver wrapper in latch_sim.py. The netlist mirrors PCB/v2.x/snips/stackup/board.kdl by
 hand, so update it when those values or that topology change. See README.md for what is not modeled.
 
     python3 scripts/spice/latch_v2_sim.py          # exit 1 on any failure

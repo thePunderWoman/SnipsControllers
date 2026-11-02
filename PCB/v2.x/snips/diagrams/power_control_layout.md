@@ -4,7 +4,7 @@
 
 Q_PWR1 switches the buck's EN pin from VSYS. It carries only the EN pull-down current, since the buck takes its input directly from VSYS, so this block is low-current throughout.
 
-**Source:** `PCB/v2.x/stackup/board.kdl` &nbsp;·&nbsp; **Nets:** VSYS → PWR_EN &nbsp;·&nbsp; **Package:** SOT-23 ×3, SOD-123 ×2, SOT-323 ×1
+**Source:** `PCB/v2.x/snips/stackup/board.kdl` &nbsp;·&nbsp; **Nets:** VSYS → PWR_EN &nbsp;·&nbsp; **Package:** SOT-23 ×3, SOD-123 ×2, SOT-323 ×1
 
 ## What's on this sheet
 
@@ -71,4 +71,4 @@ The button's position is fixed by the enclosure before you start — everything 
 > **Checked, not just assumed:** AO3401A is rated for 4A continuous with <60mΩ RDS(on) at 4.5V gate drive in this SOT-23 package — comfortably oversized for a handheld controller's sub-2A system budget, so this isn't a thermal risk the way the charger's WSON is. MMBT3904 is a general-purpose small-signal part switching microamps here (just enough to bias a diode) — nowhere near its ratings, no thermal consideration needed. BAT54W-7-F's job is purely to isolate two nodes at sub-1V forward drop, also nowhere near its ratings. Connectivity alone (ERC, netlist, DRC) doesn't catch bad DC bias points — the `R_LATCH_G1`/`PWR_BTN_SENSE` loading bugs in callouts D and F, and the floating `PWR_EN` in callout G, all passed every connectivity check and were only found by actually working through the bias/divider math or reading the driven IC's own datasheet, so don't treat a clean ERC/DRC as proof a gate-drive, sense, or enable network will behave.
 
 ---
-*Generated from `PCB/v2.x/stackup/board.kdl` — a placement reference, not a manufacturing drawing. Model your actual footprints and DRC against your fab's rules. A richer standalone version with the full interactive design lives in [power_control_layout.html](power_control_layout.html).*
+*Generated from `PCB/v2.x/snips/stackup/board.kdl` — a placement reference, not a manufacturing drawing. Model your actual footprints and DRC against your fab's rules. A richer standalone version with the full interactive design lives in [power_control_layout.html](power_control_layout.html).*
