@@ -108,7 +108,7 @@ The droids use XBee Zigbee 3.0, so the controller joins that network through the
 Recommended bringup order:
 1. Current-limited supply on VSYS, with no carrier fitted: press power for 1 s, then check 3V3 and idle current.
 2. Flash over USB with no button held, with SW_BOOT1 held at power-on if the chip does not enumerate. Confirm `PWR_HOLD` reads high.
-3. Time the shortest press that stays on, at 3.3 V and 4.2 V. The simulation gives under 0.3 s at worst, so a 1 s press is well clear. Run a USB upload with no button held, then confirm a watchdog reset reboots the board. Power off at least 20 times, on USB and on battery, and scope `PWR_EN` and `PWR_LATCH_G`: the board must stay off every time, since the simulation's margin has not been measured.
+3. Time the shortest press that stays on, at 3.3 V and 4.2 V. The simulation gives under 0.4 s at worst, so a 1 s press is well clear. Run a USB upload with no button held, then confirm a watchdog reset reboots the board. Power off at least 20 times, on USB and on battery, and scope `PWR_EN` and `PWR_LATCH_G`: the board must stay off every time, since the simulation's margin has not been measured.
 4. OLED and ICM-42670-P on I2C.
 5. SK6812 RGB LED.
 6. Buttons, using the pin table.
@@ -123,7 +123,7 @@ Recommended bringup order:
 - Battery → bq25185 (charger and power path, 4.2V, 500mA) → TLV62569 (3.3V buck) → 3V3 for everything, including the carrier.
 - Power switch: soft latch (AO3401A PFET + AO3400A NFET) controls the TLV62569 EN pin. USB does not hold it on.
 - Boot: press the power button for about a second → latch enables 3V3 → RXD0's pull-up holds the latch through D_OR2 as soon as the chip has power → firmware drives RXD0 high.
-- Shutdown: firmware sees a hold on IO21 → graceful shutdown → RXD0 low → the gate decays through R_LATCH_G1 → C_LATCH_FB1 kicks it clear of threshold as PWR_EN falls → power cut after about 0.6-2 s, counted from release if the button is still held.
+- Shutdown: firmware sees a hold on IO21 → graceful shutdown → RXD0 low → the gate decays through R_LATCH_G1 → C_LATCH_FB1 kicks it clear of threshold as PWR_EN falls → power cut after about 0.8-2.6 s, counted from release if the button is still held.
 - bq25185 STAT1 and STAT2 go to IO15 and IO14 (open drain, 10kΩ pull-ups to 3V3).
 - Battery voltage: VSYS through R_VSYS1/R_VSYS2 to IO7, reading VSYS/3.
 - Below about 3.3 V on the battery the buck passes it through, and the DRV5055's minimum is 3.0 V, so the firmware cutoff should sit above that.

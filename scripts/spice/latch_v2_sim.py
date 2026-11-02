@@ -34,16 +34,18 @@ import latch_sim as ls
 R_INV_BASE1 = R_INV_PU1 = "220k"
 R_PWR_EN_PD1 = "22k"
 C_LATCH_G1 = "1u"
-C_LATCH_FB1 = "470n"
-C_FB_LOW = "230n"     # estimate: a 16 V X7R at 3.5 V bias and -20%, the case with the least kick
+C_LATCH_FB1 = "1u"
+C_FB_LOW = "600n"     # estimate: a 50 V X5R 0603 at 3.5 V bias and -10%, the case with the least kick
+C_FB_HIGH = "1.2u"    # estimate: +10% and a little over, the case with the most kick
+C_RAIL = "48u"        # V2 nominal with the XBee carrier: a heavier rail is the harder case at power-off
 C_LATCH_LOW = "0.55u" # estimate: -10% tolerance and about -40% for a 6.3 V 0402 X5R at 2.8 V bias
 CORNERS = ((3.0, 1.45, 1.3), (3.7, 1.05, 0.9), (4.2, 0.65, 0.6), (4.5, 0.65, 0.6))
 WPU = ("30k", "100k")     # the datasheet gives only 45k typical, so this is a deliberately wide spread
 BROWNOUTS = (2.8, 2.4, 2.0)  # rail level at which the chip resets and the pull-up returns
 
 MAX_GATE_OFF = 0.5    # V, well under the AO3400A's 0.65 V minimum threshold
-MAX_PRESS_S = 0.5     # button press to PWR_EN on
-MAX_OFF_S = 3.0       # PWR_HOLD low to PWR_EN low
+MAX_PRESS_S = 0.6     # button press to PWR_EN on
+MAX_OFF_S = 4.0       # PWR_HOLD low to PWR_EN low
 MAX_OFF_DRAIN = 60e-6 # A from VSYS with the board off, resistors only: no IC quiescent current
 BOOT_PRESS_S = 1.0    # press the board must accept as a normal turn-on
 BUMP_S = 0.02         # knock on the button that must not turn the board on
@@ -81,7 +83,7 @@ Cen pwren 0 20p
 """
 
 
-def buck(vsys, load_a=0.06, c="37u"):
+def buck(vsys, load_a=0.06, c=C_RAIL):
     v = min(3.32, vsys - 0.05)
     return f"V33 bk 0 {v}\nSbk bk v3v3 pwren 0 SWBK\nCrail v3v3 0 {c}\nRload v3v3 0 {v / load_a}\n"
 
@@ -252,7 +254,7 @@ def offheld():
 
 def ratio():
     out = []
-    for name, c_latch, c_fb in (("least kick", "1.1u", C_FB_LOW), ("most kick", C_LATCH_LOW, "560n")):
+    for name, c_latch, c_fb in (("least kick", "1.1u", C_FB_LOW), ("most kick", C_LATCH_LOW, C_FB_HIGH)):
         for v, n, p in CORNERS[:3]:
             fell, low, pk = stays_off(v, n, p, 0.005, "30k", 2.8, c_latch, c_fb)
             ok = fell is not None and low and pk < n

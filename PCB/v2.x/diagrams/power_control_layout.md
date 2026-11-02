@@ -19,7 +19,7 @@ A press-to-start, software-held latch: the button turns the board on, the MCU ha
 | R_GATE1 | 100kΩ | 0402 | Q_PWR1 gate pull-up — off by default |
 | R_LATCH_G1 | 1MΩ | 0402 | Q_LATCH1 gate pull-down — off by default; sized to not starve the diode-OR's drive (callout D) |
 | C_LATCH_G1 | 1µF | 0402 | Latch-gate filter — keeps the ~2ms battery-insertion transient from lifting `PWR_LATCH_G` (callout I) |
-| C_LATCH_FB1 | 470nF | 0603 | `PWR_EN` to `PWR_LATCH_G` — gives the latch hysteresis at power-off (callout J) |
+| C_LATCH_FB1 | 1µF | 0603 | `PWR_EN` to `PWR_LATCH_G` — gives the latch hysteresis at power-off (callout J) |
 | R_BTN_PU1 | 100kΩ | 0402 | Button sense pull-up to **3V3** (not VSYS) — MCU reads pressed (0V) vs idle (3.3V); callout H |
 | R_INV_BASE1 | 100kΩ | 0402 | Dedicated VSYS pull-up for Q_INV1's base — decoupled from `PWR_BTN_SENSE` (callout F) |
 | D_INV_ISO1 | BAT54W-7-F | SOT-323 | Schottky isolator: lets a press pull Q_INV1's base low without loading `PWR_BTN_SENSE` |
