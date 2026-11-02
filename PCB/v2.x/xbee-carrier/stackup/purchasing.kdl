@@ -1,0 +1,23 @@
+mpn "0402CG470J500NT" manufacturer="FH (Guangdong Fenghua Advanced Tech)" value="47pF" footprint="Capacitor_SMD:C_0402_1005Metric" {
+    catalog lcsc="C1567"
+}
+
+mpn "0402WGF1002TCE" manufacturer="UNI-ROYAL(Uniroyal Elec)" value="10kΩ" footprint="Resistor_SMD:R_0402_1005Metric" {
+    catalog lcsc="C25744"
+}
+
+mpn "0402WGF1000TCE" manufacturer="UNI-ROYAL(Uniroyal Elec)" value="100Ω" footprint="Resistor_SMD:R_0402_1005Metric" {
+    catalog lcsc="C25076"
+}
+
+mpn "CL05B104KO5NNNC" manufacturer="Samsung Electro-Mechanics" value="100nF" footprint="Capacitor_SMD:C_0402_1005Metric" rated_voltage="16V" {
+    catalog lcsc="C1525"
+}
+
+mpn "CL05A105KA5NQNC" manufacturer="Samsung Electro-Mechanics" value="1µF" footprint="Capacitor_SMD:C_0402_1005Metric" rated_voltage="25V" {
+    catalog lcsc="C52923"
+}
+
+mpn "CL05A106MP5NUNC" manufacturer="Samsung Electro-Mechanics" value="10µF" footprint="Capacitor_SMD:C_0402_1005Metric" rated_voltage="10V" {
+    catalog lcsc="C315248"
+}

@@ -1,0 +1,14 @@
+### Footprint positions - created on 2026-11-01T19:59:42 ###
+### Printed by KiCad version 10.0.5
+## Unit = mm, Angle = deg.
+## Side : All
+# Ref          Val                                                                                             Package                 PosX       PosY       Rot  Side
+C_XB_1U1       1µF_25V_X5R_±10%_|_CL05A105KA5NQNC_|_Samsung_|_0402                                             C_0402_1005Metric   109.5500   -92.2500  180.0000  top
+C_XB_10U1      10µF_10V_X5R_±20%_|_CL05A106MP5NUNC_|_Samsung_|_0402                                            C_0402_1005Metric    89.5500   -94.1000  -90.0000  top
+C_XB_47P1      47pF_50V_C0G_±5%_|_0402CG470J500NT_|_FH_|_0402                                                  C_0402_1005Metric   107.6500   -92.2500    0.0000  top
+C_XB_RST1      100nF_16V_X7R_±10%_|_CL05B104KO5NNNC_|_Samsung_|_0402                                           C_0402_1005Metric    89.5500   -99.0000  -90.0000  top
+R_XB_ATTN_PU1  10kΩ_±1%_62.5mW_|_0402WGF1002TCE_|_UNI-ROYAL_|_0402                                             R_0402_1005Metric    90.6500   -92.6000  180.0000  top
+R_XB_RST1      100Ω_±1%_62.5mW_|_0402WGF1000TCE_|_UNI-ROYAL_|_0402                                             R_0402_1005Metric    90.1000  -107.4000  180.0000  top
+R_XB_RST_PU1   10kΩ_±1%_62.5mW_|_0402WGF1002TCE_|_UNI-ROYAL_|_0402                                             R_0402_1005Metric    89.5500   -96.8000   90.0000  top
+U_XBEE1        XBee_3_PRO_Zigbee_3.0_module_+19dBm_U.FL_|_XB3-24Z8UM_|_Digi_|_Micro_13.54x19.30mm_castellated  XB3-24Z8UM          100.4000  -100.0000  -90.0000  top
+## End

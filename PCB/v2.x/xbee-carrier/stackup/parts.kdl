@@ -1,0 +1,123 @@
+// XBee 3 carrier parts.
+part xbee3-micro {
+    symbol "Xbee3:XB3-24Z8UM"
+    reference U
+    value "XBee3 PRO Micro"
+    datasheet "https://docs.digi.com/resources/documentation/digidocs/pdfs/90001543.pdf"
+    description "XBee 3 PRO Zigbee 3.0 module, +19 dBm, 2.4 GHz, U.FL antenna, Micro 13.54x19.30mm castellated"
+    manufacturer "Digi International"
+    order mpn="XB3-24Z8UM" lcsc=C5833776
+
+    pin GND power_in
+    pin VCC power_in
+    pin DOUT output symbol="DOUT/DIO13"
+    pin DIN input symbol="DIN/~{CONFIG}/DIO14"
+    pin DIO12 bidirectional
+    pin RESET input symbol="~{RESET}"
+    pin RSSI_PWM output symbol="RSSI_PWM/DIO10"
+    pin PWM1 output symbol="PWM1/DIO11"
+    pin DTR input symbol="~{DTR}/SLEEP_RQ/DIO8"
+    pin SPI_ATTN output symbol="SPI_~{ATTN}/~{BOOTMODE}/DIO19" {
+        role strap sampled=reset pull=none \
+            note="BOOTMODE: must not be low at reset (90001543); the module's data-ready line afterwards"
+        require net.rest high
+    }
+    pin SPI_CLK input symbol="SPI_CLK/DIO18"
+    pin SPI_SSEL input symbol="SPI_~{SSEL}/DIO17"
+    pin SPI_MOSI input symbol="SPI_MOSI/DIO16"
+    pin SPI_MISO output symbol="SPI_MISO/DIO15"
+    pin DIO4 bidirectional
+    pin CTS output symbol="~{CTS}/DIO7"
+    pin ON_SLEEP output symbol="ON/~{SLEEP}/DIO9"
+    pin ASSOCIATE output symbol="ASSOCIATE/DIO5"
+    pin RTS input symbol="~{RTS}/DIO6"
+    pin AD3 bidirectional symbol="AD3/DIO3"
+    pin AD2 bidirectional symbol="AD2/DIO2"
+    pin AD1 bidirectional symbol="AD1/DIO1"
+    pin AD0 bidirectional symbol="AD0/DIO0"
+    pin RF passive
+
+    package micro footprint="Xbee3:XB3-24Z8UM" {
+        pad GND 1
+        pad VCC 2
+        pad DOUT 3
+        pad DIN 4
+        pad DIO12 5
+        pad RESET 6
+        pad RSSI_PWM 7
+        pad PWM1 8
+        pad DTR 9
+        pad GND 10
+        pad SPI_ATTN 11
+        pad GND 12
+        pad SPI_CLK 13
+        pad SPI_SSEL 14
+        pad SPI_MOSI 15
+        pad SPI_MISO 16
+        pad GND 21
+        pad DIO4 23
+        pad CTS 24
+        pad ON_SLEEP 25
+        pad ASSOCIATE 26
+        pad RTS 27
+        pad AD3 28
+        pad AD2 29
+        pad AD1 30
+        pad AD0 31
+        pad GND 32
+        pad RF 33
+        pad GND 34
+    }
+
+    // 2.1-3.6 V supply; 140 mA transmitting at +19 dBm (90001543, electrical specifications).
+    port vcc type=power {
+        require net.voltage min="2.1V" max="3.6V"
+        add net.draw "140mA"
+        line rail pin=VCC
+        line gnd pin=GND
+    }
+
+    port spi type=spi {
+        line sck pin=SPI_CLK
+        line mosi pin=SPI_MOSI
+        line miso pin=SPI_MISO
+    }
+    port cs type=output pin=SPI_SSEL
+    port sleep-rq type=output pin=DTR
+    port attn pin=SPI_ATTN
+    port on-sleep pin=ON_SLEEP
+    port reset pin=RESET
+}
+
+// The carrier's castellated edge, the mate of xbee-carrier on the V2 board. Same pad numbers and coordinates.
+part carrier-edge {
+    symbol "Connector_Generic:Conn_02x06_Odd_Even"
+    reference J
+    value "XBee carrier edge"
+    description "Castellated half holes on the carrier's edge, 2.54 mm pitch"
+
+    pin GND power_in
+    pin VCC power_in
+    pin DIN passive
+    pin DOUT passive
+    pin RTS passive
+    pin CTS passive
+    pin SLEEP_RQ passive
+    pin ON_SLEEP passive
+    pin RESET passive
+
+    package castellated footprint="SnipsControllers_Custom:XBee_Carrier_Edge" {
+        pad CTS 1
+        pad DIN 2
+        pad DOUT 3
+        pad RTS 4
+        pad ON_SLEEP 5
+        pad RESET 6
+        pad SLEEP_RQ 7
+        pad GND 8
+        pad VCC 9
+        pad VCC 10
+        pad GND 11
+        pad GND 12
+    }
+}

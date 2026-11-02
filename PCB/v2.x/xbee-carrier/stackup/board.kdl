@@ -1,0 +1,83 @@
+// Snips XBee 3 carrier: a 2-layer castellated daughter board for the V2 controller's underside.
+// The XBee faces away from V2, so this board's top view matches XBee_Carrier_Castellated on V2 exactly.
+use "@stackup/passives"
+use "./parts.kdl"; use "./purchasing.kdl"
+
+design xbee_carrier {
+    // Digi XB3-24Z8UM on this board's top side, the only reflow side. It is MSL 3.
+    place xbee3-micro "U_XBEE1" designator="U_XBEE1" footprint="Xbee3:XB3-24Z8UM" value="XBee3 PRO Micro" bom_value="XBee 3 PRO Zigbee 3.0 module +19dBm U.FL | XB3-24Z8UM | Digi | Micro 13.54x19.30mm castellated"
+    place carrier-edge "J_EDGE1" designator="J_EDGE1" footprint="SnipsControllers_Custom:XBee_Carrier_Edge" value="XBee carrier edge" bom_value="Castellated edge no part | Snips XBee carrier edge | Snips Controllers | Copper half holes only | DNP - part of the bare board" manufacturer="Snips Controllers" mpn="Snips XBee carrier edge" hand=#true
+
+    // Digi 90001543 p.52: 1 uF and 47 pF as near as possible to pad 2, lowest value closest, plus 10 uF.
+    // The 10 uF has no proximity requirement. It is an 0402 for space, so about 4 uF at 3.3 V, and V2's rail is close by.
+    place capacitor "C_XB_47P1" designator="C_XB_47P1" footprint="Capacitor_SMD:C_0402_1005Metric" value="47pF" bom_value="47pF 50V C0G ±5% | 0402CG470J500NT | FH | 0402"
+    place capacitor "C_XB_1U1" designator="C_XB_1U1" footprint="Capacitor_SMD:C_0402_1005Metric" value="1µF" bom_value="1µF 25V X5R ±10% | CL05A105KA5NQNC | Samsung | 0402"
+    place capacitor "C_XB_10U1" designator="C_XB_10U1" footprint="Capacitor_SMD:C_0402_1005Metric" value="10µF" bom_value="10µF 10V X5R ±20% | CL05A106MP5NUNC | Samsung | 0402"
+
+    // V2 drives RESET open drain, low or released, so the pull-up lives here. The RC holds the module in reset for
+    // about 1 ms as the rail rises, and R_XB_RST1 keeps the discharge current off the ESP32 pin.
+    place resistor "R_XB_RST_PU1" designator="R_XB_RST_PU1" footprint="Resistor_SMD:R_0402_1005Metric" value="10kΩ" bom_value="10kΩ ±1% 62.5mW | 0402WGF1002TCE | UNI-ROYAL | 0402"
+    place resistor "R_XB_RST1" designator="R_XB_RST1" footprint="Resistor_SMD:R_0402_1005Metric" value="100Ω" bom_value="100Ω ±1% 62.5mW | 0402WGF1000TCE | UNI-ROYAL | 0402"
+    place capacitor "C_XB_RST1" designator="C_XB_RST1" footprint="Capacitor_SMD:C_0402_1005Metric" value="100nF" bom_value="100nF 16V X7R ±10% | CL05B104KO5NNNC | Samsung | 0402"
+    // BOOTMODE shares this pin and must not be low at reset (90001543 p.42).
+    place pull-up "R_XB_ATTN_PU1" designator="R_XB_ATTN_PU1" footprint="Resistor_SMD:R_0402_1005Metric" value="10kΩ" bom_value="10kΩ ±1% 62.5mW | 0402WGF1002TCE | UNI-ROYAL | 0402"
+
+    circuit "J_EDGE1.CTS" "U_XBEE1.CTS" name="/XBee/XBEE_CTS"
+    circuit "J_EDGE1.DIN" "U_XBEE1.DIN" name="/XBee/XBEE_DIN"
+    circuit "J_EDGE1.DOUT" "U_XBEE1.DOUT" name="/XBee/XBEE_DOUT"
+    circuit "J_EDGE1.RTS" "U_XBEE1.RTS" name="/XBee/XBEE_RTS"
+    circuit "J_EDGE1.ON_SLEEP" "U_XBEE1.ON_SLEEP" name="/XBee/XBEE_ON_SLEEP"
+    circuit "J_EDGE1.SLEEP_RQ" "U_XBEE1.DTR" name="/XBee/XBEE_SLEEP_RQ"
+    circuit "J_EDGE1.RESET" "R_XB_RST1.A" name="/XBee/XBEE_RESET"
+    circuit "R_XB_RST1.B" "C_XB_RST1.A" "R_XB_RST_PU1.A" "U_XBEE1.RESET" name="/XBee/XBEE_RESET_RC"
+    circuit "R_XB_ATTN_PU1.node" "U_XBEE1.SPI_ATTN" name="/XBee/XBEE_ATTN"
+    circuit "J_EDGE1.VCC" "U_XBEE1.VCC" "C_XB_47P1.A" "C_XB_1U1.A" "C_XB_10U1.A" "R_XB_RST_PU1.B" "R_XB_ATTN_PU1.rail.rail" name="3V3"
+    set "J_EDGE1.VCC" net.voltage "3.3V"
+    circuit "J_EDGE1.GND" "U_XBEE1.GND" "C_XB_47P1.B" "C_XB_1U1.B" "C_XB_10U1.B" "C_XB_RST1.B" name="GND"
+
+    nc "U_XBEE1.DIO12"
+    nc "U_XBEE1.RSSI_PWM"
+    nc "U_XBEE1.PWM1"
+    nc "U_XBEE1.SPI_CLK"
+    nc "U_XBEE1.SPI_SSEL"
+    nc "U_XBEE1.SPI_MOSI"
+    nc "U_XBEE1.SPI_MISO"
+    nc "U_XBEE1.DIO4"
+    nc "U_XBEE1.ASSOCIATE"
+    nc "U_XBEE1.AD3"
+    nc "U_XBEE1.AD2"
+    nc "U_XBEE1.AD1"
+    nc "U_XBEE1.AD0"
+    nc "U_XBEE1.RF" // this module uses the U.FL connector, not the RF pad
+
+    match placement {
+        when value="47pF"
+        when footprint="Capacitor_SMD:C_0402_1005Metric"
+        set mpn="0402CG470J500NT"
+    }
+    match placement {
+        when value="1µF"
+        when footprint="Capacitor_SMD:C_0402_1005Metric"
+        set mpn="CL05A105KA5NQNC"
+    }
+    match placement {
+        when value="10µF"
+        when footprint="Capacitor_SMD:C_0402_1005Metric"
+        set mpn="CL05A106MP5NUNC"
+    }
+    match placement {
+        when value="100nF"
+        when footprint="Capacitor_SMD:C_0402_1005Metric"
+        set mpn="CL05B104KO5NNNC"
+    }
+    match placement {
+        when value="10kΩ"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="0402WGF1002TCE"
+    }
+    match placement {
+        when value="100Ω"
+        when footprint="Resistor_SMD:R_0402_1005Metric"
+        set mpn="0402WGF1000TCE"
+    }
+}

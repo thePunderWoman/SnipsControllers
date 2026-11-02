@@ -77,7 +77,7 @@ files are organized.
 | TLV62569 VOUT | 22µF ceramic | As on V1. TI specifies 10-47 µF |
 | ESP32-S3-MINI-1U 3V3 | 10µF + 100nF + 39pF ceramic | As on V1 |
 | ESP32-S3-MINI-1U EN | 1µF ceramic | With R_EN_PU1, per Espressif |
-| XBee VCC | 10µF + 1µF + 100nF + 47pF ceramic | On the carrier |
+| XBee VCC | 10µF + 1µF + 47pF ceramic | On the carrier, per Digi 90001543 p.52 |
 
 ### Resistors
 | Signal | Value | Notes |
