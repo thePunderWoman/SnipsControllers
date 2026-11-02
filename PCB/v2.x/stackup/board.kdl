@@ -63,8 +63,9 @@ design snips_controller {
     place resistor "R_GATE1" designator="R_GATE1" footprint="Resistor_SMD:R_0402_1005Metric" value="100kΩ" bom_value="100kΩ ±1% 62.5mW | 0402WGF1003TCE | UNI-ROYAL | 0402"
     // Gives the latch hysteresis. As PWR_EN falls it kicks the gate down, clear of threshold, so RXD0's pull-up cannot
     // restart the board when it returns at brownout. It also couples a rising gate back into PWR_EN, which is why
-    // R_PWR_EN_PD1 is 22k: at 100k that alone lifts EN past its threshold. See scripts/spice/latch_v2_sim.py.
-    place capacitor "C_LATCH_FB1" designator="C_LATCH_FB1" footprint="Capacitor_SMD:C_0603_1608Metric" value="470nF" bom_value="470nF 25V X7R ±10% | CL10B474KA8NNNC | Samsung | 0603"
+    // R_PWR_EN_PD1 is 22k: at 100k that alone lifts EN past its threshold. It is 1 uF because the XBee carrier adds to the
+    // rail, which collapses more slowly: 470 nF left almost no margin with one fitted. See scripts/spice/latch_v2_sim.py.
+    place capacitor "C_LATCH_FB1" designator="C_LATCH_FB1" footprint="Capacitor_SMD:C_0603_1608Metric" value="1µF" bom_value="1µF 50V X5R ±10% | CL10A105KB8NNNC | Samsung | 0603"
     place resistor "R_INV_BASE1" designator="R_INV_BASE1" footprint="Resistor_SMD:R_0402_1005Metric" value="220kΩ" bom_value="220kΩ ±1% 62.5mW | 0402WGF2203TCE | UNI-ROYAL | 0402"
     place resistor "R_INV_PU1" designator="R_INV_PU1" footprint="Resistor_SMD:R_0402_1005Metric" value="220kΩ" bom_value="220kΩ ±1% 62.5mW | 0402WGF2203TCE | UNI-ROYAL | 0402"
     place resistor "R_ISET1" designator="R_ISET1" footprint="Resistor_SMD:R_0402_1005Metric" value="604Ω" bom_value="604Ω ±1% 62.5mW | AC0402FR-07604RL | Yageo | 0402"
@@ -215,11 +216,6 @@ design snips_controller {
         when value="22kΩ"
         when footprint="Resistor_SMD:R_0402_1005Metric"
         set mpn="0402WGF2202TCE"
-    }
-    match placement {
-        when value="470nF"
-        when footprint="Capacitor_SMD:C_0603_1608Metric"
-        set mpn="CL10B474KA8NNNC"
     }
     match placement {
         when value="220kΩ"

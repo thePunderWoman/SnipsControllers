@@ -257,7 +257,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:86"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:87"
 			(at 0 2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1502,7 +1502,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:82"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:83"
 			(at -2 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1882,7 +1882,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:112"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:113"
 			(at 0 2 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -2158,7 +2158,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:84"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:85"
 			(at 0 2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -2758,7 +2758,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:77"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:78"
 			(at 0 2 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -2961,7 +2961,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:91"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:92"
 			(at 2 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -3407,7 +3407,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:88"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:89"
 			(at 0 2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -3779,7 +3779,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:85"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:86"
 			(at 0 2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -4151,7 +4151,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:83"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:84"
 			(at 0 2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -4852,7 +4852,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:115"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:116"
 			(at 0 2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -5725,7 +5725,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:104"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:105"
 			(at 0 -2 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -6589,7 +6589,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:93"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:94"
 			(at -2 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -8291,7 +8291,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:73"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:74"
 			(at -2 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -8607,7 +8607,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:80"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:81"
 			(at 0 2 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -8824,7 +8824,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:109"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:110"
 			(at 0 2 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -9027,7 +9027,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:90"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:91"
 			(at 2 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -9920,7 +9920,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:108"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:109"
 			(at 0 2 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -10123,7 +10123,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:94"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:95"
 			(at -2 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -10633,7 +10633,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:81"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:82"
 			(at 0 -2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -10845,7 +10845,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:89"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:90"
 			(at 0 2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -11406,7 +11406,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:78"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:79"
 			(at 0 2 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -11606,7 +11606,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:87"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:88"
 			(at 0 2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -18497,7 +18497,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:114"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:115"
 			(at 0 -2 90)
 			(layer "B.SilkS")
 			(hide yes)
@@ -19583,7 +19583,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:68"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:69"
 			(at 0 -2 0)
 			(layer "B.SilkS")
 			(hide yes)
@@ -19804,7 +19804,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:92"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:93"
 			(at 0 2 0)
 			(layer "B.SilkS")
 			(hide yes)
@@ -20271,7 +20271,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:69"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:70"
 			(at -2 0 0)
 			(layer "B.SilkS")
 			(hide yes)
@@ -22182,7 +22182,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:96"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:97"
 			(at 0 -2 180)
 			(layer "B.SilkS")
 			(hide yes)
@@ -22985,7 +22985,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:75"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:76"
 			(at 0 2 180)
 			(layer "B.SilkS")
 			(hide yes)
@@ -24055,7 +24055,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:71"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:72"
 			(at -2 0 270)
 			(layer "B.SilkS")
 			(hide yes)
@@ -24487,7 +24487,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:79"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:80"
 			(at 0 -2 180)
 			(layer "B.SilkS")
 			(hide yes)
@@ -24934,7 +24934,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:74"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:75"
 			(at 0 -2 180)
 			(layer "B.SilkS")
 			(hide yes)
@@ -25150,7 +25150,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:70"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:71"
 			(at 0 -2 180)
 			(layer "B.SilkS")
 			(hide yes)
@@ -25785,7 +25785,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:107"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:108"
 			(at 0 -2 180)
 			(layer "B.SilkS")
 			(hide yes)
@@ -26206,7 +26206,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:95"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:96"
 			(at -2 0 180)
 			(layer "B.SilkS")
 			(hide yes)
@@ -27472,7 +27472,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:113"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:114"
 			(at 0 -2 180)
 			(layer "B.SilkS")
 			(hide yes)
@@ -27809,7 +27809,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "470nF 25V X7R ±10% | CL10B474KA8NNNC | Samsung | 0603"
+		(property "Value" "1µF 50V X5R ±10% | CL10A105KB8NNNC | Samsung | 0603"
 			(at 0 -1.43 0)
 			(layer "B.Fab")
 			(uuid "36557735-6d4f-49c3-8576-f9ec90382a28")
@@ -27858,7 +27858,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Voltage" "25V"
+		(property "Voltage" "50V"
 			(at 0 -2 0)
 			(layer "B.SilkS")
 			(hide yes)
@@ -27884,7 +27884,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Manufacturer_Part_Number" "CL10B474KA8NNNC"
+		(property "Manufacturer_Part_Number" "CL10A105KB8NNNC"
 			(at 0 -2 0)
 			(layer "B.SilkS")
 			(hide yes)
@@ -27897,7 +27897,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C1623"
+		(property "LCSC" "C15849"
 			(at 0 -2 0)
 			(layer "B.SilkS")
 			(hide yes)
@@ -27923,7 +27923,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:67"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:68"
 			(at 0 -2 0)
 			(layer "B.SilkS")
 			(hide yes)
@@ -28622,7 +28622,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:111"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:112"
 			(at 0 -2 270)
 			(layer "B.SilkS")
 			(hide yes)
@@ -28830,7 +28830,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:76"
+		(property "Stackup Source" "PCB/v2.x/stackup/board.kdl:77"
 			(at 0 -2 180)
 			(layer "B.SilkS")
 			(hide yes)

@@ -1,4 +1,4 @@
-### Footprint positions - created on 2026-11-01T11:55:16 ###
+### Footprint positions - created on 2026-11-01T19:51:01 ###
 ### Printed by KiCad version 10.0.5
 ## Unit = mm, Angle = deg.
 ## Side : All
@@ -11,7 +11,7 @@ C_HALL1       100nF_16V_X7R_±10%_|_CL05B104KO5NNNC_|_Samsung_|_0402            
 C_IMU_1       100nF_16V_X7R_±10%_|_CL05B104KO5NNNC_|_Samsung_|_0402                                                                                        C_0402_1005Metric                                  127.2000  -125.9000    0.0000  bottom
 C_IMU_2       2.2µF_10V_X7R_±10%_|_CL10B225KP8NNNC_|_Samsung_|_0603                                                                                        C_0603_1608Metric                                  124.7000  -125.7000  180.0000  bottom
 C_IMU_3       10nF_50V_X7R_±10%_|_CL05B103KB5NNNC_|_Samsung_|_0402                                                                                         C_0402_1005Metric                                  127.1800  -128.5000  180.0000  bottom
-C_LATCH_FB1   470nF_25V_X7R_±10%_|_CL10B474KA8NNNC_|_Samsung_|_0603                                                                                        C_0603_1608Metric                                  137.4000   -80.8000  180.0000  bottom
+C_LATCH_FB1   1µF_50V_X5R_±10%_|_CL10A105KB8NNNC_|_Samsung_|_0603                                                                                          C_0603_1608Metric                                  137.4000   -80.8000  180.0000  bottom
 C_LATCH_G1    1µF_6.3V_X5R_±10%_|_CL05A105KQ5NNNC_|_Samsung_|_0402                                                                                         C_0402_1005Metric                                  135.0050   -74.8900  180.0000  bottom
 C_STICK1      100nF_16V_X7R_±10%_|_CL05B104KO5NNNC_|_Samsung_|_0402                                                                                        C_0402_1005Metric                                  145.5050   -76.2050  -90.0000  bottom
 C_SYS_1       10µF_25V_X5R_±10%_|_CL21A106KAYNNNE_|_Samsung_|_0805                                                                                         C_0805_2012Metric                                  134.7000   -94.2500    0.0000  bottom
