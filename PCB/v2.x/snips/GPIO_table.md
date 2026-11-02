@@ -1,7 +1,7 @@
 # Snips Controller V2 — ESP32-S3-MINI-1U pin table
 
-> The wiring source is `PCB/v2.x/stackup/board.kdl`, and the module is modeled in
-> `PCB/v2.x/stackup/parts.kdl`. Pin data is from Espressif's ESP32-S3-MINI-1 & MINI-1U datasheet
+> The wiring source is `PCB/v2.x/snips/stackup/board.kdl`, and the module is modeled in
+> `PCB/v2.x/snips/stackup/parts.kdl`. Pin data is from Espressif's ESP32-S3-MINI-1 & MINI-1U datasheet
 > v1.7, in `datasheets/`. The module is on the top side.
 
 The ESP32-S3-MINI-1U-N8 runs the firmware. The XBee 3 is optional: it sits on a castellated daughter board on the underside, and the ESP32's own Bluetooth and ESP-NOW work without it.

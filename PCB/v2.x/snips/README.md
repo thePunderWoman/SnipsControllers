@@ -5,7 +5,7 @@ A wireless handheld controller for R2-D2 droid operation, designed for use at pu
 The electrical design is in [Stackup KDL](stackup/board.kdl), using the pinned
 Stackup library plus a [local thumbstick model](stackup/parts.kdl). The existing [KiCad PCB](snips_controller.kicad_pcb) is linked
 through `snips_controller.stackup_sch`; sync it with the Stackup KiCad plugin. Run
-`stackup check PCB/v2.x/stackup/board.kdl` from the repository root before syncing.
+`stackup check PCB/v2.x/snips/stackup/board.kdl` from the repository root before syncing.
 
 ## V2 board
 
