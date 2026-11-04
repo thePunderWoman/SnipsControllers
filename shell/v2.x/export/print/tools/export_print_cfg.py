@@ -5,6 +5,8 @@ ORI = {
     'TopShell':     ([], '+Z up (as modelled): seam rim on the bed'),
     'BottomShell':  ([], '+Z up (as modelled): belly on the bed, open side up (scoop needs supports)'),
     'BatteryPanel': ([], '+Z up (as modelled): outer face on the bed'),
+    # pouch-cell variant (replaces BottomShell + BatteryPanel + Trigger; TriggerPost, TriggerCaps and the top-side parts are shared)
+    'BottomShell_Pouch': ([], '+Z up (as modelled): belly on the bed, open side up (scoop needs supports)'),
     'Bumper':       ([('x', -90)], 'front face on the bed'),
     'PowerButton':  ([('x', -90)], 'flange on the bed, stem up'),
     'SideButtonL1': ([('y', 90)], 'flat base on the bed, D stem up'),
@@ -12,6 +14,7 @@ ORI = {
     'SideButtonR1': ([('y', -90)], 'flat base on the bed, D stem up'),
     'SideButtonR2': ([('y', -90)], 'flat base on the bed, D stem up'),
     'Trigger':      ([('y', -90)], 'big flat blade face on the bed, spring ear up'),
+    'Trigger_Pouch': ([('y', -90)], 'big flat blade face on the bed, spring ear up'),
     'TriggerPost':  ([('x', 180)], 'D flat on the bed, post lying along X'),
 }
 for _i in range(1, 7):
