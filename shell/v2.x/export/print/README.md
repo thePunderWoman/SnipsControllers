@@ -34,6 +34,7 @@ them) for a 3 x 1 mm strap loop. Slots are narrow and tall with rounded ends, so
   radial clearance to the cell unchanged (`bay_ceil_*` parameters). Printed belly down the new part is a domed roof over the cell trench: the surface is steeper than 45 deg up to the arc tips, then the last ~10.6 mm (between the arc tips) curves over to horizontal and has to bridge. Expect it to print with bridge settings; check the preview and add slicer supports only if the dome sags (not yet test-printed).
 - Engraved + / - at the two ends of both ledges and "Li-ion 14500 only" on the right ledge (`pol_*` parameters, 0.5 mm deep).
   The ledge is a bridge when printed belly down, so the letters may print a little rough.
+- The negative end is a closed square tube to the back wall (`bay_tube_*`): 1.1 mm walls, 0.7 mm roof that bridges ~17 mm across when printed belly down (not yet test-printed; use bridge settings and check the preview).
 
 ## Trigger notes
 - Both triggers are filleted where a finger touches them: the long edges across the blade (nose, bottom-flat corners, rear corner) at 1.2 mm (`trig_edge_r`, only below `trig_edge_zmax`) and the outline of both side faces along the finger blade, from the rear face near the hub round the bottom and along the nose diagonal, at 1.0 mm (`trig_side_r`). 1.2 mm does not compute on the side outline, because of sliver edges at the ramp teeth and hub; the rest of the outline (ledge, ramp, hub pockets) stays sharp.

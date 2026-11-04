@@ -66,6 +66,13 @@ inductor), `bay_ceil_z0`, `bay_ceil_w`, `bay_ceil_xb_y0`, `bay_ceil_xb_y1`.
 Remaining float with the cell in: 0.25 mm to the ceiling at the two ends, 0.33 mm of clearance under the XBee module. A strip of
 Kapton tape on the module underside adds margin for free.
 
+At the negative (trigger) end the ceiling continues as a closed square tube all the way to the back wall where the spring contact
+sits (y up to 8.2 mm, `bay_tube_*` parameters): 1.1 mm side walls from the bulkhead and floor, a 0.7 mm roof at z 0.3 mm and
+a 0.8 mm end wall, with a short transition from the ceiling. The tube is deliberately larger than a round sleeve (inner half-width
+`bay_tube_in_x` = cell radius + clearance, roof raised above the cell), because the cell is removed by tilting its rear end down
+about the bulkhead edge and its front end rises about 1.1 mm at 14 deg; a snug round sleeve would block removal beyond ~3 deg.
+Widening the battery panel so the cell drops straight in would allow a snugger tube (not done).
+
 The two flat ledges beside the cell (visible with the panel off) carry engraved polarity marks: **+** at the rear (palm) end,
 **-** at the front (trigger) end, on both ledges, plus "Li-ion 14500 only" along the right ledge. Text height `pol_h`
 (2.2 mm) / `pol_note_h` (1.8 mm), depth `pol_depth` (0.5 mm of the 1.6 mm ledge), position `pol_x`, `pol_y_lo`, `pol_y_hi`,

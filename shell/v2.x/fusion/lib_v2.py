@@ -3018,7 +3018,7 @@ POL_PARAMS = [
     ('pol_x', '(bay_cell_d / 2 + bay_trench_clr + bay_pan_w / 2 + bay_pan_clr) / 2', 'x of the ledge centre line (abs)'),
     ('pol_y_lo', 'bay_seal_ys', 'rear end of the visible ledge (wide zone start)'),
     ('pol_y_hi', 'bay_pan_y1 + bay_pan_clr', 'front end of the visible ledge'),
-    ('pol_edge', '2.4 mm', 'centre of the + and - marks from the ledge ends'),
+    ('pol_edge', '1.8 mm', 'centre of the + and - marks from the ledge ends'),
 ]
 POL_CAP = 0.5   # baseline offset as a fraction of text height (Fusion text height = the full glyph height, so centre the glyphs)
 
@@ -3095,3 +3095,55 @@ def build_bay_polarity(c, des, body, sides=(1, -1)):
         if note:
             texts.add(_pol_text(sk, des, 'Li-ion 14500 only', 'pol_note_h', side, '(pol_y_lo + pol_y_hi) / 2', '19 mm'))
         ext(c, texts, 'pol_depth', FE.CutFeatureOperation, 'Engrave ' + nm.lower(), neg=True, target=body)
+
+
+# ---------------------------------------------------------------- 14500 bay front tube (negative-terminal end, standard shell only)
+# Encloses the cell's front end and the front contact block from the cradle end to the contact holder's back wall. A snug tube would
+# block cell removal: the cell tilts rear-down about the bulkhead rear edge, which lifts its front end about 1.1 mm (its top corner
+# reaches z -0.02 at 14 deg). So the tube is square with a raised roof (underside bay_tube_roof_z) instead of following the trench circle.
+# Limits above it: joystick base z 1.59 (x 6.6..9.7), 0603 z 1.31 (y 6.8..7.6), diodes / SOT-23 z 0.85..0.91 from y 8.5 (SOT-23 also at x < -8.8).
+TUBE_PARAMS = [
+    ('bay_tube_y0', 'bay_cradle_y1', 'tube start = cradle arc end'),
+    ('bay_tube_y1', '8.2 mm', 'tube end (back wall of the contact holder); PCB diodes at y 8.5 reach z 0.85'),
+    ('bay_tube_in_x', 'bay_cell_d / 2 + bay_trench_clr', 'tube inner half-width = trench radius'),
+    ('bay_tube_wall', '1.1 mm', 'tube side wall thickness (outer face x 8.6, 0.2 mm inside the SOT-23 at x -8.8)'),
+    ('bay_tube_roof_z', '0.3 mm', 'roof underside: clears the cell front end swinging up when it tilts out (z -0.02 at 14 deg)'),
+    ('bay_tube_roof_t', '0.7 mm', 'roof thickness (top z 1.0, 0.59 under the joystick base)'),
+    ('bay_tube_zb', 'bay_bulk_top_z - 0.3 mm', 'walls over the hook bulkhead start here (below it the hook slots are open)'),
+    ('bay_tube_end_t', '0.8 mm', 'end wall thickness'),
+    ('bay_tube_end_zb', 'bay_hold_top_z - 0.3 mm', 'end wall starts 0.3 mm into the holder backing top'),
+]
+
+
+def add_tube_params(des):
+    add_ceil_params(des)
+    up = des.userParameters
+    for n, e, c in TUBE_PARAMS:
+        pr = up.itemByName(n)
+        if pr is None:
+            up.add(n, VI(e), 'mm', c)
+        else:
+            pr.expression = e
+
+
+def build_bay_front_tube(c, des, body):
+    add_tube_params(des)
+    def mir(x0, x1, y0, y1):
+        return [(x0, x1, y0, y1), ('-(%s)' % x1, '-(%s)' % x0, y0, y1)]
+    wx0 = 'bay_tube_in_x'; wx1 = 'bay_tube_in_x + bay_tube_wall'
+    ymid = 'bay_cradle_ay1'
+    # side walls over the hook bulkhead (y -0.8 .. 2.2)
+    sk = _xy_rects(c, des, 'Bay tube walls bulkhead', mir(wx0, wx1, 'bay_tube_y0', ymid))
+    ext(c, all_profiles(sk), 'bay_tube_roof_z - bay_tube_zb', FE.JoinFeatureOperation, 'Bay tube walls bulkhead', start='bay_tube_zb', target=body)
+    # side walls on the floor (y 2.2 .. end)
+    sk = _xy_rects(c, des, 'Bay tube walls floor', mir(wx0, wx1, ymid, 'bay_tube_y1'))
+    ext(c, all_profiles(sk), 'bay_tube_roof_z - bay_seal_zlow', FE.JoinFeatureOperation, 'Bay tube walls floor', start='bay_seal_zlow', target=body)
+    # end wall on the holder backing
+    sk = _xy_rects(c, des, 'Bay tube end wall', [('-(%s)' % wx1, wx1, 'bay_tube_y1 - bay_tube_end_t', 'bay_tube_y1')])
+    ext(c, main_profile(sk), 'bay_tube_roof_z - bay_tube_end_zb', FE.JoinFeatureOperation, 'Bay tube end wall', start='bay_tube_end_zb', target=body)
+    # roof
+    sk = _xy_rects(c, des, 'Bay tube roof', [('-(%s)' % wx1, wx1, 'bay_tube_y0', 'bay_tube_y1')])
+    ext(c, main_profile(sk), 'bay_tube_roof_t', FE.JoinFeatureOperation, 'Bay tube roof', start='bay_tube_roof_z', target=body)
+    # close the 0.5 mm slit between the dome ceiling end (top bay_ceil_top_z) and the raised roof
+    sk = _xy_rects(c, des, 'Bay tube transition', [('-(bay_ceil_w)', 'bay_ceil_w', 'bay_tube_y0 - 0.6 mm', 'bay_tube_y0 + 0.2 mm')])
+    ext(c, main_profile(sk), 'bay_tube_roof_z + 0.1 mm - (bay_ceil_top_z - 0.1 mm)', FE.JoinFeatureOperation, 'Bay tube transition', start='bay_ceil_top_z - 0.1 mm', target=body)
