@@ -2964,3 +2964,134 @@ def build_trigger_side_fillets(comp, des):
             raise RuntimeError('no side-edge fillet run computes on the face at x=%.1f' % (x * 10))
         feats.append(done)
     return feats
+
+
+# ---------------------------------------------------------------- 14500 bay ceiling (standard shell only)
+# The cradle arcs stop at bay_cradle_deg above the cell equator, so the cell can float up into whatever sits over it. The XBee
+# module's underside (z -0.82) is only 0.33 mm above the cell top (z -1.15). This closes the top of the cell trench with a thin
+# printed ceiling everywhere the PCB parts leave room (rear end and front end, the front being the negative-terminal end), so the
+# cell is sleeved on all sides except the belly opening. No ceiling under the XBee module (bay_ceil_xb_y0..y1).
+CEIL_PARAMS = [
+    ('bay_ceil_top_z', '-0.2 mm', 'ceiling top face (lowest PCB bottom-side part over it is the 0.29 mm inductor, the 0.85 mm caps and the XBee module (z -0.82) are excluded by y)'),
+    ('bay_ceil_z0', 'bay_axis_z + 3 mm', 'ceiling block bottom: inside the trench circle, so it is trimmed to the trench by the cut'),
+    ('bay_ceil_w', '(bay_cell_d / 2 + bay_trench_clr + bay_cradle_t) * cos(bay_cradle_deg)', 'ceiling half-width = x of the cradle arc outer tip'),
+    ('bay_ceil_xb_y0', '-30.9 mm', 'rear edge of the XBee module keep-out (module body y -30.4..-18.6 plus 0.5 mm)'),
+    ('bay_ceil_xb_y1', '-18.1 mm', 'front edge of the XBee module keep-out'),
+]
+
+
+def add_ceil_params(des):
+    add_cradle_params(des)
+    up = des.userParameters
+    for n, e, c in CEIL_PARAMS:
+        pr = up.itemByName(n)
+        if pr is None:
+            up.add(n, VI(e), 'mm', c)
+        else:
+            pr.expression = e
+
+
+def build_bay_ceiling(c, des, body):
+    """Join a ceiling block over each end of the cell trench, then cut the trench circle back out of it. Blocks span from the
+    cradle arc ends to the XBee keep-out; the cut keeps the trench radius so the cell clearance is unchanged."""
+    add_ceil_params(des)
+    for nm, y0, y1 in (('Bay ceiling rear', 'bay_cradle_y0', 'bay_ceil_xb_y0'), ('Bay ceiling front', 'bay_ceil_xb_y1', 'bay_cradle_y1')):
+        sk = _xy_rects(c, des, nm, [('-(bay_ceil_w)', 'bay_ceil_w', y0, y1)])
+        ext(c, main_profile(sk), 'bay_ceil_top_z - bay_ceil_z0', FE.JoinFeatureOperation, nm, start='bay_ceil_z0', target=body)
+    sk = c.sketches.add(c.xZConstructionPlane); sk.name = 'Bay ceiling trench'
+    circle_at(sk, des, '0 mm', '-bay_axis_z', 'bay_cell_d + 2 * bay_trench_clr')
+    prof = main_profile(sk)
+    # the rear cut starts where the existing cell trench starts (clip front face + 0.2 mm); starting at the arc start would widen the
+    # trench by 0.2 mm in y and leave a tangent sliver at the circle bottom (z = floor), which made the STL non-watertight
+    ext(c, prof, 'bay_ceil_xb_y0 - (bay_clip_y + bay_clip_t + 0.2 mm)', FE.CutFeatureOperation, 'Bay ceiling trench (rear)', start='bay_clip_y + bay_clip_t + 0.2 mm', target=body)
+    ext(c, prof, 'bay_cradle_y1 - bay_ceil_xb_y1', FE.CutFeatureOperation, 'Bay ceiling trench (front)', start='bay_ceil_xb_y1', target=body)
+
+
+# ---------------------------------------------------------------- 14500 bay polarity marks + cell note (standard shell only)
+# Engraved into the flat ledge faces beside the cell (z = bay_axis_z, facing the belly opening), where they are visible with the
+# panel off and the cell in. Palm (rear) end is +, trigger (front) end is -. The note goes on the right ledge. Text is sketched on
+# the ledge face itself, so it reads correctly from below, reading rear -> front with its tops toward the centre line.
+POL_PARAMS = [
+    ('pol_h', '2.2 mm', 'polarity mark text height'),
+    ('pol_note_h', '1.8 mm', 'cell note text height'),
+    ('pol_depth', '0.5 mm', 'engraving depth (ledge is 1.6 mm thick)'),
+    ('pol_x', '(bay_cell_d / 2 + bay_trench_clr + bay_pan_w / 2 + bay_pan_clr) / 2', 'x of the ledge centre line (abs)'),
+    ('pol_y_lo', 'bay_seal_ys', 'rear end of the visible ledge (wide zone start)'),
+    ('pol_y_hi', 'bay_pan_y1 + bay_pan_clr', 'front end of the visible ledge'),
+    ('pol_edge', '2.4 mm', 'centre of the + and - marks from the ledge ends'),
+]
+POL_CAP = 0.5   # baseline offset as a fraction of text height (Fusion text height = the full glyph height, so centre the glyphs)
+
+
+def add_pol_params(des):
+    add_seal_params(des)
+    up = des.userParameters
+    for n, e, c in POL_PARAMS:
+        pr = up.itemByName(n)
+        if pr is None:
+            up.add(n, VI(e), 'mm', c)
+        else:
+            pr.expression = e
+
+
+def ledge_face(body, side):
+    """Planar downward face at the cell equator on the given side (+1 right / -1 left) of the bay."""
+    for f in body.faces:
+        if f.geometry.surfaceType != adsk.core.SurfaceTypes.PlaneSurfaceType: continue
+        bb = f.boundingBox
+        if abs(bb.minPoint.z * 10 + 8.4) < 0.01 and abs(bb.maxPoint.z * 10 + 8.4) < 0.01:
+            x0 = bb.minPoint.x * 10; x1 = bb.maxPoint.x * 10
+            ok, n = f.evaluator.getNormalAtPoint(f.pointOnFace)
+            if n.z < -0.9 and ((side > 0 and x0 > 7 and x1 < 11.1) or (side < 0 and x1 < -7 and x0 > -11.1)):
+                return f
+    raise RuntimeError('ledge face not found side %d' % side)
+
+
+def _signed_dim(d, expr, getter, target):
+    """Set a driving distance dimension and flip its sign if the geometry landed on the wrong side of the origin."""
+    d.parameter.expression = expr
+    if abs(getter() - target) > 1e-4:
+        d.parameter.expression = '-(%s)' % expr
+
+
+def _pol_text(sk, des, text, h_expr, side, yc_expr, len_expr, zf=None):
+    """One text along a fully constrained construction line parallel to y, centred on yc, baseline offset so the glyphs sit on the
+    ledge centre line. Model positions are mapped into the face sketch with modelToSketchSpace; dimension signs are verified."""
+    H = adsk.fusion.DimensionOrientations
+    zf = ev_cm(des, 'bay_axis_z') if zf is None else zf
+    hv = ev_cm(des, h_expr); xb = side * ev_cm(des, 'pol_x') - POL_CAP * hv   # glyph tops point to +x on both ledges
+    yc = ev_cm(des, yc_expr); ln = ev_cm(des, len_expr)
+    p0 = sk.modelToSketchSpace(P3(xb, yc - ln / 2, zf)); p1 = sk.modelToSketchSpace(P3(xb, yc + ln / 2, zf))
+    line = sk.sketchCurves.sketchLines.addByTwoPoints(P3(p0.x, p0.y, 0), P3(p1.x, p1.y, 0))
+    line.isConstruction = True
+    sk.geometricConstraints.addVertical(line)
+    dm = sk.sketchDimensions
+    uexpr = ('(pol_x) - %g * (%s)' if side > 0 else '(pol_x) + %g * (%s)') % (POL_CAP, h_expr)
+    d = dm.addDistanceDimension(sk.originPoint, line.startSketchPoint, H.HorizontalDimensionOrientation, P3(p0.x / 2, p0.y - 0.3, 0))
+    _signed_dim(d, uexpr, lambda: line.startSketchPoint.geometry.x, p0.x)
+    dm.addDistanceDimension(line.startSketchPoint, line.endSketchPoint, H.VerticalDimensionOrientation, P3(p0.x + 0.3, (p0.y + p1.y) / 2, 0)).parameter.expression = len_expr
+    ye = '(%s) - (%s) / 2' % (yc_expr, len_expr)
+    d = dm.addDistanceDimension(sk.originPoint, line.startSketchPoint, H.VerticalDimensionOrientation, P3(p0.x - 0.3, p0.y / 2, 0))
+    if p1.y > p0.y:
+        _signed_dim(d, ye, lambda: line.startSketchPoint.geometry.y, p0.y)
+    else:
+        raise RuntimeError('sketch v axis is reversed relative to model y; path would read front to rear')
+    ti = sk.sketchTexts.createInput2(text, hv)
+    ti.fontName = 'Arial'; ti.textStyle = adsk.fusion.TextStyles.TextStyleBold
+    ti.setAsAlongPath(line, True, adsk.core.HorizontalAlignments.CenterHorizontalAlignment, 0)
+    t = sk.sketchTexts.add(ti)
+    t.heightParameter.expression = h_expr      # bind the glyph height to the user parameter
+    return t
+
+
+def build_bay_polarity(c, des, body, sides=(1, -1)):
+    """Engrave + / - at the two ends of both ledges, and the cell note on the right ledge."""
+    add_pol_params(des)
+    for side, nm, note in [t for t in ((1, 'Polarity marks right ledge', True), (-1, 'Polarity marks left ledge', False)) if t[0] in sides]:
+        sk = c.sketches.add(ledge_face(body, side)); sk.name = nm
+        texts = adsk.core.ObjectCollection.create()
+        texts.add(_pol_text(sk, des, '+', 'pol_h', side, 'pol_y_lo + pol_edge', '3 mm'))
+        texts.add(_pol_text(sk, des, '\u2212', 'pol_h', side, 'pol_y_hi - pol_edge', '3 mm'))
+        if note:
+            texts.add(_pol_text(sk, des, 'Li-ion 14500 only', 'pol_note_h', side, '(pol_y_lo + pol_y_hi) / 2', '19 mm'))
+        ext(c, texts, 'pol_depth', FE.CutFeatureOperation, 'Engrave ' + nm.lower(), neg=True, target=body)

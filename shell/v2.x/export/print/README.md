@@ -29,6 +29,12 @@ pouch cell, no BatteryPanel). TopShell, buttons, Bumper, TriggerPost and Trigger
 them) for a 3 x 1 mm strap loop. Slots are narrow and tall with rounded ends, so they print without supports. Parameters:
 `strap_loop_w`, `strap_loop_t`, `strap_clr`, `strap_bar_w`, `strap_x`, `strap_z`, `strap_cut_y`.
 
+## 14500 bay ceiling and markings (BottomShell only)
+- 0.7 mm printed ceiling over the cell at the rear (positive) end and the front (negative) end of the bay, open under the XBee module,
+  radial clearance to the cell unchanged (`bay_ceil_*` parameters). Printed belly down the new part is a domed roof over the cell trench: the surface is steeper than 45 deg up to the arc tips, then the last ~10.6 mm (between the arc tips) curves over to horizontal and has to bridge. Expect it to print with bridge settings; check the preview and add slicer supports only if the dome sags (not yet test-printed).
+- Engraved + / - at the two ends of both ledges and "Li-ion 14500 only" on the right ledge (`pol_*` parameters, 0.5 mm deep).
+  The ledge is a bridge when printed belly down, so the letters may print a little rough.
+
 ## Trigger notes
 - Both triggers are filleted where a finger touches them: the long edges across the blade (nose, bottom-flat corners, rear corner) at 1.2 mm (`trig_edge_r`, only below `trig_edge_zmax`) and the outline of both side faces along the finger blade, from the rear face near the hub round the bottom and along the nose diagonal, at 1.0 mm (`trig_side_r`). 1.2 mm does not compute on the side outline, because of sliver edges at the ramp teeth and hub; the rest of the outline (ledge, ramp, hub pockets) stays sharp.
 - Both triggers rest 8 deg forward of vertical (`trig_rest_deg`, `pt_rest_deg`); the pull is 28 deg beyond that.
