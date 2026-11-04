@@ -1302,19 +1302,20 @@ BAY_PARAMS = [
     ('bay_pan_w', '21.6 mm', 'panel width'),
     ('bay_pan_clr', '0.15 mm', 'panel to shell gap'),
     ('bay_pan_y0', 'bay_clip_y + bay_clip_t + 0.2 mm + bay_pan_clr', 'panel rear edge: the whole cell must drop through the opening'),
-    ('bay_pan_y1', '-1.45 mm', 'panel front edge'),
+    ('bay_pan_y1', '5 mm', 'panel front edge (just short of the cell front end + clearance; the cell drops straight out of the opening)'),
     ('bay_pan_t', '4.7 mm', 'panel thickness'),
     ('bay_pan_nw', '15.2 mm', 'panel tail width (rear part, clear of the PCB screw columns)'),
     ('bay_pan_step_y', 'mh3_y + post_r + 0.5 mm', 'where the panel widens (just past the rear screw column)'),
     ('bay_rim_w', '1.5 mm', 'rim wall beside the opening'),
     ('bay_rim_top_z', '-12.3 mm', 'rim wall top'),
-    ('bay_hook_x0', '5.5 mm', 'hook tab inner x'),
+    ('bay_hook_x0', '7.6 mm', 'hook tab inner x (outside the front contact holder cheeks)'),
     ('bay_hook_x1', '10.5 mm', 'hook tab outer x'),
     ('bay_hook_len', '2.5 mm', 'hook tab length past the panel front'),
     ('bay_hook_z0', '-15.2 mm', 'hook tab bottom'),
     ('bay_hook_z1', '-13.8 mm', 'hook tab top'),
     ('bay_slot_clr', '0.2 mm', 'hook slot clearance'),
-    ('bay_bulk_t', '3.5 mm', 'front hook bulkhead thickness'),
+    ('bay_bulk_t', 'bay_front_y + 1.55 mm - (bay_pan_y1 + bay_pan_clr)', 'hook pad depth: from the opening front edge to the back of the front holder'),
+    ('bay_bulk_x0', 'bay_blk_w / 2 + bay_hold_clr + bay_hold_w', 'hook pads start at the front contact holder cheek outer face'),
     ('bay_bulk_top_z', '-12.0 mm', 'front hook bulkhead top'),
 ]
 
@@ -1373,8 +1374,8 @@ def _xy_rects(comp, des, name, rects):
 
 
 def build_bay_shell(bot_comp, des, body):
-    """BottomShell side of the battery bay: contact holders, hook bulkhead, rim walls, cell trench,
-    panel opening, hook slots and thumb pocket (z positions from bay_* parameters)."""
+    """BottomShell side of the battery bay: contact holders, hook pads, rim walls, cell trench,
+    panel opening and thumb pocket (z positions from bay_* parameters). Hook slots: build_bay_hook_slots (after the seal)."""
     add_bay_params(des)
     c = bot_comp
     hx = 'bay_clip_w / 2 + bay_hold_clr'
@@ -1392,10 +1393,12 @@ def build_bay_shell(bot_comp, des, body):
     sk = _xy_rects(c, des, 'Bay front plate pocket', [
         ('-(%s)' % fx, '%s' % fx, 'bay_front_y - bay_blk_t - bay_hold_clr', 'bay_front_y + bay_hold_clr')])
     ext(c, main_profile(sk), 'bay_hold_top_z + 1 mm - bay_floor_z', FE.CutFeatureOperation, 'Bay front plate pocket', start='bay_floor_z', target=body)
-    # hook bulkhead and rim walls
+    # hook pads (either side of the front contact holder; the cell drops out of the opening between them) and rim walls
+    bx = 'shell_w / 2 - wall + 0.2 mm'
     sk = _xy_rects(c, des, 'Bay hook bulkhead', [
-        ('-(shell_w / 2 - wall + 0.2 mm)', 'shell_w / 2 - wall + 0.2 mm', 'bay_pan_y1 + bay_pan_clr', 'bay_pan_y1 + bay_pan_clr + bay_bulk_t')])
-    ext(c, main_profile(sk), 'bay_bulk_top_z - (bay_floor_z - 0.3 mm)', FE.JoinFeatureOperation, 'Bay hook bulkhead', start='bay_floor_z - 0.3 mm', target=body)
+        ('-(%s)' % bx, '-(bay_bulk_x0)', 'bay_pan_y1 + bay_pan_clr', 'bay_pan_y1 + bay_pan_clr + bay_bulk_t'),
+        ('bay_bulk_x0', bx, 'bay_pan_y1 + bay_pan_clr', 'bay_pan_y1 + bay_pan_clr + bay_bulk_t')])
+    ext(c, all_profiles(sk), 'bay_bulk_top_z - (bay_floor_z - 0.3 mm)', FE.JoinFeatureOperation, 'Bay hook bulkhead', start='bay_floor_z - 0.3 mm', target=body)
     px = 'bay_pan_w / 2 + bay_pan_clr'
     sk = _xy_rects(c, des, 'Bay rim walls', [
         ('-(%s + bay_rim_w)' % px, '-(%s)' % px, 'bay_pan_step_y - bay_pan_clr', 'bay_pan_y1 + bay_pan_clr + 0.5 mm'),
@@ -1414,15 +1417,19 @@ def build_bay_shell(bot_comp, des, body):
     sk = _xy_rects(c, des, 'Bay wide opening', [
         ('-(%s)' % px, '%s' % px, 'bay_pan_step_y - bay_pan_clr', 'bay_pan_y1 + bay_pan_clr')])
     ext(c, main_profile(sk), 'bay_pan_t + 1 mm + 0.3 mm', FE.CutFeatureOperation, 'Bay wide opening', start='-bot_d - 1 mm', target=body)
-    # hook slots in the bulkhead
-    sk = _xy_rects(c, des, 'Bay hook slots', [
-        ('-(bay_hook_x1 + bay_slot_clr)', '-(bay_hook_x0 - bay_slot_clr)', 'bay_pan_y1 + bay_pan_clr - 0.2 mm', 'bay_pan_y1 + bay_hook_len + bay_slot_clr + 0.3 mm'),
-        ('bay_hook_x0 - bay_slot_clr', 'bay_hook_x1 + bay_slot_clr', 'bay_pan_y1 + bay_pan_clr - 0.2 mm', 'bay_pan_y1 + bay_hook_len + bay_slot_clr + 0.3 mm')])
-    ext(c, all_profiles(sk), 'bay_hook_z1 + bay_slot_clr - bay_floor_z', FE.CutFeatureOperation, 'Bay hook slots', start='bay_floor_z', target=body)
     # thumb pocket in the belly behind the panel
     sk = _xy_rects(c, des, 'Bay thumb pocket', [
         ('-4.5 mm', '4.5 mm', 'bay_pan_y0 - bay_pan_clr - 3.5 mm', 'bay_pan_y0 - bay_pan_clr')])
     ext(c, main_profile(sk), '0.6 mm', FE.CutFeatureOperation, 'Bay thumb pocket', start='-bot_d', target=body)
+
+
+def build_bay_hook_slots(c, des, body):
+    """Slots for the panel hook tabs, cut into the hook pads. Built after build_bay_seal because the front closure would refill them."""
+    add_bay_params(des)
+    sk = _xy_rects(c, des, 'Bay hook slots', [
+        ('-(bay_hook_x1 + bay_slot_clr)', '-(bay_hook_x0 - bay_slot_clr)', 'bay_pan_y1 + bay_pan_clr - 0.2 mm', 'bay_pan_y1 + bay_hook_len + bay_slot_clr + 0.3 mm'),
+        ('bay_hook_x0 - bay_slot_clr', 'bay_hook_x1 + bay_slot_clr', 'bay_pan_y1 + bay_pan_clr - 0.2 mm', 'bay_pan_y1 + bay_hook_len + bay_slot_clr + 0.3 mm')])
+    ext(c, all_profiles(sk), 'bay_hook_z1 + bay_slot_clr - bay_floor_z', FE.CutFeatureOperation, 'Bay hook slots', start='bay_floor_z', target=body)
 
 
 BAY_PANEL_PARAMS = [
@@ -1545,8 +1552,8 @@ CRADLE_PARAMS = [
     ('bay_cradle_t', '1.6 mm', 'cradle arc wall thickness (v1.1 housing wall)'),
     ('bay_cradle_deg', '45 deg', 'cradle arc top angle above the cell equator'),
     ('bay_cradle_y0', 'bay_clip_y + bay_clip_t', 'cradle arcs start at the rear clip front face (clip plate is wider than the arc gap)'),
-    ('bay_cradle_y1', 'bay_pan_y1 + bay_pan_clr + 0.5 mm', 'cradle arcs end 0.5 mm past the bulkhead rear face (the cell tilts about it on removal)'),
-    ('bay_cradle_ay1', 'bay_pan_y1 + bay_pan_clr + bay_bulk_t', 'cradle anchor blocks end at the front of the hook bulkhead'),
+    ('bay_cradle_y1', 'bay_front_y - bay_blk_t - bay_hold_clr', 'cradle arcs and ceiling run to the front holder rear face (the cell drops straight down, so no tilt clearance is needed)'),
+    ('bay_cradle_ay1', 'bay_front_y - bay_blk_t', 'cradle anchor blocks, rim extensions and web end at the front closure'),
 ]
 
 
@@ -1654,9 +1661,8 @@ def build_bay_seal(c, des, body):
     sk = _xy_rects(c, des, 'Bay seal narrow', r)
     ext(c, all_profiles(sk), 'bay_axis_z + 0.3 mm - bay_seal_zlow', FE.JoinFeatureOperation, 'Bay seal narrow',
         start='bay_seal_zlow', target=body)
-    # 2 step closure + front side walls + holder closure (floor to wall top)
+    # 2 step closure + holder closure (floor to wall top); the rim extension (3) runs straight to the holder closure
     r = (mir('bay_seal_xn0', 'bay_seal_xw1', 'bay_seal_ys - %s' % t, 'bay_seal_ys')
-         + mir('bay_seal_xw0', 'bay_seal_xw1', 'bay_cradle_ay1', 'bay_seal_hold_y0')
          + mir('bay_hold_x_in', 'bay_seal_xw1', 'bay_seal_hold_y0', 'bay_seal_hold_y1'))
     sk = _xy_rects(c, des, 'Bay seal step front', r)
     ext(c, all_profiles(sk), 'bay_seal_ztop - bay_seal_zlow', FE.JoinFeatureOperation, 'Bay seal step front',
@@ -2964,3 +2970,134 @@ def build_trigger_side_fillets(comp, des):
             raise RuntimeError('no side-edge fillet run computes on the face at x=%.1f' % (x * 10))
         feats.append(done)
     return feats
+
+
+# ---------------------------------------------------------------- 14500 bay ceiling (standard shell only)
+# The cradle arcs stop at bay_cradle_deg above the cell equator, so the cell can float up into whatever sits over it. The XBee
+# module's underside (z -0.82) is only 0.33 mm above the cell top (z -1.15). This closes the top of the cell trench with a thin
+# printed ceiling everywhere the PCB parts leave room (rear end and front end, the front being the negative-terminal end), so the
+# cell is sleeved on all sides except the belly opening. No ceiling under the XBee module (bay_ceil_xb_y0..y1).
+CEIL_PARAMS = [
+    ('bay_ceil_top_z', '-0.2 mm', 'ceiling top face (lowest PCB bottom-side part over it is the 0.29 mm inductor, the 0.85 mm caps and the XBee module (z -0.82) are excluded by y)'),
+    ('bay_ceil_z0', 'bay_axis_z + 3 mm', 'ceiling block bottom: inside the trench circle, so it is trimmed to the trench by the cut'),
+    ('bay_ceil_w', '(bay_cell_d / 2 + bay_trench_clr + bay_cradle_t) * cos(bay_cradle_deg)', 'ceiling half-width = x of the cradle arc outer tip'),
+    ('bay_ceil_xb_y0', '-30.9 mm', 'rear edge of the XBee module keep-out (module body y -30.4..-18.6 plus 0.5 mm)'),
+    ('bay_ceil_xb_y1', '-18.1 mm', 'front edge of the XBee module keep-out'),
+]
+
+
+def add_ceil_params(des):
+    add_cradle_params(des)
+    up = des.userParameters
+    for n, e, c in CEIL_PARAMS:
+        pr = up.itemByName(n)
+        if pr is None:
+            up.add(n, VI(e), 'mm', c)
+        else:
+            pr.expression = e
+
+
+def build_bay_ceiling(c, des, body):
+    """Join a ceiling block over each end of the cell trench, then cut the trench circle back out of it. Blocks span from the
+    cradle arc ends to the XBee keep-out; the cut keeps the trench radius so the cell clearance is unchanged."""
+    add_ceil_params(des)
+    for nm, y0, y1 in (('Bay ceiling rear', 'bay_cradle_y0', 'bay_ceil_xb_y0'), ('Bay ceiling front', 'bay_ceil_xb_y1', 'bay_cradle_y1')):
+        sk = _xy_rects(c, des, nm, [('-(bay_ceil_w)', 'bay_ceil_w', y0, y1)])
+        ext(c, main_profile(sk), 'bay_ceil_top_z - bay_ceil_z0', FE.JoinFeatureOperation, nm, start='bay_ceil_z0', target=body)
+    sk = c.sketches.add(c.xZConstructionPlane); sk.name = 'Bay ceiling trench'
+    circle_at(sk, des, '0 mm', '-bay_axis_z', 'bay_cell_d + 2 * bay_trench_clr')
+    prof = main_profile(sk)
+    # the rear cut starts where the existing cell trench starts (clip front face + 0.2 mm); starting at the arc start would widen the
+    # trench by 0.2 mm in y and leave a tangent sliver at the circle bottom (z = floor), which made the STL non-watertight
+    ext(c, prof, 'bay_ceil_xb_y0 - (bay_clip_y + bay_clip_t + 0.2 mm)', FE.CutFeatureOperation, 'Bay ceiling trench (rear)', start='bay_clip_y + bay_clip_t + 0.2 mm', target=body)
+    ext(c, prof, 'bay_pin_tip_y - bay_ceil_xb_y1', FE.CutFeatureOperation, 'Bay ceiling trench (front)', start='bay_ceil_xb_y1', target=body)
+
+
+# ---------------------------------------------------------------- 14500 bay polarity marks + cell note (standard shell only)
+# Engraved into the flat ledge faces beside the cell (z = bay_axis_z, facing the belly opening), where they are visible with the
+# panel off and the cell in. Palm (rear) end is +, trigger (front) end is -. The note goes on the right ledge. Text is sketched on
+# the ledge face itself, so it reads correctly from below, reading rear -> front with its tops toward the centre line.
+POL_PARAMS = [
+    ('pol_h', '2.2 mm', 'polarity mark text height'),
+    ('pol_note_h', '1.8 mm', 'cell note text height'),
+    ('pol_depth', '0.5 mm', 'engraving depth (ledge is 1.6 mm thick)'),
+    ('pol_x', '(bay_cell_d / 2 + bay_trench_clr + bay_pan_w / 2 + bay_pan_clr) / 2', 'x of the ledge centre line (abs)'),
+    ('pol_y_lo', 'bay_seal_ys', 'rear end of the visible ledge (wide zone start)'),
+    ('pol_y_hi', 'bay_pan_y1 + bay_pan_clr', 'front end of the visible ledge'),
+    ('pol_edge', '1.8 mm', 'centre of the + and - marks from the ledge ends'),
+]
+POL_CAP = 0.5   # baseline offset as a fraction of text height (Fusion text height = the full glyph height, so centre the glyphs)
+
+
+def add_pol_params(des):
+    add_seal_params(des)
+    up = des.userParameters
+    for n, e, c in POL_PARAMS:
+        pr = up.itemByName(n)
+        if pr is None:
+            up.add(n, VI(e), 'mm', c)
+        else:
+            pr.expression = e
+
+
+def ledge_face(body, side):
+    """Planar downward face at the cell equator on the given side (+1 right / -1 left) of the bay."""
+    for f in body.faces:
+        if f.geometry.surfaceType != adsk.core.SurfaceTypes.PlaneSurfaceType: continue
+        bb = f.boundingBox
+        if abs(bb.minPoint.z * 10 + 8.4) < 0.01 and abs(bb.maxPoint.z * 10 + 8.4) < 0.01:
+            x0 = bb.minPoint.x * 10; x1 = bb.maxPoint.x * 10
+            ok, n = f.evaluator.getNormalAtPoint(f.pointOnFace)
+            if n.z < -0.9 and ((side > 0 and x0 > 7 and x1 < 11.1) or (side < 0 and x1 < -7 and x0 > -11.1)):
+                return f
+    raise RuntimeError('ledge face not found side %d' % side)
+
+
+def _signed_dim(d, expr, getter, target):
+    """Set a driving distance dimension and flip its sign if the geometry landed on the wrong side of the origin."""
+    d.parameter.expression = expr
+    if abs(getter() - target) > 1e-4:
+        d.parameter.expression = '-(%s)' % expr
+
+
+def _pol_text(sk, des, text, h_expr, side, yc_expr, len_expr, zf=None):
+    """One text along a fully constrained construction line parallel to y, centred on yc, baseline offset so the glyphs sit on the
+    ledge centre line. Model positions are mapped into the face sketch with modelToSketchSpace; dimension signs are verified."""
+    H = adsk.fusion.DimensionOrientations
+    zf = ev_cm(des, 'bay_axis_z') if zf is None else zf
+    hv = ev_cm(des, h_expr); xb = side * ev_cm(des, 'pol_x') - POL_CAP * hv   # glyph tops point to +x on both ledges
+    yc = ev_cm(des, yc_expr); ln = ev_cm(des, len_expr)
+    p0 = sk.modelToSketchSpace(P3(xb, yc - ln / 2, zf)); p1 = sk.modelToSketchSpace(P3(xb, yc + ln / 2, zf))
+    line = sk.sketchCurves.sketchLines.addByTwoPoints(P3(p0.x, p0.y, 0), P3(p1.x, p1.y, 0))
+    line.isConstruction = True
+    sk.geometricConstraints.addVertical(line)
+    dm = sk.sketchDimensions
+    uexpr = ('(pol_x) - %g * (%s)' if side > 0 else '(pol_x) + %g * (%s)') % (POL_CAP, h_expr)
+    d = dm.addDistanceDimension(sk.originPoint, line.startSketchPoint, H.HorizontalDimensionOrientation, P3(p0.x / 2, p0.y - 0.3, 0))
+    _signed_dim(d, uexpr, lambda: line.startSketchPoint.geometry.x, p0.x)
+    dm.addDistanceDimension(line.startSketchPoint, line.endSketchPoint, H.VerticalDimensionOrientation, P3(p0.x + 0.3, (p0.y + p1.y) / 2, 0)).parameter.expression = len_expr
+    ye = '(%s) - (%s) / 2' % (yc_expr, len_expr)
+    d = dm.addDistanceDimension(sk.originPoint, line.startSketchPoint, H.VerticalDimensionOrientation, P3(p0.x - 0.3, p0.y / 2, 0))
+    if p1.y > p0.y:
+        _signed_dim(d, ye, lambda: line.startSketchPoint.geometry.y, p0.y)
+    else:
+        raise RuntimeError('sketch v axis is reversed relative to model y; path would read front to rear')
+    ti = sk.sketchTexts.createInput2(text, hv)
+    ti.fontName = 'Arial'; ti.textStyle = adsk.fusion.TextStyles.TextStyleBold
+    ti.setAsAlongPath(line, True, adsk.core.HorizontalAlignments.CenterHorizontalAlignment, 0)
+    t = sk.sketchTexts.add(ti)
+    t.heightParameter.expression = h_expr      # bind the glyph height to the user parameter
+    return t
+
+
+def build_bay_polarity(c, des, body, sides=(1, -1)):
+    """Engrave + / - at the two ends of both ledges, and the cell note on the right ledge."""
+    add_pol_params(des)
+    for side, nm, note in [t for t in ((1, 'Polarity marks right ledge', True), (-1, 'Polarity marks left ledge', False)) if t[0] in sides]:
+        sk = c.sketches.add(ledge_face(body, side)); sk.name = nm
+        texts = adsk.core.ObjectCollection.create()
+        texts.add(_pol_text(sk, des, '+', 'pol_h', side, 'pol_y_lo + pol_edge', '3 mm'))
+        texts.add(_pol_text(sk, des, '\u2212', 'pol_h', side, 'pol_y_hi - pol_edge', '3 mm'))
+        if note:
+            texts.add(_pol_text(sk, des, 'Li-ion 14500 only', 'pol_note_h', side, '(pol_y_lo + pol_y_hi) / 2', '19 mm'))
+        ext(c, texts, 'pol_depth', FE.CutFeatureOperation, 'Engrave ' + nm.lower(), neg=True, target=body)

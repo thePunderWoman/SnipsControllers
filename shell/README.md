@@ -55,6 +55,32 @@ Defaults suit a 3 x 1 mm flat loop: slots 1.5 x 3.4 mm, centred x -12.4 mm, z -6
 than the flat wall. Hang test it before relying on it with heavy loads; widen `strap_bar_w` if you want more margin (the pair
 has about 1 mm to spare toward the bay wall on the standard shell).
 
+### 14500 bay: ceiling and markings (standard shell)
+The cradle arcs stop 45 deg above the cell equator, so on their own they leave the top of the cell open to the PCB. The XBee
+module's underside (z -0.82 mm) is only 0.33 mm above the cell top (z -1.15 mm), so a cell with a worn wrap could float up
+against it. The standard shell therefore has a 0.7 mm printed ceiling over the cell wherever the PCB parts leave room: the whole
+rear (positive terminal) end from the clip to y -30.9 mm and the front (negative terminal) end from y -18.1 mm to the front
+contact holder at y 6.2 mm. There is no ceiling under the XBee module (keep-out y -30.9..-18.1 mm). Radial clearance to the cell is
+unchanged (`bay_trench_clr` 0.25 mm). Parameters: `bay_ceil_top_z` (-0.2 mm, the lowest part above it is the 0.29 mm
+inductor), `bay_ceil_z0`, `bay_ceil_w`, `bay_ceil_xb_y0`, `bay_ceil_xb_y1`.
+Remaining float with the cell in: 0.25 mm to the ceiling at the two ends, 0.33 mm of clearance under the XBee module. A strip of
+Kapton tape on the module underside adds margin for free.
+
+At the negative (trigger) end the same round ceiling (0.7 mm wall, same R7.5 bore) and the cradle arcs continue to the back of the
+cell space at y 6.2 mm, ahead of the spring pin tip (y 5.46 mm), where the bore ends in a closed end cap against the front contact
+holder. The negative end is therefore a round tube from the XBee keep-out to the back wall (`bay_cradle_y1`, `bay_pin_tip_y`).
+So the cell can come out under a closed round tube, the opening for the panel runs forward to y 5.15 mm (`bay_pan_y1` 5 mm
+plus clearance) and the hook bulkhead that used to sit under the cell's front end is gone: the cell drops straight down and
+straight in (checked for 0 to 14 mm of travel, no interference). The battery panel is correspondingly longer; its two hook tabs
+(`bay_hook_x0/x1`, x 7.6..10.5 mm) slide into slots in two hook pads beside the front contact holder (`bay_bulk_x0`, built last
+because the front closure would otherwise refill the slots).
+
+The two flat ledges beside the cell (visible with the panel off) carry engraved polarity marks: **+** at the rear (palm) end,
+**-** at the front (trigger) end, on both ledges, plus "Li-ion 14500 only" along the right ledge. Text height `pol_h`
+(2.2 mm) / `pol_note_h` (1.8 mm), depth `pol_depth` (0.5 mm of the 1.6 mm ledge), position `pol_x`, `pol_y_lo`, `pol_y_hi`,
+`pol_edge`. The text is engraved into a bridged ceiling when printed belly down, so expect it to print a little rough; it is a
+shallow groove, not a stencil.
+
 ### Photos
 `photos/snips_shell_*.png` show the standard variant, `photos/snips_shell_pouch_*.png` the pouch variant (same angles;
 the pouch set has no top/thumbstick close-ups because the top is shared).
