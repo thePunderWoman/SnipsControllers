@@ -1,0 +1,27 @@
+SB_PARAMS = [
+    ('sb_y1', '14.5 mm', 'Front side switch actuator centre y (PCB STEP)'),
+    ('sb_y2', '4.5 mm', 'Rear side switch actuator centre y (PCB STEP)'),
+    ('sb_z', '5.55 mm', 'Side switch actuator centre height'),
+    ('sb_tip_x', 'pcb_hw', 'Side switch actuator tip |x|'),
+    ('sb_act_gap', '0.1 mm', 'Gap between the flange inner face and the actuator tip at rest'),
+    ('sb_stem_w', '7.3 mm', 'D stem / cap width (y), v1.1 size'),
+    ('sb_stem_h', '4.6 mm', 'D stem / cap height (z), v1.1 size'),
+    ('sb_stem_r', '1.8 mm', 'D stem outer-corner radius'),
+    ('sb_hole_clr', '0.2 mm', 'D hole clearance per side'),
+    ('sb_fl_w', '8.6 mm', 'Inner flange width (y); must exceed the D hole so it retains'),
+    ('sb_fl_h', '5.8 mm', 'Inner flange height (z); must exceed the D hole so it retains'),
+    ('sb_fl_t', '0.9 mm', 'Inner flange thickness (x)'),
+    ('sb_d_r', '1.8 mm', 'Flange outer-corner radius; the flat side faces the other button'),
+    ('sb_pocket_clr', '0.2 mm', 'Flange pocket clearance per side'),
+    ('sb_pocket_axial', '0.15 mm', 'Free travel between flange outer face and pocket floor'),
+    ('sb_proud', '1 mm', 'Cap face stands this far proud of the side skin'),
+    ('sb_cap_fillet', '0.3 mm', 'Cap outer edge fillet'),
+    ('sb_wall_in_x', 'shell_w / 2 - wall', 'Side wall inner face |x|'),
+    ('sb_wall_out_x', 'shell_w / 2', 'Side wall outer face |x|'),
+    ('sb_fl_in_x', 'sb_tip_x + sb_act_gap', 'Flange inner face |x|'),
+    ('sb_fl_out_x', 'sb_fl_in_x + sb_fl_t', 'Flange outer face |x|'),
+    ('sb_pocket_floor_x', 'sb_fl_out_x + sb_pocket_axial', 'Pocket floor |x|'),
+    ('sb_cap_out_x', 'sb_wall_out_x + sb_proud', 'Cap outer face |x|'),
+]
+
+
