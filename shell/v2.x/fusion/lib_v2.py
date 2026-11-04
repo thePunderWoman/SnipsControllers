@@ -1302,19 +1302,20 @@ BAY_PARAMS = [
     ('bay_pan_w', '21.6 mm', 'panel width'),
     ('bay_pan_clr', '0.15 mm', 'panel to shell gap'),
     ('bay_pan_y0', 'bay_clip_y + bay_clip_t + 0.2 mm + bay_pan_clr', 'panel rear edge: the whole cell must drop through the opening'),
-    ('bay_pan_y1', '-1.45 mm', 'panel front edge'),
+    ('bay_pan_y1', '5 mm', 'panel front edge (just short of the cell front end + clearance; the cell drops straight out of the opening)'),
     ('bay_pan_t', '4.7 mm', 'panel thickness'),
     ('bay_pan_nw', '15.2 mm', 'panel tail width (rear part, clear of the PCB screw columns)'),
     ('bay_pan_step_y', 'mh3_y + post_r + 0.5 mm', 'where the panel widens (just past the rear screw column)'),
     ('bay_rim_w', '1.5 mm', 'rim wall beside the opening'),
     ('bay_rim_top_z', '-12.3 mm', 'rim wall top'),
-    ('bay_hook_x0', '5.5 mm', 'hook tab inner x'),
+    ('bay_hook_x0', '7.6 mm', 'hook tab inner x (outside the front contact holder cheeks)'),
     ('bay_hook_x1', '10.5 mm', 'hook tab outer x'),
     ('bay_hook_len', '2.5 mm', 'hook tab length past the panel front'),
     ('bay_hook_z0', '-15.2 mm', 'hook tab bottom'),
     ('bay_hook_z1', '-13.8 mm', 'hook tab top'),
     ('bay_slot_clr', '0.2 mm', 'hook slot clearance'),
-    ('bay_bulk_t', '3.5 mm', 'front hook bulkhead thickness'),
+    ('bay_bulk_t', 'bay_front_y + 1.55 mm - (bay_pan_y1 + bay_pan_clr)', 'hook pad depth: from the opening front edge to the back of the front holder'),
+    ('bay_bulk_x0', 'bay_blk_w / 2 + bay_hold_clr + bay_hold_w', 'hook pads start at the front contact holder cheek outer face'),
     ('bay_bulk_top_z', '-12.0 mm', 'front hook bulkhead top'),
 ]
 
@@ -1373,8 +1374,8 @@ def _xy_rects(comp, des, name, rects):
 
 
 def build_bay_shell(bot_comp, des, body):
-    """BottomShell side of the battery bay: contact holders, hook bulkhead, rim walls, cell trench,
-    panel opening, hook slots and thumb pocket (z positions from bay_* parameters)."""
+    """BottomShell side of the battery bay: contact holders, hook pads, rim walls, cell trench,
+    panel opening and thumb pocket (z positions from bay_* parameters). Hook slots: build_bay_hook_slots (after the seal)."""
     add_bay_params(des)
     c = bot_comp
     hx = 'bay_clip_w / 2 + bay_hold_clr'
@@ -1392,10 +1393,12 @@ def build_bay_shell(bot_comp, des, body):
     sk = _xy_rects(c, des, 'Bay front plate pocket', [
         ('-(%s)' % fx, '%s' % fx, 'bay_front_y - bay_blk_t - bay_hold_clr', 'bay_front_y + bay_hold_clr')])
     ext(c, main_profile(sk), 'bay_hold_top_z + 1 mm - bay_floor_z', FE.CutFeatureOperation, 'Bay front plate pocket', start='bay_floor_z', target=body)
-    # hook bulkhead and rim walls
+    # hook pads (either side of the front contact holder; the cell drops out of the opening between them) and rim walls
+    bx = 'shell_w / 2 - wall + 0.2 mm'
     sk = _xy_rects(c, des, 'Bay hook bulkhead', [
-        ('-(shell_w / 2 - wall + 0.2 mm)', 'shell_w / 2 - wall + 0.2 mm', 'bay_pan_y1 + bay_pan_clr', 'bay_pan_y1 + bay_pan_clr + bay_bulk_t')])
-    ext(c, main_profile(sk), 'bay_bulk_top_z - (bay_floor_z - 0.3 mm)', FE.JoinFeatureOperation, 'Bay hook bulkhead', start='bay_floor_z - 0.3 mm', target=body)
+        ('-(%s)' % bx, '-(bay_bulk_x0)', 'bay_pan_y1 + bay_pan_clr', 'bay_pan_y1 + bay_pan_clr + bay_bulk_t'),
+        ('bay_bulk_x0', bx, 'bay_pan_y1 + bay_pan_clr', 'bay_pan_y1 + bay_pan_clr + bay_bulk_t')])
+    ext(c, all_profiles(sk), 'bay_bulk_top_z - (bay_floor_z - 0.3 mm)', FE.JoinFeatureOperation, 'Bay hook bulkhead', start='bay_floor_z - 0.3 mm', target=body)
     px = 'bay_pan_w / 2 + bay_pan_clr'
     sk = _xy_rects(c, des, 'Bay rim walls', [
         ('-(%s + bay_rim_w)' % px, '-(%s)' % px, 'bay_pan_step_y - bay_pan_clr', 'bay_pan_y1 + bay_pan_clr + 0.5 mm'),
@@ -1414,15 +1417,19 @@ def build_bay_shell(bot_comp, des, body):
     sk = _xy_rects(c, des, 'Bay wide opening', [
         ('-(%s)' % px, '%s' % px, 'bay_pan_step_y - bay_pan_clr', 'bay_pan_y1 + bay_pan_clr')])
     ext(c, main_profile(sk), 'bay_pan_t + 1 mm + 0.3 mm', FE.CutFeatureOperation, 'Bay wide opening', start='-bot_d - 1 mm', target=body)
-    # hook slots in the bulkhead
-    sk = _xy_rects(c, des, 'Bay hook slots', [
-        ('-(bay_hook_x1 + bay_slot_clr)', '-(bay_hook_x0 - bay_slot_clr)', 'bay_pan_y1 + bay_pan_clr - 0.2 mm', 'bay_pan_y1 + bay_hook_len + bay_slot_clr + 0.3 mm'),
-        ('bay_hook_x0 - bay_slot_clr', 'bay_hook_x1 + bay_slot_clr', 'bay_pan_y1 + bay_pan_clr - 0.2 mm', 'bay_pan_y1 + bay_hook_len + bay_slot_clr + 0.3 mm')])
-    ext(c, all_profiles(sk), 'bay_hook_z1 + bay_slot_clr - bay_floor_z', FE.CutFeatureOperation, 'Bay hook slots', start='bay_floor_z', target=body)
     # thumb pocket in the belly behind the panel
     sk = _xy_rects(c, des, 'Bay thumb pocket', [
         ('-4.5 mm', '4.5 mm', 'bay_pan_y0 - bay_pan_clr - 3.5 mm', 'bay_pan_y0 - bay_pan_clr')])
     ext(c, main_profile(sk), '0.6 mm', FE.CutFeatureOperation, 'Bay thumb pocket', start='-bot_d', target=body)
+
+
+def build_bay_hook_slots(c, des, body):
+    """Slots for the panel hook tabs, cut into the hook pads. Built after build_bay_seal because the front closure would refill them."""
+    add_bay_params(des)
+    sk = _xy_rects(c, des, 'Bay hook slots', [
+        ('-(bay_hook_x1 + bay_slot_clr)', '-(bay_hook_x0 - bay_slot_clr)', 'bay_pan_y1 + bay_pan_clr - 0.2 mm', 'bay_pan_y1 + bay_hook_len + bay_slot_clr + 0.3 mm'),
+        ('bay_hook_x0 - bay_slot_clr', 'bay_hook_x1 + bay_slot_clr', 'bay_pan_y1 + bay_pan_clr - 0.2 mm', 'bay_pan_y1 + bay_hook_len + bay_slot_clr + 0.3 mm')])
+    ext(c, all_profiles(sk), 'bay_hook_z1 + bay_slot_clr - bay_floor_z', FE.CutFeatureOperation, 'Bay hook slots', start='bay_floor_z', target=body)
 
 
 BAY_PANEL_PARAMS = [
@@ -1545,8 +1552,8 @@ CRADLE_PARAMS = [
     ('bay_cradle_t', '1.6 mm', 'cradle arc wall thickness (v1.1 housing wall)'),
     ('bay_cradle_deg', '45 deg', 'cradle arc top angle above the cell equator'),
     ('bay_cradle_y0', 'bay_clip_y + bay_clip_t', 'cradle arcs start at the rear clip front face (clip plate is wider than the arc gap)'),
-    ('bay_cradle_y1', 'bay_pan_y1 + bay_pan_clr + 0.5 mm', 'cradle arcs end 0.5 mm past the bulkhead rear face (the cell tilts about it on removal)'),
-    ('bay_cradle_ay1', 'bay_pan_y1 + bay_pan_clr + bay_bulk_t', 'cradle anchor blocks end at the front of the hook bulkhead'),
+    ('bay_cradle_y1', 'bay_front_y - bay_blk_t - bay_hold_clr', 'cradle arcs and ceiling run to the front holder rear face (the cell drops straight down, so no tilt clearance is needed)'),
+    ('bay_cradle_ay1', 'bay_front_y - bay_blk_t', 'cradle anchor blocks, rim extensions and web end at the front closure'),
 ]
 
 
@@ -1654,9 +1661,8 @@ def build_bay_seal(c, des, body):
     sk = _xy_rects(c, des, 'Bay seal narrow', r)
     ext(c, all_profiles(sk), 'bay_axis_z + 0.3 mm - bay_seal_zlow', FE.JoinFeatureOperation, 'Bay seal narrow',
         start='bay_seal_zlow', target=body)
-    # 2 step closure + front side walls + holder closure (floor to wall top)
+    # 2 step closure + holder closure (floor to wall top); the rim extension (3) runs straight to the holder closure
     r = (mir('bay_seal_xn0', 'bay_seal_xw1', 'bay_seal_ys - %s' % t, 'bay_seal_ys')
-         + mir('bay_seal_xw0', 'bay_seal_xw1', 'bay_cradle_ay1', 'bay_seal_hold_y0')
          + mir('bay_hold_x_in', 'bay_seal_xw1', 'bay_seal_hold_y0', 'bay_seal_hold_y1'))
     sk = _xy_rects(c, des, 'Bay seal step front', r)
     ext(c, all_profiles(sk), 'bay_seal_ztop - bay_seal_zlow', FE.JoinFeatureOperation, 'Bay seal step front',
@@ -3004,7 +3010,7 @@ def build_bay_ceiling(c, des, body):
     # the rear cut starts where the existing cell trench starts (clip front face + 0.2 mm); starting at the arc start would widen the
     # trench by 0.2 mm in y and leave a tangent sliver at the circle bottom (z = floor), which made the STL non-watertight
     ext(c, prof, 'bay_ceil_xb_y0 - (bay_clip_y + bay_clip_t + 0.2 mm)', FE.CutFeatureOperation, 'Bay ceiling trench (rear)', start='bay_clip_y + bay_clip_t + 0.2 mm', target=body)
-    ext(c, prof, 'bay_cradle_y1 - bay_ceil_xb_y1', FE.CutFeatureOperation, 'Bay ceiling trench (front)', start='bay_ceil_xb_y1', target=body)
+    ext(c, prof, 'bay_pin_tip_y - bay_ceil_xb_y1', FE.CutFeatureOperation, 'Bay ceiling trench (front)', start='bay_ceil_xb_y1', target=body)
 
 
 # ---------------------------------------------------------------- 14500 bay polarity marks + cell note (standard shell only)
@@ -3095,55 +3101,3 @@ def build_bay_polarity(c, des, body, sides=(1, -1)):
         if note:
             texts.add(_pol_text(sk, des, 'Li-ion 14500 only', 'pol_note_h', side, '(pol_y_lo + pol_y_hi) / 2', '19 mm'))
         ext(c, texts, 'pol_depth', FE.CutFeatureOperation, 'Engrave ' + nm.lower(), neg=True, target=body)
-
-
-# ---------------------------------------------------------------- 14500 bay front tube (negative-terminal end, standard shell only)
-# Encloses the cell's front end and the front contact block from the cradle end to the contact holder's back wall. A snug tube would
-# block cell removal: the cell tilts rear-down about the bulkhead rear edge, which lifts its front end about 1.1 mm (its top corner
-# reaches z -0.02 at 14 deg). So the tube is square with a raised roof (underside bay_tube_roof_z) instead of following the trench circle.
-# Limits above it: joystick base z 1.59 (x 6.6..9.7), 0603 z 1.31 (y 6.8..7.6), diodes / SOT-23 z 0.85..0.91 from y 8.5 (SOT-23 also at x < -8.8).
-TUBE_PARAMS = [
-    ('bay_tube_y0', 'bay_cradle_y1', 'tube start = cradle arc end'),
-    ('bay_tube_y1', '8.2 mm', 'tube end (back wall of the contact holder); PCB diodes at y 8.5 reach z 0.85'),
-    ('bay_tube_in_x', 'bay_cell_d / 2 + bay_trench_clr', 'tube inner half-width = trench radius'),
-    ('bay_tube_wall', '1.1 mm', 'tube side wall thickness (outer face x 8.6, 0.2 mm inside the SOT-23 at x -8.8)'),
-    ('bay_tube_roof_z', '0.3 mm', 'roof underside: clears the cell front end swinging up when it tilts out (z -0.02 at 14 deg)'),
-    ('bay_tube_roof_t', '0.7 mm', 'roof thickness (top z 1.0, 0.59 under the joystick base)'),
-    ('bay_tube_zb', 'bay_bulk_top_z - 0.3 mm', 'walls over the hook bulkhead start here (below it the hook slots are open)'),
-    ('bay_tube_end_t', '0.8 mm', 'end wall thickness'),
-    ('bay_tube_end_zb', 'bay_hold_top_z - 0.3 mm', 'end wall starts 0.3 mm into the holder backing top'),
-]
-
-
-def add_tube_params(des):
-    add_ceil_params(des)
-    up = des.userParameters
-    for n, e, c in TUBE_PARAMS:
-        pr = up.itemByName(n)
-        if pr is None:
-            up.add(n, VI(e), 'mm', c)
-        else:
-            pr.expression = e
-
-
-def build_bay_front_tube(c, des, body):
-    add_tube_params(des)
-    def mir(x0, x1, y0, y1):
-        return [(x0, x1, y0, y1), ('-(%s)' % x1, '-(%s)' % x0, y0, y1)]
-    wx0 = 'bay_tube_in_x'; wx1 = 'bay_tube_in_x + bay_tube_wall'
-    ymid = 'bay_cradle_ay1'
-    # side walls over the hook bulkhead (y -0.8 .. 2.2)
-    sk = _xy_rects(c, des, 'Bay tube walls bulkhead', mir(wx0, wx1, 'bay_tube_y0', ymid))
-    ext(c, all_profiles(sk), 'bay_tube_roof_z - bay_tube_zb', FE.JoinFeatureOperation, 'Bay tube walls bulkhead', start='bay_tube_zb', target=body)
-    # side walls on the floor (y 2.2 .. end)
-    sk = _xy_rects(c, des, 'Bay tube walls floor', mir(wx0, wx1, ymid, 'bay_tube_y1'))
-    ext(c, all_profiles(sk), 'bay_tube_roof_z - bay_seal_zlow', FE.JoinFeatureOperation, 'Bay tube walls floor', start='bay_seal_zlow', target=body)
-    # end wall on the holder backing
-    sk = _xy_rects(c, des, 'Bay tube end wall', [('-(%s)' % wx1, wx1, 'bay_tube_y1 - bay_tube_end_t', 'bay_tube_y1')])
-    ext(c, main_profile(sk), 'bay_tube_roof_z - bay_tube_end_zb', FE.JoinFeatureOperation, 'Bay tube end wall', start='bay_tube_end_zb', target=body)
-    # roof
-    sk = _xy_rects(c, des, 'Bay tube roof', [('-(%s)' % wx1, wx1, 'bay_tube_y0', 'bay_tube_y1')])
-    ext(c, main_profile(sk), 'bay_tube_roof_t', FE.JoinFeatureOperation, 'Bay tube roof', start='bay_tube_roof_z', target=body)
-    # close the 0.5 mm slit between the dome ceiling end (top bay_ceil_top_z) and the raised roof
-    sk = _xy_rects(c, des, 'Bay tube transition', [('-(bay_ceil_w)', 'bay_ceil_w', 'bay_tube_y0 - 0.6 mm', 'bay_tube_y0 + 0.2 mm')])
-    ext(c, main_profile(sk), 'bay_tube_roof_z + 0.1 mm - (bay_ceil_top_z - 0.1 mm)', FE.JoinFeatureOperation, 'Bay tube transition', start='bay_ceil_top_z - 0.1 mm', target=body)

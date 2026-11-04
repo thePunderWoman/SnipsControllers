@@ -59,19 +59,21 @@ has about 1 mm to spare toward the bay wall on the standard shell).
 The cradle arcs stop 45 deg above the cell equator, so on their own they leave the top of the cell open to the PCB. The XBee
 module's underside (z -0.82 mm) is only 0.33 mm above the cell top (z -1.15 mm), so a cell with a worn wrap could float up
 against it. The standard shell therefore has a 0.7 mm printed ceiling over the cell wherever the PCB parts leave room: the whole
-rear (positive terminal) end from the clip to y -30.9 mm and the front (negative terminal) end from y -18.1 mm to the end of the
-cradle at y -0.8 mm. There is no ceiling under the XBee module (keep-out y -30.9..-18.1 mm). Radial clearance to the cell is
+rear (positive terminal) end from the clip to y -30.9 mm and the front (negative terminal) end from y -18.1 mm to the front
+contact holder at y 6.2 mm. There is no ceiling under the XBee module (keep-out y -30.9..-18.1 mm). Radial clearance to the cell is
 unchanged (`bay_trench_clr` 0.25 mm). Parameters: `bay_ceil_top_z` (-0.2 mm, the lowest part above it is the 0.29 mm
 inductor), `bay_ceil_z0`, `bay_ceil_w`, `bay_ceil_xb_y0`, `bay_ceil_xb_y1`.
 Remaining float with the cell in: 0.25 mm to the ceiling at the two ends, 0.33 mm of clearance under the XBee module. A strip of
 Kapton tape on the module underside adds margin for free.
 
-At the negative (trigger) end the ceiling continues as a closed square tube all the way to the back wall where the spring contact
-sits (y up to 8.2 mm, `bay_tube_*` parameters): 1.1 mm side walls from the bulkhead and floor, a 0.7 mm roof at z 0.3 mm and
-a 0.8 mm end wall, with a short transition from the ceiling. The tube is deliberately larger than a round sleeve (inner half-width
-`bay_tube_in_x` = cell radius + clearance, roof raised above the cell), because the cell is removed by tilting its rear end down
-about the bulkhead edge and its front end rises about 1.1 mm at 14 deg; a snug round sleeve would block removal beyond ~3 deg.
-Widening the battery panel so the cell drops straight in would allow a snugger tube (not done).
+At the negative (trigger) end the same round ceiling (0.7 mm wall, same R7.5 bore) and the cradle arcs continue to the back of the
+cell space at y 6.2 mm, ahead of the spring pin tip (y 5.46 mm), where the bore ends in a closed end cap against the front contact
+holder. The negative end is therefore a round tube from the XBee keep-out to the back wall (`bay_cradle_y1`, `bay_pin_tip_y`).
+So the cell can come out under a closed round tube, the opening for the panel runs forward to y 5.15 mm (`bay_pan_y1` 5 mm
+plus clearance) and the hook bulkhead that used to sit under the cell's front end is gone: the cell drops straight down and
+straight in (checked for 0 to 14 mm of travel, no interference). The battery panel is correspondingly longer; its two hook tabs
+(`bay_hook_x0/x1`, x 7.6..10.5 mm) slide into slots in two hook pads beside the front contact holder (`bay_bulk_x0`, built last
+because the front closure would otherwise refill the slots).
 
 The two flat ledges beside the cell (visible with the panel off) carry engraved polarity marks: **+** at the rear (palm) end,
 **-** at the front (trigger) end, on both ledges, plus "Li-ion 14500 only" along the right ledge. Text height `pol_h`
