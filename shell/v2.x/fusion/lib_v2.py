@@ -2902,3 +2902,65 @@ def build_trigger_finger_fillet(comp, des, name='Trigger finger edge fillet (lon
     fi.addConstantRadiusEdgeSet(finger_edges(comp, des), VI('trig_edge_r'), False)
     f = comp.features.filletFeatures.add(fi); f.name = name
     return f
+
+
+# ---------------------------------------------------------------- trigger side-edge fillet (both triggers)
+# Rounds the outline of the two flat side faces along the finger blade (rear face up to the hub, round the bottom, along the
+# nose diagonal) so a finger resting on either side of the trigger doesn't meet a sharp edge. The outline is one closed loop that
+# also carries the ledge, ramp teeth and hub pockets with sliver edges (0.07..0.4 mm); a chain over those fails (ASM_BL_CAP_COMPLEX),
+# so only a contiguous run is filleted and the search takes the longest run that computes. 1.2 mm does not compute on the run, 1.0 does.
+TRIG_SIDE_PARAMS = [('trig_side_r', '1.0 mm', 'Fillet on the side-face outline along the finger blade of both triggers (1.2 mm does not compute)')]
+
+
+def add_trig_side_params(des):
+    up = des.userParameters
+    for n, e, c in TRIG_SIDE_PARAMS:
+        if up.itemByName(n) is None:
+            up.add(n, VI(e), 'mm', c)
+
+
+def _edge_mid_mm(e):
+    ok, t0, t1 = e.evaluator.getParameterExtents(); ok, p = e.evaluator.getPointAtParameter((t0 + t1) / 2)
+    return p.y * 10, p.z * 10
+
+
+def trigger_side_faces(comp):
+    out = []
+    for f in comp.bRepBodies[0].faces:
+        if f.geometry.surfaceType != adsk.core.SurfaceTypes.PlaneSurfaceType:
+            continue
+        ok, nn = f.evaluator.getNormalAtPoint(f.pointOnFace)
+        if abs(nn.x) > 0.99 and f.area * 100 > 30:
+            out.append((f.pointOnFace.x, f))
+    return sorted(out, key=lambda t: t[0])
+
+
+def build_trigger_side_fillets(comp, des):
+    """One fillet feature per side face. Chain = rear-lower edge, then up toward the hub (u edges) and around the bottom/nose
+    (d edges); longest (u, d) that computes wins."""
+    add_trig_side_params(des)
+    feats = []
+    for xi in range(2):
+        x, face = trigger_side_faces(comp)[xi]
+        eds = list([l for l in face.loops if l.isOuter][0].edges); n = len(eds); ms = [_edge_mid_mm(e) for e in eds]
+        i0 = min(range(n), key=lambda i: (ms[i][0] - 25.9) ** 2 + (ms[i][1] + 11.4) ** 2)
+        du = 1 if ms[(i0 + 1) % n][1] > ms[i0][1] else -1
+        done = None
+        for u, d in sorted([(u, d) for u in range(1, 6) for d in range(3, 9)], key=lambda t: -(t[0] + t[1])):
+            idx = [(i0 + du * t) % n for t in range(0, u + 1)] + [(i0 - du * t) % n for t in range(1, d + 1)]
+            if len(set(idx)) != len(idx):
+                continue
+            es = adsk.core.ObjectCollection.create()
+            for i in idx:
+                es.add(eds[i])
+            try:
+                fi = comp.features.filletFeatures.createInput()
+                fi.addConstantRadiusEdgeSet(es, VI('trig_side_r'), False)
+                f = comp.features.filletFeatures.add(fi); f.name = 'Trigger side edge fillet (x=%.1f)' % (x * 10)
+                done = f; break
+            except RuntimeError:
+                pass
+        if done is None:
+            raise RuntimeError('no side-edge fillet run computes on the face at x=%.1f' % (x * 10))
+        feats.append(done)
+    return feats
