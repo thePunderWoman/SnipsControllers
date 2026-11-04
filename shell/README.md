@@ -42,6 +42,7 @@ Width and length are identical; only the height differs.
 Height is measured from the flat shell surface (not the thumbstick bump) to the bottom flat surface, so the pouch
 variant is **3.38 mm** thinner. Both triggers rest 8 deg forward of vertical (parameters `trig_rest_deg` and
 `pt_rest_deg`) with a 28 deg pull from there, which gives the finger a little more room at the front wall.
+Both triggers have the finger-blade long edges filleted at 1.2 mm (`trig_edge_r`).
 Reference cell model: `export/reference/stl|step/Cell_YDL103035_Ref.*`.
 
 ### Wrist strap anchor

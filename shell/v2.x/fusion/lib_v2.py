@@ -2859,3 +2859,46 @@ def build_strap_slots(comp, des, target):
         _strap_slot(sk, des, xc)
         profs.add(sk.profiles.item(0))
     return ext(comp, profs, 'strap_cut_y - (y_rear_out - 1 mm)', FE.CutFeatureOperation, 'Strap slots', start='y_rear_out - 1 mm', target=target)
+
+
+# ---------------------------------------------------------------- trigger finger-edge fillet (both triggers)
+# Rounds the long edges across the finger blade (nose, bottom-flat corners, rear corner) so the trigger feels soft under the
+# finger. Each edge ends on a flat side face, so it computes at the full radius. The outline of the two side faces is NOT filleted:
+# it carries sub-0.5 mm sliver edges at the ramp teeth and the nose polyline, and any fillet chain over them fails (ASM_BL_CAP_COMPLEX
+# at every radius down to 0.3 mm). Cleaning those slivers out of the profile would unlock it.
+TRIG_FILLET_PARAMS = [
+    ('trig_edge_r', '1.2 mm', 'Fillet on the long finger-blade edges of both triggers'),
+    ('trig_edge_zmax', '-9.5 mm', 'Only edges below this z (the finger blade) are filleted; the ledge, hub, ear and pocket stay sharp'),
+]
+
+
+def add_trig_fillet_params(des):
+    up = des.userParameters
+    for n, e, c in TRIG_FILLET_PARAMS:
+        if up.itemByName(n) is None:
+            up.add(n, VI(e), 'mm', c)
+
+
+def finger_edges(comp, des):
+    """Long (>10 mm) blade-wide edges below trig_edge_zmax whose faces meet at more than 20 deg."""
+    import math
+    zmax = ev_cm(des, 'trig_edge_zmax'); out = adsk.core.ObjectCollection.create()
+    for e in comp.bRepBodies[0].edges:
+        if e.faces.count != 2 or e.length < ev_cm(des, '10 mm'):
+            continue
+        ev = e.evaluator
+        ok, t0, t1 = ev.getParameterExtents(); ok, pm = ev.getPointAtParameter((t0 + t1) / 2)
+        if pm.z >= zmax:
+            continue
+        ok, n0 = e.faces[0].evaluator.getNormalAtPoint(pm); ok, n1 = e.faces[1].evaluator.getNormalAtPoint(pm)
+        if math.degrees(math.acos(max(-1.0, min(1.0, n0.dotProduct(n1))))) > 20.0:
+            out.add(e)
+    return out
+
+
+def build_trigger_finger_fillet(comp, des, name='Trigger finger edge fillet (long edges)'):
+    add_trig_fillet_params(des)
+    fi = comp.features.filletFeatures.createInput()
+    fi.addConstantRadiusEdgeSet(finger_edges(comp, des), VI('trig_edge_r'), False)
+    f = comp.features.filletFeatures.add(fi); f.name = name
+    return f
