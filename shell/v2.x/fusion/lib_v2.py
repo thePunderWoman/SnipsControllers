@@ -2801,3 +2801,56 @@ def build_pt_front_rounding(comp, des):
     fi.addConstantRadiusEdgeSet(es, adsk.core.ValueInput.createByString('pt_front_r'), False)
     f = comp.features.filletFeatures.add(fi); f.name = 'Trigger front rounding fillet'
     return f
+
+
+# ---------------------------------------------------------------- wrist strap anchor (both bottom shells)
+STRAP_PARAMS = [
+    ('strap_loop_w', '5 mm', 'Wrist strap attachment loop width (flat webbing)'),
+    ('strap_loop_t', '1 mm', 'Wrist strap attachment loop thickness'),
+    ('strap_clr', '0.4 mm', 'Clearance added to the loop width in the slot'),
+    ('strap_slot_w', 'strap_loop_w + strap_clr', 'Strap slot width (x)'),
+    ('strap_slot_h', 'strap_loop_t + 0.6 mm', 'Strap slot height (z)'),
+    ('strap_bar_h', '3.4 mm', 'Bar of wall left between the two slots (the load-bearing bar the loop wraps)'),
+    ('strap_top_z', '-2.4 mm', 'z of the top edge of the upper slot (below the 0.8 mm thin lap section of the rear wall)'),
+]
+
+
+def add_strap_params(des):
+    up = des.userParameters
+    for n, e, c in STRAP_PARAMS:
+        if up.itemByName(n) is None:
+            up.add(n, VI(e), 'mm', c)
+
+
+def _strap_slot(sk, des, zc_expr):
+    """Stadium slot strap_slot_w x strap_slot_h centred x=0, z=zc_expr on an XZ sketch (sketch y = -model z). Fully constrained."""
+    H = adsk.fusion.DimensionOrientations
+    cy = -ev_cm(des, zc_expr)
+    w = ev_cm(des, 'strap_slot_w'); h = ev_cm(des, 'strap_slot_h')
+    r = h / 2; L = (w - h) / 2
+    Ls = sk.sketchCurves.sketchLines; As = sk.sketchCurves.sketchArcs
+    top = Ls.addByTwoPoints(P3(-L, cy + r, 0), P3(L, cy + r, 0))
+    bot = Ls.addByTwoPoints(P3(L, cy - r, 0), P3(-L, cy - r, 0))
+    ar = As.addByThreePoints(top.endSketchPoint, P3(L + r, cy, 0), bot.startSketchPoint)
+    al = As.addByThreePoints(bot.endSketchPoint, P3(-L - r, cy, 0), top.startSketchPoint)
+    gc = sk.geometricConstraints; dm = sk.sketchDimensions
+    gc.addHorizontal(top); gc.addHorizontal(bot)
+    gc.addTangent(top, ar); gc.addTangent(bot, ar); gc.addTangent(top, al); gc.addTangent(bot, al)
+    dm.addRadialDimension(ar, P3(L + r + 0.3, cy + 0.3, 0)).parameter.expression = 'strap_slot_h / 2'
+    dm.addDistanceDimension(al.centerSketchPoint, ar.centerSketchPoint, H.HorizontalDimensionOrientation, P3(0, cy - r - 0.3, 0)).parameter.expression = 'strap_slot_w - strap_slot_h'
+    dm.addDistanceDimension(sk.originPoint, ar.centerSketchPoint, H.HorizontalDimensionOrientation, P3(L / 2, cy + r + 0.3, 0)).parameter.expression = '(strap_slot_w - strap_slot_h) / 2'
+    dm.addDistanceDimension(sk.originPoint, ar.centerSketchPoint, H.VerticalDimensionOrientation, P3(L + r + 0.6, cy / 2, 0)).parameter.expression = '-(%s)' % zc_expr
+    return sk
+
+
+def build_strap_slots(comp, des, target):
+    """Two stacked slots through the rear wall of a bottom shell, a bar of wall between them. Thread the thin loop in through
+    one slot and out of the other so it wraps the bar. One sketch per slot (keeps each fully constrained on its own)."""
+    add_strap_params(des)
+    profs = adsk.core.ObjectCollection.create()
+    for nm, zc in (('Strap slot upper', 'strap_top_z - strap_slot_h / 2'),
+                   ('Strap slot lower', 'strap_top_z - strap_slot_h - strap_bar_h - strap_slot_h / 2')):
+        sk = comp.sketches.add(comp.xZConstructionPlane); sk.name = nm
+        _strap_slot(sk, des, zc)
+        profs.add(sk.profiles.item(0))
+    return ext(comp, profs, 'wall + 1 mm + 0.3 mm', FE.CutFeatureOperation, 'Strap slots', start='y_rear_out - 1 mm', target=target)
