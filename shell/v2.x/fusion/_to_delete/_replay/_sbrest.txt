@@ -1,0 +1,71 @@
+def add_sb_params(des):
+    up = des.userParameters
+    for n, e, c in SB_PARAMS:
+        if up.itemByName(n) is None:
+            up.add(n, VI(e), 'mm', c)
+
+
+def _sb_d(sk, des, yc, w, h, outer_top, r):
+    """D profile on a YZ-plane sketch (sketch x = -z, y = y): centred at (yc, sb_z), size w (y) x h (z),
+    the two corners on the outer-y side rounded by r, flat side toward the other button."""
+    rect = rect4(sk, des, '-(sb_z + (%s) / 2)' % h, '-(sb_z - (%s) / 2)' % h, '(%s) - (%s) / 2' % (yc, w), '(%s) + (%s) / 2' % (yc, w))
+    lines = [rect.item(i) for i in range(4)]
+    def horiz(l): return abs(l.startSketchPoint.geometry.y - l.endSketchPoint.geometry.y) < 1e-9
+    hs = [l for l in lines if horiz(l)]; vs = [l for l in lines if not horiz(l)]
+    outer = max(hs, key=lambda l: l.startSketchPoint.geometry.y) if outer_top else min(hs, key=lambda l: l.startSketchPoint.geometry.y)
+    def mid(l):
+        a = l.startSketchPoint.geometry; b = l.endSketchPoint.geometry
+        return P3((a.x + b.x) / 2, (a.y + b.y) / 2, 0)
+    arcs = []
+    for v in vs:
+        arcs.append(sk.sketchCurves.sketchArcs.addFillet(v, mid(v), outer, mid(outer), ev_cm(des, r)))
+    g = arcs[0].centerSketchPoint.geometry
+    sk.sketchDimensions.addRadialDimension(arcs[0], P3(g.x, g.y + (0.3 if outer_top else -0.3), 0)).parameter.expression = r
+    sk.geometricConstraints.addEqual(arcs[0], arcs[1])
+    return rect
+
+
+def _sb_cap_face(body, s, x_cm):
+    for fc in body.faces:
+        if fc.geometry.objectType.endswith('Plane'):
+            ok, n = fc.evaluator.getNormalAtPoint(fc.pointOnFace)
+            if ok and abs(n.x - s) < 1e-6 and abs(abs(fc.pointOnFace.x) - x_cm) < 1e-4:
+                return fc
+    raise RuntimeError('cap face not found')
+
+
+SB_LAYOUT = [('L1', -1, 'sb_y1', True), ('L2', -1, 'sb_y2', False), ('R1', 1, 'sb_y1', True), ('R2', 1, 'sb_y2', False)]
+
+
+def build_side_cuts(top_comp, des, key):
+    """Top shell: flange pocket in the wall's inner face + D hole through the remaining outer lip."""
+    add_sb_params(des)
+    _, s, yc, ot = [t for t in SB_LAYOUT if t[0] == key][0]
+    sx = lambda e: ('-(%s)' % e) if s < 0 else '(%s)' % e
+    body = top_comp.bRepBodies.item(0)
+    sk = top_comp.sketches.add(top_comp.yZConstructionPlane); sk.name = 'Side pocket %s' % key
+    _sb_d(sk, des, yc, 'sb_fl_w + 2 * sb_pocket_clr', 'sb_fl_h + 2 * sb_pocket_clr', ot, 'sb_d_r + sb_pocket_clr')
+    ext(top_comp, main_profile(sk), 'sb_pocket_floor_x - (sb_wall_in_x - 0.5 mm)', FE.CutFeatureOperation, 'Side pocket %s' % key,
+        neg=(s < 0), start=sx('sb_wall_in_x - 0.5 mm'), target=body)
+    sk = top_comp.sketches.add(top_comp.yZConstructionPlane); sk.name = 'Side hole %s' % key
+    _sb_d(sk, des, yc, 'sb_stem_w + 2 * sb_hole_clr', 'sb_stem_h + 2 * sb_hole_clr', ot, 'sb_stem_r + sb_hole_clr')
+    ext(top_comp, main_profile(sk), 'sb_wall_out_x + 1 mm - (sb_pocket_floor_x - 0.2 mm)', FE.CutFeatureOperation, 'Side hole %s' % key,
+        neg=(s < 0), start=sx('sb_pocket_floor_x - 0.2 mm'), target=body)
+
+
+def build_side_button(root, des, key):
+    """Printed part: inner D flange in the wall pocket; D stem (its end is the cap, same size) through the lip. No outer flange, installs from inside."""
+    add_sb_params(des)
+    _, s, yc, ot = [t for t in SB_LAYOUT if t[0] == key][0]
+    sx = lambda e: ('-(%s)' % e) if s < 0 else '(%s)' % e
+    comp = new_component(root, 'SideButton%s' % key)
+    sk = comp.sketches.add(comp.yZConstructionPlane); sk.name = 'Button flange'
+    _sb_d(sk, des, yc, 'sb_fl_w', 'sb_fl_h', ot, 'sb_d_r')
+    f = ext(comp, main_profile(sk), 'sb_fl_t', FE.NewBodyFeatureOperation, 'Button flange', neg=(s < 0), start=sx('sb_fl_in_x'))
+    body = f.bodies.item(0); body.name = 'SideButton%s' % key
+    sk = comp.sketches.add(comp.yZConstructionPlane); sk.name = 'Button stem'
+    _sb_d(sk, des, yc, 'sb_stem_w', 'sb_stem_h', ot, 'sb_stem_r')
+    ext(comp, main_profile(sk), 'sb_cap_out_x - (sb_fl_out_x - 0.2 mm)', FE.JoinFeatureOperation, 'Button stem',
+        neg=(s < 0), start=sx('sb_fl_out_x - 0.2 mm'), target=body)
+    fillet_face_edges(comp, _sb_cap_face(body, s, ev_cm(des, 'sb_cap_out_x')), 'sb_cap_fillet', 'Cap edge fillet')
+    return comp

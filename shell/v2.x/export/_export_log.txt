@@ -1,0 +1,12 @@
+v2 raw exports from SnipsShell_v2.f3d (2026-11-03). TriggerCaps exported as one component (two lumps).
+PCB_Reference not exported: the board STEP lives in PCB/v2.x/snips/step.
+TopShell OK
+BottomShell OK
+TriggerCaps OK
+XBeeCarrier_Ref OK
+ThumbstickKnob_Ref OK
+SpringRef OK
+OLED_Ref OK
+Cell14500_Ref OK
+ContactClip_Revolve OK
+Contacts_Block OK
