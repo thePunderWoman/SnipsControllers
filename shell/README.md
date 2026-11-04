@@ -45,13 +45,14 @@ variant is **3.38 mm** thinner. Both triggers rest 8 deg forward of vertical (pa
 Reference cell model: `export/reference/stl|step/Cell_YDL103035_Ref.*`.
 
 ### Wrist strap anchor
-Both bottom shells have two stacked slots through the rear (USB-end) wall, centred on the shell, below the seam and the
-USB port. Push the strap's thin attachment loop in through one slot and back out of the other so it wraps the 3.4 mm
-bar of wall between them. Defaults suit a 5 x 1 mm flat loop (`strap_loop_w`, `strap_loop_t`, `strap_clr`):
-slots 5.4 x 1.6 mm, bar `strap_bar_h` 3.4 mm, top edge at z -2.4 mm (`strap_top_z`). The bar is the full 2 mm wall thick and
-printed with its layers along the load direction, which is comfortably strong for a dangling controller;
-if you hang something heavier, raise `strap_bar_h` and re-export. Interior behind the slots is clear in both variants,
-so the loop has room to turn.
+Both bottom shells have two vertical slots through the rear-left corner (looking from the USB end, the left side), with a 2.2 mm
+bar of wall between them. Push the strap's thin attachment loop in through one slot and back out of the other so it wraps the
+bar. The centre of the rear wall is taken by the contact clip and 14500 bay on the standard shell, so the pair sits in the free
+corner pocket (same position on both variants; the cut runs through the corner into the interior, which is clear behind it).
+Defaults suit a 3 x 1 mm flat loop: slots 1.5 x 3.4 mm, centred x -12.4 mm, z -6 mm, parameters `strap_loop_w`, `strap_loop_t`,
+`strap_clr`, `strap_bar_w`, `strap_x`, `strap_z`, `strap_cut_y`. The bar is the full wall thick and the corner makes it deeper
+than the flat wall. Hang test it before relying on it with heavy loads; widen `strap_bar_w` if you want more margin (the pair
+has about 1 mm to spare toward the bay wall on the standard shell).
 
 ### Photos
 `photos/snips_shell_*.png` show the standard variant, `photos/snips_shell_pouch_*.png` the pouch variant (same angles;

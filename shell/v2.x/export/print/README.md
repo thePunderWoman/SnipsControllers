@@ -25,9 +25,9 @@ pouch cell, no BatteryPanel). TopShell, buttons, Bumper, TriggerPost and Trigger
 33.70 mm tall (standard) vs 30.32 mm (pouch), measured flat top surface to flat bottom.
 
 ## Wrist strap anchor
-`BottomShell` and `BottomShell_Pouch` each have two 5.4 x 1.6 mm slots through the rear wall (bar between them 3.4 mm). They print
-without supports (short horizontal bridges of 1.6 mm). Parameters: `strap_loop_w`, `strap_loop_t`, `strap_clr`, `strap_bar_h`,
-`strap_top_z`. Rotate the bar with `strap_bar_h` up to ~5 mm for heavier loads (the lower slot then sits lower on the rear wall).
+`BottomShell` and `BottomShell_Pouch` each have two vertical 1.5 x 3.4 mm slots through the rear-left corner (2.2 mm bar between
+them) for a 3 x 1 mm strap loop. Slots are narrow and tall with rounded ends, so they print without supports. Parameters:
+`strap_loop_w`, `strap_loop_t`, `strap_clr`, `strap_bar_w`, `strap_x`, `strap_z`, `strap_cut_y`.
 
 ## Trigger notes
 - Both triggers rest 8 deg forward of vertical (`trig_rest_deg`, `pt_rest_deg`); the pull is 28 deg beyond that.

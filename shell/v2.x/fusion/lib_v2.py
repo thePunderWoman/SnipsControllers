@@ -2804,14 +2804,19 @@ def build_pt_front_rounding(comp, des):
 
 
 # ---------------------------------------------------------------- wrist strap anchor (both bottom shells)
+# Two vertical slots side by side in the left rear corner (-x), a bar of wall between them. The loop goes in one slot and out
+# of the other, wrapping the bar. Placed in the free corner pocket: the centre of the rear wall is taken by the contact clip /
+# 14500 bay (standard shell). The slots run through the corner mass (cut to strap_cut_y) to open into the interior.
 STRAP_PARAMS = [
-    ('strap_loop_w', '5 mm', 'Wrist strap attachment loop width (flat webbing)'),
+    ('strap_loop_w', '3 mm', 'Wrist strap attachment loop width (flat webbing), runs along z through the slot'),
     ('strap_loop_t', '1 mm', 'Wrist strap attachment loop thickness'),
     ('strap_clr', '0.4 mm', 'Clearance added to the loop width in the slot'),
-    ('strap_slot_w', 'strap_loop_w + strap_clr', 'Strap slot width (x)'),
-    ('strap_slot_h', 'strap_loop_t + 0.6 mm', 'Strap slot height (z)'),
-    ('strap_bar_h', '3.4 mm', 'Bar of wall left between the two slots (the load-bearing bar the loop wraps)'),
-    ('strap_top_z', '-2.4 mm', 'z of the top edge of the upper slot (below the 0.8 mm thin lap section of the rear wall)'),
+    ('strap_slot_h', 'strap_loop_w + strap_clr', 'Strap slot height (z)'),
+    ('strap_slot_w', 'strap_loop_t + 0.5 mm', 'Strap slot width (x)'),
+    ('strap_bar_w', '2.2 mm', 'Bar of wall between the two slots (x), the load-bearing bar the loop wraps'),
+    ('strap_x', '-12.4 mm', 'x of the centre of the slot pair (left rear corner pocket)'),
+    ('strap_z', '-6 mm', 'z of the slot centres (below the thin lap section, above the belly fillet)'),
+    ('strap_cut_y', '-45.5 mm', 'y the slot cut runs to (through the corner mass into the interior)'),
 ]
 
 
@@ -2822,35 +2827,35 @@ def add_strap_params(des):
             up.add(n, VI(e), 'mm', c)
 
 
-def _strap_slot(sk, des, zc_expr):
-    """Stadium slot strap_slot_w x strap_slot_h centred x=0, z=zc_expr on an XZ sketch (sketch y = -model z). Fully constrained."""
+def _strap_slot(sk, des, xc_expr):
+    """Vertical stadium slot strap_slot_w x strap_slot_h centred (xc_expr, strap_z) on an XZ sketch (sketch y = -model z).
+    xc_expr is negative (left side). Fully constrained."""
     H = adsk.fusion.DimensionOrientations
-    cy = -ev_cm(des, zc_expr)
+    cx = ev_cm(des, xc_expr); cy = -ev_cm(des, 'strap_z')
     w = ev_cm(des, 'strap_slot_w'); h = ev_cm(des, 'strap_slot_h')
-    r = h / 2; L = (w - h) / 2
+    r = w / 2; L = (h - w) / 2
     Ls = sk.sketchCurves.sketchLines; As = sk.sketchCurves.sketchArcs
-    top = Ls.addByTwoPoints(P3(-L, cy + r, 0), P3(L, cy + r, 0))
-    bot = Ls.addByTwoPoints(P3(L, cy - r, 0), P3(-L, cy - r, 0))
-    ar = As.addByThreePoints(top.endSketchPoint, P3(L + r, cy, 0), bot.startSketchPoint)
-    al = As.addByThreePoints(bot.endSketchPoint, P3(-L - r, cy, 0), top.startSketchPoint)
+    lft = Ls.addByTwoPoints(P3(cx - r, cy - L, 0), P3(cx - r, cy + L, 0))
+    rgt = Ls.addByTwoPoints(P3(cx + r, cy + L, 0), P3(cx + r, cy - L, 0))
+    atop = As.addByThreePoints(lft.endSketchPoint, P3(cx, cy + L + r, 0), rgt.startSketchPoint)
+    abot = As.addByThreePoints(rgt.endSketchPoint, P3(cx, cy - L - r, 0), lft.startSketchPoint)
     gc = sk.geometricConstraints; dm = sk.sketchDimensions
-    gc.addHorizontal(top); gc.addHorizontal(bot)
-    gc.addTangent(top, ar); gc.addTangent(bot, ar); gc.addTangent(top, al); gc.addTangent(bot, al)
-    dm.addRadialDimension(ar, P3(L + r + 0.3, cy + 0.3, 0)).parameter.expression = 'strap_slot_h / 2'
-    dm.addDistanceDimension(al.centerSketchPoint, ar.centerSketchPoint, H.HorizontalDimensionOrientation, P3(0, cy - r - 0.3, 0)).parameter.expression = 'strap_slot_w - strap_slot_h'
-    dm.addDistanceDimension(sk.originPoint, ar.centerSketchPoint, H.HorizontalDimensionOrientation, P3(L / 2, cy + r + 0.3, 0)).parameter.expression = '(strap_slot_w - strap_slot_h) / 2'
-    dm.addDistanceDimension(sk.originPoint, ar.centerSketchPoint, H.VerticalDimensionOrientation, P3(L + r + 0.6, cy / 2, 0)).parameter.expression = '-(%s)' % zc_expr
+    gc.addVertical(lft); gc.addVertical(rgt)
+    gc.addTangent(lft, atop); gc.addTangent(rgt, atop); gc.addTangent(lft, abot); gc.addTangent(rgt, abot)
+    dm.addRadialDimension(atop, P3(cx + r + 0.3, cy + L + 0.3, 0)).parameter.expression = 'strap_slot_w / 2'
+    dm.addDistanceDimension(abot.centerSketchPoint, atop.centerSketchPoint, H.VerticalDimensionOrientation, P3(cx + r + 0.5, cy, 0)).parameter.expression = 'strap_slot_h - strap_slot_w'
+    dm.addDistanceDimension(sk.originPoint, atop.centerSketchPoint, H.HorizontalDimensionOrientation, P3(cx / 2, cy + L + r + 0.3, 0)).parameter.expression = '-(%s)' % xc_expr
+    dm.addDistanceDimension(sk.originPoint, atop.centerSketchPoint, H.VerticalDimensionOrientation, P3(cx - r - 0.6, cy / 2, 0)).parameter.expression = '-strap_z + (strap_slot_h - strap_slot_w) / 2'
     return sk
 
 
 def build_strap_slots(comp, des, target):
-    """Two stacked slots through the rear wall of a bottom shell, a bar of wall between them. Thread the thin loop in through
-    one slot and out of the other so it wraps the bar. One sketch per slot (keeps each fully constrained on its own)."""
+    """Two vertical slots through the rear-left corner of a bottom shell with a bar of wall between them. One sketch per slot."""
     add_strap_params(des)
     profs = adsk.core.ObjectCollection.create()
-    for nm, zc in (('Strap slot upper', 'strap_top_z - strap_slot_h / 2'),
-                   ('Strap slot lower', 'strap_top_z - strap_slot_h - strap_bar_h - strap_slot_h / 2')):
+    for nm, xc in (('Strap slot outer', 'strap_x - (strap_slot_w + strap_bar_w) / 2'),
+                   ('Strap slot inner', 'strap_x + (strap_slot_w + strap_bar_w) / 2')):
         sk = comp.sketches.add(comp.xZConstructionPlane); sk.name = nm
-        _strap_slot(sk, des, zc)
+        _strap_slot(sk, des, xc)
         profs.add(sk.profiles.item(0))
-    return ext(comp, profs, 'wall + 1 mm + 0.3 mm', FE.CutFeatureOperation, 'Strap slots', start='y_rear_out - 1 mm', target=target)
+    return ext(comp, profs, 'strap_cut_y - (y_rear_out - 1 mm)', FE.CutFeatureOperation, 'Strap slots', start='y_rear_out - 1 mm', target=target)

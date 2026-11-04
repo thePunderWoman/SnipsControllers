@@ -18,5 +18,6 @@ Trigger OK (re-exported: rest pose rotated 8 deg forward, trig_rest_deg)
 TriggerPost_Pouch / TriggerCaps_Pouch not exported: identical to TriggerPost / TriggerCaps (same volume, faces and bbox); the pouch variant uses those files.
 Print files regenerated for the new/changed parts only (unchanged print STEPs were left as committed).
 
-2026-11-03 (later): added wrist strap slots (rear wall, both bottom shells). Re-exported BottomShell and BottomShell_Pouch
+2026-11-03 (later): added wrist strap slots (two vertical slots, rear-left corner, both bottom shells). Re-exported BottomShell and BottomShell_Pouch
 (stl, step, print/stl, print/step) and the f3d archive. Other parts unchanged.
+2026-11-03 (later still): strap slots moved from the rear-wall centre to the rear-left corner (vertical, 3 mm loop); same parts re-exported.
