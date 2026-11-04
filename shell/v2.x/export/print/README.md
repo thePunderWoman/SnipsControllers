@@ -30,6 +30,7 @@ them) for a 3 x 1 mm strap loop. Slots are narrow and tall with rounded ends, so
 `strap_loop_w`, `strap_loop_t`, `strap_clr`, `strap_bar_w`, `strap_x`, `strap_z`, `strap_cut_y`.
 
 ## Trigger notes
+- The long edges across the finger blade (nose, bottom-flat corners, rear corner) are filleted at 1.2 mm (`trig_edge_r`; only edges below `trig_edge_zmax`) on both triggers for a soft finger feel. The side-face outlines are left sharp: they carry sub-0.5 mm sliver edges at the ramp teeth and nose, which stop any fillet chain from computing.
 - Both triggers rest 8 deg forward of vertical (`trig_rest_deg`, `pt_rest_deg`); the pull is 28 deg beyond that.
   `Trigger` was regenerated for this, so reprint it if you printed an earlier one.
 - The trigger spring slots (ear slot and fixed-leg groove) are 0.8 mm wide, parametric (`trig_leg_slot`, `trig_groove_w`). Print a short test coupon first if the 0.35 mm wire does not slide in, and ream rather than change the model.
