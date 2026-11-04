@@ -8,7 +8,35 @@ on:
     branches: [main, stackup]
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      firmware: ${{ steps.filter.outputs.firmware }}
+      pcb: ${{ steps.filter.outputs.pcb }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            firmware:
+              - 'src/**'
+              - 'include/**'
+              - 'test/**'
+              - 'platformio.ini'
+              - 'scripts/firmware_version.py'
+              - 'scripts/native_coverage_linkflags.py'
+              - '.github/workflows/ci.yml'
+            pcb:
+              - 'PCB/**'
+              - 'ci/**'
+              - 'manifest.kdl'
+              - '.github/workflows/ci.yml'
+
   stackup-check:
+    needs: changes
+    if: needs.changes.outputs.pcb == 'true' || github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -68,6 +96,8 @@ jobs:
             --plugin-dir stackup-tool/kicad-plugin
 
   native-tests:
+    needs: changes
+    if: needs.changes.outputs.firmware == 'true' || github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -104,6 +134,8 @@ jobs:
           exit $status
 
   esp32s3-build:
+    needs: changes
+    if: needs.changes.outputs.firmware == 'true' || github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
