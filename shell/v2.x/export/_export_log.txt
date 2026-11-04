@@ -10,3 +10,10 @@ OLED_Ref OK
 Cell14500_Ref OK
 ContactClip_Revolve OK
 Contacts_Block OK
+2026-11-03 (pouch-cell variant + forward trigger rest offset), from SnipsShell_v2.f3d "SnipsShell V2 v18":
+BottomShell_Pouch OK (new)
+Trigger_Pouch OK (new)
+Cell_YDL103035_Ref OK (new, reference/)
+Trigger OK (re-exported: rest pose rotated 8 deg forward, trig_rest_deg)
+TriggerPost_Pouch / TriggerCaps_Pouch not exported: identical to TriggerPost / TriggerCaps (same volume, faces and bbox); the pouch variant uses those files.
+Print files regenerated for the new/changed parts only (unchanged print STEPs were left as committed).

@@ -429,10 +429,10 @@ def build_top_posts(top_comp, des):
     ext(top_comp, all_profiles(sk), 'post_engage + 1 mm', FE.CutFeatureOperation, 'Post pilot holes', start='pcb_top_z', target=top_comp.bRepBodies.item(0))
 
 
-def build_bottom_columns(bot_comp, des):
+def build_bottom_columns(bot_comp, des, d='bot_d'):
     up = des.userParameters
     body = bot_comp.bRepBodies.item(0)
-    z_floor = '-(bot_d - floor_t)'
+    z_floor = '-(%s - floor_t)' % d
     sk = bot_comp.sketches.add(bot_comp.xYConstructionPlane); sk.name = 'PCB columns'
     hole_circles(sk, des, '2 * post_r')
     ext(bot_comp, all_profiles(sk), 'pcb_bot_z - (%s)' % z_floor, FE.JoinFeatureOperation, 'PCB columns', start=z_floor)
@@ -442,7 +442,7 @@ def build_bottom_columns(bot_comp, des):
     ext(bot_comp, profile_by_loops(sk, 2)[0], '1 mm', FE.CutFeatureOperation, 'Column trim', start='lap_h - seam_clr', target=bot_comp.bRepBodies.item(0))
     sk = bot_comp.sketches.add(bot_comp.xYConstructionPlane); sk.name = 'Screw head wells'
     hole_circles(sk, des, 'head_well_d')
-    ext(bot_comp, all_profiles(sk), 'bot_d + screw_head_seat_z', FE.CutFeatureOperation, 'Screw head wells', start='-bot_d', target=bot_comp.bRepBodies.item(0))
+    ext(bot_comp, all_profiles(sk), d + ' + screw_head_seat_z', FE.CutFeatureOperation, 'Screw head wells', start='-' + d, target=bot_comp.bRepBodies.item(0))
     sk = bot_comp.sketches.add(bot_comp.xYConstructionPlane); sk.name = 'Screw bores'
     hole_circles(sk, des, 'screw_clr_d')
     ext(bot_comp, all_profiles(sk), 'pcb_bot_z - screw_head_seat_z + 0.1 mm', FE.CutFeatureOperation, 'Screw bores', start='screw_head_seat_z', target=bot_comp.bRepBodies.item(0))
@@ -548,7 +548,7 @@ def build_usb_bezel(comp, des, name_prefix, target, keep_above):
     t = comp.sketches.add(comp.xYConstructionPlane); t.name = name_prefix + ' bezel trim'
     rect4(t, des, 'usb_x - (usb_plug_w / 2 + usb_pocket_clr + usb_bezel_t) - 1 mm',
           'usb_x + (usb_plug_w / 2 + usb_pocket_clr + usb_bezel_t) + 1 mm',
-          'y_rear_out + wall', 'usb_face_y - usb_stop_gap + 0.5 mm')
+          'y_rear_out + wall' if keep_above else 'y_rear_out + wall / 2 - 0.1 mm', 'usb_face_y - usb_stop_gap + 0.5 mm')
     if keep_above:
         ext(comp, main_profile(t), '5 mm', FE.CutFeatureOperation, name_prefix + ' bezel trim', neg=True,
             start='usb_bezel_split_top', target=target)
@@ -556,9 +556,10 @@ def build_usb_bezel(comp, des, name_prefix, target, keep_above):
         ext(comp, main_profile(t), '10 mm', FE.CutFeatureOperation, name_prefix + ' bezel trim',
             start='usb_bezel_split_bot', target=target)
     # re-cut the bore through the bezel using the existing pocket sketch
-    ps = [s for s in comp.sketches if s.name in ('USB plug pocket', 'USB plug notch (bottom)')][0]
-    ext(comp, main_profile(ps), 'usb_face_y - usb_stop_gap - (y_rear_out - 1 mm)', FE.CutFeatureOperation,
-        name_prefix + ' bezel bore', start='y_rear_out - 1 mm', target=target)
+    ps = [s for s in comp.sketches if s.name in ('USB plug pocket', 'USB plug notch (bottom)')]
+    if ps:   # the bottom shell has no pocket sketch (only a sliver of bezel below the seam gap), so no bore re-cut
+        ext(comp, main_profile(ps[0]), 'usb_face_y - usb_stop_gap - (y_rear_out - 1 mm)', FE.CutFeatureOperation,
+            name_prefix + ' bezel bore', start='y_rear_out - 1 mm', target=target)
 
 
 PWR_PARAMS = [
@@ -1804,7 +1805,8 @@ TRIG_PROFILE = [(21.6, -17.06), (23.19, -18.4), (24.4, -19.12), (25.54, -19.36),
 TRIG2_PARAMS = [
     ('trig_piv_y', '25.3 mm', 'trigger pivot axis y (axis runs along x); 1.0 mm behind the v1.1-derived 26.3 so the hub rim (r 2.6) clears the front wall / bumper at every pull angle'),
     ('trig_piv_z', '-3.0 mm', 'trigger pivot axis z'),
-    ('trig_pull_deg', '28 deg', 'trigger rotation at full pull'),
+    ('trig_rest_deg', '8 deg', 'rest pose is rotated this far forward of the original rest pose (more finger stroke); the pull end stays where it was'),
+    ('trig_pull_deg', '28 deg + trig_rest_deg', 'total trigger rotation from rest to full pull (28 deg plus the forward rest offset)'),
     ('trig_x0', '-9.45 mm', 'trigger body left edge (x); slot / spring envelope is trig_x0..trig_x1'),
     ('trig_bx1', '7.6 mm', 'trigger blade right edge (x); coil sits between here and the slot wall'),
     ('trig_nose_y', 'trig_ramp_y - 0.4 mm', 'trigger front trim: 0.4 mm behind the front wall inner face'),
@@ -1841,7 +1843,7 @@ def add_trig2_params(des):
     for n, e, c in TRIG2_PARAMS:
         pr = up.itemByName(n)
         if pr is None:
-            up.add(n, VI(e), 'deg' if e.endswith('deg') else 'mm', c)
+            up.add(n, VI(e), 'deg' if n in ('trig_rest_deg', 'trig_pull_deg') else 'mm', c)
         else:
             pr.expression = e
     for n, e in (('trig_x0', '-9.45 mm'),):
@@ -1886,6 +1888,8 @@ def build_trigger(root, des):
     py, pz = ev('trig_piv_y'), ev('trig_piv_z')
     nose, tip = ev('trig_nose_y'), ev('trig_tip_z')
     pts = [(py + (y - 26.3), pz + (z + 3.0)) for y, z in TRIG_PROFILE]      # profile was extracted about the (26.3, -3.0) pivot
+    rest = des.userParameters.itemByName('trig_rest_deg').value       # radians
+    pts = [(py + (p[0] - py) * math.cos(rest) - (p[1] - pz) * math.sin(rest), pz + (p[0] - py) * math.sin(rest) + (p[1] - pz) * math.cos(rest)) for p in pts]
     pts = _clip(pts, lambda p: nose - p[0])
     pts = _clip(pts, lambda p: p[1] - tip)
     rows = []
@@ -1993,16 +1997,19 @@ def _rel_rows(pts):
 def build_trigger_ear(c, des, body):
     """Ear on the blade's right face carrying the spring's moving leg: through-slot along the leg + hook pocket."""
     add_spring_params(des)
-    dx, dy = SPR_T[0] - SPR_S[0], SPR_T[1] - SPR_S[1]; n = math.hypot(dx, dy); d = (dx / n, dy / n)
-    pa = (SPR_S[0] + d[0] * 2.6, SPR_S[1] + d[1] * 2.6)
+    rest = des.userParameters.itemByName('trig_rest_deg').value
+    _r = lambda p: (p[0] * math.cos(rest) - p[1] * math.sin(rest), p[0] * math.sin(rest) + p[1] * math.cos(rest))
+    R_S, R_T, R_H = _r(SPR_S), _r(SPR_T), _r(SPR_H)
+    dx, dy = R_T[0] - R_S[0], R_T[1] - R_S[1]; n = math.hypot(dx, dy); d = (dx / n, dy / n)
+    pa = (R_S[0] + d[0] * 2.6, R_S[1] + d[1] * 2.6)
     sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Trigger spring ear'
-    poly_pts(sk, des, _rel_rows(_seg_strip(pa, SPR_T, 1.2, 0, 0.7)))
-    poly_pts(sk, des, _rel_rows(_seg_strip(SPR_T, SPR_H, 1.0, 0.9, 0.5)))
+    poly_pts(sk, des, _rel_rows(_seg_strip(pa, R_T, 1.2, 0, 0.7)))
+    poly_pts(sk, des, _rel_rows(_seg_strip(R_T, R_H, 1.0, 0.9, 0.5)))
     ext(c, all_profiles(sk), 'trig_ear_x1 - trig_bx1', FE.JoinFeatureOperation, 'Trigger spring ear', start='trig_bx1', target=body)
     sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Trigger leg slot'
-    pb = (SPR_S[0] + d[0] * 2.0, SPR_S[1] + d[1] * 2.0)
-    poly_pts(sk, des, _rel_rows(_seg_strip(pb, SPR_T, 0.3, 0, 0.3)))
-    poly_pts(sk, des, _rel_rows(_seg_strip(SPR_T, SPR_H, 0.3, 0.3, 0.3)))
+    pb = (R_S[0] + d[0] * 2.0, R_S[1] + d[1] * 2.0)
+    poly_pts(sk, des, _rel_rows(_seg_strip(pb, R_T, 0.3, 0, 0.3)))
+    poly_pts(sk, des, _rel_rows(_seg_strip(R_T, R_H, 0.3, 0.3, 0.3)))
     ext(c, all_profiles(sk), 'trig_ear_x1 - trig_bx1 + 0.4 mm', FE.CutFeatureOperation, 'Trigger leg slot', start='trig_bx1 - 0.2 mm', target=body)
 
 
@@ -2121,11 +2128,14 @@ def _seg_strip_w(a, b, wexp, l0=0.0, l1=0.0):
 def build_trigger_leg_slot(c, des, body):
     """Through-slot in the ear for the moving leg, half-width = trig_leg_slot (parametric)."""
     add_slot_cap_params(des)
-    dx, dy = SPR_T[0] - SPR_S[0], SPR_T[1] - SPR_S[1]; n = math.hypot(dx, dy); d = (dx / n, dy / n)
-    pb = (SPR_S[0] + d[0] * 2.0, SPR_S[1] + d[1] * 2.0)
+    rest = des.userParameters.itemByName('trig_rest_deg').value
+    _r = lambda p: (p[0] * math.cos(rest) - p[1] * math.sin(rest), p[0] * math.sin(rest) + p[1] * math.cos(rest))
+    R_S, R_T, R_H = _r(SPR_S), _r(SPR_T), _r(SPR_H)
+    dx, dy = R_T[0] - R_S[0], R_T[1] - R_S[1]; n = math.hypot(dx, dy); d = (dx / n, dy / n)
+    pb = (R_S[0] + d[0] * 2.0, R_S[1] + d[1] * 2.0)
     sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Trigger leg slot'
-    poly_pts(sk, des, _seg_strip_w(pb, SPR_T, 'trig_leg_slot', 0, 0.3))
-    poly_pts(sk, des, _seg_strip_w(SPR_T, SPR_H, 'trig_leg_slot', 0.3, 0.3))
+    poly_pts(sk, des, _seg_strip_w(pb, R_T, 'trig_leg_slot', 0, 0.3))
+    poly_pts(sk, des, _seg_strip_w(R_T, R_H, 'trig_leg_slot', 0.3, 0.3))
     ext(c, all_profiles(sk), 'trig_ear_x1 - trig_bx1 + 0.4 mm', FE.CutFeatureOperation, 'Trigger leg slot', start='trig_bx1 - 0.2 mm', target=body)
 
 
@@ -2168,3 +2178,626 @@ def build_post_caps(root, des):
         ext(c, all_profiles(sk), 'trig_cap_w + 2 * trig_cap_nub', FE.JoinFeatureOperation, 'Post cap nub %s' % nm,
             start='trig_piv_y - trig_cap_w / 2 - trig_cap_nub', target=body)
     return c
+
+
+# ---------------------------------------------------------------- pouch-cell variant (BottomShell_Pouch)
+# 1100 mAh YDL 103035 pouch cell (10 x 30 x 37 mm incl. PCM), permanent: no battery panel, plain floor.
+POUCH_PARAMS = [
+    ('pouch_cell_t', '10 mm', 'YDL103035 thickness'),
+    ('pouch_cell_w', '30 mm', 'YDL103035 width'),
+    ('pouch_cell_l', '37 mm', 'YDL103035 length incl. protection board'),
+    ('pouch_swell', '0.5 mm', 'thickness allowance for cell swelling'),
+    ('pouch_clr', '0.3 mm', 'clearance between cell and PCB parts / floor'),
+    ('pouch_top_z', '-0.82 mm - pouch_clr', 'cell top: lowest carrier part (z -0.82) minus clearance'),
+    ('pouch_cav_r', '2 mm', 'cavity floor corner radius: small enough that the cell corners clear it, big enough to keep the belly corner wall above about 1.3 mm'),
+    ('pouch_bot_d', '-pouch_top_z + pouch_cell_t + pouch_swell + pouch_clr + floor_t', 'pouch variant belly depth'),
+    ('pouch_plug_gap', '4 mm', 'room in front of the PCB battery JST (front face y -28.85, opening faces +y) for the mating PHR-2 plug: 4 mm because the plug is mated with the shells apart and the cell wire has slack; ASSUMED plug ~6 x 4.5 x 6 mm, verify with the real plug'),
+    ('pouch_y0', '-28.85 mm + pouch_plug_gap', 'cell rear face y: JST battery connector front face + plug room'),
+    ('pouch_y1', 'pouch_y0 + pouch_cell_l', 'cell front face y'),
+    ('pouch_stop_t', '1.2 mm', 'retention stop rib thickness'),
+    ('pouch_stop_h', '5 mm', 'front stop rib height above the floor'),
+    ('pouch_rear_h', '3 mm', 'rear stop height: low, so the cell wires (exit at mid-height) clear it'),
+    ('pouch_stop_x', 'shell_w / 2 - wall + 0.2 mm', 'stop rib half length (0.2 mm into the side walls to fuse)'),
+    ('pouch_wire_x0', '6 mm', 'rear stop ends here (+x side left open as the wire path to the JST connector at x 8.2..14.1)'),
+]
+
+
+def add_pouch_params(des):
+    up = des.userParameters
+    for n, e, c in POUCH_PARAMS:
+        if up.itemByName(n) is None:
+            up.add(n, VI(e), 'mm', c)
+
+
+def build_pouch_shell(root, des):
+    """BottomShell_Pouch: like build_bottom_shell with depth pouch_bot_d and a tight cavity corner radius,
+    then PCB columns, screw wells/bores and column reliefs. No battery bay."""
+    add_pouch_params(des)
+    _relief_param(des)
+    d = 'pouch_bot_d'
+    comp = new_component(root, 'BottomShell_Pouch')
+    sk = comp.sketches.add(comp.xYConstructionPlane); sk.name = 'Plan outer'
+    plan(sk, '0 mm')
+    f = ext(comp, main_profile(sk), d + ' - lap_h', FE.NewBodyFeatureOperation, 'Bottom outer', neg=True, start='-lap_h')
+    body = f.bodies.item(0); body.name = 'BottomShell_Pouch'
+    zb = -des.unitsManager.evaluateExpression(d, 'cm')
+    fillet_face_edges(comp, planar_face_at(body, zb, -1), 'edge_r', 'Bottom edge fillet')
+    cut_tool(comp, des, body, 'wall', d + ' - lap_h - floor_t', True, '-lap_h', '-(%s - floor_t)' % d, -1, 'pouch_cav_r', 'Cavity')
+    sk = comp.sketches.add(comp.xYConstructionPlane); sk.name = 'Plan seam rib ring'
+    plan(sk, 'lip_w + seam_clr'); plan(sk, 'wall')
+    ext(comp, profile_by_loops(sk, 2)[0], '2*lap_h - seam_clr', FE.JoinFeatureOperation, 'Seam rib', start='-lap_h')
+    build_bottom_columns(comp, des, d)
+    build_bottom_reliefs(comp, des)
+    return comp
+
+
+def build_pouch_stops(comp, des, body):
+    """Cell retention: rear stop stub (open on +x for the wires to the battery JST) and a full-width front stop."""
+    add_pouch_params(des)
+    z0 = '-(pouch_bot_d - floor_t)'
+    for nm, l, r, yb, yt, h in (
+        ('Pouch rear stop', '-pouch_stop_x', 'pouch_wire_x0', 'pouch_y0 - pouch_clr - pouch_stop_t', 'pouch_y0 - pouch_clr', 'pouch_rear_h'),
+        ('Pouch front stop', '-pouch_stop_x', 'pouch_stop_x', 'pouch_y1 + pouch_clr', 'pouch_y1 + pouch_clr + pouch_stop_t', 'pouch_stop_h'),
+    ):
+        sk = comp.sketches.add(comp.xYConstructionPlane); sk.name = nm
+        rect4(sk, des, l, r, yb, yt)
+        ext(comp, main_profile(sk), h, FE.JoinFeatureOperation, nm, start=z0, target=body)
+
+
+def build_pouch_cell_ref(root, des):
+    add_pouch_params(des)
+    comp = new_component(root, 'Cell_YDL103035_Ref')
+    sk = comp.sketches.add(comp.xYConstructionPlane); sk.name = 'Cell'
+    rect4(sk, des, '-pouch_cell_w / 2', 'pouch_cell_w / 2', 'pouch_y0', 'pouch_y1')
+    f = ext(comp, main_profile(sk), 'pouch_cell_t', FE.NewBodyFeatureOperation, 'Cell', start='pouch_top_z - pouch_cell_t')
+    f.bodies.item(0).name = 'Cell_YDL103035'
+    return comp
+
+
+def build_pouch_usb(comp, des, body):
+    """Bottom half of the USB plug channel: bezel sliver below the seam gap (trimmed all the way back to the bezel start, so
+    nothing is left above the seam inside the rear wall) and the closing port wall."""
+    build_usb_bezel(comp, des, 'USB bottom', body, False)
+    build_usb_port_wall(comp, des, 'Bottom', body)
+
+
+def build_pouch_bumper(comp, des, body):
+    """Bottom half of the bumper: flange pocket and stem slot in the front wall."""
+    build_bumper_cuts(comp, des, 'Bottom', body)
+
+
+# ---------------------------------------------------------------- pouch variant trigger (pt_*) ----
+# Static pt_ copies of the standard trigger / scoop builders for BottomShell_Pouch (standard parts stay untouched).
+# Pouch differences: scoop starts at y 14.4 on the shallower belly, side clearance 0.3, slot rear = cell stop front face,
+# rear lobe trimmed (pt_lobe_ymin) so its sweep clears the stop.
+PT_PARAMS = [
+    ('pt_sc_y0', '14.55 mm', 'scoop curve fit point 0 (y): where the standard scoop curve crosses the shallower pouch belly'),
+    ('pt_sc_z0', '-pouch_bot_d', 'scoop curve fit point 0 (z) = pouch belly'),
+    ('pt_sc_y1', '15.37 mm', 'scoop curve fit point 1 (y): on the standard curve, keeps the pouch curve identical to it'),
+    ('pt_sc_z1', '-13.555 mm', 'scoop curve fit point 1 (z)'),
+    ('pt_sc_y2', '16.16 mm', 'scoop curve fit point 2 (y) (standard point 1)'),
+    ('pt_sc_z2', '-12.99 mm', 'scoop curve fit point 2 (z)'),
+    ('pt_sc_y3', '23.77 mm', 'scoop curve fit point 3 (y) (standard point 2)'),
+    ('pt_sc_z3', '-7.76 mm', 'scoop curve fit point 3 (z)'),
+    ('pt_sc_y4', '30.3 mm', 'scoop curve fit point 4 (y) - ends in the front wall (standard point 3)'),
+    ('pt_sc_z4', '-5.31 mm', 'scoop curve fit point 4 (z)'),
+    ('pt_floor_t', '2.2 mm', 'ramp floor thickness, normal to the scoop curve'),
+    ('pt_ramp_y', 'y_front_out - wall', 'ramp floor stops at the front wall inner face'),
+    ('pt_cut_y1', 'y_front_out + 1.1 mm', 'scoop cut closes past the front face'),
+    ('pt_cut_zlow', '-pouch_bot_d - 1.5 mm', 'scoop cut bottom, below the belly'),
+    ('pt_cut_x', 'shell_w / 2 + 1 mm', 'scoop cut half-width, past the side walls'),
+]
+
+
+def add_pt_params(des):
+    up = des.userParameters
+    for n, e, c in PT_PARAMS:
+        pr = up.itemByName(n)
+        if pr is None:
+            up.add(n, VI(e), 'mm', c)
+        else:
+            pr.expression = e
+
+
+def build_pt_scoop(c, des, body):
+    """Scoop the belly in front of the battery bay for the trigger: spline cut across the full width below the
+    curve, plus a ramp floor strip (offset of the curve) up to the front wall. YZ sketch: (x_s, y_s) = (-z, y)."""
+    add_pt_params(des)
+    sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Trigger scoop'
+    O = sk.originPoint; dm = sk.sketchDimensions; gc = sk.geometricConstraints
+    Hz = adsk.fusion.DimensionOrientations.HorizontalDimensionOrientation
+    Vt = adsk.fusion.DimensionOrientations.VerticalDimensionOrientation
+    ev = lambda e: ev_cm(des, e)
+    def S(y_e, z_e): return sk.modelToSketchSpace(P3(0, ev(y_e), ev(z_e)))
+    names = [('pt_sc_y%d' % i, 'pt_sc_z%d' % i) for i in range(5)]
+    oc = adsk.core.ObjectCollection.create()
+    for yn, zn in names: oc.add(S(yn, zn))
+    sp = sk.sketchCurves.sketchFittedSplines.add(oc)
+    for i, fp in enumerate(sp.fitPoints):
+        yn, zn = names[i]; g = fp.geometry
+        dm.addDistanceDimension(O, fp, Hz, P3(g.x / 2, g.y + 0.3, 0)).parameter.expression = '-(%s)' % zn
+        dm.addDistanceDimension(O, fp, Vt, P3(g.x + 0.3, g.y / 2, 0)).parameter.expression = yn
+    # ramp floor curve: offset of the scoop curve, toward +z (negative distance on this side)
+    inp = gc.createOffsetInput([sp], VI('-(pt_floor_t)'))
+    oco = gc.addOffset2(inp)
+    osp = list(oco.childCurves)[0]
+    # cut closure: P3 -> Q1 -> Q2 -> Q3 -> P0
+    L = sk.sketchCurves.sketchLines
+    p0 = sp.startSketchPoint; p3 = sp.endSketchPoint
+    q1g = S('pt_cut_y1', 'pt_sc_z4'); q2g = S('pt_cut_y1', 'pt_cut_zlow'); q3g = S('pt_sc_y0', 'pt_cut_zlow')
+    l1 = L.addByTwoPoints(p3, q1g)
+    l2 = L.addByTwoPoints(l1.endSketchPoint, q2g)
+    l3 = L.addByTwoPoints(l2.endSketchPoint, q3g)
+    l4 = L.addByTwoPoints(l3.endSketchPoint, p0)
+    gc.addVertical(l1); gc.addHorizontal(l2); gc.addVertical(l3); gc.addHorizontal(l4)
+    q1 = l1.endSketchPoint; q2 = l2.endSketchPoint
+    dm.addDistanceDimension(O, q1, Vt, P3(q1.geometry.x + 0.3, q1.geometry.y / 2, 0)).parameter.expression = 'pt_cut_y1'
+    dm.addDistanceDimension(O, q2, Hz, P3(q2.geometry.x / 2, q2.geometry.y + 0.3, 0)).parameter.expression = '-(pt_cut_zlow)'
+    # start cap of the ramp floor strip
+    cap = L.addByTwoPoints(p0, osp.startSketchPoint)
+    # front stop line at the front wall inner face (constant y => horizontal in this sketch), bottom on l3, top on the offset curve
+    vg0 = S('pt_ramp_y', 'pt_cut_zlow'); vg1 = S('pt_ramp_y', '-3 mm')
+    v = L.addByTwoPoints(vg0, vg1)
+    gc.addHorizontal(v)
+    gc.addCoincident(v.startSketchPoint, l3)
+    gc.addCoincident(v.endSketchPoint, osp)
+    dm.addOffsetDimension(v, O, P3(v.startSketchPoint.geometry.x, v.startSketchPoint.geometry.y / 2, 0)).parameter.expression = 'pt_ramp_y'
+    # classify profiles against the scoop curve
+    import bisect
+    evl = sp.geometry.evaluator; ok, s0, s1 = evl.getParameterExtents()
+    pts = []
+    for i in range(201):
+        ok, pt = evl.getPointAtParameter(s0 + (s1 - s0) * i / 200.0); pts.append((pt.y, pt.x))
+    pts.sort(); ys = [p[0] for p in pts]
+    def xs_at(y):
+        j = min(max(bisect.bisect_left(ys, y), 1), len(ys) - 1)
+        (ya, xa), (yb, xb) = pts[j - 1], pts[j]
+        return xa + (xb - xa) * (y - ya) / (yb - ya) if yb != ya else xa
+    ramp_y = ev('pt_ramp_y')
+    cut = adsk.core.ObjectCollection.create(); floor = adsk.core.ObjectCollection.create(); info = []
+    for p in sk.profiles:
+        cp = p.areaProperties().centroid; info.append((round(cp.x, 3), round(cp.y, 3), round(p.areaProperties().area, 4)))
+        if cp.x > xs_at(cp.y): cut.add(p)         # larger x_s = lower z = below the curve
+        elif cp.y < ramp_y: floor.add(p)
+    if cut.count != 2 or floor.count != 1:
+        raise RuntimeError('scoop profiles cut=%d floor=%d %s' % (cut.count, floor.count, info))
+    f = ext(c, cut, '2 * pt_cut_x', FE.CutFeatureOperation, 'Trigger scoop cut', start='-pt_cut_x', target=body)
+    ext(c, floor, 'shell_w - wall', FE.JoinFeatureOperation, 'Trigger ramp floor', start='-(shell_w - wall) / 2', target=body)
+    return sk, sp, osp
+
+
+PT_SLOT_PARAMS = [
+    ('pt_x0', '-9.45 mm', 'trigger body left edge (x)'),
+    ('pt_x1', '8.7 mm', 'trigger body right edge (x)'),
+    ('pt_clr', '0.3 mm', 'trigger side clearance in the slot'),
+    ('pt_slot_y0', 'pouch_y1 + pouch_clr + pouch_stop_t', 'trigger slot rear edge: front face of the cell front stop'),
+    ('pt_lobe_ymin', 'pt_slot_y0 + 0.3 mm', 'rear lobe is trimmed so its swept path stays in front of this y at every pull angle'),
+    ('pt_slot_ztop', '2.5 mm', 'slot cut top, past the shell top so no ceiling lip is left'),
+]
+
+
+def build_pt_slot(c, des, body):
+    """Centre slot through the ramp floor for the trigger (also relieves the front screw columns), then
+    re-cut the front screw head wells through the new ramp floor."""
+    add_pt_params(des)
+    up = des.userParameters
+    for n, e, cm in PT_SLOT_PARAMS:
+        pr = up.itemByName(n)
+        if pr is None: up.add(n, VI(e), 'mm', cm)
+        else: pr.expression = e
+    sk = _xy_rects(c, des, 'Trigger slot', [('pt_x0 - pt_clr', 'pt_x1 + pt_clr', 'pt_slot_y0', 'pt_ramp_y')])
+    ext(c, all_profiles(sk), 'pt_slot_ztop - pt_cut_zlow', FE.CutFeatureOperation, 'Trigger slot', start='pt_cut_zlow', target=body)
+    sk = c.sketches.add(c.xYConstructionPlane); sk.name = 'Screw head wells (ramp)'
+    circle_at(sk, des, 'mh1_x', 'mh1_y', 'head_well_d')
+    circle_at(sk, des, 'mh2_x', 'mh2_y', 'head_well_d')
+    ext(c, all_profiles(sk), 'pouch_bot_d + screw_head_seat_z', FE.CutFeatureOperation, 'Screw head wells (ramp)', start='-pouch_bot_d', target=body)
+    # the left screw column leaves only ~0.3 mm between the head well and the slot: open the well into the slot (keyhole)
+    sk = _xy_rects(c, des, 'Left well keyhole', [('mh1_x', 'pt_x0 - pt_clr', 'mh1_y - head_well_d / 2', 'mh1_y + head_well_d / 2')])
+    ext(c, all_profiles(sk), 'pouch_bot_d + screw_head_seat_z', FE.CutFeatureOperation, 'Left well keyhole', start='-pouch_bot_d', target=body)
+
+
+# ---------------------------------------------------------------- pivot trigger (v2) ----
+# v1.1 blade side profile (y, z mm) shifted to the v2 pivot (26.3, -3.0): rest pose, before the nose / tip trims
+PT_PROFILE = [(21.6, -17.06), (23.19, -18.4), (24.4, -19.12), (25.54, -19.36), (25.91, -19.24), (26.15, -18.95), (26.19, -18.29),
+                (25.68, -15.85), (25.51, -14.25), (25.52, -12.55), (25.84, -10.27), (26.46, -8.14), (27.27, -6.38), (27.7, -6.3),
+                (28.9, -4.6), (28.9, -4.4), (29.3, -4.4), (29.3, -3.4), (28.9, -3.4), (28.9, -3.0), (28.1, -1.1), (26.3, -0.4),
+                (24.5, -1.1), (23.7, -3.0), (23.85, -6.04), (18.5, -7.73), (18.5, -7.5), (16.8, -7.5), (16.8, -8.28), (15.33, -8.73),
+                (14.45, -9.22), (14.16, -9.55), (14.22, -9.84), (14.49, -10.13), (15.43, -10.4), (16.15, -10.92), (18.26, -13.56)]
+
+PT2_PARAMS = [
+    ('pt_piv_y', '25.3 mm', 'trigger pivot axis y (axis runs along x); 1.0 mm behind the v1.1-derived 26.3 so the hub rim (r 2.6) clears the front wall / bumper at every pull angle'),
+    ('pt_piv_z', '-3.0 mm', 'trigger pivot axis z'),
+    ('pt_rest_deg', '8 deg', 'rest pose is rotated this far forward of the standard rest pose (more finger stroke); the pull end stays where it was'),
+    ('pt_pull_deg', '28 deg + pt_rest_deg', 'total trigger rotation from rest to full pull (28 deg as the standard trigger, plus the forward rest offset)'),
+    ('pt_x0', '-9.45 mm', 'trigger body left edge (x); slot / spring envelope is pt_x0..pt_x1'),
+    ('pt_bx1', '7.6 mm', 'trigger blade right edge (x); coil sits between here and the slot wall'),
+    ('pt_nose_y', 'pt_ramp_y - 0.4 mm', 'trigger front trim: 0.4 mm behind the front wall inner face'),
+    ('pt_tip_z', '-pouch_bot_d + 0.3 mm', 'trigger tip trim: 0.3 mm above the belly'),
+    ('pt_flat_len', '3.2 mm', 'length (y) of the flat bottom face at pt_tip_z (was 6.3 mm before the chamfer); the blade underside behind it is chamfered up to the lobe'),
+    ('pt_post_d', '2.9 mm', 'pivot post diameter (D shape, as v1.1)'),
+    ('pt_post_flat', '0.55 mm', 'pivot post flat depth, on the +z side'),
+    ('pt_bore_clr', '0.15 mm', 'hub bore clearance per side around the post'),
+    ('pt_sock_l', '-10.35 mm', 'left post socket end (x), 0.5 mm into the left column wall'),
+    ('pt_sock_r', '9.8 mm', 'right post socket end (x), 0.7 mm into the right column wall'),
+    ('pt_sock_clr', '0.15 mm', 'socket clearance per side around the post'),
+    ('pt_post_x0', 'pt_sock_l + 0.15 mm', 'post left end'),
+    ('pt_post_x1', 'pt_sock_r - 0.15 mm', 'post right end'),
+    ('pt_hall_y', '23.25 mm', 'hall sensor y (U_HALL1)'),
+    ('pt_hall_z', '0.91 mm', 'hall package bottom face z'),
+    ('pt_hall_gap', '1.1 mm', 'magnet top face to hall package gap at full pull'),
+    ('pt_mag_x', '-8.0 mm', 'magnet centre x (hall is at -8.5; nudged so the pocket wall clears the slot)'),
+    ('pt_mag_d', '2.0 mm', 'magnet diameter (2 x 2 mm N52 cylinder)'),
+    ('pt_mag_t', '2.0 mm', 'magnet thickness'),
+    ('pt_mag_clr', '0.1 mm', 'magnet pocket clearance (diameter)'),
+    ('pt_mag_wall', '0.4 mm', 'pocket wall'),
+    ('pt_mag_floor', '1.0 mm', 'pocket floor thickness'),
+    ('pt_mag_ty', 'pt_piv_y + (pt_hall_y - pt_piv_y) * cos(pt_pull_deg) - (pt_hall_z - pt_hall_gap - pt_piv_z) * sin(pt_pull_deg)',
+     'magnet top face y in the rest pose (hall point rotated back by the pull angle about the pivot)'),
+    ('pt_mag_tz', 'pt_piv_z + (pt_hall_y - pt_piv_y) * sin(pt_pull_deg) + (pt_hall_z - pt_hall_gap - pt_piv_z) * cos(pt_pull_deg)',
+     'magnet top face z in the rest pose'),
+    ('pt_sw_x', '2.7 mm', 'hub notch half-width for the bumper switch (switch body +-2.3)'),
+    ('pt_sw_floor_z', 'pt_piv_z', 'hub notch floor z: everything above the pivot level is removed under the switch (it sweeps up with the pull)'),
+]
+
+
+def add_pt2_params(des):
+    add_pt_params(des)
+    up = des.userParameters
+    for n, e, c in PT2_PARAMS:
+        pr = up.itemByName(n)
+        if pr is None:
+            up.add(n, VI(e), 'deg' if n in ('pt_rest_deg', 'pt_pull_deg') else 'mm', c)
+        else:
+            pr.expression = e
+    for n, e in (('pt_x0', '-9.45 mm'),):
+        pass
+
+
+def _pt_d_profile(c, des, name, dia_e, flat_e):
+    """YZ sketch: circle of diameter dia_e about the pivot with a flat chord on the +z side, flat_e from the centre.
+    Returns (sketch, D profile)."""
+    sk = c.sketches.add(c.yZConstructionPlane); sk.name = name
+    circ = circle_at(sk, des, '-(pt_piv_z)', 'pt_piv_y', dia_e)
+    cx = circ.centerSketchPoint.geometry.x
+    L = sk.sketchCurves.sketchLines; dm = sk.sketchDimensions; O = sk.originPoint
+    xc = cx - ev_cm(des, flat_e)
+    ln = L.addByTwoPoints(P3(xc, ev_cm(des, 'pt_piv_y - 3 mm'), 0), P3(xc, ev_cm(des, 'pt_piv_y + 3 mm'), 0))
+    sk.geometricConstraints.addVertical(ln)
+    HO = adsk.fusion.DimensionOrientations
+    dm.addDistanceDimension(circ.centerSketchPoint, ln.startSketchPoint, HO.HorizontalDimensionOrientation, P3(xc, ev_cm(des, 'pt_piv_y') - 0.5, 0)).parameter.expression = flat_e
+    dm.addDistanceDimension(O, ln.startSketchPoint, HO.VerticalDimensionOrientation, P3(xc + 1, ev_cm(des, 'pt_piv_y - 3 mm') / 2, 0)).parameter.expression = 'pt_piv_y - 3 mm'
+    dm.addDistanceDimension(O, ln.endSketchPoint, HO.VerticalDimensionOrientation, P3(xc + 1, ev_cm(des, 'pt_piv_y + 3 mm') / 2, 0)).parameter.expression = 'pt_piv_y + 3 mm'
+    return sk, max(sk.profiles, key=lambda p: p.areaProperties().area)
+
+
+def build_pt_trigger(root, des):
+    """Blade body (v1.1 profile, trimmed), D pivot bore, magnet tab + pocket, bumper-switch notch. Rest pose."""
+    add_pt2_params(des)
+    c = new_component(root, 'Trigger_Pouch')
+    ev = lambda e: ev_cm(des, e) * 10.0
+    py, pz = ev('pt_piv_y'), ev('pt_piv_z')
+    nose, tip = ev('pt_nose_y'), ev('pt_tip_z')
+    pts = [(py + (y - 26.3), pz + (z + 3.0)) for y, z in PT_PROFILE]      # profile was extracted about the (26.3, -3.0) pivot
+    rest = des.userParameters.itemByName('pt_rest_deg').value       # radians
+    pull = int(math.ceil(math.degrees(des.userParameters.itemByName('pt_pull_deg').value)))
+    def _fwd(p):    # rotate (y, z) forward about the pivot by the rest offset
+        dy, dz = p[0] - py, p[1] - pz
+        return (py + dy * math.cos(rest) - dz * math.sin(rest), pz + dy * math.sin(rest) + dz * math.cos(rest))
+    pts = [_fwd(p) for p in pts]
+    pts = _clip(pts, lambda p: nose - p[0])
+    pts = _clip(pts, lambda p: p[1] - tip)
+    ymin = ev('pt_lobe_ymin')
+    for a in range(0, pull + 1):
+        th = -math.radians(a)
+        pts = _clip(pts, lambda p, th=th: (py + (p[0] - py) * math.cos(th) - (p[1] - pz) * math.sin(th)) - ymin)
+    # shorten the flat belly-side face: 45-degree-ish chamfer from pt_flat_len behind the pad front up to the lobe's lower point
+    yf = max(p[0] for p in pts if abs(p[1] - tip) < 1e-6)
+    A = (yf - ev('pt_flat_len'), tip); B = _fwd((py + (16.8 - 26.3), pz + (-8.28 + 3.0)))
+    cr = lambda p: (B[0] - A[0]) * (p[1] - A[1]) - (B[1] - A[1]) * (p[0] - A[0])
+    sg = 1 if cr((py, pz)) >= 0 else -1
+    pts = _clip(pts, lambda p: sg * cr(p))
+    rows = []
+    for y, z in pts:
+        ye = 'pt_nose_y' if abs(y - nose) < 1e-6 else '(pt_piv_y + (%.3f mm))' % (y - py)
+        ze = 'pt_tip_z' if abs(z - tip) < 1e-6 else '(pt_piv_z + (%.3f mm))' % (z - pz)
+        rows.append(('-(%s)' % ze, ye))        # sketch (x_s, y_s) = (-z, y)
+    sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Trigger blade profile'
+    poly_pts(sk, des, rows)
+    ext(c, main_profile(sk), 'pt_bx1 - pt_x0', FE.NewBodyFeatureOperation, 'Trigger blade', start='pt_x0')
+    body = c.bRepBodies.item(0); body.name = 'Trigger_Pouch'
+    # magnet tab behind the hub (rest pose), carries the pocket under the hall point
+    tab_top = 'pt_mag_tz'
+    sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Trigger magnet tab'
+    rect4(sk, des, '-(pt_mag_tz)', '-(pt_mag_tz - pt_mag_t - pt_mag_floor - 0.1 mm)',
+          'pt_mag_ty - pt_mag_d / 2 - pt_mag_clr / 2 - pt_mag_wall', 'pt_piv_y - 2 mm')
+    ext(c, all_profiles(sk), 'pt_mag_x + pt_mag_d / 2 + pt_mag_clr / 2 + pt_mag_wall - pt_x0', FE.JoinFeatureOperation,
+        'Trigger magnet tab', start='pt_x0', target=body)
+    sk = c.sketches.add(c.xYConstructionPlane); sk.name = 'Trigger magnet pocket'
+    circle_at(sk, des, 'pt_mag_x', 'pt_mag_ty', 'pt_mag_d + pt_mag_clr')
+    ext(c, all_profiles(sk), 'pt_mag_t + 0.1 mm', FE.CutFeatureOperation, 'Trigger magnet pocket', neg=True, start='pt_mag_tz', target=body)
+    # D bore for the pivot post
+    sk, prof = _pt_d_profile(c, des, 'Trigger D bore', 'pt_post_d + 2 * pt_bore_clr', 'pt_post_d / 2 - pt_post_flat + pt_bore_clr')
+    ext(c, prof, 'pt_bx1 - pt_x0 + 2 mm', FE.CutFeatureOperation, 'Trigger D bore', start='pt_x0 - 1 mm', target=body)
+    # hub notch under the bumper switch
+    sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Trigger switch notch'
+    rect4(sk, des, '-(1 mm)', '-(pt_sw_floor_z)', 'pt_piv_y - 3.6 mm', 'pt_piv_y + 3.6 mm')
+    ext(c, all_profiles(sk), '2 * pt_sw_x', FE.CutFeatureOperation, 'Trigger switch notch', start='-pt_sw_x', target=body)
+    return c
+
+
+def build_pt_post(root, des):
+    add_pt2_params(des)
+    c = new_component(root, 'TriggerPost_Pouch')
+    sk, prof = _pt_d_profile(c, des, 'Trigger post D', 'pt_post_d', 'pt_post_d / 2 - pt_post_flat')
+    ext(c, prof, 'pt_post_x1 - pt_post_x0', FE.NewBodyFeatureOperation, 'Trigger post', start='pt_post_x0')
+    c.bRepBodies.item(0).name = 'TriggerPost_Pouch'
+    return c
+
+
+def build_pt_sockets(c, des, body):
+    """U-slots (open to the top) in the left / right column walls for the pivot post ends."""
+    add_pt2_params(des)
+    for side, x0, x1, nm in (('L', 'pt_sock_l', '-9 mm', 'left'), ('R', '9 mm', 'pt_sock_r', 'right')):
+        sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Trigger socket ' + nm
+        circle_at(sk, des, '-(pt_piv_z)', 'pt_piv_y', 'pt_post_d + 2 * pt_sock_clr')
+        rect4(sk, des, '-(pt_slot_ztop)', '-(pt_piv_z)', 'pt_piv_y - pt_post_d / 2 - pt_sock_clr', 'pt_piv_y + pt_post_d / 2 + pt_sock_clr')
+        ext(c, all_profiles(sk), '(%s) - (%s)' % (x1, x0), FE.CutFeatureOperation, 'Trigger socket ' + nm, start=x0, target=body)
+
+
+# ---------------------------------------------------------------- torsion spring mount (v2) ----
+# spring leg geometry relative to the pivot (y, z mm), from the v1.1 model (trigger-torsion-spring.md)
+PT_SPR_S = (0.85, -1.81)      # moving leg leaves the coil here
+PT_SPR_T = (-5.04, -4.55)     # moving leg tip
+PT_SPR_H = (-5.67, -3.19)     # moving leg hook end
+PT_SPR_SHIFT = (19.45, -15.9, -1.4)   # v1.1 -> v2 translation of SpringRef (x, y, z mm): coil centre x -11.1 -> 8.35
+
+PT_SPRING_PARAMS = [
+    ('pt_ear_x1', '8.3 mm', 'spring ear outer face (x)'),
+    ('pt_ear_w', '1.2 mm', 'spring ear half-width around the moving leg'),
+    ('pt_leg_slot', '0.3 mm', 'moving leg slot half-width (wire 0.35 + 0.25 clearance)'),
+    ('pt_fix_x', '8.7 mm', 'fixed leg x'),
+    ('pt_fix_z', 'pt_piv_z + 2 mm', 'fixed leg z (top of the coil)'),
+    ('pt_fix_y1', 'pt_piv_y - 6.5 mm', 'fixed leg tip y'),
+    ('pt_rib_x0', '8.1 mm', 'fixed leg rib: left edge'),
+    ('pt_rib_x1', '11.5 mm', 'fixed leg rib: right edge (anchors into the right screw column)'),
+    ('pt_rib_y0', 'pt_fix_y1 + 0.2 mm', 'fixed leg rib: rear edge'),
+    ('pt_rib_y1', '23.3 mm', 'fixed leg rib: front edge'),
+    ('pt_rib_z0', 'pt_fix_z + 0.15 mm', 'fixed leg rib: underside, bears on the wire top'),
+    ('pt_rib_top', 'pcb_bot_z', 'fixed leg rib: top (PCB underside)'),
+]
+
+
+def add_pt_spring_params(des):
+    add_pt2_params(des)
+    up = des.userParameters
+    for n, e, c in PT_SPRING_PARAMS:
+        pr = up.itemByName(n)
+        if pr is None: up.add(n, VI(e), 'mm', c)
+        else: pr.expression = e
+
+
+def place_pt_spring_UNUSED(root):
+    """Move the v1.1 spring reference to the v2 pivot (MoveFeature on its body, sticky in the timeline)."""
+    occ = root.occurrences.itemByName('SpringRef_v1.1:1')
+    m = [[1, 0, 0, PT_SPR_SHIFT[0] / 10.0], [0, 1, 0, PT_SPR_SHIFT[1] / 10.0], [0, 0, 1, PT_SPR_SHIFT[2] / 10.0]]
+    body_occ = occ.childOccurrences.item(0) if occ.childOccurrences.count else occ
+    f = _move_occ(root, body_occ, m)
+    f.name = 'Place spring (v2 pivot)'
+    return occ
+
+
+def _pt_seg_strip(a, b, w, l0=0.0, l1=0.0):
+    """Rectangle around segment a->b (extended by l0 / l1 at the ends), half-width w. Points (dy, dz) rel pivot."""
+    dx, dy = b[0] - a[0], b[1] - a[1]; n = math.hypot(dx, dy); dx, dy = dx / n, dy / n
+    nx, ny = -dy, dx
+    p0 = (a[0] - dx * l0, a[1] - dy * l0); p1 = (b[0] + dx * l1, b[1] + dy * l1)
+    return [(p0[0] + nx * w, p0[1] + ny * w), (p1[0] + nx * w, p1[1] + ny * w), (p1[0] - nx * w, p1[1] - ny * w), (p0[0] - nx * w, p0[1] - ny * w)]
+
+
+def _pt_rel_rows(pts):
+    return [('-(pt_piv_z + (%.3f mm))' % z, 'pt_piv_y + (%.3f mm)' % y) for y, z in pts]
+
+
+def build_pt_ear(c, des, body):
+    """Ear on the blade's right face carrying the spring's moving leg: through-slot along the leg + hook pocket."""
+    add_pt_spring_params(des)
+    rest = des.userParameters.itemByName('pt_rest_deg').value
+    _r = lambda p: (p[0] * math.cos(rest) - p[1] * math.sin(rest), p[0] * math.sin(rest) + p[1] * math.cos(rest))
+    SPR_S, SPR_T, SPR_H = _r(PT_SPR_S), _r(PT_SPR_T), _r(PT_SPR_H)
+    dx, dy = SPR_T[0] - SPR_S[0], SPR_T[1] - SPR_S[1]; n = math.hypot(dx, dy); d = (dx / n, dy / n)
+    pa = (SPR_S[0] + d[0] * 2.6, SPR_S[1] + d[1] * 2.6)
+    sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Trigger spring ear'
+    poly_pts(sk, des, _pt_rel_rows(_pt_seg_strip(pa, SPR_T, 1.2, 0, 0.7)))
+    poly_pts(sk, des, _pt_rel_rows(_pt_seg_strip(SPR_T, SPR_H, 1.0, 0.9, 0.5)))
+    ext(c, all_profiles(sk), 'pt_ear_x1 - pt_bx1', FE.JoinFeatureOperation, 'Trigger spring ear', start='pt_bx1', target=body)
+    sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Trigger leg slot'
+    pb = (SPR_S[0] + d[0] * 2.0, SPR_S[1] + d[1] * 2.0)
+    poly_pts(sk, des, _pt_rel_rows(_pt_seg_strip(pb, SPR_T, 0.3, 0, 0.3)))
+    poly_pts(sk, des, _pt_rel_rows(_pt_seg_strip(SPR_T, SPR_H, 0.3, 0.3, 0.3)))
+    ext(c, all_profiles(sk), 'pt_ear_x1 - pt_bx1 + 0.4 mm', FE.CutFeatureOperation, 'Trigger leg slot', start='pt_bx1 - 0.2 mm', target=body)
+
+
+def build_pt_spring_rib(c, des, body):
+    """Overhang under the PCB that holds the spring's fixed leg (wire bears up into a 0.6 mm groove)."""
+    add_pt_spring_params(des)
+    sk = _xy_rects(c, des, 'Spring leg rib', [('pt_rib_x0', 'pt_rib_x1', 'pt_rib_y0', 'pt_rib_y1')])
+    ext(c, all_profiles(sk), 'pt_rib_top - pt_rib_z0', FE.JoinFeatureOperation, 'Spring leg rib', start='pt_rib_z0', target=body)
+
+
+def build_pt_ramp_trim(comp, body):
+    """Trim the ramp-floor strip's lateral ends to the true outer envelope (plan outline + edge_r bottom fillet).
+    Envelope tool -> cut out of an oversized box -> cut the remainder from the shell."""
+    des = adsk.fusion.Design.cast(adsk.core.Application.get().activeProduct)
+    FEo = adsk.fusion.FeatureOperations
+    sk = comp.sketches.add(comp.xYConstructionPlane); sk.name = 'Plan outer envelope'
+    plan(sk, '0 mm')
+    f = ext(comp, main_profile(sk), 'pouch_bot_d - lap_h', FEo.NewBodyFeatureOperation, 'Outer envelope', neg=True, start='-lap_h')
+    env = f.bodies.item(0); env.name = 'Outer envelope'
+    zb = -des.unitsManager.evaluateExpression('pouch_bot_d', 'cm')
+    fillet_face_edges(comp, planar_face_at(env, zb, -1), 'edge_r', 'Outer envelope fillet')
+    sk2 = comp.sketches.add(comp.xYConstructionPlane); sk2.name = 'Plan trim box'
+    plan(sk2, '-2 mm')
+    f2 = ext(comp, main_profile(sk2), 'edge_r + 2 mm', FEo.NewBodyFeatureOperation, 'Trim box', neg=True, start='-(pouch_bot_d - edge_r)')
+    box = f2.bodies.item(0); box.name = 'Trim box'
+    for tgt, tool, nm in ((box, env, 'Trim tool (box minus envelope)'), (body, box, 'Trim ramp strip to shell fillet')):
+        t = adsk.core.ObjectCollection.create(); t.add(tool)
+        ci = comp.features.combineFeatures.createInput(tgt, t)
+        ci.operation = FEo.CutFeatureOperation; ci.isKeepToolBodies = False
+        cf = comp.features.combineFeatures.add(ci); cf.name = nm
+    return body
+
+
+def build_pt_rim_fillets(comp, des):
+    """Round the trigger scoop rim: pt_rim_r (3 mm) on the rear lip + side rims where the finger rolls over,
+    pt_lip_r (0.8 mm) on the front lip. Edges are found by geometry (NURBS scoop face vs outer face)."""
+    up = des.userParameters
+    for n, v, c in (('pt_rim_r', '2 mm', 'Trigger scoop rim fillet (rear lip + side rims); 3 mm (standard) does not compute on the shallow pouch belly, 2.2 is the limit'),
+                    ('pt_lip_r', '0.8 mm', 'Trigger scoop front lip fillet')):
+        if not up.itemByName(n):
+            up.add(n, adsk.core.ValueInput.createByString(v), 'mm', c)
+    body = comp.bRepBodies.item(0)
+    ev = lambda e: des.unitsManager.evaluateExpression(e, 'mm') * 10   # evaluateExpression returns cm
+    ymin, yfr = ev('pt_sc_y0'), ev('pt_sc_y4')
+    def bb(e):
+        b = e.boundingBox
+        return [v * 10 for v in (b.minPoint.x, b.maxPoint.x, b.minPoint.y, b.maxPoint.y, b.minPoint.z, b.maxPoint.z)]
+    big = adsk.core.ObjectCollection.create()
+    for e in body.edges:
+        x0, x1, y0, y1, z0, z1 = bb(e)
+        st = sorted(f.geometry.surfaceType for f in e.faces)
+        if 7 in st and y0 >= ymin - 0.05 and y1 <= 27.25 and z1 < -5.0 and e.length * 10 > 3 and st != [7, 7] and (
+                (st == [0, 7] and abs(y0 - ymin) < 0.05 and abs(y1 - ymin) < 0.05) or st == [1, 7] and y1 < 27.25 or
+                (st == [0, 7] and abs(abs(x0) - 17.5) < 0.05 and abs(x1 - x0) < 0.05)):
+            big.add(e)
+    fi = comp.features.filletFeatures.createInput()
+    fi.addConstantRadiusEdgeSet(big, adsk.core.ValueInput.createByString('pt_rim_r'), False)
+    f1 = comp.features.filletFeatures.add(fi); f1.name = 'Trigger rim fillet (roll-over)'
+    body = comp.bRepBodies.item(0)
+    lip = adsk.core.ObjectCollection.create()
+    for e in body.edges:
+        x0, x1, y0, y1, z0, z1 = bb(e)
+        if sorted(f.geometry.surfaceType for f in e.faces) == [0, 7] and abs(y1 - yfr) < 0.06 and abs(z1 - ev('pt_sc_z4')) < 0.06 and (x1 - x0) > 2:
+            lip.add(e)
+    fi = comp.features.filletFeatures.createInput()
+    fi.addConstantRadiusEdgeSet(lip, adsk.core.ValueInput.createByString('pt_lip_r'), True)
+    f2 = comp.features.filletFeatures.add(fi); f2.name = 'Trigger front lip fillet'
+    return f1, f2
+# NOTE: the rim-edge selection above is a best-effort reconstruction of what was applied interactively
+# (edges: rear lip y=pt_sc_y0, belly-corner arcs, side-wall rims x=+-17.5 up to y 27.2); verify on a rebuild.
+
+
+# ------------------------------------------------- slot widening, rib pillar, post caps (2026-11-03) ----
+PT_SLOT_CAP_PARAMS = [
+    ('pt_leg_slot', '0.4 mm', 'moving leg slot half-width (0.8 mm = 2 perimeters at a 0.4 nozzle)'),
+    ('pt_groove_w', '0.4 mm', 'fixed leg groove half-width under the rib (0.8 mm total)'),
+    ('pt_rib_x0', '7.9 mm', 'fixed leg rib: left edge (leaves a 0.4 mm wall beside the 0.8 groove)'),
+    ('pt_pil_x0', '9.3 mm', 'rib pillar: left edge (0.2 mm clear of the groove / wire)'),
+    ('pt_pil_x1', 'pt_rib_x1', 'rib pillar: right edge'),
+    ('pt_pil_y1', '22.7 mm', 'rib pillar: front edge (keeps 0.3 mm clear of the right screw head well)'),
+    ('pt_pil_zb0', '-9.6 mm', 'rib pillar bottom z at y = pt_rib_y0 (buried 1.3 mm in the ramp floor)'),
+    ('pt_pil_zb1', '-7.1 mm', 'rib pillar bottom z at y = pt_pil_y1 (buried 1.3 mm in the ramp floor)'),
+    ('pt_cap_clr', '0.05 mm', 'post cap: clearance to the socket end'),
+    ('pt_cap_t_l', '0.45 mm', 'post cap thickness, left socket'),
+    ('pt_cap_t_r', '0.6 mm', 'post cap thickness, right socket'),
+    ('pt_cap_w', '3.0 mm', 'post cap width (socket is pt_post_d + 2 * pt_sock_clr = 3.2)'),
+    ('pt_cap_nub', '0.1 mm', 'post cap: friction nub protrusion each side'),
+    ('pt_cap_gap', '0.1 mm', 'post cap: clearance above the post and below the PCB'),
+]
+
+
+def add_pt_slot_cap_params(des):
+    add_pt_spring_params(des)
+    up = des.userParameters
+    for n, e, c in PT_SLOT_CAP_PARAMS:
+        pr = up.itemByName(n)
+        if pr is None: up.add(n, VI(e), 'mm', c)
+        else: pr.expression = e
+
+
+def _pt_seg_strip_w(a, b, wexp, l0=0.0, l1=0.0):
+    """Like _seg_strip but the half-width is the parameter expression wexp. Returns (z_expr, y_expr) rows."""
+    dx, dy = b[0] - a[0], b[1] - a[1]; n = math.hypot(dx, dy); dx, dy = dx / n, dy / n
+    nx, ny = -dy, dx
+    p0 = (a[0] - dx * l0, a[1] - dy * l0); p1 = (b[0] + dx * l1, b[1] + dy * l1)
+    rows = []
+    for (py_, pz_), s in ((p0, 1), (p1, 1), (p1, -1), (p0, -1)):
+        rows.append(('-(pt_piv_z + (%.3f mm) + (%.4f) * %s)' % (pz_, s * ny, wexp),
+                     'pt_piv_y + (%.3f mm) + (%.4f) * %s' % (py_, s * nx, wexp)))
+    return rows
+
+
+def build_pt_leg_slot(c, des, body):
+    """Through-slot in the ear for the moving leg, half-width = pt_leg_slot (parametric)."""
+    add_pt_slot_cap_params(des)
+    rest = des.userParameters.itemByName('pt_rest_deg').value
+    _r = lambda p: (p[0] * math.cos(rest) - p[1] * math.sin(rest), p[0] * math.sin(rest) + p[1] * math.cos(rest))
+    SPR_S, SPR_T, SPR_H = _r(PT_SPR_S), _r(PT_SPR_T), _r(PT_SPR_H)
+    dx, dy = SPR_T[0] - SPR_S[0], SPR_T[1] - SPR_S[1]; n = math.hypot(dx, dy); d = (dx / n, dy / n)
+    pb = (SPR_S[0] + d[0] * 2.0, SPR_S[1] + d[1] * 2.0)
+    sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Trigger leg slot'
+    poly_pts(sk, des, _pt_seg_strip_w(pb, SPR_T, 'pt_leg_slot', 0, 0.3))
+    poly_pts(sk, des, _pt_seg_strip_w(SPR_T, SPR_H, 'pt_leg_slot', 0.3, 0.3))
+    ext(c, all_profiles(sk), 'pt_ear_x1 - pt_bx1 + 0.4 mm', FE.CutFeatureOperation, 'Trigger leg slot', start='pt_bx1 - 0.2 mm', target=body)
+
+
+def build_pt_spring_groove(c, des, body):
+    """Fixed-leg groove under the rib, half-width pt_groove_w (parametric)."""
+    add_pt_slot_cap_params(des)
+    sk = c.sketches.add(c.xZConstructionPlane); sk.name = 'Spring leg groove'
+    rect4(sk, des, 'pt_fix_x - pt_groove_w', 'pt_fix_x + pt_groove_w', '-(pt_rib_z0 + 0.45 mm)', '-(pt_rib_z0 - 0.1 mm)')
+    ext(c, all_profiles(sk), 'pt_rib_y1 - pt_rib_y0 + 0.2 mm', FE.CutFeatureOperation, 'Spring leg groove', start='pt_rib_y0 - 0.1 mm', target=body)
+
+
+def build_pt_rib_pillar(c, des, body):
+    """Solid pillar under the spring-leg rib so a belly-down print needs no support there. Side profile (YZ) is
+    buried 1.3 mm in the ramp floor; footprint stays clear of the spring (x 9.3+) and the right screw head well."""
+    add_pt_slot_cap_params(des)
+    sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Rib pillar'
+    poly_pts(sk, des, [('-(pt_rib_z0 - 0.2 mm)', 'pt_rib_y0'), ('-(pt_rib_z0 - 0.2 mm)', 'pt_pil_y1'),
+                       ('-(pt_pil_zb1)', 'pt_pil_y1'), ('-(pt_pil_zb0)', 'pt_rib_y0')])
+    ext(c, all_profiles(sk), 'pt_pil_x1 - pt_pil_x0', FE.JoinFeatureOperation, 'Rib pillar', start='pt_pil_x0', target=body)
+
+
+def build_pt_post_caps(root, des):
+    """Component 'TriggerCaps': a thin cap above each post end, filling the gap between post and PCB (0.1 mm each way).
+    Friction nubs on the sides hold it in the socket. Printed flat, loose parts."""
+    add_pt_slot_cap_params(des)
+    c = new_component(root, 'TriggerCaps_Pouch')
+    zt = '-(pcb_bot_z - pt_cap_gap)'                                   # sketch x_s = -z
+    zb = '-(pt_piv_z + pt_post_d / 2 + pt_cap_gap)'
+    y0, y1 = 'pt_piv_y - pt_cap_w / 2', 'pt_piv_y + pt_cap_w / 2'
+    for nm, start, t in (('left', 'pt_sock_l + pt_cap_clr', 'pt_cap_t_l'),
+                         ('right', 'pt_sock_r - pt_cap_t_r - pt_cap_clr', 'pt_cap_t_r')):
+        sk = c.sketches.add(c.yZConstructionPlane); sk.name = 'Post cap %s' % nm
+        rect4(sk, des, zt, zb, y0, y1)
+        f = ext(c, all_profiles(sk), t, FE.NewBodyFeatureOperation, 'Post cap %s' % nm, start=start)
+        body = f.bodies.item(0); body.name = 'PostCap_%s' % nm
+        # friction nub: a short bar across the plate, protruding pt_cap_nub each side (axis along y)
+        sk = c.sketches.add(c.xZConstructionPlane); sk.name = 'Post cap nub %s' % nm
+        xa = '(%s) + 0.1 mm' % start; xb = '(%s) + (%s) - 0.1 mm' % (start, t)
+        rect4(sk, des, xa, xb, '-(pt_piv_z + 2.4 mm)', '-(pt_piv_z + 1.8 mm)')      # XZ sketch (x, y_s = -z)
+        ext(c, all_profiles(sk), 'pt_cap_w + 2 * pt_cap_nub', FE.JoinFeatureOperation, 'Post cap nub %s' % nm,
+            start='pt_piv_y - pt_cap_w / 2 - pt_cap_nub', target=body)
+    return c
+
+
+
+
+
+def build_pt_front_rounding(comp, des):
+    """pt_front_r (1.5 mm) round on the outer front lower edge of the scoop's front end (flat front edge + the two corner arcs),
+    on top of the lip fillet. The standard shell carries it on a longer chain; the pouch scoop's flat is only the 0.1 mm sliver."""
+    up = des.userParameters
+    if not up.itemByName('pt_front_r'):
+        up.add('pt_front_r', adsk.core.ValueInput.createByString('1.5 mm'), 'mm', 'Trigger scoop front rounding fillet (on top of pt_lip_r)')
+    ev = lambda e: des.unitsManager.evaluateExpression(e, 'mm') * 10
+    z4, y4 = ev('pt_sc_z4'), ev('pt_sc_y4'); es = adsk.core.ObjectCollection.create()
+    for e in comp.bRepBodies.item(0).edges:
+        b = e.boundingBox; st = sorted(g.geometry.surfaceType for g in e.faces)
+        z0, z1, y0 = b.minPoint.z * 10, b.maxPoint.z * 10, b.minPoint.y * 10
+        if st in ([0, 0], [0, 1]) and abs(z0 - z4) < 0.02 and abs(z1 - z4) < 0.02 and y0 > y4 - 0.05:
+            es.add(e)
+    fi = comp.features.filletFeatures.createInput()
+    fi.addConstantRadiusEdgeSet(es, adsk.core.ValueInput.createByString('pt_front_r'), False)
+    f = comp.features.filletFeatures.add(fi); f.name = 'Trigger front rounding fillet'
+    return f
