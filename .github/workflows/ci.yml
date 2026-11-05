@@ -122,7 +122,7 @@ jobs:
 
       - name: Coverage report
         run: |
-          output=$(gcovr --root . --filter 'src/' --exclude 'src/SnipsController\.ino' --exclude 'src/oled\.cpp' --exclude 'src/rgb_led\.cpp' --exclude 'src/calibration_store\.cpp' --exclude 'src/droid_persistence\.cpp' --exclude 'src/xbee_spi\.cpp' --exclude 'src/xbee_control\.cpp' --exclude 'src/display_layout_store\.cpp' --exclude 'src/accelerometer\.cpp' --exclude 'src/power_config_store\.cpp' --print-summary --fail-under-line 90)
+          output=$(gcovr --root . --filter 'src/' --exclude 'src/SnipsController\.ino' --exclude 'src/oled\.cpp' --exclude 'src/rgb_led\.cpp' --exclude 'src/calibration_store\.cpp' --exclude 'src/droid_persistence\.cpp' --exclude 'src/xbee_spi\.cpp' --exclude 'src/xbee_uart\.cpp' --exclude 'src/xbee_control\.cpp' --exclude 'src/display_layout_store\.cpp' --exclude 'src/accelerometer\.cpp' --exclude 'src/power_config_store\.cpp' --print-summary --fail-under-line 90)
           status=$?
           {
             echo '### Coverage (src/, excluding SnipsController.ino and hardware adapters)'
@@ -155,5 +155,8 @@ jobs:
       - name: Install PlatformIO
         run: pip install --upgrade platformio
 
-      - name: Build esp32s3 firmware
+      - name: Build esp32s3 firmware (V1)
         run: pio run -e esp32s3
+
+      - name: Build esp32s3_v2 firmware (V2)
+        run: pio run -e esp32s3_v2

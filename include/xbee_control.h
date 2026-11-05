@@ -3,18 +3,26 @@
 #include <cstddef>
 
 #include "droid_switcher.h"
+#include "xbee_api.h"
 #include "xbee_role.h"
+#if defined(SNIPS_BOARD_V2)
+#include "xbee_uart.h"
+#else
 #include "xbee_spi.h"
+#endif
 
-// Real XbeeTransport (see droid_switcher.h), over the SPI transport in
-// xbee_spi.h. Exact AT command sequencing (NR for leave, ID for the new
+// Real XbeeTransport (see droid_switcher.h), over the board's XBee link:
+// SPI on V1 (xbee_spi.h), UART to the optional carrier on V2
+// (xbee_uart.h). Exact AT command sequencing (NR for leave, ID for the new
 // PAN, AC to apply and trigger rejoin) is this class's best-effort
 // reading of Digi's XBee3 manual, not yet validated against real
 // hardware — confirm during this PR's bring-up and adjust here if the
 // sequence needs correcting.
 class XbeeControl : public XbeeTransport, public XbeeRoleTransport {
  public:
-  void begin() { spi_.begin(); }
+  XbeeControl();
+
+  void begin() { link_.begin(); }
 
   bool leaveNetwork() override;
   bool setPanId(const char *panId) override;
@@ -50,18 +58,23 @@ class XbeeControl : public XbeeTransport, public XbeeRoleTransport {
   // Returns false on query failure, leaving outDbm untouched.
   bool queryLocalRssiDbm(int *outDbm);
 
-  // Passthroughs to the owned XbeeSpi — see xbee_spi.h. XbeeControl is
-  // kept as the single facade over the one physical XBee connection
-  // rather than SnipsController.ino owning a second XbeeSpi instance.
+  // Passthroughs to the API over the owned link — see xbee_api.h.
+  // XbeeControl is kept as the single facade over the one physical XBee
+  // connection rather than SnipsController.ino owning a second one.
   void sendPacket(const uint8_t *payload, uint16_t payloadLength) {
-    spi_.sendPacket(payload, payloadLength);
+    api_.sendPacket(payload, payloadLength);
   }
   bool pollForPacket(uint8_t *outPayload, uint16_t outPayloadCapacity,
                      uint16_t *outPayloadLength) {
-    return spi_.pollForPacket(outPayload, outPayloadCapacity,
+    return api_.pollForPacket(outPayload, outPayloadCapacity,
                               outPayloadLength);
   }
 
  private:
-  XbeeSpi spi_;
+#if defined(SNIPS_BOARD_V2)
+  XbeeUart link_;
+#else
+  XbeeSpi link_;
+#endif
+  XbeeApi api_;
 };
