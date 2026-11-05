@@ -1,5 +1,8 @@
 #include "xbee_spi.h"
 
+// V1 boards only; V2 talks to its XBee over UART (xbee_uart.h).
+#if !defined(SNIPS_BOARD_V2)
+
 #include <Arduino.h>
 #include <SPI.h>
 
@@ -87,95 +90,4 @@ void XbeeSpi::writeFrame(const uint8_t *frameData, uint16_t length) {
   SPI.endTransaction();
 }
 
-bool XbeeSpi::sendAtCommand(const char *atCmd, const uint8_t *value,
-                            uint8_t valueLength, uint8_t *outValue,
-                            uint8_t outValueCapacity,
-                            uint8_t *outValueLength,
-                            unsigned long timeoutMs) {
-  constexpr uint8_t kFrameId = 0x01;
-  uint8_t requestFrame[64];
-  const uint16_t requestLength = XbeeFrame::buildAtCommandFrame(
-      requestFrame, sizeof(requestFrame), kFrameId, atCmd, value,
-      valueLength);
-  if (requestLength == 0) {
-    return false;
-  }
-  writeFrame(requestFrame, requestLength);
-
-  const unsigned long start = millis();
-  uint8_t responseFrame[64];
-  while (millis() - start < timeoutMs) {
-    if (!frameAvailable()) {
-      yield();  // let the ESP32's background tasks/watchdog run
-      continue;
-    }
-
-    const int32_t length = readFrame(responseFrame, sizeof(responseFrame));
-    if (length <= 0) {
-      continue;  // no delimiter yet, or a bad frame — keep waiting
-    }
-
-    XbeeFrame::AtCommandResponse response;
-    if (!XbeeFrame::parseAtCommandResponse(
-            responseFrame, static_cast<uint16_t>(length), &response)) {
-      continue;  // some other frame type was queued — not our response
-    }
-    if (response.frameId != kFrameId) {
-      continue;
-    }
-    if (response.status != XbeeFrame::AtCommandStatus::kOk) {
-      return false;
-    }
-
-    const uint8_t copyLength = response.valueLength < outValueCapacity
-                                    ? response.valueLength
-                                    : outValueCapacity;
-    for (uint8_t i = 0; i < copyLength; i++) {
-      outValue[i] = response.value[i];
-    }
-    if (outValueLength != nullptr) {
-      *outValueLength = copyLength;
-    }
-    return true;
-  }
-  return false;  // timed out
-}
-
-void XbeeSpi::sendPacket(const uint8_t *payload, uint16_t payloadLength) {
-  constexpr uint8_t kFrameId = 0x02;  // distinct from sendAtCommand's 0x01
-  uint8_t frame[32];
-  const uint16_t length = XbeeFrame::buildTransmitRequestFrame(
-      frame, sizeof(frame), kFrameId, payload, payloadLength);
-  if (length == 0) {
-    return;  // payload too large for the frame buffer — drop it
-  }
-  writeFrame(frame, length);
-}
-
-bool XbeeSpi::pollForPacket(uint8_t *outPayload, uint16_t outPayloadCapacity,
-                            uint16_t *outPayloadLength) {
-  if (!frameAvailable()) {
-    return false;
-  }
-
-  uint8_t frame[64];
-  const int32_t length = readFrame(frame, sizeof(frame));
-  if (length <= 0) {
-    return false;  // no delimiter yet, or a bad frame was drained
-  }
-
-  XbeeFrame::ReceivePacket packet;
-  if (!XbeeFrame::parseReceivePacket(frame, static_cast<uint16_t>(length),
-                                     &packet)) {
-    return false;  // some other frame type — not what we're looking for
-  }
-
-  const uint16_t copyLength = packet.payloadLength < outPayloadCapacity
-                                  ? packet.payloadLength
-                                  : outPayloadCapacity;
-  for (uint16_t i = 0; i < copyLength; i++) {
-    outPayload[i] = packet.payload[i];
-  }
-  *outPayloadLength = copyLength;
-  return true;
-}
+#endif  // !SNIPS_BOARD_V2

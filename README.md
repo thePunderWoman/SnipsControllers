@@ -75,8 +75,11 @@ This is yet to be determined since we're so early in the prototype stage, but th
 Requires [PlatformIO](https://platformio.org/) (CLI or IDE extension).
 
 ```bash
-# Build the firmware
+# Build the firmware for V1.x boards (the default)
 pio run
+
+# Build the firmware for V2 boards
+pio run -e esp32s3_v2
 
 # Run unit tests (no hardware required)
 pio test -e native

@@ -787,8 +787,11 @@ void loop() {
     // imuFlags 0 on boards without the ICM-42670-P.
     uint8_t imuBytes[Icm42670p::kSampleLength];
     if (accelerometer.readSample(imuBytes)) {
-      // TODO(V2): pick the mounting from the board once V2 firmware lands.
+#if defined(SNIPS_BOARD_V2)
+      ImuSample imu = imuSampleFromRaw(imuBytes, ImuMountings::kV2);
+#else
       ImuSample imu = imuSampleFromRaw(imuBytes, ImuMountings::kV1_2);
+#endif
       gyroBias.update(imu);
       gyroBias.remove(&imu);
       fillUplinkImu(imu, &uplink);

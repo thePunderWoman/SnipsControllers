@@ -1,5 +1,14 @@
 #include "xbee_control.h"
 
+#include <Arduino.h>
+
+namespace {
+unsigned long clockMs() { return millis(); }
+void idle() { yield(); }
+}  // namespace
+
+XbeeControl::XbeeControl() : api_(&link_, clockMs, idle) {}
+
 namespace {
 
 int hexNibble(char c) {
@@ -37,7 +46,7 @@ bool XbeeControl::leaveNetwork() {
   // "NR0": local network reset — forces the module to leave its current
   // network and search again per its (about-to-change) ID setting.
   uint8_t value[] = {0};
-  return spi_.sendAtCommand("NR", value, sizeof(value), nullptr, 0, nullptr);
+  return api_.sendAtCommand("NR", value, sizeof(value), nullptr, 0, nullptr);
 }
 
 bool XbeeControl::setPanId(const char *panId) {
@@ -45,7 +54,7 @@ bool XbeeControl::setPanId(const char *panId) {
   if (!hexStringToBytes(panId, panIdBytes, sizeof(panIdBytes))) {
     return false;
   }
-  if (!spi_.sendAtCommand("ID", panIdBytes, sizeof(panIdBytes), nullptr, 0,
+  if (!api_.sendAtCommand("ID", panIdBytes, sizeof(panIdBytes), nullptr, 0,
                           nullptr)) {
     return false;
   }
@@ -53,21 +62,21 @@ bool XbeeControl::setPanId(const char *panId) {
   // remembers this PAN ID across power cycles on its own — nothing needs
   // to re-apply it at boot, and it never changes again until this method
   // is called again for a different droid.
-  return spi_.sendAtCommand("WR", nullptr, 0, nullptr, 0, nullptr);
+  return api_.sendAtCommand("WR", nullptr, 0, nullptr, 0, nullptr);
 }
 
 bool XbeeControl::rejoinNetwork() {
   // "AC": apply pending parameter changes now, triggering the module to
   // act on the new ID and (re)associate rather than waiting for its next
   // natural re-read of that setting.
-  return spi_.sendAtCommand("AC", nullptr, 0, nullptr, 0, nullptr);
+  return api_.sendAtCommand("AC", nullptr, 0, nullptr, 0, nullptr);
 }
 
 bool XbeeControl::queryByteParameter(const char *command,
                                      uint8_t *outValue) {
   uint8_t value[1];
   uint8_t valueLength = 0;
-  if (!spi_.sendAtCommand(command, nullptr, 0, value, sizeof(value),
+  if (!api_.sendAtCommand(command, nullptr, 0, value, sizeof(value),
                           &valueLength) ||
       valueLength != sizeof(value)) {
     return false;
@@ -77,15 +86,15 @@ bool XbeeControl::queryByteParameter(const char *command,
 }
 
 bool XbeeControl::writeByteParameter(const char *command, uint8_t value) {
-  return spi_.sendAtCommand(command, &value, sizeof(value), nullptr, 0,
+  return api_.sendAtCommand(command, &value, sizeof(value), nullptr, 0,
                             nullptr);
 }
 
 bool XbeeControl::commitAndApply() {
   // "WR" so the settings survive power cycles, "AC" so they take effect
   // now.
-  return spi_.sendAtCommand("WR", nullptr, 0, nullptr, 0, nullptr) &&
-         spi_.sendAtCommand("AC", nullptr, 0, nullptr, 0, nullptr);
+  return api_.sendAtCommand("WR", nullptr, 0, nullptr, 0, nullptr) &&
+         api_.sendAtCommand("AC", nullptr, 0, nullptr, 0, nullptr);
 }
 
 bool XbeeControl::querySerialLow(char *outHex, size_t outHexCapacity) {
@@ -94,7 +103,7 @@ bool XbeeControl::querySerialLow(char *outHex, size_t outHexCapacity) {
   }
   uint8_t value[4];
   uint8_t valueLength = 0;
-  if (!spi_.sendAtCommand("SL", nullptr, 0, value, sizeof(value),
+  if (!api_.sendAtCommand("SL", nullptr, 0, value, sizeof(value),
                           &valueLength) ||
       valueLength != sizeof(value)) {
     return false;
@@ -109,7 +118,7 @@ bool XbeeControl::queryPanId(char *outHex, size_t outHexCapacity) {
   }
   uint8_t value[8];
   uint8_t valueLength = 0;
-  if (!spi_.sendAtCommand("ID", nullptr, 0, value, sizeof(value),
+  if (!api_.sendAtCommand("ID", nullptr, 0, value, sizeof(value),
                           &valueLength) ||
       valueLength != sizeof(value)) {
     return false;
@@ -121,7 +130,7 @@ bool XbeeControl::queryPanId(char *outHex, size_t outHexCapacity) {
 bool XbeeControl::queryLocalRssiDbm(int *outDbm) {
   uint8_t value[1];
   uint8_t valueLength = 0;
-  if (!spi_.sendAtCommand("DB", nullptr, 0, value, sizeof(value),
+  if (!api_.sendAtCommand("DB", nullptr, 0, value, sizeof(value),
                           &valueLength) ||
       valueLength != sizeof(value)) {
     return false;

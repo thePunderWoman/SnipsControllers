@@ -25,7 +25,7 @@ Pins are chosen by position, not carried over from V1, so V2 needs its own firmw
 - **TXD0 (IO43)** prints the boot log, so it stays free for debugging. RGB data has moved off it, so the LED no longer sees that traffic.
 - **Boot glitches:** the low-level power-up glitches on IO1-IO17 (Table 2-2, where IO15 and IO16 appear as XTAL_32K) are 60 µs. Those pins carry only inputs, except IO1 (SLEEP_RQ, where low means awake). XBee RESET is on IO42, which has no listed glitch.
 - **IO26 stays unconnected.** It is the PSRAM chip-select, and Arduino runs a PSRAM probe at every boot, so it is driven before `setup()`. The probe fails on the -N8, which has no PSRAM, and boot continues.
-- **Do not flash V1 firmware on V2.** It would treat V2 pins as SPI and read the wrong buttons. V2 needs its own pin map.
+- **Do not flash V1 firmware on V2.** It would treat V2 pins as SPI and read the wrong buttons. Build V2 firmware with `pio run -e esp32s3_v2`, which uses V2's pin map in `include/pin_assignment.h`.
 - **EN:** 10 kΩ and 1 µF, as Espressif advises (Peripheral Schematics), so EN crosses 0.75 × VDD about 14 ms after the rail is up. V1 has no capacitor.
 - **Pad 61:** the thermal pad is 9 segments, soldered to GND.
 
