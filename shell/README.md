@@ -75,6 +75,13 @@ straight in (checked for 0 to 14 mm of travel, no interference). The battery pan
 (`bay_hook_x0/x1`, x 7.6..10.5 mm) slide into slots in two hook pads beside the front contact holder (`bay_bulk_x0`, built last
 because the front closure would otherwise refill the slots).
 
+Contact retention: the rear clip and the front contact block drop vertically into their U-shaped pockets (before the top shell is on).
+Each pocket cheek has a 0.5 mm lead-in chamfer and one vertical crush rib (0.15 mm proud, 0.05 mm of interference per side with the
+plate, `bay_ret_*` parameters) so the contact stays put while you solder and glue; the plate then gets a dab of hot glue on its top
+edge. Each cheek top also has a 1 mm deep stepped relief (`bay_ret_wire_d`) where the wire leaves the tab and the glue can anchor it,
+on both sides of both contacts. The front block's plate is only full width on its thin back plate, so that rib sits there. Print a short
+strip of the pocket first to tune `bay_ret_rib_int` (FDM tolerance can make 0.05 mm too tight or too loose).
+
 The two flat ledges beside the cell (visible with the panel off) carry engraved polarity marks: **+** at the rear (palm) end,
 **-** at the front (trigger) end, on both ledges, plus "Li-ion 14500 only" along the right ledge. Text height `pol_h`
 (2.2 mm) / `pol_note_h` (1.8 mm), depth `pol_depth` (0.5 mm of the 1.6 mm ledge), position `pol_x`, `pol_y_lo`, `pol_y_hi`,

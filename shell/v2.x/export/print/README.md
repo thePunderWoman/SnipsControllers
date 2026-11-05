@@ -36,6 +36,8 @@ them) for a 3 x 1 mm strap loop. Slots are narrow and tall with rounded ends, so
   The ledge is a bridge when printed belly down, so the letters may print a little rough.
 - The negative end continues the same round ceiling to the front contact holder (no flat roof; the bore bridges the same ~10.6 mm as the rest of the ceiling). The battery opening and `BatteryPanel` are ~6.5 mm longer than before so the cell drops straight out; the panel's hook tabs go under two pads beside the contact holder.
 
+- Contact pockets have crush ribs (0.05 mm interference per side, `bay_ret_*`), a lead-in chamfer and wire relief steps in the cheek tops. Test-print the pocket first; if a contact is too tight or loose change `bay_ret_rib_int` rather than the clearance.
+
 ## Trigger notes
 - Both triggers are filleted where a finger touches them: the long edges across the blade (nose, bottom-flat corners, rear corner) at 1.2 mm (`trig_edge_r`, only below `trig_edge_zmax`) and the outline of both side faces along the finger blade, from the rear face near the hub round the bottom and along the nose diagonal, at 1.0 mm (`trig_side_r`). 1.2 mm does not compute on the side outline, because of sliver edges at the ramp teeth and hub; the rest of the outline (ledge, ramp, hub pockets) stays sharp.
 - Both triggers rest 8 deg forward of vertical (`trig_rest_deg`, `pt_rest_deg`); the pull is 28 deg beyond that.

@@ -3101,3 +3101,64 @@ def build_bay_polarity(c, des, body, sides=(1, -1)):
         if note:
             texts.add(_pol_text(sk, des, 'Li-ion 14500 only', 'pol_note_h', side, '(pol_y_lo + pol_y_hi) / 2', '19 mm'))
         ext(c, texts, 'pol_depth', FE.CutFeatureOperation, 'Engrave ' + nm.lower(), neg=True, target=body)
+
+
+# ---------------------------------------------------------------- 14500 bay contact retention (standard shell only)
+# The contacts drop vertically into the U-shaped pockets (rear clip, front block) before the top shell goes on. Lead-in chamfer on the
+# cheeks, vertical crush ribs on the cheek faces (0.05 mm interference per side, one rib per cheek, on the part of the plate that is
+# full width: the front block's thin back plate sits at y front_y - 0.5 .. front_y), and a stepped wire relief in the cheek tops.
+# A dab of hot glue on the plate's top edge and the relief holds the contact against lift-out.
+RET_PARAMS = [
+    ('bay_ret_lead', '0.5 mm', 'lead-in chamfer on the contact pocket cheeks'),
+    ('bay_ret_rib_int', '0.05 mm', 'crush rib interference per side with the contact plate'),
+    ('bay_ret_rib_h', 'bay_hold_clr + bay_ret_rib_int', 'crush rib height off the cheek face'),
+    ('bay_ret_rib_w', '0.5 mm', 'crush rib width (y)'),
+    ('bay_ret_rib_top', 'bay_hold_top_z - bay_ret_lead', 'crush rib top at the cheek face (continues the lead-in chamfer)'),
+    ('bay_ret_wire_d', '1 mm', 'wire relief step depth below the cheek top'),
+]
+
+
+def add_ret_params(des):
+    add_bay_params(des)
+    up = des.userParameters
+    for n, e, c in RET_PARAMS:
+        if up.itemByName(n) is None:
+            up.add(n, VI(e), 'mm', c)
+
+
+def build_bay_retention(c, des, body):
+    add_ret_params(des)
+    top = ev_cm(des, 'bay_hold_top_z')
+    xr = ev_cm(des, 'bay_clip_w / 2 + bay_hold_clr'); xf = ev_cm(des, 'bay_blk_w / 2 + bay_hold_clr')
+    ra = (ev_cm(des, 'bay_clip_y - bay_hold_clr'), ev_cm(des, 'bay_clip_y + bay_clip_t + 0.2 mm'))
+    fa = (ev_cm(des, 'bay_front_y - bay_blk_t - bay_hold_clr'), ev_cm(des, 'bay_front_y + bay_hold_clr'))
+    edges = adsk.core.ObjectCollection.create(); n = [0, 0]
+    for e in body.edges:
+        if not isinstance(e.geometry, adsk.core.Line3D):
+            continue
+        a = e.startVertex.geometry; b = e.endVertex.geometry
+        if abs(a.z - top) > 1e-4 or abs(b.z - top) > 1e-4 or abs(a.x - b.x) > 1e-4 or abs(a.y - b.y) < 1e-4:
+            continue
+        for k, (xc, (y0, y1)) in enumerate(((xr, ra), (xf, fa))):
+            if abs(abs(a.x) - xc) < 1e-4 and min(a.y, b.y) >= y0 - 0.01 and max(a.y, b.y) <= y1 + 0.01:
+                edges.add(e); n[k] += 1
+    if n != [2, 2]:
+        raise RuntimeError('pocket cheek top edges: %s' % n)
+    inp = c.features.chamferFeatures.createInput2()
+    inp.chamferEdgeSets.addEqualDistanceChamferEdgeSet(edges, VI('bay_ret_lead'), False)
+    c.features.chamferFeatures.add(inp).name = 'Bay pocket lead-in'
+    zs = 'bay_floor_z - 0.3 mm'
+    hx = 'bay_clip_w / 2 + bay_hold_clr'; fx = 'bay_blk_w / 2 + bay_hold_clr'
+    for nm, xc, ystart in (('rear', hx, 'bay_clip_y + 0.3 mm - bay_ret_rib_w / 2'),
+                           ('front', fx, 'bay_front_y - 0.25 mm - bay_ret_rib_w / 2')):
+        sk = c.sketches.add(c.xZConstructionPlane); sk.name = 'Bay %s ribs' % nm
+        for s in (1, -1):
+            X = (lambda e: '(%s)' % e) if s > 0 else (lambda e: '-(%s)' % e)
+            poly_pts(sk, des, [(X(xc), '-(%s)' % zs), (X('(%s) - bay_ret_rib_h' % xc), '-(%s)' % zs),
+                               (X('(%s) - bay_ret_rib_h' % xc), '-(bay_ret_rib_top - bay_ret_rib_h)'), (X(xc), '-(bay_ret_rib_top)')])
+        ext(c, all_profiles(sk), 'bay_ret_rib_w', FE.JoinFeatureOperation, 'Bay %s ribs' % nm, start=ystart, target=body)
+        y0, y1 = (('bay_clip_y + 0.75 mm', 'bay_cradle_y0') if nm == 'rear' else ('bay_front_y - 1.3 mm', 'bay_front_y - 0.6 mm'))
+        sk = _xy_rects(c, des, 'Bay %s wire relief' % nm, [('-(%s + bay_hold_w + 0.2 mm)' % xc, '-(%s)' % xc, y0, y1),
+                                                        ('%s' % xc, '%s + bay_hold_w + 0.2 mm' % xc, y0, y1)])
+        ext(c, all_profiles(sk), 'bay_ret_wire_d + 0.5 mm', FE.CutFeatureOperation, 'Bay %s wire relief' % nm,
+            start='bay_hold_top_z - bay_ret_wire_d', target=body)
