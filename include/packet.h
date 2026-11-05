@@ -18,9 +18,18 @@
 
 // Controller -> Amidala, sent periodically. Raw per-button state (no
 // gesture classification — see the rewrite plan's Context section) plus
-// calibrated analog and battery/charge status.
+// calibrated analog and battery/charge status, then the IMU readings (see
+// imu.h for the axes).
+//
+// Wire format (17 bytes): button mask (2), trigger, stick X, stick Y,
+// battery, charge state, flags, then IMU flags, pitch, roll and three
+// rotation rates (2 bytes each). The IMU fields were appended to the
+// original 8 bytes, so an Amidala that reads only those keeps working.
 struct UplinkPacket {
   static constexpr uint8_t kFlagShuttingDown = 0x01;
+
+  static constexpr uint8_t kImuTiltValid = 0x01;
+  static constexpr uint8_t kImuRatesValid = 0x02;
 
   uint16_t buttonMask = 0;  // bit i = Buttons::Index i is pressed
   uint8_t triggerPercent = 0;      // 0-100
@@ -32,6 +41,15 @@ struct UplinkPacket {
   // uplinks before power cuts so Amidala can mark this controller
   // disconnected immediately instead of waiting out a timeout.
   uint8_t flags = 0;
+
+  // kImuTiltValid / kImuRatesValid. Boards with no IMU send 0; the
+  // QMA6100P (V1.1 and earlier) has no gyroscope.
+  uint8_t imuFlags = 0;
+  int8_t pitchDeg = 0;   // -90..90, + with the stick end raised
+  int8_t rollDeg = 0;    // -90..90, + with the right edge raised
+  // About the controller's X, Y and Z axes, in tenths of a degree per
+  // second (+/-2500 covers the gyro's +/-250 deg/s range).
+  int16_t rateDeciDps[3] = {};
 };
 
 // Amidala -> controller, sent after every uplink. Carries what the
@@ -73,7 +91,8 @@ struct DownlinkPacket {
 
 namespace Packet {
 
-constexpr size_t kUplinkEncodedSize = 8;
+constexpr size_t kUplinkBaseSize = 8;  // before the IMU fields
+constexpr size_t kUplinkEncodedSize = 17;
 constexpr size_t kDownlinkEncodedSize =
     8 + DownlinkPacket::kSequenceNameLength;  // 23
 
@@ -82,7 +101,8 @@ constexpr size_t kDownlinkEncodedSize =
 size_t encodeUplink(const UplinkPacket &packet, uint8_t *outBuf,
                     size_t outCapacity);
 
-// Returns false if length is too short to hold a full uplink packet.
+// Returns false if length is too short to hold the original 8-byte
+// uplink. A packet without the IMU fields decodes with imuFlags 0.
 bool decodeUplink(const uint8_t *buf, size_t length, UplinkPacket *out);
 
 // Returns the number of bytes written (always kDownlinkEncodedSize), or 0

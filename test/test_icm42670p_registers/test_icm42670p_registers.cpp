@@ -19,7 +19,9 @@ void test_bank0_register_addresses() {
   TEST_ASSERT_EQUAL_HEX8(0x00, Icm42670p::kRegMclkRdy);
   TEST_ASSERT_EQUAL_HEX8(0x02, Icm42670p::kRegSignalPathReset);
   TEST_ASSERT_EQUAL_HEX8(0x06, Icm42670p::kRegIntConfig);
+  TEST_ASSERT_EQUAL_HEX8(0x0B, Icm42670p::kRegAccelDataX1);
   TEST_ASSERT_EQUAL_HEX8(0x1F, Icm42670p::kRegPwrMgmt0);
+  TEST_ASSERT_EQUAL_HEX8(0x20, Icm42670p::kRegGyroConfig0);
   TEST_ASSERT_EQUAL_HEX8(0x21, Icm42670p::kRegAccelConfig0);
   TEST_ASSERT_EQUAL_HEX8(0x27, Icm42670p::kRegWomConfig);
   TEST_ASSERT_EQUAL_HEX8(0x2B, Icm42670p::kRegIntSource0);
@@ -107,6 +109,38 @@ void test_wom_fired_reads_only_wom_bits() {
   TEST_ASSERT_FALSE(Icm42670p::womFired(0xF0));
 }
 
+void test_gyro_config() {
+  // GYRO_CONFIG0 (p. 57): FS_SEL bits 6-5 = 11 (+/-250 dps), ODR bits 3-0 =
+  // 1010 (50 Hz).
+  TEST_ASSERT_EQUAL_HEX8(0x6A, Icm42670p::kGyroConfig0Value);
+}
+
+void test_six_axis_power_mode() {
+  // PWR_MGMT0 (p. 56): GYRO_MODE bits 3-2 = 11 (low noise), ACCEL_MODE bits
+  // 1-0 = 11 (low noise). IDLE and ACCEL_LP_CLK_SEL stay 0.
+  TEST_ASSERT_EQUAL_HEX8(0x0F, Icm42670p::kPwrMgmt0SixAxis);
+}
+
+void test_sensitivity() {
+  // Tables 1-2: 131 LSB/(deg/s) at GYRO_UI_FS_SEL=3, 16,384 LSB/g at
+  // ACCEL_UI_FS_SEL=3.
+  TEST_ASSERT_EQUAL_FLOAT(131.0f, Icm42670p::kGyroLsbPerDps);
+  TEST_ASSERT_EQUAL_FLOAT(16384.0f, Icm42670p::kAccelLsbPerG);
+}
+
+void test_sample_words_are_big_endian_signed() {
+  // 0x0B-0x16 hold accel X/Y/Z then gyro X/Y/Z, high byte first (p. 42,
+  // INTF_CONFIG0 SENSOR_DATA_ENDIAN reset 1, p. 67).
+  const uint8_t bytes[Icm42670p::kSampleLength] = {
+      0x40, 0x00, 0xC0, 0x00, 0x00, 0x01, 0x00, 0x83, 0xFF, 0x7D, 0x7F, 0xFF};
+  TEST_ASSERT_EQUAL_INT16(16384, Icm42670p::sampleWord(bytes, 0));
+  TEST_ASSERT_EQUAL_INT16(-16384, Icm42670p::sampleWord(bytes, 1));
+  TEST_ASSERT_EQUAL_INT16(1, Icm42670p::sampleWord(bytes, 2));
+  TEST_ASSERT_EQUAL_INT16(131, Icm42670p::sampleWord(bytes, 3));
+  TEST_ASSERT_EQUAL_INT16(-131, Icm42670p::sampleWord(bytes, 4));
+  TEST_ASSERT_EQUAL_INT16(32767, Icm42670p::sampleWord(bytes, 5));
+}
+
 int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_identity);
@@ -121,5 +155,9 @@ int main(int argc, char **argv) {
   RUN_TEST(test_wom_config);
   RUN_TEST(test_wom_threshold_about_31mg);
   RUN_TEST(test_wom_fired_reads_only_wom_bits);
+  RUN_TEST(test_gyro_config);
+  RUN_TEST(test_six_axis_power_mode);
+  RUN_TEST(test_sensitivity);
+  RUN_TEST(test_sample_words_are_big_endian_signed);
   return UNITY_END();
 }

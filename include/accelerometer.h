@@ -32,6 +32,18 @@ class Accelerometer {
 
   bool isPresent() const { return chip_ != Chip::kNone; }
 
+  // Only the ICM-42670-P has a gyroscope, so only it fills readSample().
+  bool hasGyro() const { return chip_ == Chip::kIcm42670p; }
+
+  // Turns the gyroscope on (6-axis low-noise mode) or off (back to the
+  // accelerometer-only low-power mode wake-on-motion was tuned in). No-op
+  // without a gyro. See icm42670p_registers.h's kPwrMgmt0SixAxis.
+  void setGyroEnabled(bool enabled);
+
+  // Reads the 12 raw data bytes (Icm42670p::kSampleLength) into `out`.
+  // False with no gyro, with the gyro off, or if the read fails.
+  bool readSample(uint8_t *out);
+
   // True if any motion has latched since the last call; clears the latch
   // (an I2C read, only when INT1 is high). Always false if begin() found
   // nothing (or was never called).
@@ -40,4 +52,5 @@ class Accelerometer {
  private:
   enum class Chip { kNone, kIcm42670p, kQma6100p };
   Chip chip_ = Chip::kNone;
+  bool gyroEnabled_ = false;
 };

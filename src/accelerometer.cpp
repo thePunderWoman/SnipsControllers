@@ -74,6 +74,7 @@ void configureIcm42670p() {
   writeIcmMreg1(kMreg1AccelWomZThr, kWomThreshold);
 
   writeRegister(kI2cAddress, kRegAccelConfig0, kAccelConfig0Value);
+  writeRegister(kI2cAddress, kRegGyroConfig0, kGyroConfig0Value);
   writeRegister(kI2cAddress, kRegIntSource0, kIntSource0None);
   writeRegister(kI2cAddress, kRegIntSource1, kIntSource1WomAllAxes);
   // Clear the reset-done status before INT1 becomes a latched output.
@@ -136,6 +137,32 @@ bool Accelerometer::begin() {
     configureIcm42670p();
   } else {
     configureQma6100p();
+  }
+  return true;
+}
+
+void Accelerometer::setGyroEnabled(bool enabled) {
+  if (!hasGyro() || enabled == gyroEnabled_) return;
+  gyroEnabled_ = enabled;
+  using namespace Icm42670p;
+  writeRegister(kI2cAddress, kRegPwrMgmt0,
+                enabled ? kPwrMgmt0SixAxis : kPwrMgmt0AccelLowPower);
+  // No register writes for 200 us after a sensor leaves OFF (p. 56).
+  delayMicroseconds(250);
+}
+
+bool Accelerometer::readSample(uint8_t *out) {
+  if (!hasGyro() || !gyroEnabled_) return false;
+  using namespace Icm42670p;
+  Wire.beginTransmission(kI2cAddress);
+  Wire.write(kRegAccelDataX1);
+  if (Wire.endTransmission(/*sendStop=*/false) != 0) return false;
+  if (Wire.requestFrom(kI2cAddress, static_cast<uint8_t>(kSampleLength)) !=
+      kSampleLength) {
+    return false;
+  }
+  for (int i = 0; i < kSampleLength; ++i) {
+    out[i] = static_cast<uint8_t>(Wire.read());
   }
   return true;
 }

@@ -20,7 +20,9 @@ constexpr uint8_t kWhoAmIValue = 0x67;
 constexpr uint8_t kRegMclkRdy = 0x00;          // MCLK_RDY, bit 3
 constexpr uint8_t kRegSignalPathReset = 0x02;  // SOFT_RESET_DEVICE_CONFIG, bit 4
 constexpr uint8_t kRegIntConfig = 0x06;        // INT1_MODE/DRIVE/POLARITY, bits 2-0
-constexpr uint8_t kRegPwrMgmt0 = 0x1F;         // IDLE bit 4, ACCEL_MODE bits 1-0
+constexpr uint8_t kRegAccelDataX1 = 0x0B;      // first of 12 data bytes, see below
+constexpr uint8_t kRegPwrMgmt0 = 0x1F;         // IDLE 4, GYRO_MODE 3-2, ACCEL_MODE 1-0
+constexpr uint8_t kRegGyroConfig0 = 0x20;      // GYRO_UI_FS_SEL 6-5, GYRO_ODR 3-0
 constexpr uint8_t kRegAccelConfig0 = 0x21;     // ACCEL_UI_FS_SEL 6-5, ACCEL_ODR 3-0
 constexpr uint8_t kRegWomConfig = 0x27;        // WOM_INT_DUR 4-3, WOM_MODE 1, WOM_EN 0
 constexpr uint8_t kRegIntSource0 = 0x2B;       // INT1 routing; RESET_DONE on by default
@@ -74,6 +76,35 @@ constexpr uint8_t kPwrMgmt0AccelLowPower = 0x02;
 constexpr uint8_t kAccelFs2g = 0x03 << 5;
 constexpr uint8_t kAccelOdr50Hz = 0x0A;
 constexpr uint8_t kAccelConfig0Value = kAccelFs2g | kAccelOdr50Hz;
+
+// GYRO_CONFIG0 (p. 57): GYRO_UI_FS_SEL 11 -> +/-250 dps, the finest range,
+// since a hand-held controller turns well under that; GYRO_ODR 1010 ->
+// 50 Hz, matching the accelerometer.
+constexpr uint8_t kGyroFs250dps = 0x03 << 5;
+constexpr uint8_t kGyroOdr50Hz = 0x0A;
+constexpr uint8_t kGyroConfig0Value = kGyroFs250dps | kGyroOdr50Hz;
+
+// PWR_MGMT0 with the gyroscope on (p. 56). The gyro only runs in low-noise
+// mode, and the datasheet's power modes (Table 11, p. 22) pair it with the
+// accelerometer off or in low-noise mode, never low-power, so both go to
+// low-noise ("6-Axis Low-Noise Mode"). With the gyro off, the driver goes
+// back to kPwrMgmt0AccelLowPower.
+constexpr uint8_t kPwrMgmt0GyroLowNoise = 0x03 << 2;
+constexpr uint8_t kPwrMgmt0AccelLowNoise = 0x03;
+constexpr uint8_t kPwrMgmt0SixAxis = kPwrMgmt0GyroLowNoise | kPwrMgmt0AccelLowNoise;
+
+// Sensitivity at the ranges above (Tables 1 and 2, pp. 10-11).
+constexpr float kAccelLsbPerG = 16384.0f;  // ACCEL_UI_FS_SEL=3, +/-2g
+constexpr float kGyroLsbPerDps = 131.0f;   // GYRO_UI_FS_SEL=3, +/-250 dps
+
+// ACCEL_DATA_X1 through GYRO_DATA_Z0 (0x0B-0x16): accel X, Y, Z then gyro
+// X, Y, Z, each a signed 16-bit value, high byte first (INTF_CONFIG0's
+// SENSOR_DATA_ENDIAN resets to 1, big endian, p. 67).
+constexpr int kSampleLength = 12;
+
+inline int16_t sampleWord(const uint8_t *bytes, int index) {
+  return static_cast<int16_t>((bytes[2 * index] << 8) | bytes[2 * index + 1]);
+}
 
 // INT_SOURCE0's reset value (0x10) routes the reset-done interrupt to INT1.
 // With INT1 latched it would hold the pin high, so route nothing here.

@@ -13,6 +13,8 @@
 #include "display_layout_store.h"
 #include "droid_persistence.h"
 #include "frame_buffer.h"
+#include "icm42670p_registers.h"
+#include "imu.h"
 #include "loop_pacer.h"
 #include "low_battery.h"
 #include "menu.h"
@@ -52,6 +54,11 @@ SequenceBanner sequenceBanner;
 int signalDbm = 0;
 bool signalKnown = false;  // distinguishes "0dBm" from "never queried"
 Accelerometer accelerometer;
+GyroBias gyroBias;
+// The last uplink's gyro reading showed the controller being turned; counts
+// as activity, since wake-on-motion is only relied on with the gyro off.
+bool imuMoving = false;
+UplinkPacket lastImuUplink;  // IMU fields of the latest uplink, for the log
 ActivityDetector activityDetector;
 PowerManager powerManager;
 PowerConfig powerConfig;
@@ -691,7 +698,8 @@ void loop() {
   activityInputs.stickYPercent = stickYPercent;
   activityInputs.triggerPercent = triggerPercent;
   activityInputs.motion =
-      accelerometer.isPresent() && accelerometer.motionDetected();
+      (accelerometer.isPresent() && accelerometer.motionDetected()) ||
+      imuMoving;
   const uint8_t activeSources = activityDetector.update(activityInputs);
   powerManager.update(activeSources != 0, now);
 
@@ -733,6 +741,11 @@ void loop() {
 
   const bool inLowBatteryCountdown = lowBatteryMonitor.isInShutdownCountdown();
   setXbeeSleep(shouldXbeeSleep(currentPowerState, inLowBatteryCountdown));
+  // The gyro only feeds the uplink, so it runs only while uplinks go out
+  // (about 0.4 mA); with it off the IMU is back in the low-power mode
+  // wake-on-motion was tuned in.
+  accelerometer.setGyroEnabled(!xbeeSleepRequested);
+  if (xbeeSleepRequested) imuMoving = false;
 
   // Uplink: sent periodically over the radio, faster than the
   // human-readable Serial telemetry below — this is what Amidala
@@ -769,6 +782,19 @@ void loop() {
     uplink.stickYPercent = static_cast<int8_t>(stickYPercent);
     uplink.batteryPercent = static_cast<uint8_t>(batteryPercent);
     uplink.chargeState = chargeState;
+
+    // Tilt and rotation for Amidala's bindings (see imu.h). Left at
+    // imuFlags 0 on boards without the ICM-42670-P.
+    uint8_t imuBytes[Icm42670p::kSampleLength];
+    if (accelerometer.readSample(imuBytes)) {
+      // TODO(V2): pick the mounting from the board once V2 firmware lands.
+      ImuSample imu = imuSampleFromRaw(imuBytes, ImuMountings::kV1_2);
+      gyroBias.update(imu);
+      gyroBias.remove(&imu);
+      fillUplinkImu(imu, &uplink);
+      imuMoving = imuShowsMotion(imu);
+      lastImuUplink = uplink;
+    }
 
     uint8_t uplinkBuf[Packet::kUplinkEncodedSize];
     const size_t uplinkLength =
@@ -880,6 +906,21 @@ void loop() {
     Serial.print(stickXPercent);
     Serial.print(" Y ");
     Serial.println(stickYPercent);
+    // Bench check for the IMU mounting in imu.h: raising the stick end
+    // should read pitch +, the right edge roll +, and turning
+    // counterclockwise on a table rate Z +.
+    if (lastImuUplink.imuFlags != 0) {
+      Serial.print("IMU pitch ");
+      Serial.print(lastImuUplink.pitchDeg);
+      Serial.print(" roll ");
+      Serial.print(lastImuUplink.rollDeg);
+      Serial.print(" rate X ");
+      Serial.print(lastImuUplink.rateDeciDps[0] / 10.0f, 1);
+      Serial.print(" Y ");
+      Serial.print(lastImuUplink.rateDeciDps[1] / 10.0f, 1);
+      Serial.print(" Z ");
+      Serial.println(lastImuUplink.rateDeciDps[2] / 10.0f, 1);
+    }
 
     // What low-power mode sees right now — the "Activity:" lines above
     // only print on a rising edge, so an input stuck active shows up
