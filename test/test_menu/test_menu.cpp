@@ -746,43 +746,63 @@ void test_manage_droids_delete_confirm_back_cancels() {
 
 // ---- display config -----------------------------------------------------------
 
-void test_display_config_cycles_selected_slot_source() {
+void test_display_config_cursor_starts_on_current_layout() {
   MenuController menu;
-  ComplicationRegistry registry;
-  menu.setComplications(&registry);
+  StatusLayout layout = StatusLayout::kSideGauges;
+  menu.setStatusLayout(&layout);
   selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
   menu.onEnter(0, 0, 0);  // -> kDisplayConfig
   TEST_ASSERT_TRUE(MenuScreen::kDisplayConfig == menu.currentScreen());
-  TEST_ASSERT_EQUAL_INT(0, menu.selectedDisplayConfigSlot());
-
-  const ComplicationSource before = registry.slotSource(0);
-  menu.onEnter(0, 0, 0);
-  TEST_ASSERT_FALSE(before == registry.slotSource(0));
-  TEST_ASSERT_TRUE(menu.consumeComplicationsChanged());
-  TEST_ASSERT_FALSE(menu.consumeComplicationsChanged());
+  TEST_ASSERT_TRUE(StatusLayout::kSideGauges == menu.selectedDisplayLayout());
 }
 
-void test_display_config_up_down_selects_slot_not_source() {
+void test_display_config_enter_applies_selected_layout() {
   MenuController menu;
-  ComplicationRegistry registry;
-  menu.setComplications(&registry);
+  StatusLayout layout = StatusLayout::kStatusBars;
+  menu.setStatusLayout(&layout);
   selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
   menu.onEnter(0, 0, 0);  // -> kDisplayConfig
 
   menu.onDown();
-  TEST_ASSERT_EQUAL_INT(1, menu.selectedDisplayConfigSlot());
-  menu.onUp();
-  menu.onUp();  // wraps to the last slot
-  TEST_ASSERT_EQUAL_INT(ComplicationRegistry::kSlotCount - 1,
-                        menu.selectedDisplayConfigSlot());
+  TEST_ASSERT_TRUE(StatusLayout::kStatusBars == layout);  // not until Enter
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_TRUE(StatusLayout::kThrottleFirst == layout);
+  TEST_ASSERT_TRUE(menu.consumeStatusLayoutChanged());
+  TEST_ASSERT_FALSE(menu.consumeStatusLayoutChanged());
+  TEST_ASSERT_TRUE(MenuScreen::kDisplayConfig == menu.currentScreen());
 }
 
-void test_display_config_enter_without_registry_is_noop() {
-  MenuController menu;  // no setComplications() call
+void test_display_config_enter_on_current_layout_is_not_a_change() {
+  MenuController menu;
+  StatusLayout layout = StatusLayout::kLogo;
+  menu.setStatusLayout(&layout);
   selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
   menu.onEnter(0, 0, 0);  // -> kDisplayConfig
+  menu.onEnter(0, 0, 0);
+  TEST_ASSERT_FALSE(menu.consumeStatusLayoutChanged());
+}
+
+void test_display_config_up_down_wraps_over_layouts() {
+  MenuController menu;
+  StatusLayout layout = StatusLayout::kStatusBars;
+  menu.setStatusLayout(&layout);
+  selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
+  menu.onEnter(0, 0, 0);  // -> kDisplayConfig
+
+  menu.onUp();  // wraps to the last layout
+  TEST_ASSERT_TRUE(StatusLayout::kLogo == menu.selectedDisplayLayout());
+  menu.onDown();
+  TEST_ASSERT_TRUE(StatusLayout::kStatusBars == menu.selectedDisplayLayout());
+}
+
+void test_display_config_enter_without_layout_is_noop() {
+  MenuController menu;  // no setStatusLayout() call
+  selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
+  menu.onEnter(0, 0, 0);  // -> kDisplayConfig
+  TEST_ASSERT_TRUE(StatusLayout::kStatusBars == menu.selectedDisplayLayout());
+  menu.onDown();
   menu.onEnter(0, 0, 0);  // should not crash
-  TEST_ASSERT_FALSE(menu.consumeComplicationsChanged());
+  TEST_ASSERT_FALSE(menu.consumeStatusLayoutChanged());
 }
 
 void test_display_config_back_returns_to_main_menu() {
@@ -1353,27 +1373,39 @@ void test_render_factory_reset_confirm() {
   TEST_ASSERT_EQUAL_STRING("Factory Reset?", screen.line(0));
 }
 
-void test_render_display_config_shows_slots_and_selection() {
+void test_render_display_config_shows_layouts_selection_and_current() {
   MenuController menu;
-  ComplicationRegistry registry;
-  menu.setComplications(&registry);
+  StatusLayout layout = StatusLayout::kStatusBars;
+  menu.setStatusLayout(&layout);
   ScreenBuffer screen;
   selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
   menu.onEnter(0, 0, 0);  // -> kDisplayConfig
-  menu.onDown();  // select slot 1
+  menu.onDown();
   renderMenuScreen(menu, &screen);
   TEST_ASSERT_EQUAL_STRING("Display Config", screen.line(0));
-  TEST_ASSERT_EQUAL_STRING("  1: Battery", screen.line(1));
-  TEST_ASSERT_EQUAL_STRING("> 2: Droid Name", screen.line(2));
+  TEST_ASSERT_EQUAL_STRING("  Status bars *", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("> Throttle first", screen.line(2));
+  TEST_ASSERT_EQUAL_STRING("  Side gauges", screen.line(3));
+  TEST_ASSERT_EQUAL_STRING("  Snips logo", screen.line(4));
+  TEST_ASSERT_EQUAL_STRING("Enter: use layout", screen.line(6));
 }
 
-void test_render_display_config_without_registry_shows_placeholder() {
-  MenuController menu;  // no setComplications() call
+void test_render_display_config_without_layout_marks_none_current() {
+  MenuController menu;  // no setStatusLayout() call
   ScreenBuffer screen;
   selectMainMenuItem(&menu, MainMenuItem::kDisplayConfig);
   menu.onEnter(0, 0, 0);  // -> kDisplayConfig
   renderMenuScreen(menu, &screen);
-  TEST_ASSERT_EQUAL_STRING("> 1: (none)", screen.line(1));
+  TEST_ASSERT_EQUAL_STRING("> Status bars", screen.line(1));
+}
+
+// ---- current droid ----------------------------------------------------------
+
+void test_has_current_droid_false_until_a_name_is_set() {
+  MenuController menu;
+  TEST_ASSERT_FALSE(menu.hasCurrentDroid());
+  menu.setCurrentDroidName("R2-D2");
+  TEST_ASSERT_TRUE(menu.hasCurrentDroid());
 }
 
 void test_render_power_config_shows_rows_and_selection() {
@@ -1609,9 +1641,11 @@ int main(int argc, char **argv) {
   RUN_TEST(test_switch_droid_with_invalid_saved_pan_id_shows_invalid_pan_id);
   RUN_TEST(test_manage_droids_delete_flow_removes_entry);
   RUN_TEST(test_manage_droids_delete_confirm_back_cancels);
-  RUN_TEST(test_display_config_cycles_selected_slot_source);
-  RUN_TEST(test_display_config_up_down_selects_slot_not_source);
-  RUN_TEST(test_display_config_enter_without_registry_is_noop);
+  RUN_TEST(test_display_config_cursor_starts_on_current_layout);
+  RUN_TEST(test_display_config_enter_applies_selected_layout);
+  RUN_TEST(test_display_config_enter_on_current_layout_is_not_a_change);
+  RUN_TEST(test_display_config_up_down_wraps_over_layouts);
+  RUN_TEST(test_display_config_enter_without_layout_is_noop);
   RUN_TEST(test_display_config_back_returns_to_main_menu);
   RUN_TEST(test_power_config_up_down_wraps_over_rows);
   RUN_TEST(test_power_config_enter_cycles_dim_timeout_row);
@@ -1655,8 +1689,9 @@ int main(int argc, char **argv) {
   RUN_TEST(test_render_device_info);
   RUN_TEST(test_device_serial_low_defaults_then_reflects_what_was_set);
   RUN_TEST(test_render_factory_reset_confirm);
-  RUN_TEST(test_render_display_config_shows_slots_and_selection);
-  RUN_TEST(test_render_display_config_without_registry_shows_placeholder);
+  RUN_TEST(test_render_display_config_shows_layouts_selection_and_current);
+  RUN_TEST(test_render_display_config_without_layout_marks_none_current);
+  RUN_TEST(test_has_current_droid_false_until_a_name_is_set);
   RUN_TEST(test_render_power_config_shows_rows_and_selection);
   RUN_TEST(test_render_power_config_without_config_shows_defaults);
   RUN_TEST(test_render_brightness_shows_rows_and_selection);

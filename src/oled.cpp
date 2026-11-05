@@ -1,5 +1,7 @@
 #include "oled.h"
 
+#include <cstring>
+
 #include "pin_assignment.h"
 
 namespace {
@@ -67,6 +69,12 @@ void OledDisplay::render(const ScreenBuffer &content) {
     display_.setCursor(0, static_cast<int16_t>(i * 8));
     display_.print(content.line(i));
   }
+  display_.display();
+}
+
+void OledDisplay::render(const FrameBuffer &frame) {
+  if (!ready_) return;
+  std::memcpy(display_.getBuffer(), frame.bytes(), FrameBuffer::kByteCount);
   display_.display();
 }
 

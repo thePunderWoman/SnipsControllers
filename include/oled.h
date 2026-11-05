@@ -2,6 +2,7 @@
 
 #include <Adafruit_SSD1306.h>
 
+#include "frame_buffer.h"
 #include "screen.h"
 #include "screen_brightness.h"
 
@@ -30,6 +31,10 @@ class OledDisplay {
   bool begin();
 
   void render(const ScreenBuffer &content);
+
+  // Pushes a status screen frame (status_screen.h). FrameBuffer is
+  // already in the panel's own byte layout, so this is a straight copy.
+  void render(const FrameBuffer &frame);
 
   // Draws a 1-bit bitmap (row-major, MSB-first-per-byte, e.g.
   // snips_logo_bitmap.h) centered on the display and pushes it immediately.

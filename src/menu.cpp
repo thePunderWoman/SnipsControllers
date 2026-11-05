@@ -15,6 +15,9 @@ namespace {
 // kFactoryResetConfirm case in MenuController::onEnter().
 constexpr const char *kClearedPanId = "0000000000000000";
 
+// currentDroidName() before any droid is chosen, and after Factory Reset.
+constexpr const char *kNoDroidName = "(none)";
+
 // Stick-as-nav thresholds (see MenuController::tick()) — percentages of
 // calibrated travel, not raw ADC. Sign convention (positive = up,
 // negative = down) confirmed against real hardware. The fire threshold
@@ -53,6 +56,10 @@ MainMenuItem MenuController::selectedMainMenuItem() const {
 void MenuController::setCurrentDroidName(const char *name) {
   std::strncpy(currentDroidName_, name, sizeof(currentDroidName_) - 1);
   currentDroidName_[sizeof(currentDroidName_) - 1] = '\0';
+}
+
+bool MenuController::hasCurrentDroid() const {
+  return std::strcmp(currentDroidName_, kNoDroidName) != 0;
 }
 
 int MenuController::wrapIndex(int index, int count) {
@@ -105,8 +112,8 @@ void MenuController::onUp() {
       panIdEntry_.scrollPrev();
       break;
     case MenuScreen::kDisplayConfig:
-      displayConfigSlotIndex_ =
-          wrapIndex(displayConfigSlotIndex_ - 1, ComplicationRegistry::kSlotCount);
+      displayLayoutIndex_ = wrapIndex(displayLayoutIndex_ - 1,
+                                      static_cast<int>(StatusLayout::kCount));
       break;
     case MenuScreen::kPowerConfig:
       powerConfigRowIndex_ = wrapIndex(
@@ -148,8 +155,8 @@ void MenuController::onDown() {
       panIdEntry_.scrollNext();
       break;
     case MenuScreen::kDisplayConfig:
-      displayConfigSlotIndex_ =
-          wrapIndex(displayConfigSlotIndex_ + 1, ComplicationRegistry::kSlotCount);
+      displayLayoutIndex_ = wrapIndex(displayLayoutIndex_ + 1,
+                                      static_cast<int>(StatusLayout::kCount));
       break;
     case MenuScreen::kPowerConfig:
       powerConfigRowIndex_ = wrapIndex(
@@ -271,7 +278,8 @@ void MenuController::enterMainMenuItem(MainMenuItem item) {
       screen_ = MenuScreen::kCalibrateTrigger;
       break;
     case MainMenuItem::kDisplayConfig:
-      displayConfigSlotIndex_ = 0;
+      displayLayoutIndex_ =
+          statusLayout_ != nullptr ? static_cast<int>(*statusLayout_) : 0;
       screen_ = MenuScreen::kDisplayConfig;
       break;
     case MainMenuItem::kBrightness:
@@ -393,9 +401,10 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
       break;
 
     case MenuScreen::kDisplayConfig:
-      if (complications_ != nullptr) {
-        complications_->cycleSlotSource(displayConfigSlotIndex_);
-        complicationsChanged_ = true;
+      if (statusLayout_ != nullptr &&
+          *statusLayout_ != selectedDisplayLayout()) {
+        *statusLayout_ = selectedDisplayLayout();
+        statusLayoutChanged_ = true;
       }
       break;
 
@@ -461,7 +470,7 @@ void MenuController::onEnter(int rawTrigger, int rawStickX, int rawStickY) {
         xbeeTransport_->leaveNetwork();
         xbeeTransport_->setPanId(kClearedPanId);
       }
-      setCurrentDroidName("(none)");
+      setCurrentDroidName(kNoDroidName);
       screen_ = MenuScreen::kMainMenu;
       break;
 
@@ -555,9 +564,9 @@ bool MenuController::consumeDroidStoreChanged() {
   return true;
 }
 
-bool MenuController::consumeComplicationsChanged() {
-  if (!complicationsChanged_) return false;
-  complicationsChanged_ = false;
+bool MenuController::consumeStatusLayoutChanged() {
+  if (!statusLayoutChanged_) return false;
+  statusLayoutChanged_ = false;
   return true;
 }
 
@@ -778,16 +787,17 @@ void renderMenuScreen(const MenuController &menu, ScreenBuffer *screen) {
     case MenuScreen::kDisplayConfig: {
       screen->setLine(0, "Display Config");
       char line[ScreenBuffer::kMaxLineLength + 1];
-      for (int i = 0; i < ComplicationRegistry::kSlotCount; ++i) {
-        const char *sourceLabel =
-            menu.complications() != nullptr
-                ? complicationSourceLabel(menu.complications()->slotSource(i))
-                : "(none)";
-        std::snprintf(line, sizeof(line), "%s%d: %s",
-                      i == menu.selectedDisplayConfigSlot() ? "> " : "  ",
-                      i + 1, sourceLabel);
+      const int count = static_cast<int>(StatusLayout::kCount);
+      for (int i = 0; i < count; ++i) {
+        const auto layout = static_cast<StatusLayout>(i);
+        const bool inUse =
+            menu.statusLayout() != nullptr && *menu.statusLayout() == layout;
+        std::snprintf(line, sizeof(line), "%s%s%s",
+                      layout == menu.selectedDisplayLayout() ? "> " : "  ",
+                      statusLayoutLabel(layout), inUse ? " *" : "");
         screen->setLine(1 + i, line);
       }
+      screen->setLine(1 + count + 1, "Enter: use layout");
       break;
     }
 

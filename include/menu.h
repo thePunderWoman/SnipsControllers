@@ -1,10 +1,10 @@
 #pragma once
 
 #include "calibration.h"
-#include "complications.h"
 #include "droid_store.h"
 #include "power_management.h"
 #include "screen.h"
+#include "status_screen.h"
 #include "text_entry.h"
 #include "droid_switcher.h"
 
@@ -49,8 +49,7 @@ enum class MainMenuItem {
 };
 
 // One row of the Power Config screen — Up/Down select a row, Enter
-// cycles that row's value, same interaction pattern as Display Config's
-// slots.
+// cycles that row's value.
 enum class PowerConfigRow {
   kDimTimeout = 0,
   kOffTimeout,
@@ -179,28 +178,31 @@ class MenuController {
   const TextEntryWidget &nameEntry() const { return nameEntry_; }
   const TextEntryWidget &panIdEntry() const { return panIdEntry_; }
 
-  // The currently-active droid's name, for the complications system's
-  // "Droid Name" source — "(none)" until either a switch succeeds or
+  // The currently-active droid's name, for the status screen — "(none)"
+  // (see hasCurrentDroid()) until either a switch succeeds or
   // setCurrentDroidName() seeds it. SnipsController.ino calls the setter
   // once at boot, having derived the name by querying the XBee module's
   // current PAN ID (which it remembers on its own — see
   // XbeeControl::queryPanId()) and matching it against the droid list.
   const char *currentDroidName() const { return currentDroidName_; }
   void setCurrentDroidName(const char *name);
+  bool hasCurrentDroid() const;
 
-  // Display Config edits an externally-owned ComplicationRegistry rather
-  // than duplicating its slot-assignment state here — set once at boot.
-  // May be left null (the menu screen then just does nothing on Enter).
-  void setComplications(ComplicationRegistry *registry) {
-    complications_ = registry;
+  // Display Config picks the status screen layout (status_screen.h). It
+  // edits an externally-owned StatusLayout rather than duplicating it
+  // here — set once at boot. Up/Down move the cursor over the layouts
+  // (starting on the current one) and Enter switches to the one under
+  // it. May be left null (Enter then does nothing).
+  void setStatusLayout(StatusLayout *layout) { statusLayout_ = layout; }
+  const StatusLayout *statusLayout() const { return statusLayout_; }
+  StatusLayout selectedDisplayLayout() const {
+    return static_cast<StatusLayout>(displayLayoutIndex_);
   }
-  const ComplicationRegistry *complications() const { return complications_; }
-  int selectedDisplayConfigSlot() const { return displayConfigSlotIndex_; }
-  bool consumeComplicationsChanged();
+  bool consumeStatusLayoutChanged();
 
   // Power Config edits an externally-owned PowerConfig rather than
   // duplicating its state here — set once at boot, same pattern as
-  // setComplications(). May be left null (the menu screen then just
+  // setStatusLayout(). May be left null (the menu screen then just
   // does nothing on Enter).
   void setPowerConfig(PowerConfig *config) { powerConfig_ = config; }
   const PowerConfig *powerConfig() const { return powerConfig_; }
@@ -220,7 +222,7 @@ class MenuController {
   // itself (SnipsController.ino seeds it once at boot from the loaded
   // CalibrationData, same pattern as setDeviceSerialLow()), since
   // there's only one value and no natural external owner the way
-  // ComplicationRegistry/PowerConfig are owned elsewhere. Up/Down apply
+  // PowerConfig is owned elsewhere. Up/Down apply
   // a change immediately (see onUp()/onDown()) rather than needing a
   // separate Enter-to-confirm step.
   void setStickDeadzonePercent(int percent) {
@@ -275,9 +277,9 @@ class MenuController {
   const char *deviceSerialLow_ = "(unknown)";
   char currentDroidName_[DroidEntry::kMaxNameLength + 1] = "(none)";
 
-  ComplicationRegistry *complications_ = nullptr;
-  int displayConfigSlotIndex_ = 0;
-  bool complicationsChanged_ = false;
+  StatusLayout *statusLayout_ = nullptr;
+  int displayLayoutIndex_ = 0;
+  bool statusLayoutChanged_ = false;
 
   PowerConfig *powerConfig_ = nullptr;
   int powerConfigRowIndex_ = 0;
