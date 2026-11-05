@@ -10,9 +10,9 @@
 #include "buttons.h"
 #include "calibration.h"
 #include "calibration_store.h"
-#include "complication_persistence.h"
-#include "complications.h"
+#include "display_layout_store.h"
 #include "droid_persistence.h"
+#include "frame_buffer.h"
 #include "loop_pacer.h"
 #include "low_battery.h"
 #include "menu.h"
@@ -25,8 +25,10 @@
 #include "rgb_led.h"
 #include "screen.h"
 #include "screen_brightness.h"
+#include "sequence_banner.h"
 #include "snips_logo_bitmap.h"
 #include "status_led.h"
+#include "status_screen.h"
 #include "xbee_control.h"
 
 // Pure entry point — wiring only. All real logic lives in dedicated
@@ -44,8 +46,11 @@ BatteryMonitor batteryMonitor;
 CalibrationData calibrationData;
 MenuController menuController;
 XbeeControl xbeeControl;
-ComplicationRegistry complications;
-ComplicationData complicationData;
+StatusLayout statusLayout = StatusLayout::kStatusBars;
+StatusData statusData;
+SequenceBanner sequenceBanner;
+int signalDbm = 0;
+bool signalKnown = false;  // distinguishes "0dBm" from "never queried"
 Accelerometer accelerometer;
 ActivityDetector activityDetector;
 PowerManager powerManager;
@@ -64,21 +69,58 @@ unsigned long lastDownlinkMs = 0;  // 0 = never received one
 constexpr unsigned long kConnectionTimeoutMs = 5000;
 MenuScreen previousMenuScreen = MenuScreen::kInactive;
 MainMenuItem previousMainMenuItem = MainMenuItem::kSwitchDroid;
+// The status screen is re-rendered this often so downlink changes and the
+// e-stop blink show promptly, but a frame only goes over I2C when it
+// differs from the one already on the panel.
+unsigned long lastStatusRefreshMs = 0;
+constexpr unsigned long kStatusRefreshIntervalMs = 100;
+constexpr unsigned long kEstopBlinkHalfPeriodMs = 500;
+FrameBuffer shownStatusFrame;
+bool statusFrameShown = false;  // false once anything else is drawn
+
+void copyField(char *dest, size_t destCapacity, const char *src) {
+  std::strncpy(dest, src, destCapacity - 1);
+  dest[destCapacity - 1] = '\0';
+}
+
+bool droidConnected(unsigned long now) {
+  return lastDownlinkMs != 0 && now - lastDownlinkMs < kConnectionTimeoutMs;
+}
+
+// Every text screen goes through here, so the status screen knows the
+// panel no longer shows its last frame.
+void showText(const ScreenBuffer &screen) {
+  oledDisplay.render(screen);
+  statusFrameShown = false;
+}
 
 void showBootScreen() {
   ScreenBuffer bootScreen;
   bootScreen.setLine(0, "Snips Controller");
   bootScreen.setLine(1, "OLED OK");
-  oledDisplay.render(bootScreen);
+  showText(bootScreen);
 }
 
 // The "normal operating" screen, shown whenever the on-device menu is
-// closed — smartwatch-style complications, user-assignable via Display
-// Config.
-void showOperatingScreen() {
-  ScreenBuffer screen;
-  complications.render(&screen);
-  oledDisplay.render(screen);
+// closed, in the layout picked on Display Config (see status_screen.h).
+// With onlyIfChanged, a frame identical to the one on the panel is not
+// sent again.
+void showOperatingScreen(bool onlyIfChanged = false) {
+  const unsigned long now = millis();
+  statusData.connected = droidConnected(now);
+  statusData.signalBars = signalBarsForDbm(signalDbm, signalKnown);
+  statusData.estopSolidPhase = (now / kEstopBlinkHalfPeriodMs) % 2 == 0;
+  statusData.sequenceVisible = sequenceBanner.visible(now);
+  copyField(statusData.sequenceName, sizeof(statusData.sequenceName),
+            sequenceBanner.name());
+  statusData.sequenceProgressPercent = sequenceBanner.progressPercent();
+
+  FrameBuffer frame;
+  renderStatusScreen(statusData, statusLayout, &frame);
+  if (onlyIfChanged && statusFrameShown && frame == shownStatusFrame) return;
+  oledDisplay.render(frame);
+  shownStatusFrame = frame;
+  statusFrameShown = true;
 }
 
 bool oledOnFor(const PowerState &state) {
@@ -105,7 +147,7 @@ void applyPowerState(const PowerState &state) {
     if (menuController.currentScreen() != MenuScreen::kInactive) {
       ScreenBuffer menuScreen;
       renderMenuScreen(menuController, &menuScreen);
-      oledDisplay.render(menuScreen);
+      showText(menuScreen);
     } else {
       showOperatingScreen();
     }
@@ -168,11 +210,6 @@ RgbColor statusColor(SystemState state) {
                     ledBrightnessScale(powerConfig.ledBrightnessPercent));
 }
 
-void copyField(char *dest, size_t destCapacity, const char *src) {
-  std::strncpy(dest, src, destCapacity - 1);
-  dest[destCapacity - 1] = '\0';
-}
-
 // Notifies Amidala this controller is powering off intentionally (so it
 // doesn't wait out a stale-connection timeout), shows a brief message,
 // then cuts power. Capped total duration (a few hundred ms) so a
@@ -182,7 +219,7 @@ void performGracefulShutdown() {
 
   ScreenBuffer shutdownScreen;
   shutdownScreen.setLine(0, "Powering Off...");
-  oledDisplay.render(shutdownScreen);
+  showText(shutdownScreen);
 
   // Wake the XBee if it's asleep (XBee sleep stage, or the low-battery
   // countdown), or the shutdown packets below never leave. The retry
@@ -286,7 +323,7 @@ void setup() {
       if (oledDisplay.begin()) {
         ScreenBuffer emptyScreen;
         renderBatteryEmptyScreen(&emptyScreen);
-        oledDisplay.render(emptyScreen);
+        showText(emptyScreen);
       }
       constexpr unsigned long kBatteryEmptyMessageMs = 3000;
       delay(kBatteryEmptyMessageMs);
@@ -328,10 +365,10 @@ void setup() {
   // has been saved yet.
   menuController.setDroidStore(DroidPersistence::load());
 
-  // Restores any previously-saved Display Config slot assignments;
-  // defaults are left in place for anything never saved.
-  ComplicationPersistence::load(&complications);
-  menuController.setComplications(&complications);
+  // Restores the status screen layout picked on Display Config; Status
+  // bars if none has been saved.
+  statusLayout = DisplayLayoutStore::load();
+  menuController.setStatusLayout(&statusLayout);
 
   // Restores any previously-saved power management settings; defaults to
   // every idle stage on Never (no behavior change) if none has been saved
@@ -376,7 +413,7 @@ void setup() {
   // The XBee module remembers its own PAN ID across power cycles once
   // XbeeControl::setPanId() commits one via "WR" — it never needs to be
   // re-applied here. This just derives which saved droid (by name) that
-  // PAN ID corresponds to, for the "Droid Name" complication; no match
+  // PAN ID corresponds to, for the status screen's droid name; no match
   // (e.g. first boot, or after a Factory Reset clears the list) leaves
   // the "(none)" default in place.
   char currentPanId[17];
@@ -403,7 +440,7 @@ void setup() {
 
   // Power-on splash, so it's obvious the device is booting rather than
   // just dark/unresponsive, followed by the existing brief boot
-  // confirmation text — loop() takes over with the real complications
+  // confirmation text — loop() takes over with the real status
   // screen once real sensor data starts flowing.
   if (oledDisplay.begin()) {
     oledDisplay.setDrive(
@@ -606,15 +643,15 @@ void loop() {
     if (menuController.currentScreen() != MenuScreen::kInactive) {
       ScreenBuffer menuScreen;
       renderMenuScreen(menuController, &menuScreen);
-      oledDisplay.render(menuScreen);
+      showText(menuScreen);
     } else {
       showOperatingScreen();
     }
   }
 
-  if (menuController.consumeComplicationsChanged()) {
-    ComplicationPersistence::save(complications);
-    Serial.println("Display config saved.");
+  if (menuController.consumeStatusLayoutChanged()) {
+    DisplayLayoutStore::save(statusLayout);
+    Serial.println("Display layout saved.");
   }
 
   if (menuController.consumePowerConfigChanged()) {
@@ -741,9 +778,9 @@ void loop() {
     }
   }
 
-  // Downlink: non-blocking poll every tick. Handedness and the Left/Right
-  // label+value feed the complications system directly — a received
-  // field is sticky (kept displayed) until a newer downlink updates it.
+  // Downlink: non-blocking poll every tick. Amidala sends one after
+  // every uplink; its droid fields stay on the status screen until a
+  // newer downlink updates them.
   uint8_t downlinkBuf[Packet::kDownlinkEncodedSize];
   uint16_t downlinkLength = 0;
   if (xbeeControl.pollForPacket(downlinkBuf, sizeof(downlinkBuf),
@@ -751,48 +788,50 @@ void loop() {
     DownlinkPacket downlink;
     if (Packet::decodeDownlink(downlinkBuf, downlinkLength, &downlink)) {
       lastDownlinkMs = now;
-      complicationData.handedness = downlink.handedness;
-      copyField(complicationData.leftLabel, sizeof(complicationData.leftLabel),
-               downlink.leftLabel);
-      copyField(complicationData.leftValue, sizeof(complicationData.leftValue),
-               downlink.leftValue);
-      copyField(complicationData.rightLabel,
-               sizeof(complicationData.rightLabel), downlink.rightLabel);
-      copyField(complicationData.rightValue,
-               sizeof(complicationData.rightValue), downlink.rightValue);
+      applyDownlink(downlink, &statusData);
+      sequenceBanner.update(downlink, now);
       Serial.println("Downlink packet received.");
     }
   }
 
-  // Feed the complications system every tick — cheap, and keeps the
-  // operating screen's next scheduled redraw (below) always showing
-  // current data.
-  complicationData.batteryPercent = batteryPercent;
-  complicationData.batteryIndicatorVisible =
+  // Feed the status screen every tick — cheap, and keeps its next
+  // refresh (below) always showing current data.
+  statusData.batteryPercent = batteryPercent;
+  statusData.batteryVisible =
       !lowBatteryMonitor.isWarning() || lowBatteryMonitor.blinkOn();
   // `Serial` is true while a USB host is connected (see the serial wait
   // in setup()).
   const UsbPower usbPower =
       usbPowerFor(static_cast<bool>(Serial), chargeState);
-  complicationData.usbPower = usbPower;
-  complicationData.charging = chargeState == ChargeState::kCharging;
-  copyField(complicationData.droidName, sizeof(complicationData.droidName),
-           menuController.currentDroidName());
-  complications.setData(complicationData);
+  statusData.usbPower = usbPower;
+  statusData.charging = chargeState == ChargeState::kCharging;
+  copyField(statusData.droidName, sizeof(statusData.droidName),
+            menuController.hasCurrentDroid() ? menuController.currentDroidName()
+                                             : "");
+
+  // Skipped while the menu, the low-battery countdown or a charging fault
+  // owns the screen, and while the OLED is off (applyPowerState()
+  // redraws on wake).
+  if (now - lastStatusRefreshMs >= kStatusRefreshIntervalMs) {
+    lastStatusRefreshMs = now;
+    if (menuController.currentScreen() == MenuScreen::kInactive &&
+        !inLowBatteryCountdown && oledOnFor(currentPowerState) &&
+        chargeState != ChargeState::kLatchedFault) {
+      showOperatingScreen(/*onlyIfChanged=*/true);
+    }
+  }
 
   // Once a second: query local signal strength (blocking, up to ~200ms —
-  // too slow to do every tick), update the status LED, refresh the
-  // operating screen so it doesn't just sit stale between menu-state
-  // changes, and log human-readable telemetry (not what Amidala sees,
-  // just a bring-up check that the values above look right).
+  // too slow to do every tick), update the status LED, show a charging
+  // fault, and log human-readable telemetry (not what Amidala sees, just
+  // a bring-up check that the values above look right).
   if (now - lastTelemetryLogMs >= kTelemetryLogIntervalMs) {
     lastTelemetryLogMs = now;
 
     int rssiDbm = 0;
     if (!xbeeSleepRequested && xbeeControl.queryLocalRssiDbm(&rssiDbm)) {
-      complicationData.signalDbm = rssiDbm;
-      complicationData.signalKnown = true;
-      complications.setData(complicationData);
+      signalDbm = rssiDbm;
+      signalKnown = true;
     }
 
     SystemState ledState;
@@ -800,8 +839,7 @@ void loop() {
       ledState = SystemState::kError;
     } else if (chargeState == ChargeState::kCharging) {
       ledState = SystemState::kCharging;
-    } else if (lastDownlinkMs != 0 &&
-               now - lastDownlinkMs < kConnectionTimeoutMs) {
+    } else if (droidConnected(now)) {
       ledState = SystemState::kConnected;
     } else {
       ledState = SystemState::kDisconnected;
@@ -815,21 +853,18 @@ void loop() {
         !lowBatteryMonitor.blinkOn();
     rgbLed.show(blinkLedOff ? RgbColor{0, 0, 0} : statusColor(ledState));
 
+    // A charging fault takes over the operating screen (but not active
+    // menu navigation) for as long as it persists — this checks once a
+    // second like the rest of this block rather than every tick, since
+    // unlike the bounded 30-second countdown above, a fault can persist
+    // for an entire session and redrawing every tick would hog I2C.
     // Skipped while the OLED is off: applyPowerState() redraws on wake.
     if (menuController.currentScreen() == MenuScreen::kInactive &&
-        !inLowBatteryCountdown && oledOnFor(currentPowerState)) {
-      // A charging fault takes over the operating screen (but not active
-      // menu navigation) for as long as it persists — this checks once a
-      // second like the rest of this block rather than every tick, since
-      // unlike the bounded 30-second countdown above, a fault can persist
-      // for an entire session and redrawing every tick would hog I2C.
-      if (chargeState == ChargeState::kLatchedFault) {
-        ScreenBuffer faultScreen;
-        renderChargingFaultScreen(&faultScreen);
-        oledDisplay.render(faultScreen);
-      } else {
-        showOperatingScreen();
-      }
+        !inLowBatteryCountdown && oledOnFor(currentPowerState) &&
+        chargeState == ChargeState::kLatchedFault) {
+      ScreenBuffer faultScreen;
+      renderChargingFaultScreen(&faultScreen);
+      showText(faultScreen);
     }
 
     Serial.print("Battery ");
@@ -877,7 +912,7 @@ void loop() {
     ScreenBuffer countdownScreen;
     renderLowBatteryCountdownScreen(lowBatteryMonitor.secondsRemaining(),
                                     &countdownScreen);
-    oledDisplay.render(countdownScreen);
+    showText(countdownScreen);
   } else if (wasInLowBatteryCountdown) {
     // Cancelled (charging plugged in, or the reading recovered) —
     // restore whatever the current power state and menu state say should
