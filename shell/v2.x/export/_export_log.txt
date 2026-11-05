@@ -31,3 +31,5 @@ Print files regenerated for the new/changed parts only (unchanged print STEPs we
 2026-11-04 (night, later): closed square tube around the negative end of the 14500 bay up to the back wall (spring contact). Re-exported BottomShell only (stl, step, print/stl, print/step) and the f3d archive.
 
 2026-11-04 (late): replaced the square front tube by the round ceiling extended to the front contact holder; battery opening and BatteryPanel lengthened (bay_pan_y1 -1.45 -> 5 mm), hook bulkhead replaced by hook pads, slots moved after the seal. Re-exported BottomShell and BatteryPanel (stl, step, print/stl, print/step) and the f3d archive.
+
+2026-11-04 (late, later): contact retention in the 14500 bay (lead-in chamfer, crush ribs, wire relief steps on the rear clip and front block pockets). Re-exported BottomShell only (stl, step, print/stl, print/step) and the f3d archive.
