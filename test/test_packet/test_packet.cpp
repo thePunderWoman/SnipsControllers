@@ -43,6 +43,45 @@ void test_uplink_flags_default_to_zero() {
   TEST_ASSERT_EQUAL_UINT8(0, decoded.flags);
 }
 
+void test_uplink_imu_round_trip_and_layout() {
+  UplinkPacket packet;
+  packet.buttonMask = 0x0102;
+  packet.imuFlags = UplinkPacket::kImuTiltValid | UplinkPacket::kImuRatesValid;
+  packet.pitchDeg = -45;
+  packet.rollDeg = 90;
+  packet.rateDeciDps[0] = -2500;
+  packet.rateDeciDps[1] = 1;
+  packet.rateDeciDps[2] = 300;
+
+  uint8_t buf[Packet::kUplinkEncodedSize];
+  TEST_ASSERT_EQUAL_UINT(17, Packet::encodeUplink(packet, buf, sizeof(buf)));
+  // The first 8 bytes are unchanged from the original format, so an
+  // Amidala that only reads those keeps working.
+  TEST_ASSERT_EQUAL_HEX8(0x01, buf[0]);
+  TEST_ASSERT_EQUAL_HEX8(0x02, buf[1]);
+  const uint8_t imu[] = {0x03, 0xD3, 0x5A, 0xF6, 0x3C, 0x00, 0x01, 0x01, 0x2C};
+  TEST_ASSERT_EQUAL_UINT8_ARRAY(imu, buf + 8, sizeof(imu));
+
+  UplinkPacket decoded;
+  TEST_ASSERT_TRUE(Packet::decodeUplink(buf, sizeof(buf), &decoded));
+  TEST_ASSERT_EQUAL_UINT8(packet.imuFlags, decoded.imuFlags);
+  TEST_ASSERT_EQUAL_INT8(-45, decoded.pitchDeg);
+  TEST_ASSERT_EQUAL_INT8(90, decoded.rollDeg);
+  TEST_ASSERT_EQUAL_INT16(-2500, decoded.rateDeciDps[0]);
+  TEST_ASSERT_EQUAL_INT16(1, decoded.rateDeciDps[1]);
+  TEST_ASSERT_EQUAL_INT16(300, decoded.rateDeciDps[2]);
+}
+
+void test_uplink_decodes_original_8_byte_packet_without_imu() {
+  uint8_t buf[Packet::kUplinkBaseSize] = {0, 1, 50, 0, 0, 80, 0, 0};
+  UplinkPacket decoded;
+  decoded.imuFlags = 0xFF;
+  TEST_ASSERT_TRUE(Packet::decodeUplink(buf, sizeof(buf), &decoded));
+  TEST_ASSERT_EQUAL_UINT16(1, decoded.buttonMask);
+  TEST_ASSERT_EQUAL_UINT8(80, decoded.batteryPercent);
+  TEST_ASSERT_EQUAL_UINT8(0, decoded.imuFlags);
+}
+
 void test_uplink_encode_fails_when_buffer_too_small() {
   UplinkPacket packet;
   uint8_t buf[3];
@@ -166,6 +205,8 @@ int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_uplink_round_trip);
   RUN_TEST(test_uplink_flags_default_to_zero);
+  RUN_TEST(test_uplink_imu_round_trip_and_layout);
+  RUN_TEST(test_uplink_decodes_original_8_byte_packet_without_imu);
   RUN_TEST(test_uplink_encode_fails_when_buffer_too_small);
   RUN_TEST(test_uplink_decode_fails_when_length_too_short);
   RUN_TEST(test_downlink_round_trip);
