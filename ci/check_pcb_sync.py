@@ -52,7 +52,9 @@ def main() -> int:
         return 1
 
     board = pcbnew.LoadBoard(str(board_path))
-    outcome = apply_module.apply(board, components, netlist.classes(result.stdout))
+    outcome = apply_module.apply(
+        board, components, netlist.classes(result.stdout), netlist.shape_dirs(result.stdout)
+    )
     print(outcome.summary())
     if outcome.classed.problems:
         print("\n".join(outcome.classed.problems), file=sys.stderr)
@@ -68,6 +70,8 @@ def main() -> int:
             outcome.recoppered,
             outcome.nets_removed,
             outcome.orphaned,
+            outcome.shipped,
+            outcome.found_bodies,
             outcome.classed.changed(),
             outcome.classed.problems,
             outcome.problems,

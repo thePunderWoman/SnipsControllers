@@ -33,7 +33,10 @@ Keep `value=` human-readable; specify exact purchasing choices with `manufacture
 in the purchasing BOM and is marked `DNP` for outsourced assembly.
 
 - V2 is a separate board in `PCB/v2.x/snips`, with its optional XBee carrier in `PCB/v2.x/xbee-carrier`. Both have the same layout of files and the same commands; CI checks all three boards.
-- The circuit source is `PCB/v1.x/stackup/board.kdl` and `PCB/v1.x/stackup/parts.kdl`. Run
+- Parts come from the Stackup library pinned in `manifest.kdl` (`stackup-eda/library`). A part
+  that isn't specific to Snips belongs there, not in a board's `parts.kdl`; only Snips-specific
+  parts (the V2 XBee carrier pads and its mating edge) stay local.
+- The circuit source is `PCB/v1.x/stackup/board.kdl`. Run
   `stackup check PCB/v1.x/stackup/board.kdl`, then sync the PCB with the Stackup KiCad plugin.
 - The BOM scripts read Stackup's CSV through the Cargo-locked CLI, including
   defaults from library parts. CI checks the export and PCB sync.

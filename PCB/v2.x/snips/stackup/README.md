@@ -1,11 +1,12 @@
 # Snips Controller Stackup design
 
 `board.kdl` defines the electrical design and imports parts from the library
-pinned in the repository's `manifest.kdl`. `parts.kdl` defines the Snips-specific
-thumbstick. `purchasing.kdl` declares the selected manufacturer parts and
-supplier numbers. The match rules in `board.kdl` choose those parts by the
-resolved value and footprint. The resulting BOM matches the previous factory
-order in `../production/bom/snips_controller-bom.csv`.
+pinned in the repository's `manifest.kdl`. `parts.kdl` defines the pads for the
+XBee carrier daughter board, the one Snips-specific part. `purchasing.kdl`
+declares the selected manufacturer parts and supplier numbers. The match rules
+in `board.kdl` choose those parts by the resolved value and footprint. The
+resulting BOM matches the previous factory order in
+`../production/bom/snips_controller-bom.csv`.
 
 The board layout is in `../snips_controller.kicad_pcb`. To check the design, run
 `stackup check PCB/v2.x/snips/stackup/board.kdl` from the repository root. To update the
