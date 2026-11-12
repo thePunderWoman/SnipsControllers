@@ -1,4 +1,4 @@
-### Footprint positions - created on 2026-10-29T18:08:56 ###
+### Footprint positions - created on 2026-11-11T22:46:23 ###
 ### Printed by KiCad version 10.0.5
 ## Unit = mm, Angle = deg.
 ## Side : All
@@ -60,7 +60,6 @@ D_RGB1           SK6812MINI-HS-012                        SK6812MINI-HS-012     
 FID1             Fiducial_1mm_Mask2mm                     Fiducial_1mm_Mask2mm                               123.0000   -95.0000    0.0000  top
 FID2             Fiducial_1mm_Mask2mm                     Fiducial_1mm_Mask2mm                               151.3000  -127.3000    0.0000  top
 FID3             Fiducial_1mm_Mask2mm                     Fiducial_1mm_Mask2mm                               147.0000  -150.1000    0.0000  top
-J_STICK1         GuliKit_Thumbstick                       GuliKit_HallStick                                  137.5000   -95.2500    0.0000  top
 J_USB1           USB-C                                    USB_C_Receptacle_HRO_TYPE-C-31-M-12                137.5000  -157.1000    0.0000  top
 R_BOOT_PU1       10kΩ                                     R_0402_1005Metric                                  148.5000   -82.7400  -90.0000  top
 R_CC1            5.1kΩ                                    R_0402_1005Metric                                  130.2500  -153.7600  -90.0000  top
@@ -90,5 +89,4 @@ SW_VOL_DN1       SKRTLAE010                               SW_Push_1P1T-MP_NO_Hor
 SW_VOL_UP1       SKRTLAE010                               SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010      153.2000   -90.5000   90.0000  top
 U_MCU1           ESP32-S3-WROOM-1-N8                      ESP32-S3-WROOM-1                                   138.0000   -72.9100    0.0000  top
 U_OLED1          Qwiic_connector                          JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal   124.1000   -80.8000  180.0000  top
-U_XBEE1          XBee3                                    XB324Z8UTJ                                         142.0000  -127.5000  -90.0000  top
 ## End
