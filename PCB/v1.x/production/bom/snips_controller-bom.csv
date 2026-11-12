@@ -1,41 +1,43 @@
-"Id";"Designator";"Footprint";"Quantity";"Designation";"Supplier and ref";
-1;"BT1";"JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal";1;"PH 2-pin battery RIGHT-ANGLE HORIZONTAL";;;
-2;"C_3V3_1, C_XBEE_VCC4";"C_0603_1608Metric";2;"10µF";;;
-3;"C_3V3_2, C_DBNC1, C_HALL1, C_IMU_1, C_LATCH_G1, C_OLED_2, C_RGB1, C_STICK1, C_SYS_2, C_VIN_2, C_XBEE_RC1, C_XBEE_VCC1";"C_0402_1005Metric";12;"100nF";;;
-4;"C_3V3_3";"C_0402_1005Metric";1;"39pF";;;
-5;"C_BAT1, C_BUCK_IN1, C_OLED_1, C_SYS_1, C_VIN_1";"C_0805_2012Metric";5;"10µF";;;
-6;"C_BUCK_OUT1";"C_0805_2012Metric";1;"22µF";;;
-7;"C_IMU_2";"C_0603_1608Metric";1;"2.2µF";;;
-8;"C_IMU_3";"C_0402_1005Metric";1;"10nF";;;
-9;"C_XBEE_VCC2";"C_0603_1608Metric";1;"1µF";;;
-10;"C_XBEE_VCC3";"C_0402_1005Metric";1;"47pF";;;
-11;"D_INV_ISO1";"SOT-323_SC-70";1;"BAT54W-7-F";;;
-12;"D_OR1, D_OR2";"D_SOD-123";2;"1N4148W";;;
-13;"D_RGB1";"SK6812MINI-HS-012";1;"SK6812MINI-HS-012";;;
-14;"D_VBUS_TVS1";"D_SOD-323";1;"TPPESD5V0S1BA";;;
-15;"J_USB1";"USB_C_Receptacle_HRO_TYPE-C-31-M-12";1;"USB-C";;;
-16;"L_BUCK1";"L_Bourns-SRN4018";1;"2.2µH";;;
-17;"Q_INV1";"SOT-23";1;"MMBT3904(RANGE:100-300)";;;
-18;"Q_LATCH1";"SOT-23";1;"AO3400A";;;
-19;"Q_PWR1";"SOT-23";1;"AO3401A";;;
-20;"R_BOOT_PU1, R_EN_PU1, R_STAT1, R_STAT2, R_TS1, R_XBEE_ATTN_PU1, R_XBEE_RST1";"R_0402_1005Metric";7;"10kΩ";;;
-21;"R_BTN_PU1, R_GATE1, R_INV_BASE1, R_INV_PU1, R_PWR_EN_PD1, R_VSYS2";"R_0402_1005Metric";6;"100kΩ";;;
-22;"R_CC1, R_CC2";"R_0402_1005Metric";2;"5.1kΩ";;;
-23;"R_FB1";"R_0402_1005Metric";1;"255kΩ";;;
-24;"R_FB2";"R_0402_1005Metric";1;"56.2kΩ";;;
-25;"R_ISET1";"R_0402_1005Metric";1;"604Ω";;;
-26;"R_LATCH_G1";"R_0402_1005Metric";1;"1MΩ";;;
-27;"R_RGB1";"R_0402_1005Metric";1;"470Ω";;;
-28;"R_USB_DM1, R_USB_DP1";"R_0402_1005Metric";2;"27Ω";;;
-29;"R_VSET1";"R_0402_1005Metric";1;"18kΩ";;;
-30;"R_VSYS1";"R_0402_1005Metric";1;"200kΩ";;;
-31;"R_XBEE_RC1";"R_0402_1005Metric";1;"100Ω";;;
-32;"SW_BOOT1";"SW_SPST_EVQP2_ShortPushTravel_H2.1mm";1;"Panasonic_EVQP2";;;
-33;"SW_MACRO1, SW_MACRO2, SW_MACRO3, SW_MACRO4, SW_MACRO5, SW_MACRO6";"SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm";6;"6x6x5mm SMD Tactile";;;
-34;"SW_PWR1, SW_THR_DN1, SW_THR_UP1, SW_TRIG_DIG1, SW_TRIG_DIG2, SW_VOL_DN1, SW_VOL_UP1";"SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010";7;"SKRTLAE010";;;
-35;"U_BUCK1";"SOT-23-5";1;"TLV62569DBVR";;;
-36;"U_CHG1";"IC_BQ25185DLHR";1;"BQ25185DLHR";;;
-37;"U_HALL1";"SOT-23";1;"DRV5055A2QDBZR";;;
-38;"U_IMU1";"LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y";1;"ICM-42670-P";;;
-39;"U_MCU1";"ESP32-S3-WROOM-1";1;"ESP32-S3-WROOM-1-N8";;;
-40;"U_OLED1";"JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal";1;"Qwiic connector";;;
+Refs,Quantity,Value,Footprint,MF,MPN,LCSC,Mouser,DigiKey,Hand,DNP
+"R_BTN_PU1,R_GATE1,R_INV_BASE1,R_INV_PU1,R_PWR_EN_PD1,R_VSYS2","6","100kΩ","Resistor_SMD:R_0402_1005Metric","UNI-ROYAL(Uniroyal Elec)","0402WGF1003TCE","C25741","","","",""
+"C_3V3_2,C_DBNC1,C_HALL1,C_IMU_1,C_LATCH_G1,C_OLED_2,C_RGB1,C_STICK1,C_SYS_2,C_VIN_2,C_XBEE_RC1,C_XBEE_VCC1","12","100nF","Capacitor_SMD:C_0402_1005Metric","Samsung Electro-Mechanics","CL05B104KO5NNNC","C1525","","","",""
+"R_XBEE_RC1","1","100Ω","Resistor_SMD:R_0402_1005Metric","UNI-ROYAL(Uniroyal Elec)","0402WGF1000TCE","C25076","","","",""
+"R_BOOT_PU1,R_EN_PU1,R_STAT1,R_STAT2,R_TS1,R_XBEE_ATTN_PU1,R_XBEE_RST1","7","10kΩ","Resistor_SMD:R_0402_1005Metric","UNI-ROYAL(Uniroyal Elec)","0402WGF1002TCE","C25744","","","",""
+"C_IMU_3","1","10nF","Capacitor_SMD:C_0402_1005Metric","Samsung Electro-Mechanics","CL05B103KB5NNNC","C15195","","","",""
+"C_3V3_1,C_XBEE_VCC4","2","10µF","Capacitor_SMD:C_0603_1608Metric","Samsung Electro-Mechanics","CL10A106KP8NNNC","C19702","","","",""
+"C_BAT1,C_BUCK_IN1,C_OLED_1,C_SYS_1,C_VIN_1","5","10µF","Capacitor_SMD:C_0805_2012Metric","Samsung Electro-Mechanics","CL21A106KAYNNNE","C15850","","","",""
+"R_VSET1","1","18kΩ","Resistor_SMD:R_0402_1005Metric","Yageo","RC0402FR-0718KL","C138044","","","",""
+"R_LATCH_G1","1","1MΩ","Resistor_SMD:R_0402_1005Metric","UNI-ROYAL(Uniroyal Elec)","0402WGF1004TCE","C26083","","","",""
+"D_OR1,D_OR2","2","1N4148W","Diode_SMD:D_SOD-123","ST(Semtech)","1N4148W","C81598","","","",""
+"C_XBEE_VCC2","1","1µF","Capacitor_SMD:C_0603_1608Metric","Samsung Electro-Mechanics","CL10A105KB8NNNC","C15849","","","",""
+"C_IMU_2","1","2.2µF","Capacitor_SMD:C_0603_1608Metric","Samsung Electro-Mechanics","CL10B225KP8NNNC","C100082","","","",""
+"L_BUCK1","1","2.2µH","Inductor_SMD:L_Bourns-SRN4018","Bourns","SRN4018-2R2M","C913207","","","",""
+"R_VSYS1","1","200kΩ","Resistor_SMD:R_0402_1005Metric","UNI-ROYAL(Uniroyal Elec)","0402WGF2003TCE","C25764","","","",""
+"C_BUCK_OUT1","1","22µF","Capacitor_SMD:C_0805_2012Metric","Samsung Electro-Mechanics","CL21A226MAQNNNE","C45783","","","",""
+"R_FB1","1","255kΩ","Resistor_SMD:R_0402_1005Metric","Yageo","RC0402FR-07255KL","C327361","","","",""
+"R_USB_DM1,R_USB_DP1","2","27Ω","Resistor_SMD:R_0402_1005Metric","Yageo","RC0402FR-0727RL","C138021","","","",""
+"C_3V3_3","1","39pF","Capacitor_SMD:C_0402_1005Metric","Yageo","CC0402JRNPO9BN390","C106223","","","",""
+"R_RGB1","1","470Ω","Resistor_SMD:R_0402_1005Metric","UNI-ROYAL(Uniroyal Elec)","0402WGF4700TCE","C25117","","","",""
+"C_XBEE_VCC3","1","47pF","Capacitor_SMD:C_0402_1005Metric","FH (Guangdong Fenghua Advanced Tech)","0402CG470J500NT","C1567","","","",""
+"R_CC1,R_CC2","2","5.1kΩ","Resistor_SMD:R_0402_1005Metric","UNI-ROYAL(Uniroyal Elec)","0402WGF5101TCE","C25905","","","",""
+"R_FB2","1","56.2kΩ","Resistor_SMD:R_0402_1005Metric","Yageo","RC0402FR-0756K2L","C183355","","","",""
+"R_ISET1","1","604Ω","Resistor_SMD:R_0402_1005Metric","Yageo","AC0402FR-07604RL","C227167","","","",""
+"SW_MACRO1,SW_MACRO2,SW_MACRO3,SW_MACRO4,SW_MACRO5,SW_MACRO6","6","6x6x5mm SMD Tactile","Button_Switch_SMD:SW_Push_1TS009xxxx-xxxx-xxxx_6x6x5mm","Hongyuan Precision","1TS009A-1800-5000-CT","C319409","","","",""
+"Q_LATCH1","1","AO3400A","Package_TO_SOT_SMD:SOT-23","Alpha & Omega Semicon","AO3400A","C20917","","","",""
+"Q_PWR1","1","AO3401A","Package_TO_SOT_SMD:SOT-23","Alpha & Omega Semicon","AO3401A","C15127","","","",""
+"D_INV_ISO1","1","BAT54W-7-F","Package_TO_SOT_SMD:SOT-323_SC-70","Diodes Incorporated","BAT54W-7-F","C134417","","","",""
+"U_CHG1","1","BQ25185DLHR","BQ25185DLHR:IC_BQ25185DLHR","Texas Instruments","BQ25185DLHR","C19725033","","","",""
+"U_HALL1","1","DRV5055A2QDBZR","Package_TO_SOT_SMD:SOT-23","Texas Instruments","DRV5055A2QDBZR","C266131","","","",""
+"U_MCU1","1","ESP32-S3-WROOM-1-N8","Espressif:ESP32-S3-WROOM-1","Espressif Systems","ESP32-S3-WROOM-1-N8","C2913198","356-ESP32S3WROOM1N8","","",""
+"J_STICK1","1","GuliKit_Thumbstick","SnipsControllers_Custom:GuliKit_HallStick","GuliKit","GuliKit_Thumbstick","","","","Yes","Yes"
+"U_IMU1","1","ICM-42670-P","Package_LGA:LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y","TDK InvenSense","ICM-42670-P","C3288646","","","",""
+"Q_INV1","1","MMBT3904(RANGE:100-300)","Package_TO_SOT_SMD:SOT-23","Jiangsu Changjing Electronics Technology Co., Ltd.","MMBT3904(RANGE:100-300)","C20526","","","",""
+"BT1","1","PH 2-pin battery RIGHT-ANGLE HORIZONTAL","Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal","JST","S2B-PH-K(LF)(SN)","C265016","","","",""
+"SW_BOOT1","1","Panasonic_EVQP2","Button_Switch_SMD:SW_SPST_EVQP2_ShortPushTravel_H2.1mm","Panasonic","EVQP2T02M","C2915174","","","",""
+"U_OLED1","1","Qwiic connector","Connector_JST:JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal","JST","SM04B-SRSS-TB(LF)(SN)","C160404","","","",""
+"D_RGB1","1","SK6812MINI-HS-012","SnipsControllers_Custom:SK6812MINI-HS-012","OPSCO Optoelectronics","SK6812MINI-HS","C2922787","","","",""
+"SW_PWR1,SW_THR_DN1,SW_THR_UP1,SW_TRIG_DIG1,SW_TRIG_DIG2,SW_VOL_DN1,SW_VOL_UP1","7","SKRTLAE010","Button_Switch_SMD:SW_Push_1P1T-MP_NO_Horizontal_Alps_SKRTLAE010","Alps Alpine","SKRTLAE010","C110293","","","",""
+"U_BUCK1","1","TLV62569DBVR","Package_TO_SOT_SMD:SOT-23-5","Texas Instruments","TLV62569DBVR","C141836","","","",""
+"D_VBUS_TVS1","1","TPPESD5V0S1BA","Diode_SMD:D_SOD-323","TECH PUBLIC","TPPESD5V0S1BA","C587144","","","",""
+"J_USB1","1","USB-C","Connector_USB:USB_C_Receptacle_HRO_TYPE-C-31-M-12","Hroparts Elec","TYPE-C-31-M-12","C165948","","","",""
+"U_XBEE1","1","XBee3","Xbee3:XB324Z8UTJ","Digi International","XB3-24Z8UT","","888-XB3-24Z8UT","602-2190-ND","Yes","Yes"
