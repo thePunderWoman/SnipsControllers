@@ -3,7 +3,7 @@
 A wireless handheld controller for R2-D2 droid operation, designed for use at public events and conventions. Communicates with the droid via XBee3 Zigbee radio in a packetized state-report architecture.
 
 The electrical design is in [Stackup KDL](stackup/board.kdl), using the pinned
-Stackup library plus a [local thumbstick model](stackup/parts.kdl). The existing [KiCad PCB](snips_controller.kicad_pcb) is linked
+Stackup library. The existing [KiCad PCB](snips_controller.kicad_pcb) is linked
 through `snips_controller.stackup_sch`; sync it with the Stackup KiCad plugin. Run
 `stackup check PCB/v1.x/stackup/board.kdl` from the repository root before syncing.
 

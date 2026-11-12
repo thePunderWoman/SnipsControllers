@@ -1,7 +1,7 @@
 # Snips Controller — ESP32-S3-WROOM-1 GPIO Table
 
 > The current circuit and footprint choices are in `PCB/v1.x/stackup/board.kdl`
-> and `PCB/v1.x/stackup/parts.kdl`. References to the older YAML and KiCad schematic
+> and the parts it imports from the Stackup library. References to the older YAML and KiCad schematic
 > below describe the design history; use Stackup for changes.
 
 > **MCU:** ESP32-S3-WROOM-1 module (pre-certified, integrated flash +

@@ -31,7 +31,7 @@ LIB_CANDIDATES = [
     "libngspice.so",
 ]
 
-# Component values, mirroring PCB/v1.x/stackup/parts.kdl (R_BTN_PU1 returns to 3V3, not VSYS).
+# Component values, mirroring PCB/v1.x/stackup/board.kdl (R_BTN_PU1 returns to 3V3, not VSYS).
 R_BTN_PU1 = "100k"
 C_DBNC1 = "100n"
 R_INV_BASE1 = "100k"

@@ -74,7 +74,6 @@
 			)
 			(copper_finish "None")
 			(dielectric_constraints no)
-			(castellated_pads yes)
 		)
 		(pad_to_mask_clearance 0)
 		(allow_soldermask_bridges_in_footprints no)
@@ -92,7 +91,6 @@
 		)
 		(capping no)
 		(filling no)
-		(zone_defaults)
 		(pcbplotparams
 			(layerselection 0x00000000_00000000_55555555_5755f5ff)
 			(plot_on_all_layers_selection 0x00000000_00000000_00000000_00000000)
@@ -241,7 +239,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:13"
+		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:14"
 			(at 0 2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -437,7 +435,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:8"
+		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:9"
 			(at 0 2 270)
 			(layer "F.SilkS")
 			(hide yes)
@@ -923,7 +921,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:20"
+		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:21"
 			(at 0 2 180)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1108,7 +1106,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:9"
+		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:10"
 			(at 0 2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1406,7 +1404,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "@stackup/passives.kdl:116"
+		(property "Stackup Source" "@stackup/passives.kdl:121"
 			(at 0 2 180)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1626,7 +1624,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:21"
+		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:22"
 			(at 0 2 270)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1846,7 +1844,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:14"
+		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:15"
 			(at 0 2 180)
 			(layer "F.SilkS")
 			(hide yes)
@@ -2066,7 +2064,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:15"
+		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:16"
 			(at 2 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -2274,7 +2272,7 @@
 				)
 			)
 		)
-		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:19"
+		(property "Stackup Source" "PCB/v2.x/xbee-carrier/stackup/board.kdl:20"
 			(at 0 2 90)
 			(layer "F.SilkS")
 			(hide yes)

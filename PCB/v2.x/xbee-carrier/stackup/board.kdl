@@ -1,6 +1,7 @@
 // Snips XBee 3 carrier: a 2-layer castellated daughter board for the V2 controller's underside.
 // The XBee faces away from V2, so this board's top view matches XBee_Carrier_Castellated on V2 exactly.
 use "@stackup/passives"
+use "@stackup/radio/xbee3"
 use "./parts.kdl"; use "./purchasing.kdl"
 
 design xbee_carrier {
